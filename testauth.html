@@ -2,20 +2,27 @@
   <head>
     <script src="https://apis.google.com/js/client.js"></script>
     <script>
+      function handleAuthResult(authResult) {
+        if (authResult && !authResult.error) {
+          makeApiCall();
+        }
+      }
+
       function auth() {
         var config = {
-      'client_id': 'YOUR CLIENT ID',
-          'scope': 'https://www.googleapis.com/auth/urlshortener'
+          'client_id': 'YOUR CLIENT ID',
+          'scope': 'https://www.googleapis.com/auth/calendar'
         };
-        gapi.auth.authorize(config, function() {
-          console.log('login complete');
-          console.log(gapi.auth.getToken());
-        });
+        gapi.auth.authorize(config, handleAuthResult);
+      }
+
+      function makeApiCall() {
+        console.log("***** DEBUG_jwir3: Making API call");
       }
     </script>
   </head>
 
   <body>
-    <button onclick="auth();">Authorize</button>
+    <button onclick="auth();">Add a Dummy Calendar Item on May 4, 2014</button>
   </body>
 </html>
