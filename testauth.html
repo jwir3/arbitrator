@@ -17,7 +17,22 @@
       }
 
       function makeApiCall() {
-        console.log("***** DEBUG_jwir3: Making API call");
+        gapi.client.load('calendar', 'v3', function() {
+          var request = gapi.client.calendar.calendarList.list({
+            'userId': 'me'
+          });
+
+          request.execute(function(aResponse) {
+            var calList = document.createElement('div');
+            for (calendarItem in aResponse.items) {
+                var listItem = document.createElement('div');
+                listItem.innerHtml = calendarItem.summary;
+                calList.appendChild(listItem);
+            }
+
+            document.getElementById('list').appendChild(calList);
+          });
+        });
       }
     </script>
   </head>
