@@ -1,5 +1,6 @@
 var Arbitrator = function(aString) {
   this.mBaseString = aString;
+  this.mGames = new Array();
   this.parseFromText();
 }
 
@@ -24,6 +25,9 @@ Arbitrator.prototype = {
       if (i%10 == 0) {
         this.mTable.push(row);
         row = new Array();
+        var gm = new Game(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7]);
+        this.mGames.push(gm);
+        console.log(gm);
       }
     }
 
