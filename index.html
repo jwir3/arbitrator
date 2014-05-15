@@ -2,16 +2,58 @@
 <html>
   <head>
     <title>Arbitrator</title>
+    <script src="https://apis.google.com/js/client.js"></script>
     <script type="text/javascript" src="script/arbitrator.js"></script>
     <script>
+      function populateCalendarList() {
+        gapi.client.load('calendar', 'v3', function() {
+          var request = gapi.client.calendar.calendarList.list({
+          });
+
+          request.execute(function(aResponse) {
+            var selectEle = document.getElementById('calendarList');
+            for (calendarIdx in aResponse.items) {
+                var calendarItem = aResponse.items[calendarIdx];
+                console.log(calendarItem);
+                var listItem = document.createElement('option');
+                listItem.id = calendarItem.id;
+                listItem.text = calendarItem.summary;
+                selectEle.appendChild(listItem);
+            }
+            selectEle.style.display = 'block';
+          });
+        });
+      }
+
+      function handleAuthResult(authResult) {
+        if (authResult && !authResult.error) {
+          populateCalendarList();
+        }
+      }
+
+      function initAuth() {
+        var config = {
+          'client_id': 'YOUR CLIENT ID',
+          'scope': 'https://www.googleapis.com/auth/calendar',
+          'authuser' : -1
+        };
+        gapi.auth.authorize(config, handleAuthResult);
+      }
+
       function arbitrate() {
         var scheduleText = document.getElementById('schedule').value;
         var arb = new Arbitrator(scheduleText);
       }
     </script>
   </head>
-  <body>
+  <body onload="initAuth()">
     <textarea id="schedule" rows="30" cols="80">Cut and paste your schedule here.</textarea>
+    <br />
+    <select id="calendarList" style="display: none">
+      <option id="noCalendarSelectedOption">Select Calendar</option>
+    </select>
+    <br />
+    <br />
     <br />
     <button id="arbitrate-button" onclick="arbitrate();">Parse</button>
   </body>
