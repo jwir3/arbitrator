@@ -14,18 +14,27 @@ Arbitrator.prototype = {
     var removedLastCol= false;
     for (col in cols) {
       var trimmedCol = cols[col].trim();
-      console.log("***** DEBUG_jwir3: Trimmed column is: " + trimmedCol);
       if (trimmedCol.length != 0) {
         row.push(trimmedCol);
       } else if (i == 1){
         row.push("NONE");
       }
 
+      // Special date handling, in the event that we get cut off at the knees
+      // while parsing our time.
+      if (i == 4 && (row[i].endsWith("PM") || row[i].endsWith("AM"))) {
+        console.log("row[i]: " + row[i]);
+        row[i-1] = row[i-1] + " " + row[i];
+        console.log("row[i-1]: " + row[i-1]);
+        row.pop();
+      }
+
       i = i + 1;
       if (i%10 == 0) {
         this.mTable.push(row);
+        console.log("Column 4 is: " + row[3]);
+        var gm = new Game(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]);
         row = new Array();
-        var gm = new Game(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7]);
         this.mGames.push(gm);
         console.log(gm);
       }
@@ -61,15 +70,6 @@ Arbitrator.prototype = {
    *          assignment; -1 otherwise.
    */
   getRole: function(aRow) {
-    // Role is column 3, and can be either "Referee" or "Linesman".
-    var roleString = this.mTable[aRow][2];
-    console.log("***** DEBUG_jwir3: roleString: " + roleString);
-    if (roleString.search(/referee/i) != -1) {
-      return 0;
-    } else if (roleString.search(/linesman/i) != -1) {
-      return 1;
-    } else {
-      return -1;
-    }
+    return this.mGames[aRow].getRole();
   }
 }
