@@ -1,6 +1,6 @@
 var Arbitrator = function(aString) {
   this.mBaseString = aString;
-  this.mGames = new Array();
+  this.mGames = {};
   this.parseFromText();
 }
 
@@ -23,24 +23,26 @@ Arbitrator.prototype = {
       // Special date handling, in the event that we get cut off at the knees
       // while parsing our time.
       if (i == 4 && (row[i].endsWith("PM") || row[i].endsWith("AM"))) {
-        console.log("row[i]: " + row[i]);
         row[i-1] = row[i-1] + " " + row[i];
-        console.log("row[i-1]: " + row[i-1]);
         row.pop();
       }
 
       i = i + 1;
       if (i%10 == 0) {
         this.mTable.push(row);
-        console.log("Column 4 is: " + row[3]);
         var gm = new Game(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]);
         row = new Array();
-        this.mGames.push(gm);
-        console.log(gm);
+        this.mGames[gm.getId()] = gm;
       }
     }
 
     this.mTable.push(row);
+
+    console.log(this.mGames);
+  },
+
+  getGameById: function(aId) {
+    return this.mGames[aId];
   },
 
   getRows: function() {

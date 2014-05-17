@@ -15,8 +15,28 @@ Game.prototype = {
     return this.mId;
   },
 
+  getGroup: function() {
+    return this.mGroup;
+  },
+
   getSportLevel: function() {
     return this.mSportLevel;
+  },
+
+  getSite: function() {
+    return this.mSite;
+  },
+
+  getHomeTeam: function() {
+    return this.mHomeTeam;
+  },
+
+  getAwayTeam: function() {
+    return this.mAwayTeam;
+  },
+
+  getFees: function() {
+    return this.mFees;
   },
 
   setRole: function(aRoleString) {
