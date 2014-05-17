@@ -20,7 +20,7 @@ test("Arbitrator Date Recognition", function() {
   var arbitrator = new Arbitrator(testString);
 
   // Act
-  var date = arbitrator.getGameById(1111).getTimestamp();
+  var date = arbitrator.getGameById("1111").getTimestamp();
 
   // Assert
   ok(date.getDate() == '9', "Day of month should be 9. Was: " + date.getDate());
@@ -38,8 +38,8 @@ test("Arbitrator Role Recognition", function() {
   var arbitrator2 = new Arbitrator(linesString);
 
   // Act
-  var role = arbitrator.getRole(0);
-  var role2 = arbitrator2.getRole(0);
+  var role = arbitrator.getRole(1111);
+  var role2 = arbitrator2.getRole(598);
 
   // Assert
   equal(role, 0, "Role should be referee");

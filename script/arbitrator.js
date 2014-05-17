@@ -35,13 +35,13 @@ Arbitrator.prototype = {
         this.mGames[gm.getId()] = gm;
       }
     }
-
+    var lastGame = new Game(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]);
+    this.mGames[lastGame.getId()] = lastGame;
     this.mTable.push(row);
-
-    console.log(this.mGames);
   },
 
   getGameById: function(aId) {
+    console.log(this.mGames);
     return this.mGames[aId];
   },
 
@@ -62,7 +62,7 @@ Arbitrator.prototype = {
    * @returns 0, if the row is a referee assignment; 1, if the row is a linesman
    *          assignment; -1 otherwise.
    */
-  getRole: function(aRow) {
-    return this.mGames[aRow].getRole();
+  getRole: function(aGameId) {
+    return this.mGames[aGameId].getRole();
   }
 }
