@@ -53,15 +53,6 @@ Arbitrator.prototype = {
     return this.mTable[aRow];
   },
 
-  getDateString: function(aRow) {
-    // The date/time of the game will always be in column 4
-    return this.mTable[aRow][3];
-  },
-
-  getDate: function(aRow) {
-    return new Date(Date.parse(this.getDateString(aRow)));
-  },
-
   getDescription: function(aRow) {
     // Game description is column 5
     return this.mTable[aRow][5];

@@ -39,6 +39,14 @@ Game.prototype = {
     return this.mFees;
   },
 
+  getTimestampAsString: function() {
+    return this.mTimestamp;
+  },
+
+  getTimestamp: function() {
+    return new Date(Date.parse(this.getTimestampAsString()));
+  },
+
   setRole: function(aRoleString) {
     // Role is column 3, and can be either "Referee" or "Linesman".
     if (aRoleString.search(/referee/i) != -1) {

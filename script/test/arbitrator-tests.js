@@ -20,8 +20,7 @@ test("Arbitrator Date Recognition", function() {
   var arbitrator = new Arbitrator(testString);
 
   // Act
-  var date = arbitrator.getDate(0);
-  console.log("***** DEBUG_jwir3: Date is: " + date);
+  var date = arbitrator.getGameById(1111).getTimestamp();
 
   // Assert
   ok(date.getDate() == '9', "Day of month should be 9. Was: " + date.getDate());
