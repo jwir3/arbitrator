@@ -110,7 +110,7 @@ Game.prototype = {
     // See hashmap of levels at the top of the file.
     // TODO: Add a better algorithm for this.
     var levelString = this.getSportLevel();
-    for (var level in gameLevels.keys()) {
+    for (var level in Object.keys(gameLevels)) {
       if (levelString.contains(level)) {
         return gameLevels[level];
       }
@@ -120,7 +120,8 @@ Game.prototype = {
     var yearString = levelString.find(/([0-9]{4})/g);
     if (yearString) {
         var currentYear = (new Date()).getFullYear();
-        var age = currentYear - yearString;
+        var age = parseInt(currentYear,10) - yearString;
+        console.log("Current age: " + age);
         if (age <= 8) {
           return 'Mite';
         } else if (age > 8 && age <= 10) {
@@ -140,7 +141,7 @@ Game.prototype = {
         }
     }
 
-    // TODO: Add analytics so that we know what the unknown was.
+    // TODO: Add analytics so that we can determine what the unknown was.
     return "UNKNOWN";
   },
 
