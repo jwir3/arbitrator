@@ -136,6 +136,7 @@ Game.prototype = {
 //    if (this.areTeamsValid()) {
       summaryString = summaryString + this.mHomeTeam + " v " + this.mAwayTeam + " ";
 //    }
+    return summaryString;
   },
 
   getRole: function() {
