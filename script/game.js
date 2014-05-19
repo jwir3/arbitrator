@@ -109,10 +109,12 @@ Game.prototype = {
   getLevel: function() {
     // See hashmap of levels at the top of the file.
     // TODO: Add a better algorithm for this.
+
     var levelString = this.getSportLevel();
-    for (var level in Object.keys(gameLevels)) {
-      if (levelString.contains(level)) {
-        return gameLevels[level];
+    var levelKeys = Object.keys(gameLevels);
+    for (var level in levelKeys) {
+      if (levelString.contains(levelKeys[level])) {
+        return gameLevels[levelKeys[level]];
       }
     }
 
