@@ -52,7 +52,7 @@ Game.prototype = {
   },
 
   getISOEndDate: function() {
-    var endDate = getTimestamp();
+    var endDate = this.getTimestamp();
     // One hour later...
     // TODO: Make this configurable.
     return new Date(endDate.setHours(endDate.getHours() + 1)).toISOString();
