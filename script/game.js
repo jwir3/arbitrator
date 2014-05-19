@@ -1,3 +1,23 @@
+var gameLevels = {
+  'Mite' : 'Mite',
+  'Squirt' : 'Squirt',
+  'Peewee' : 'Peewee',
+  'Bantam' : 'Bantam',
+  'Junior' : 'Junior',
+  'Midget' : 'Midget',
+  'SC' : 'Squirt C',
+  'SB' : 'Squirt B',
+  'SA' : 'Squirt A',
+  'PC' : 'Peewee C',
+  'PB' : 'Peewee B',
+  'PA' : 'Peewee A',
+  '10U': '10U Girls',
+  '12U': '12U Girls',
+  '14U': '14U Girls',
+  '16U': '16U Girls',
+  '19U': '19U Girls'
+};
+
 var Game = function(aId, aGroup, aRole, aTimestamp, aSportLevel, aSite, aHomeTeam, aAwayTeam, aFees) {
   this.mId = aId;
   this.mGroup = aGroup;
@@ -69,6 +89,55 @@ Game.prototype = {
     }
   },
 
+  isTeamValid: function(aTeamName) {
+    switch(aTeamName) {
+      case 'TBD':
+        return false;
+      case 'TBA':
+        return false;
+      default:
+        return true;
+    }
+  },
+
+  getLevel: function() {
+    // See hashmap of levels at the top of the file.
+    // TODO: Add a better algorithm for this.
+    var levelString = this.getSportLevel();
+    for (var level in gameLevels.keys()) {
+      if (levelString.contains(level)) {
+        return gameLevels[level];
+      }
+    }
+
+    // TODO: Add analytics so that we know what the unknown was.
+    return "UNKNOWN";
+  },
+
+  areTeamsValid: function() {
+    return this.isTeamValid(this.mHomeTeam) && this.isTeamValid(aAwayTeam);
+  },
+
+  getSummaryString: function() {
+    var summaryString = "";
+    if (this.getGroup() != "NONE") {
+      summaryString = summaryString + "[" + this.getGroup() + "] ";
+    }
+
+    var role = this.getRole();
+    if (role == 0) {
+      summaryString = summaryString + "Referee ";
+    } else if (role == 1) {
+      summaryString = summaryString + "Linesman ";
+    } else {
+      summaryString = summaryString + "Officiate ";
+    }
+
+//    if (this.areTeamsValid()) {
+      summaryString = summaryString + this.mHomeTeam + " v " + this.mAwayTeam + " ";
+//    }
+  },
+
   getRole: function() {
     return this.mRole;
   },
@@ -82,7 +151,7 @@ Game.prototype = {
         "dateTime": this.getISOStartDate()
       },
       "description": "Testing Arbitrator",
-      "summary": "Arbitrator TESTAUTO"
+      "summary": this.getSummaryString()
     };
   }
 }
