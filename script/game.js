@@ -60,5 +60,18 @@ Game.prototype = {
 
   getRole: function() {
     return this.mRole;
+  },
+
+  getEventJSON: function() {
+    return  {
+      "end": {
+        "date": "2014-05-19"
+      },
+      "start": {
+        "date": "2014-05-19"
+      },
+      "description": "Testing Arbitrator",
+      "summary": "Arbitrator TESTAUTO"
+    };
   }
 }

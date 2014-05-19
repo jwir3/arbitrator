@@ -44,6 +44,10 @@
       function arbitrate() {
         var scheduleText = document.getElementById('schedule').value;
         var arb = new Arbitrator(scheduleText);
+        var calSelectionElement = document.getElementById('calendarList');
+        var selectedId = calSelectionElement[calSelectionElement.selectedIndex].id;
+        console.log("Selected index is: " + selectedId);
+        //arb.submitGamesToCalendar(selectedId);
       }
     </script>
   </head>
