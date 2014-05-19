@@ -119,7 +119,7 @@ Game.prototype = {
     }
 
     // Check for a year
-    var yearString = levelString.find(/([0-9]{4})/g);
+    var yearString = levelString.search(/([0-9]{4})/g);
     if (yearString) {
         var currentYear = (new Date()).getFullYear();
         var age = parseInt(currentYear,10) - yearString;
