@@ -3,14 +3,20 @@ var gameLevels = {
   'Squirt' : 'Squirt',
   'Peewee' : 'Peewee',
   'Bantam' : 'Bantam',
+  'Junior Gold' : 'Junior Gold',
   'Junior' : 'Junior',
-  'Midget' : 'Midget',
   'SC' : 'Squirt C',
   'SB' : 'Squirt B',
-  'SA' : 'Squirt A',
+  'SA' : 'Squirt A/AA/AAA',
   'PC' : 'Peewee C',
   'PB' : 'Peewee B',
-  'PA' : 'Peewee A',
+  'PA' : 'Peewee A/AA/AAA',
+  'BC' : 'Bantam C',
+  'BB' : 'Bantam B',
+  'BA' : 'Bantam A/AA/AAA',
+  'JGC': 'Junior Gold C',
+  'JGB': 'Junior Gold B',
+  'JGA': 'Junior Gold A/AA/AAA',
   '10U': '10U Girls',
   '12U': '12U Girls',
   '14U': '14U Girls',
@@ -110,6 +116,30 @@ Game.prototype = {
       }
     }
 
+    // Check for a year
+    var yearString = levelString.find(/([0-9]{4})/g);
+    if (yearString) {
+        var currentYear = (new Date()).getFullYear();
+        var age = currentYear - yearString;
+        if (age <= 8) {
+          return 'Mite';
+        } else if (age > 8 && age <= 10) {
+          return 'Squirt';
+        } else if (age > 10 && age <= 12) {
+          return 'Peewee';
+        } else if (age > 12 && age <= 14) {
+          return 'Bantam';
+        } else if (age > 14 && age <= 16) {
+          return '16U Boys/Girls';
+        } else if (age > 16 && age <= 18) {
+          return 'Junior Gold';
+        } else if (age > 18 && age <= 20) {
+          return 'Junior';
+        } else if (age > 20){
+          return 'Senior Mens/Womens';
+        }
+    }
+
     // TODO: Add analytics so that we know what the unknown was.
     return "UNKNOWN";
   },
@@ -133,10 +163,16 @@ Game.prototype = {
       summaryString = summaryString + "Officiate ";
     }
 
-//    if (this.areTeamsValid()) {
+   if (this.areTeamsValid()) {
       summaryString = summaryString + this.mHomeTeam + " v " + this.mAwayTeam + " ";
-//    }
-    return summaryString;
+   }
+
+   var level = this.getLevel();
+   if (level != 'UNKNOWN') {
+     summaryString = summaryString + "(" + level + ")";
+   }
+
+   return summaryString.trim();
   },
 
   getRole: function() {
