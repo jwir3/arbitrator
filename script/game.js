@@ -1,7 +1,6 @@
 var Game = function(aId, aGroup, aRole, aTimestamp, aSportLevel, aSite, aHomeTeam, aAwayTeam, aFees) {
   this.mId = aId;
   this.mGroup = aGroup;
-  console.log("aRole is: " + aRole);
   this.setRole(aRole);
   this.mTimestamp = aTimestamp;
   this.mSportLevel = aSportLevel;
@@ -48,6 +47,17 @@ Game.prototype = {
     return new Date(Date.parse(this.getTimestampAsString()));
   },
 
+  getISOStartDate: function() {
+    return this.getTimestamp().toISOString();
+  },
+
+  getISOEndDate: function() {
+    var endDate = getTimestamp();
+    // One hour later...
+    // TODO: Make this configurable.
+    return new Date(endDate.setHours(endDate.getHours() + 1)).toISOString();
+  },
+
   setRole: function(aRoleString) {
     // Role is column 3, and can be either "Referee" or "Linesman".
     if (aRoleString.search(/referee/i) != -1) {
@@ -66,10 +76,10 @@ Game.prototype = {
   getEventJSON: function() {
     return  {
       "end": {
-        "date": "2014-05-19"
+        "dateTime": this.getISOEndDate()
       },
       "start": {
-        "date": "2014-05-19"
+        "dateTime": this.getISOStartDate()
       },
       "description": "Testing Arbitrator",
       "summary": "Arbitrator TESTAUTO"
