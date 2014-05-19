@@ -15,7 +15,6 @@
             var selectEle = document.getElementById('calendarList');
             for (calendarIdx in aResponse.items) {
                 var calendarItem = aResponse.items[calendarIdx];
-                console.log(calendarItem);
                 var listItem = document.createElement('option');
                 listItem.id = calendarItem.id;
                 listItem.text = calendarItem.summary;
@@ -34,7 +33,7 @@
 
       function initAuth() {
         var config = {
-          'client_id': 'YOUR CLIENT ID',
+          'client_id': '609265890429-c5d69skkd9o2f1fksco00294oom2burf.apps.googleusercontent.com',
           'scope': 'https://www.googleapis.com/auth/calendar',
           'authuser' : -1
         };
@@ -45,9 +44,10 @@
         var scheduleText = document.getElementById('schedule').value;
         var arb = new Arbitrator(scheduleText);
         var calSelectionElement = document.getElementById('calendarList');
+        console.log(calSelectionElement);
         var selectedId = calSelectionElement[calSelectionElement.selectedIndex].id;
         console.log("Selected index is: " + selectedId);
-        //arb.submitGamesToCalendar(selectedId);
+        arb.submitGamesToCalendar(selectedId);
       }
     </script>
   </head>
@@ -57,8 +57,6 @@
     <select id="calendarList" style="display: none">
       <option id="noCalendarSelectedOption">Select Calendar</option>
     </select>
-    <br />
-    <br />
     <br />
     <button id="arbitrate-button" onclick="arbitrate();">Parse</button>
   </body>

@@ -1,6 +1,7 @@
 var Game = function(aId, aGroup, aRole, aTimestamp, aSportLevel, aSite, aHomeTeam, aAwayTeam, aFees) {
   this.mId = aId;
   this.mGroup = aGroup;
+  console.log("aRole is: " + aRole);
   this.setRole(aRole);
   this.mTimestamp = aTimestamp;
   this.mSportLevel = aSportLevel;

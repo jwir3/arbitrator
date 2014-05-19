@@ -66,9 +66,17 @@ Arbitrator.prototype = {
     return this.mGames[aGameId].getRole();
   },
 
-  submitGamesToCalendar: function() {
+  submitGamesToCalendar: function(aCalendarId) {
     for (var key in this.mGames) {
-      gapi.client.calendar.events.insert(calendarId, this.mGames[key].getEventJSON());
+      console.log(this.mGames[key].getEventJSON());
+      var eventToInsert = this.mGames[key].getEventJSON();
+      var request = gapi.client.calendar.events.insert({
+        'calendarId' : aCalendarId,
+        'resource' : eventToInsert
+      });
+      request.execute(function(response){
+        console.log(response);
+      });
       break;
     }
   }
