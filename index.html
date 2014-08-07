@@ -2,7 +2,15 @@
 <html>
   <head>
     <title>Arbitrator</title>
+    <style>
+      #map-canvas {
+        height: 300px;
+        width: 300px;
+        border: 1px solid blue;
+      }
+    </style>
     <script src="https://apis.google.com/js/client.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkiyjtUnxlzQUyxnu0WqUtkhyV8Q2KyA0"></script>
     <script type="text/javascript" src="script/arbitrator.js"></script>
     <script type="text/javascript" src="script/game.js"></script>
     <script>
@@ -31,6 +39,14 @@
         }
       }
 
+      function initMaps() {
+         var mapOptions = {
+           center: new google.maps.LatLng(-34.397, 150.644),
+           zoom: 8
+         };
+         var map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
+      }
+
       function initAuth() {
         var config = {
           'client_id': '609265890429-c5d69skkd9o2f1fksco00294oom2burf.apps.googleusercontent.com',
@@ -49,6 +65,10 @@
         console.log("Selected index is: " + selectedId);
         arb.submitGamesToCalendar(selectedId);
       }
+
+      // Load the map immediately.
+      google.maps.event.addDomListener(window, 'load', initMaps);
+
     </script>
   </head>
   <body onload="initAuth()">
@@ -59,5 +79,8 @@
     </select>
     <br />
     <button id="arbitrate-button" onclick="arbitrate();">Parse</button>
+    <br />
+    <br />
+    <div id="map-canvas"></div>
   </body>
 </html>
