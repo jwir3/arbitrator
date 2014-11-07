@@ -152,7 +152,7 @@ Game.prototype = {
   },
 
   areTeamsValid: function() {
-    return this.isTeamValid(this.mHomeTeam) && this.isTeamValid(aAwayTeam);
+    return this.isTeamValid(this.mHomeTeam) && this.isTeamValid(this.mAwayTeam);
   },
 
   getSummaryString: function() {
