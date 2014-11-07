@@ -8,7 +8,6 @@ Arbitrator.prototype = {
   parseFromText: function() {
     this.mBaseString = this.mBaseString.replace(/Accepted\ on\ [0-9]+\/[0-9]+\/([0-9]{4})/g, '')
     var cols = this.mBaseString.split(/[\t\n]+/);
-    console.log("****** DEBUG_jwir3: cols is now: " + cols);
     this.mTable = new Array();
     var row = new Array();
     var i = 0;
@@ -36,9 +35,6 @@ Arbitrator.prototype = {
         this.mGames[gm.getId()] = gm;
       }
     }
-    var lastGame = new Game(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]);
-    this.mGames[lastGame.getId()] = lastGame;
-    this.mTable.push(row);
   },
 
   getGameById: function(aId) {

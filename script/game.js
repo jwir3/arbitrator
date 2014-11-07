@@ -25,7 +25,6 @@ var gameLevels = {
 };
 
 var Game = function(aId, aGroup, aRole, aTimestamp, aSportLevel, aSite, aHomeTeam, aAwayTeam, aFees) {
-  console.log("***** DEBUG_jwir3: Called game constructor with aRole: " + aRole);
   this.mId = aId;
   this.mGroup = aGroup;
   this.setRole(aRole);
