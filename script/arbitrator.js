@@ -8,6 +8,7 @@ Arbitrator.prototype = {
   parseFromText: function() {
     this.mBaseString = this.mBaseString.replace(/Accepted\ on\ [0-9]+\/[0-9]+\/([0-9]{4})/g, '')
     var cols = this.mBaseString.split(/[\t\n]+/);
+    console.log("****** DEBUG_jwir3: cols is now: " + cols);
     this.mTable = new Array();
     var row = new Array();
     var i = 0;
