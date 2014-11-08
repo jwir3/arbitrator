@@ -16,7 +16,11 @@ function showMessaging() {
 
 function addToMessage(aMessage) {
   var currentMessage = $('#message').innerHTML;
-  $('#message').html(currentMessage + '<br />' + aMessage);
+  if (currentMessage) {
+    $('#message').html(currentMessage + '<br />' + aMessage);
+  } else {
+    $('#message').html(aMessage);    
+  }
 }
 
 function clearMessage() {
