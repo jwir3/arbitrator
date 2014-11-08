@@ -2,56 +2,64 @@
 <html>
   <head>
     <title>Arbitrator</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="style/arbitrator.css" type="text/css" />
     <script src="https://apis.google.com/js/client.js"></script>
     <script type="text/javascript" src="script/arbitrator.js"></script>
     <script type="text/javascript" src="script/game.js"></script>
+    <script type="text/javascript" src="script/ui.js"></script>
     <script>
-      function populateCalendarList() {
-        gapi.client.load('calendar', 'v3', function() {
-          var request = gapi.client.calendar.calendarList.list({
-          });
-
-          request.execute(function(aResponse) {
-            var selectEle = document.getElementById('calendarList');
-            for (calendarIdx in aResponse.items) {
-                var calendarItem = aResponse.items[calendarIdx];
-                var listItem = document.createElement('option');
-                listItem.id = calendarItem.id;
-                listItem.text = calendarItem.summary;
-                selectEle.appendChild(listItem);
-            }
-            selectEle.style.display = 'block';
-          });
+    function populateCalendarList() {
+      gapi.client.load('calendar', 'v3', function() {
+        var request = gapi.client.calendar.calendarList.list({
         });
-      }
 
-      function handleAuthResult(authResult) {
-        if (authResult && !authResult.error) {
-          populateCalendarList();
-        }
-      }
+        request.execute(function(aResponse) {
+          var selectEle = document.getElementById('calendarList');
+          for (calendarIdx in aResponse.items) {
+              var calendarItem = aResponse.items[calendarIdx];
+              var listItem = document.createElement('option');
+              listItem.id = calendarItem.id;
+              listItem.text = calendarItem.summary;
+              selectEle.appendChild(listItem);
+          }
+          selectEle.style.display = 'block';
+        });
+      });
+    }
 
-      function initAuth() {
-        var config = {
-          'client_id': '609265890429-c5d69skkd9o2f1fksco00294oom2burf.apps.googleusercontent.com',
-          'scope': 'https://www.googleapis.com/auth/calendar',
-          'authuser' : -1
-        };
-        gapi.auth.authorize(config, handleAuthResult);
+    function handleAuthResult(authResult) {
+      if (authResult && !authResult.error) {
+        populateCalendarList();
       }
+    }
 
-      function arbitrate() {
-        var scheduleText = document.getElementById('schedule').value;
-        var arb = new Arbitrator(scheduleText);
-        var calSelectionElement = document.getElementById('calendarList');
-        console.log(calSelectionElement);
-        var selectedId = calSelectionElement[calSelectionElement.selectedIndex].id;
-        console.log("Selected index is: " + selectedId);
-        arb.submitGamesToCalendar(selectedId);
-      }
+    function initAuth() {
+      var config = {
+        'client_id': '609265890429-c5d69skkd9o2f1fksco00294oom2burf.apps.googleusercontent.com',
+        'scope': 'https://www.googleapis.com/auth/calendar',
+        'authuser' : -1
+      };
+      gapi.auth.authorize(config, handleAuthResult);
+    }
+
+    function arbitrate() {
+      var scheduleText = document.getElementById('schedule').value;
+      var arb = new Arbitrator(scheduleText);
+      var calSelectionElement = document.getElementById('calendarList');
+      var selectedId = calSelectionElement[calSelectionElement.selectedIndex].id;
+      arb.submitGamesToCalendar(selectedId);
+      showMessaging();
+    }
+
+    $(document).ready(function() {
+      initAuth();
+    });
+
     </script>
   </head>
-  <body onload="initAuth()">
+  <body>
+    <div id="message" class="hidden">Hello World</div>
     <textarea id="schedule" rows="30" cols="80">Cut and paste your schedule here.</textarea>
     <br />
     <select id="calendarList" style="display: none">

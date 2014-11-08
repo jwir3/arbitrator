@@ -63,18 +63,25 @@ Arbitrator.prototype = {
     return this.mGames[aGameId].getRole();
   },
 
+  notifyGameAdded: function(aGame) {
+    addToMessage('Game #' + aGame.getId() + ' was added to Google Calendar.');
+  },
+
   submitGamesToCalendar: function(aCalendarId) {
+
     for (var key in this.mGames) {
-      console.log(this.mGames[key].getEventJSON());
-      var eventToInsert = this.mGames[key].getEventJSON();
-      var request = gapi.client.calendar.events.insert({
-        'calendarId' : aCalendarId,
-        'resource' : eventToInsert
-      });
-      request.execute(function(response){
-        console.log(response);
-      });
-      break;
+    // TODO: Re-enable this code once messaging is working correctly.
+    //   console.log(this.mGames[key].getEventJSON());
+    //   var eventToInsert = this.mGames[key].getEventJSON();
+    //   var request = gapi.client.calendar.events.insert({
+    //     'calendarId' : aCalendarId,
+    //     'resource' : eventToInsert
+    //   });
+    //   request.execute(function(response){
+    //     //console.log(response);
+    //   });
+    this.notifyGameAdded(this.mGames[key]);
+    //   break;
     }
   }
 }
