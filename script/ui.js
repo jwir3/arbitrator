@@ -1,15 +1,17 @@
 function hideMessaging() {
-  $('#message').each(function(index, element){
+  $('#messageContainer').each(function(index, element){
     element.classList.add('hidden');
   });
 }
 
 function showMessaging() {
-  $('#message').each(function(index, element){
+    $('#messageContainer').each(function(index, element) {
     element.classList.remove('hidden');
     $(this).click(function() {
       hideMessaging();
-      setTimeout(clearMessage, 900);
+      $(this).bind('transitionend', function() {
+        clearMessage();
+      });
     });
   });
 }
@@ -19,7 +21,7 @@ function addToMessage(aMessage) {
   if (currentMessage) {
     $('#message').html(currentMessage + '<br />' + aMessage);
   } else {
-    $('#message').html(aMessage);    
+    $('#message').html(aMessage);
   }
 }
 
