@@ -8,10 +8,10 @@ test("Arbitrator Parse Test", function() {
 
   // Assert
   ok(arbitrator != null, "arbitrator should be non-null");
-  ok(arbitrator.getRows().length == 1, "there should be exactly one row");
-  ok(cols.length == 9, "row 0 should have 9 columns. It has: " + cols.length + " columns");
-  ok (cols[0] == '1111', "Column 0 should be the game number 1111. It was: " + cols[0]);
-  ok (cols[2] == 'Referee 1', "Column 3 should indicate referee 1. It was: " + cols[3]);
+  equal(arbitrator.getRows().length, 1, "there should be exactly one row");
+  equal(cols.length, 9, "row 0 should have 9 columns");
+  equal(cols[0], '1111', "Column 0 should be the game number 1111");
+  equal(cols[2], 'Referee 1', "Column 3 should indicate referee 1");
 });
 
 test("Arbitrator Date Recognition", function() {
@@ -23,11 +23,11 @@ test("Arbitrator Date Recognition", function() {
   var date = arbitrator.getGameById("1111").getTimestamp();
 
   // Assert
-  ok(date.getDate() == '9', "Day of month should be 9. Was: " + date.getDate());
-  ok(date.getMonth() == '10', "Month should be 10. Was: " + date.getMonth());
-  ok(date.getFullYear() == '2013', "Year should be 2013. Was: " + date.getFullYear());
-  ok(date.getHours() == 12, "Game is at hour 12pm");
-  ok(date.getMinutes() == 30, "Game is at minute 30 of hour");
+  equal(date.getDate(), '9', "Day of month should be 9");
+  equal(date.getMonth(), '10', "Month should be 10");
+  equal(date.getFullYear(), '2013', "Year should be 2013");
+  equal(date.getHours(), 12, "Game should be at hour 12pm");
+  equal(date.getMinutes(), 30, "Game should be at minute 30 of hour");
 });
 
 test("Arbitrator Role Recognition", function() {

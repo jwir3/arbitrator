@@ -10,29 +10,47 @@ Arbitrator.prototype = {
     var cols = this.mBaseString.split(/[\t\n]+/);
     this.mTable = new Array();
     var row = new Array();
-    var i = 0;
+    var columnPointer = 0;
     var removedLastCol= false;
     for (col in cols) {
+      // col is our GLOBAL column pointer - the index of the current column in
+      // the whole set of all columns. columnPointer is the relative colum
+      // pointer - the index of the column in the current row.
+      console.log("Col is: " + col);
       var trimmedCol = cols[col].trim();
+      console.log("trimmedCol: " + trimmedCol);
       if (trimmedCol.length != 0) {
-        row.push(trimmedCol);
-      } else if (i == 1){
+        var oldLength = row.length;
+        var newLength = row.push(trimmedCol);
+        if (oldLength === newLength) {
+            console.log("Encountered an error while pushing! Oldlength == newLength");
+        }
+
+        console.log("Pushing trimmedCol. Row now has: " + row.length + " elements.");
+      } else if (columnPointer == 1){
         row.push("NONE");
+        console.log("Pushing NONE. Row now has: " + row.length + " elements.");
       }
+
+      console.log("Row[" + columnPointer + "] is now: " + row[columnPointer]);
 
       // Special date handling, in the event that we get cut off at the knees
       // while parsing our time.
-      if (i == 4 && (row[i].endsWith("PM") || row[i].endsWith("AM"))) {
-        row[i-1] = row[i-1] + " " + row[i];
+      if (columnPointer == 4
+          && (row[columnPointer].endsWith("PM")
+              || row[columnPointer].endsWith("AM"))) {
+        row[columnPointer-1] = row[columnPointer-1] + " " + row[columnPointer];
         row.pop();
       }
 
-      i = i + 1;
-      if (i%10 == 0) {
+      columnPointer = columnPointer + 1;
+      if (columnPointer == 9) {
+        console.log("Pushing a single row");
         this.mTable.push(row);
         var gm = new Game(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]);
         row = new Array();
         this.mGames[gm.getId()] = gm;
+        columnPointer = 0;
       }
     }
   },
@@ -47,6 +65,7 @@ Arbitrator.prototype = {
   },
 
   getColumns: function(aRow) {
+    console.log("this.mTable[" + aRow + "] is: " + this.mTable[aRow]);
     return this.mTable[aRow];
   },
 
