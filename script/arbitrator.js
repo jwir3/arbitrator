@@ -49,7 +49,7 @@ Arbitrator.prototype = {
   },
 
   getNumGames: function() {
-    return this.numGames;  
+    return this.numGames;
   },
 
   getGameById: function(aId) {
@@ -83,6 +83,7 @@ Arbitrator.prototype = {
 
   submitGamesToCalendar: function(aCalendarId) {
     for (var key in this.mGames) {
+      if (this.mGames.hasOwnProperty(key)) {
       var eventToInsert = this.mGames[key].getEventJSON();
       var request = gapi.client.calendar.events.insert({
         'calendarId' : aCalendarId,
@@ -92,7 +93,7 @@ Arbitrator.prototype = {
         console.log(response);
       });
       this.notifyGameAdded(this.mGames[key]);
-      break;
+      }
     }
   }
 }
