@@ -9,57 +9,57 @@
     <script type="text/javascript" src="script/ui.js"></script>
     <link rel="stylesheet" href="style/arbitrator.css" type="text/css" />
     <script>
-    function populateCalendarList() {
-      gapi.client.load('calendar', 'v3', function() {
-        var request = gapi.client.calendar.calendarList.list({
-        });
-
-        request.execute(function(aResponse) {
-          var selectEle = document.getElementById('calendarList');
-          for (calendarIdx in aResponse.items) {
-              var calendarItem = aResponse.items[calendarIdx];
-              var listItem = document.createElement('option');
-              listItem.id = calendarItem.id;
-              listItem.text = calendarItem.summary;
-              selectEle.appendChild(listItem);
-          }
-          selectEle.style.display = 'block';
-        });
-      });
-    }
-
-    function handleAuthResult(authResult) {
-      if (authResult && !authResult.error) {
-        populateCalendarList();
-      }
-    }
-
-    function initAuth() {
-      var config = {
-        'client_id': '609265890429-c5d69skkd9o2f1fksco00294oom2burf.apps.googleusercontent.com',
-        'scope': 'https://www.googleapis.com/auth/calendar',
-        'authuser' : -1
-      };
-      gapi.auth.authorize(config, handleAuthResult);
-    }
+    // function populateCalendarList() {
+    //   gapi.client.load('calendar', 'v3', function() {
+    //     var request = gapi.client.calendar.calendarList.list({
+    //     });
+    //
+    //     request.execute(function(aResponse) {
+    //       var selectEle = document.getElementById('calendarList');
+    //       for (calendarIdx in aResponse.items) {
+    //           var calendarItem = aResponse.items[calendarIdx];
+    //           var listItem = document.createElement('option');
+    //           listItem.id = calendarItem.id;
+    //           listItem.text = calendarItem.summary;
+    //           selectEle.appendChild(listItem);
+    //       }
+    //       selectEle.style.display = 'block';
+    //     });
+    //   });
+    // }
+    //
+    // function handleAuthResult(authResult) {
+    //   if (authResult && !authResult.error) {
+    //     populateCalendarList();
+    //   }
+    // }
+    //
+    // function initAuth() {
+    //   var config = {
+    //     'client_id': '609265890429-c5d69skkd9o2f1fksco00294oom2burf.apps.googleusercontent.com',
+    //     'scope': 'https://www.googleapis.com/auth/calendar',
+    //     'authuser' : -1
+    //   };
+    //   gapi.auth.authorize(config, handleAuthResult);
+    // }
 
     function arbitrate() {
       var scheduleText = document.getElementById('schedule').value;
       var arb = new Arbitrator(scheduleText);
       var calSelectionElement = document.getElementById('calendarList');
       var selectedId = calSelectionElement[calSelectionElement.selectedIndex].id;
-      arb.submitGamesToCalendar(selectedId);
+      // arb.submitGamesToCalendar(selectedId);
       showMessaging();
     }
 
-    $(document).ready(function() {
-      initAuth();
-    });
+    // $(document).ready(function() {
+    //   initAuth();
+    // });
 
     </script>
   </head>
   <body>
-    <div id="messageContainer" class="hidden"><div id="message">Hello World</div><div class="instructions">Click to Dismiss</div></div>
+    <div id="messageContainer" class="hidden"><div id="message"></div><div class="instructions">Click to Dismiss</div></div>
     <textarea id="schedule" rows="30" cols="80">Cut and paste your schedule here.</textarea>
     <br />
     <select id="calendarList" style="display: none">

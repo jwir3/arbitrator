@@ -1,6 +1,25 @@
+// Polyfill for non-functional ECMAScript 5 Object.keys in FF 32
+if (!Object.prototype.keys) {
+  Object.prototype.keys = function() {
+    if (this !== Object(this)) {
+      throw new TypeError('Object.keys called on non-object');
+    }
+
+    var ret = [], p;
+    for (p in this) {
+      if (Object.prototype.hasOwnProperty.call(this, p)) {
+        ret.push(p);
+      }
+    }
+
+    return ret;
+  }
+}
+
 var Arbitrator = function(aString) {
   this.mBaseString = aString;
   this.mGames = {};
+  this.numGames = 0;
   this.parseFromText();
 }
 
@@ -16,36 +35,27 @@ Arbitrator.prototype = {
       // col is our GLOBAL column pointer - the index of the current column in
       // the whole set of all columns. columnPointer is the relative colum
       // pointer - the index of the column in the current row.
-      console.log("Col is: " + col);
       var trimmedCol = cols[col].trim();
-      console.log("trimmedCol: " + trimmedCol);
       if (trimmedCol.length != 0) {
         var oldLength = row.length;
         var newLength = row.push(trimmedCol);
-        if (oldLength === newLength) {
-            console.log("Encountered an error while pushing! Oldlength == newLength");
-        }
 
-        console.log("Pushing trimmedCol. Row now has: " + row.length + " elements.");
       } else if (columnPointer == 1){
         row.push("NONE");
-        console.log("Pushing NONE. Row now has: " + row.length + " elements.");
       }
 
-      console.log("Row[" + columnPointer + "] is now: " + row[columnPointer]);
-
-      // Special date handling, in the event that we get cut off at the knees
-      // while parsing our time.
+      // Special date handling, in the event that we actually have a newline in
+      // between where the date is and where the time is (this happens occasionally)
       if (columnPointer == 4
           && (row[columnPointer].endsWith("PM")
               || row[columnPointer].endsWith("AM"))) {
         row[columnPointer-1] = row[columnPointer-1] + " " + row[columnPointer];
         row.pop();
+        columnPointer = columnPointer - 1;
       }
 
       columnPointer = columnPointer + 1;
       if (columnPointer == 9) {
-        console.log("Pushing a single row");
         this.mTable.push(row);
         var gm = new Game(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]);
         row = new Array();
@@ -55,8 +65,11 @@ Arbitrator.prototype = {
     }
   },
 
+  getNumGames: function() {
+      return this.mGames.keys().length;
+  },
+
   getGameById: function(aId) {
-    console.log(this.mGames);
     return this.mGames[aId];
   },
 
@@ -65,7 +78,6 @@ Arbitrator.prototype = {
   },
 
   getColumns: function(aRow) {
-    console.log("this.mTable[" + aRow + "] is: " + this.mTable[aRow]);
     return this.mTable[aRow];
   },
 

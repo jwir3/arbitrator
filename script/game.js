@@ -24,6 +24,24 @@ var gameLevels = {
   '19U': '19U Girls'
 };
 
+/**
+ * Enumeration for Roles. Currently, an official (for hockey) can be one of the
+ * following:
+ *
+ *  - A Referee
+ *  - A Linesman
+ *  - An unknown role
+ *
+ * No other roles are supported at this time. In the future, it would be nice to
+ * support other roles, but it's unclear how long this polyfill for lack of
+ * Google calendar support in AS will last.
+ */
+var Role = Object.freeze({
+  REFEREE: 0,
+  LINESMAN: 1,
+  UNKNOWN: -1
+});
+
 var Game = function(aId, aGroup, aRole, aTimestamp, aSportLevel, aSite, aHomeTeam, aAwayTeam, aFees) {
   this.mId = aId;
   this.mGroup = aGroup;
@@ -87,11 +105,11 @@ Game.prototype = {
   setRole: function(aRoleString) {
     // Role is column 3, and can be either "Referee" or "Linesman".
     if (aRoleString.search(/referee/i) != -1) {
-      this.mRole = 0;
+      this.mRole = Role.REFEREE;
     } else if (aRoleString.search(/linesman/i) != -1) {
-      this.mRole = 1;
+      this.mRole = Role.LINESMAN;
     } else {
-      this.mRole = -1;
+      this.mRole = Role.UNKNOWN;
     }
   },
 
@@ -162,9 +180,9 @@ Game.prototype = {
     }
 
     var role = this.getRole();
-    if (role == 0) {
+    if (role == Role.REFEREE) {
       summaryString = summaryString + "Referee ";
-    } else if (role == 1) {
+    } else if (role == Role.LINESMAN) {
       summaryString = summaryString + "Linesman ";
     } else {
       summaryString = summaryString + "Officiate ";
