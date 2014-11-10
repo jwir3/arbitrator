@@ -1,21 +1,3 @@
-// Polyfill for non-functional ECMAScript 5 Object.keys in FF 32
-if (!Object.prototype.keys) {
-  Object.prototype.keys = function() {
-    if (this !== Object(this)) {
-      throw new TypeError('Object.keys called on non-object');
-    }
-
-    var ret = [], p;
-    for (p in this) {
-      if (Object.prototype.hasOwnProperty.call(this, p)) {
-        ret.push(p);
-      }
-    }
-
-    return ret;
-  }
-}
-
 var Arbitrator = function(aString) {
   this.mBaseString = aString;
   this.mGames = {};
@@ -60,13 +42,14 @@ Arbitrator.prototype = {
         var gm = new Game(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]);
         row = new Array();
         this.mGames[gm.getId()] = gm;
+        this.numGames++;
         columnPointer = 0;
       }
     }
   },
 
   getNumGames: function() {
-      return this.mGames.keys().length;
+    return this.numGames;  
   },
 
   getGameById: function(aId) {

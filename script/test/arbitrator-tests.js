@@ -1,3 +1,22 @@
+// Polyfill for non-functional ECMAScript 5 Object.keys in FF 32
+if (!Object.prototype.keys) {
+  Object.prototype.keys = function() {
+    if (this !== Object(this)) {
+      throw new TypeError('Object.keys called on non-object');
+    }
+
+    var ret = [], p;
+    for (p in this) {
+      if (Object.prototype.hasOwnProperty.call(this, p)) {
+        ret.push(p);
+      }
+    }
+
+    return ret;
+  }
+}
+
+// Constant used for terms which we don't care about in checkGame().
 var DONTCARE = 'dontcare-1nsy';
 
 /**
