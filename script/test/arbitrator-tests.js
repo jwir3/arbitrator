@@ -1,20 +1,90 @@
+var DONTCARE = 'dontcare-1nsy';
+
+/**
+ * Check the parameters of a given game. You can use this to check any game
+ * against expected values, and either pass the above 'DONTCARE' constant if
+ * you don't care about a given term, or leave the parameter undefined.
+ *
+ * @param aArbitrator The Arbitrator object used to parse the data. Cannot be undefined.
+ * @param aGameId The id of the game, as an integer. Cannot be undefined.
+ * @param aExpectedGroup The expected 'group' for the game.
+ * @param aExpectedRole The expected role of the official for the game. Must be
+ *        one of Role.LINESMAN or Role.REFEREE.
+ * @param aExpectedDayOfMonth The day of the month (1-31) for the game.
+ * @param aExpectedMonth The expected month of the game, as a 0-indexed integer.
+ *        (0 = JANUARY, 1 = FEBRUARY, etc...).
+ * @param aExpectedYear The expected year of the game, as a four digit integer.
+ * @param aExpectedHourOfDay The expected hour in the day for the game, as a
+ *        0-indexed integer representing 24 possible hours (0 = 1am, 1=2am,
+ *        16 = 4pm, etc...)
+ * @param aExpectedMinuteOfHour The expected minute of the hour for the game, as
+ *        a 0-indexed integer from 0-59.
+ * @param aExpectedSportLevel The expected "sport and level" string of the game.
+ *        This _should_ be just something like "Hockey, Boys Varsity", but often
+ *        it's used to communicate other information (e.g. the ruleset).
+ * @param aExpectedSite The site of the game, as a string. This must represent
+ *        EXACTLY how the online site has it listed. No resolution of lat/long
+ *        is currently performed.
+ * @param aExpectedHomeTeam The name of the home team of the game.
+ * @param aExpectedAwayTeam The name of the away team of the game.
+ */
 function checkGame(aArbitrator, aGameId, aExpectedGroup, aExpectedRole,
                    aExpectedDayOfMonth, aExpectedMonth, aExpectedYear,
-                   aExpectedHourOfDay, aExpectedMinuteOfHour) {
-  ok(aArbitrator, 'aArbitrator cannot be null');
+                   aExpectedHourOfDay, aExpectedMinuteOfHour,
+                   aExpectedSportLevel, aExpectedSite, aExpectedHomeTeam,
+                   aExpectedAwayTeam) {
+  // Only the game id and arbitrator must be present. All other things can be
+  // undefined, indicating a "don't care" term.
+  ok(aArbitrator, 'aArbitrator cannot be undefined');
+  ok(aGameId, 'aGameId cannot be undefined');
 
   var game = aArbitrator.getGameById(aGameId);
   ok(game, 'Game with id ' + aGameId + ' should exist in the map');
 
-  equal(aExpectedGroup, game.getGroup(), 'group should be ' + aExpectedGroup);
-  equal(aExpectedRole, game.getRole(), 'role should be ' + aExpectedRole);
+  if (aExpectedGroup && aExpectedGroup != DONTCARE) {
+    equal(aExpectedGroup, game.getGroup(), 'group should be ' + aExpectedGroup);
+  }
+
+  if (aExpectedRole && aExpectedRole != DONTCARE) {
+    equal(aExpectedRole, game.getRole(), 'role should be ' + aExpectedRole);
+  }
 
   var date = game.getTimestamp();
-  equal(aExpectedDayOfMonth, date.getDate(), "Day of month should be " + aExpectedDayOfMonth);
-  equal(aExpectedMonth, date.getMonth(), "Month should be " + aExpectedMonth);
-  equal(aExpectedYear, date.getFullYear(), '2013', "Year should be " + aExpectedYear);
-  equal(aExpectedHourOfDay, date.getHours(), "Game should be at hour " + aExpectedHourOfDay + " of the day");
-  equal(aExpectedMinuteOfHour, date.getMinutes(), "Game should be at minute " + aExpectedMinuteOfHour + " of hour");
+  if (aExpectedDayOfMonth && aExpectedDayOfMonth != DONTCARE) {
+    equal(aExpectedDayOfMonth, date.getDate(), "Day of month should be " + aExpectedDayOfMonth);
+  }
+
+  if (aExpectedMonth && aExpectedMonth != DONTCARE) {
+    equal(aExpectedMonth, date.getMonth(), "Month should be " + aExpectedMonth);
+  }
+
+  if (aExpectedYear && aExpectedYear != DONTCARE) {
+    equal(aExpectedYear, date.getFullYear(), '2013', "Year should be " + aExpectedYear);
+  }
+
+  if (aExpectedHourOfDay && aExpectedHourOfDay != DONTCARE) {
+    equal(aExpectedHourOfDay, date.getHours(), "Game should be at hour " + aExpectedHourOfDay + " of the day");
+  }
+
+  if (aExpectedMinuteOfHour && aExpectedMinuteOfHour != DONTCARE) {
+    equal(aExpectedMinuteOfHour, date.getMinutes(), "Game should be at minute " + aExpectedMinuteOfHour + " of hour");
+  }
+
+  if (aExpectedSportLevel && aExpectedSportLevel != DONTCARE) {
+    equal(aExpectedSportLevel, game.getSportLevel(), "Sport and level should be " + aExpectedSportLevel);
+  }
+
+  if (aExpectedSite && aExpectedSite != DONTCARE) {
+    equal(aExpectedSite, game.getSite(), "Site should be '" + aExpectedSite + "'");
+  }
+
+  if (aExpectedHomeTeam && aExpectedHomeTeam != DONTCARE) {
+    equal(aExpectedHomeTeam, game.getHomeTeam(), "Home team should be '" + aExpectedHomeTeam + "'");
+  }
+
+  if (aExpectedAwayTeam && aExpectedAwayTeam != DONTCARE) {
+    equal(aExpectedAwayTeam, game.getAwayTeam(), "Away team should be '" + aExpectedAwayTeam + "'");
+  }
 }
 
 test("Arbitrator Parse Test", function() {
@@ -42,11 +112,7 @@ test("Arbitrator Date Recognition", function() {
   var date = arbitrator.getGameById("1111").getTimestamp();
 
   // Assert
-  equal(date.getDate(), '9', "Day of month should be 9");
-  equal(date.getMonth(), '10', "Month should be 10");
-  equal(date.getFullYear(), '2013', "Year should be 2013");
-  equal(date.getHours(), 12, "Game should be at hour 12pm");
-  equal(date.getMinutes(), 30, "Game should be at minute 30 of hour");
+  checkGame(arbitrator, 1111, DONTCARE, DONTCARE, 9, 10, 2013, 12, 30);
 });
 
 test("Arbitrator Role Recognition", function() {
@@ -57,12 +123,9 @@ test("Arbitrator Role Recognition", function() {
   var arbitrator2 = new Arbitrator(linesString);
 
   // Act
-  var role = arbitrator.getRole(1111);
-  var role2 = arbitrator2.getRole(598);
-
   // Assert
-  equal(role, 0, "Role should be referee");
-  equal(role2, 1, "Role should be linesman");
+  checkGame(arbitrator, 1111, DONTCARE, Role.REFEREE);
+  checkGame(arbitrator2, 598, DONTCARE, Role.LINESMAN);
 });
 
 test("Arbitrator Object.keys polyfill", function() {
@@ -104,14 +167,23 @@ test("Arbitrator Complex Statement Parsing", function() {
     var arbitrator = new Arbitrator(aData);
     equal(3, arbitrator.getNumGames(), 'there should be 3 games');
 
+    // Test don't care terms.
+    checkGame(arbitrator, 330);
+
     // Check the characteristics of the first game.
-    checkGame(arbitrator, 330, '106016', Role.REFEREE, 8, 10, 2014, 9, 50);
+    checkGame(arbitrator, 330, '106016', Role.REFEREE, 8, 10, 2014, 9, 50,
+              "D6, Scrimmage SC 60 MIn $27.50 Each",
+              "New Prague Community Center", "New Prague", "Dodge County Black");
 
     // Check the characteristics of the second game.
-    checkGame(arbitrator, 339, '106016', Role.REFEREE, 8, 10, 2014, 18, 45);
+    checkGame(arbitrator, 339, '106016', Role.REFEREE, 8, 10, 2014, 18, 45,
+              "D6, Scrimmage 10B 60 Min $27.50 Each",
+              "Eden Prairie 3", "Eden Prairie Red", "Minnetonka Black");
 
     // Check the characteristics of the third game.
-    checkGame(arbitrator, 3839, 'MinneapHO', Role.LINESMAN, 14, 10, 2014, 20, 10);
+    checkGame(arbitrator, 3839, 'MinneapHO', Role.LINESMAN, 14, 10, 2014, 20, 10,
+              "Hockey Boys, Varsity", "St. Louis Park Recreation Center",
+              "St Thomas Academy", "Minnetonka");
 
     start();
   }).error(function(aRequest, aErrorMessage, aErrorThrown) {
