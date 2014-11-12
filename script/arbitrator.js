@@ -6,6 +6,12 @@ var Arbitrator = function(aString) {
 }
 
 Arbitrator.prototype = {
+  // General preference prefix
+  PREFERENCE_PREFIX: 'arbitrator.',
+
+  // Preferences associated with group aliases
+  PREFERENCE_GROUP_ALIAS: this.PREFERENCE_PREFIX + "groupAlias.",
+
   parseFromText: function() {
     this.mBaseString = this.mBaseString.replace(/Accepted\ on\ [0-9]+\/[0-9]+\/([0-9]{4})/g, '')
     var cols = this.mBaseString.split(/[\t\n]+/);
@@ -95,5 +101,56 @@ Arbitrator.prototype = {
       this.notifyGameAdded(this.mGames[key]);
       }
     }
+  },
+
+  hasNonAliasedGroups: function() {
+    for (var key in this.mGames) {
+      if (this.mGames.hasOwnProperty(key)) {
+        if (this.mGames[key].hasNonAliasedGroup()) {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
+}
+
+// Static methods
+
+/**
+ * Add an alias for a group ID so that it can be reported as a human-readable
+ * name.
+ *
+ * @param aGroupId The id of the group to alias
+ * @param aGroupAlias The alias to replace the group id with.
+ */
+Arbitrator.addGroupAlias = function(aGroupId, aGroupAlias) {
+  console.log("Adding alias for " + aGroupId + " -> " + aGroupAlias);
+  window.localStorage[Arbitrator.PREFERENCE_GROUP_ALIAS + aGroupId] = aGroupAlias;
+},
+
+/**
+ * Retrieve an alias for a group, based on an ID submitted.
+ */
+Arbitrator.getAliasForGroupId = function(aGroupId) {
+  var actualName = window.localStorage[Arbitrator.PREFERENCE_GROUP_ALIAS + aGroupId];
+  console.log("Group alias for '" + aGroupId + "': '" + actualName + "'")
+  if (actualName) {
+    addAliasUIFor(aGroupId, actualName);
+    return actualName;
+  }
+
+  addAliasUIFor(aGroupId, aGroupId);
+  return aGroupId;
+},
+
+/**
+ * Remove a previously created alias for a group ID.
+ *
+ * @param The group id for which the previously-created alias should be
+ *         removed.
+ */
+Arbitrator.removeGroupAlias = function(aGroupId) {
+    delete window.localStorage[Arbitrator.PREFERENCE_GROUP_ALIAS + aGroupId];
 }

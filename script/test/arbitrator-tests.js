@@ -61,48 +61,48 @@ function checkGame(aArbitrator, aGameId, aExpectedGroup, aExpectedRole,
   ok(game, 'Game with id ' + aGameId + ' should exist in the map');
 
   if (aExpectedGroup && aExpectedGroup != DONTCARE) {
-    equal(aExpectedGroup, game.getGroup(), 'group should be ' + aExpectedGroup);
+    equal(game.getGroup(), aExpectedGroup, 'group should be ' + aExpectedGroup);
   }
 
   if (aExpectedRole && aExpectedRole != DONTCARE) {
-    equal(aExpectedRole, game.getRole(), 'role should be ' + aExpectedRole);
+    equal(game.getRole(), aExpectedRole, 'role should be ' + aExpectedRole);
   }
 
   var date = game.getTimestamp();
   if (aExpectedDayOfMonth && aExpectedDayOfMonth != DONTCARE) {
-    equal(aExpectedDayOfMonth, date.getDate(), "Day of month should be " + aExpectedDayOfMonth);
+    equal(date.getDate(), aExpectedDayOfMonth, "Day of month should be " + aExpectedDayOfMonth);
   }
 
   if (aExpectedMonth && aExpectedMonth != DONTCARE) {
-    equal(aExpectedMonth, date.getMonth(), "Month should be " + aExpectedMonth);
+    equal(date.getMonth(), aExpectedMonth, "Month should be " + aExpectedMonth);
   }
 
   if (aExpectedYear && aExpectedYear != DONTCARE) {
-    equal(aExpectedYear, date.getFullYear(), '2013', "Year should be " + aExpectedYear);
+    equal(date.getFullYear(), aExpectedYear, '2013', "Year should be " + aExpectedYear);
   }
 
   if (aExpectedHourOfDay && aExpectedHourOfDay != DONTCARE) {
-    equal(aExpectedHourOfDay, date.getHours(), "Game should be at hour " + aExpectedHourOfDay + " of the day");
+    equal(date.getHours(), aExpectedHourOfDay, "Game should be at hour " + aExpectedHourOfDay + " of the day");
   }
 
   if (aExpectedMinuteOfHour && aExpectedMinuteOfHour != DONTCARE) {
-    equal(aExpectedMinuteOfHour, date.getMinutes(), "Game should be at minute " + aExpectedMinuteOfHour + " of hour");
+    equal(date.getMinutes(), aExpectedMinuteOfHour, "Game should be at minute " + aExpectedMinuteOfHour + " of hour");
   }
 
   if (aExpectedSportLevel && aExpectedSportLevel != DONTCARE) {
-    equal(aExpectedSportLevel, game.getSportLevel(), "Sport and level should be " + aExpectedSportLevel);
+    equal(game.getSportLevel(), aExpectedSportLevel, "Sport and level should be " + aExpectedSportLevel);
   }
 
   if (aExpectedSite && aExpectedSite != DONTCARE) {
-    equal(aExpectedSite, game.getSite(), "Site should be '" + aExpectedSite + "'");
+    equal(game.getSite(), aExpectedSite, "Site should be '" + aExpectedSite + "'");
   }
 
   if (aExpectedHomeTeam && aExpectedHomeTeam != DONTCARE) {
-    equal(aExpectedHomeTeam, game.getHomeTeam(), "Home team should be '" + aExpectedHomeTeam + "'");
+    equal(game.getHomeTeam(), aExpectedHomeTeam, "Home team should be '" + aExpectedHomeTeam + "'");
   }
 
   if (aExpectedAwayTeam && aExpectedAwayTeam != DONTCARE) {
-    equal(aExpectedAwayTeam, game.getAwayTeam(), "Away team should be '" + aExpectedAwayTeam + "'");
+    equal(game.getAwayTeam(), aExpectedAwayTeam, "Away team should be '" + aExpectedAwayTeam + "'");
   }
 }
 
@@ -131,6 +131,7 @@ test("Arbitrator Date Recognition", function() {
   var date = arbitrator.getGameById("1111").getTimestamp();
 
   // Assert
+  equal(arbitrator.getGameById("1111").getTime12Hr(), "12:30pm");
   checkGame(arbitrator, 1111, DONTCARE, DONTCARE, 9, 10, 2013, 12, 30);
 });
 
@@ -209,4 +210,20 @@ test("Arbitrator Complex Statement Parsing", function() {
     ok(false, 'Encountered an error during ajax call: ' + aErrorThrown);
     start();
   });
+});
+
+test("Group aliases", function() {
+  // Arrange
+  Arbitrator.addGroupAlias('106016', 'D6');
+
+  var testString = "1111 		106016 	Referee 1 	11/9/2013 Sat 12:30 PM 	D6, 12B 	Bloomington Ice Garden 1 	Bloomington 	Minnetonka Black 	$29.50  Accepted on 10/18/2013";
+
+  // Act
+  var arbitrator = new Arbitrator(testString);
+
+  // Assert
+  checkGame(arbitrator, 1111, 'D6');
+
+  // Tear down (so other tests don't use the aliases)
+  Arbitrator.removeGroupAlias('106016');
 });

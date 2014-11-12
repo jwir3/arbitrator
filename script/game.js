@@ -44,7 +44,7 @@ var Role = Object.freeze({
 
 var Game = function(aId, aGroup, aRole, aTimestamp, aSportLevel, aSite, aHomeTeam, aAwayTeam, aFees) {
   this.mId = aId;
-  this.mGroup = aGroup;
+  this.mGroup = Arbitrator.getAliasForGroupId(aGroup);
   this.setRole(aRole);
   this.mTimestamp = aTimestamp;
   this.mSportLevel = aSportLevel;
@@ -89,6 +89,17 @@ Game.prototype = {
 
   getTimestamp: function() {
     return new Date(Date.parse(this.getTimestampAsString()));
+  },
+
+  getTime12Hr: function() {
+      var timestamp = this.getTimestamp();
+      var hour = timestamp.getHours();
+      var ampm = (hour >= 12) ? 'pm' : 'am';
+      if (hour > 12) {
+        hour = hour - 12;
+      }
+
+      return hour + ":" + timestamp.getMinutes() + ampm;
   },
 
   getISOStartDate: function() {
@@ -204,7 +215,17 @@ Game.prototype = {
     return this.mRole;
   },
 
+  hasNonAliasedGroup: function() {
+    if (window.localStorage[Arbitrator.PREFERENCE_GROUP_ALIAS + this.getGroup()]) {
+      return false;
+    }
+
+    return true;
+  },
+
   getEventJSON: function() {
+    var timestamp = this.getTimestamp();
+    var hour = this.get
     return  {
       "end": {
         "dateTime": this.getISOEndDate()
@@ -212,7 +233,7 @@ Game.prototype = {
       "start": {
         "dateTime": this.getISOStartDate()
       },
-      "description": "Testing Arbitrator",
+      "description": "Game starts at " + this.getTime12Hr(),
       "summary": this.getSummaryString()
     };
   }

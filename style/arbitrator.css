@@ -24,6 +24,26 @@
     font-size: 8pt;
 }
 
+.aliasUI {
+  min-height: 2em;
+  margin-top: 1em;
+  margin-right: 0.5em;
+  vertical-align: middle;
+}
+
+.inputMessageArea {
+  display: hidden;
+}
+
+#prefArea {
+  display: none;
+  border: 1px solid #330099;
+  border-radius: 8px;
+  background-color: #99ccff;
+  padding: 1em 1em 1em 1em;
+  margin-top: 1em;
+}
+
 body {
   overflow-y: hidden;
 }
