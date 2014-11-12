@@ -41,6 +41,9 @@
         'authuser' : -1
       };
       gapi.auth.authorize(config, handleAuthResult);
+      if (Arbitrator.hasAliasedGroups()) {
+        showAliases();
+      }
     }
 
     function arbitrate() {
@@ -50,6 +53,8 @@
       var selectedId = calSelectionElement[calSelectionElement.selectedIndex].id;
       arb.submitGamesToCalendar(selectedId);
       showMessaging();
+
+      $("#prefArea").show();
     }
 
     $(document).ready(function() {
@@ -66,6 +71,14 @@
       <option id="noCalendarSelectedOption">Select Calendar</option>
     </select>
     <br />
-    <button id="arbitrate-button" onclick="arbitrate();">Parse</button>
+    <button id="arbitrate-button" onclick="arbitrate();">Submit</button>
+    <div id="prefArea">
+      <h2>Preferences</h2>
+      <hr>
+      <div class="prefGroup" id="aliasPrefs">
+        <h4>Group Aliases</h4>
+        You can add aliases for specific groups here so they are more readable in your calendar.
+      </div>
+    </div>
   </body>
 </html>
