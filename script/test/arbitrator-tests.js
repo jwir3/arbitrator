@@ -213,6 +213,9 @@ test("Arbitrator Complex Statement Parsing", function() {
 });
 
 test("Group aliases", function() {
+  // Precondition
+  ok(!Arbitrator.hasAliasedGroups(), 'should not have any aliased groups');
+
   // Arrange
   Arbitrator.addGroupAlias('106016', 'D6');
 
@@ -223,7 +226,12 @@ test("Group aliases", function() {
 
   // Assert
   checkGame(arbitrator, 1111, 'D6');
+  ok(Arbitrator.hasAliasedGroups(), 'should have some aliased groups');
+  equal(Arbitrator.getGroupAliases().keys().length, 1, 'should have 1 aliased group');
 
   // Tear down (so other tests don't use the aliases)
   Arbitrator.removeGroupAlias('106016');
+
+  // Postcondition
+  ok(!Arbitrator.hasAliasedGroups(), 'should not have any aliased groups');
 });

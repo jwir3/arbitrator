@@ -215,14 +215,6 @@ Game.prototype = {
     return this.mRole;
   },
 
-  hasNonAliasedGroup: function() {
-    if (window.localStorage[Arbitrator.PREFERENCE_GROUP_ALIAS + this.getGroup()]) {
-      return false;
-    }
-
-    return true;
-  },
-
   getEventJSON: function() {
     var timestamp = this.getTimestamp();
     var hour = this.get

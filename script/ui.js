@@ -42,6 +42,21 @@ function addAlias(aGroupName) {
     }, 1000);
 }
 
+/**
+ * Show all aliases currently in local storage in the preference UI area.
+ */
+function showAliases() {
+    var aliasedGroups = Arbitrator.getGroupAliases();
+    for (var prop in aliasedGroups) {
+      if (aliasedGroups.hasOwnProperty(prop)) {
+        var groupAlias = aliasedGroups[prop];
+        addAliasUIFor(prop, groupAlias);
+      }
+    }
+
+    $('#prefArea').show();
+}
+
 function addAliasUIFor(aGroupName, aGroupAlias) {
   // if a UI already exists for this groupName, then don't show it.
   if ($('#alias-' + aGroupName).length) {
@@ -53,5 +68,5 @@ function addAliasUIFor(aGroupName, aGroupAlias) {
   var submit = '<button class="aliasUI" onclick="addAlias(\'' + aGroupName + '\')">Add</button>';
   var msgArea = '<span id="msg-' + aGroupName + '" class="inputMessageArea"></span>';
   var uiLine = '<div class="aliasInputLine">' + input1 + input2 + submit + msgArea + '</div>';
-  $('#prefArea').append(uiLine);
+  $('#aliasPrefs').append(uiLine);
 }
