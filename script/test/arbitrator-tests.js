@@ -48,12 +48,16 @@ var DONTCARE = 'dontcare-1nsy';
  *        is currently performed.
  * @param aExpectedHomeTeam The name of the home team of the game.
  * @param aExpectedAwayTeam The name of the away team of the game.
+ * @param aExpectScrimmage Whether or not this game is expected to be a scrimmage
+ * @param aExpectTournament Whether or not this game is expected to be a
+ *        tournament game.
  */
 function checkGame(aArbitrator, aGameId, aExpectedGroup, aExpectedRole,
                    aExpectedDayOfMonth, aExpectedMonth, aExpectedYear,
                    aExpectedHourOfDay, aExpectedMinuteOfHour,
-                   aExpectedSportLevel, aExpectedLevel, aExpectedSite, aExpectedHomeTeam,
-                   aExpectedAwayTeam) {
+                   aExpectedSportLevel, aExpectedLevel, aExpectedSite,
+                   aExpectedHomeTeam, aExpectedAwayTeam, aExpectScrimmage,
+                   aExpectTournament) {
   // Only the game id and arbitrator must be present. All other things can be
   // undefined, indicating a "don't care" term.
   ok(aArbitrator, 'aArbitrator cannot be undefined');
@@ -109,6 +113,18 @@ function checkGame(aArbitrator, aGameId, aExpectedGroup, aExpectedRole,
 
   if (aExpectedLevel && aExpectedLevel != DONTCARE) {
     equal(game.getLevel(), aExpectedLevel, "Level should be '" + aExpectedLevel + "'");
+  }
+
+  if (aExpectScrimmage && aExpectScrimmage != DONTCARE) {
+    if (aExpectTournament && aExpectTournament != DONTCARE) {
+      ok(false, 'cannot have a game that is both a tournament game and a scrimmage');
+    }
+
+    equal(game.isScrimmage(), aExpectScrimmage, "Game is expected to be a scrimmage? " + aExpectScrimmage)
+  }
+
+  if (aExpectTournament && aExpectTournament != DONTCARE) {
+    equal(game.isTournament(), aExpectTournament, "Game is expected to be part of a tournament? " + aExpectTournament)
   }
 }
 
@@ -240,4 +256,57 @@ test("Group aliases", function() {
 
   // Postcondition
   ok(!Arbitrator.hasAliasedGroups(), 'should not have any aliased groups');
+});
+
+test("Tournament and Scrimmage Parsing", function() {
+  // Arrange
+  var dest = document.URL.substr(0,document.URL.lastIndexOf('/')) + '/fixtures/tournamentScrimmage.txt';
+  // Wait for the ajax call to finish before proceeding.
+  stop();
+
+  // This makes sure a 'syntax error' isn't thrown due to Firefox expecting valid
+  // XML when the request comes back. It's mostly an error-suppression routine,
+  // because the code keeps working even if it's not valid XML, it's just
+  // annoying that it's reported as a syntax error in the console.
+  $.ajaxSetup({'beforeSend': function(xhr){
+    if (xhr.overrideMimeType)
+        xhr.overrideMimeType("text/plain");
+    }
+  });
+
+  // Act
+  $.ajax({
+    url: dest,
+    dataType: 'text'
+  }).success(function(aData, aTextStatus, aRequest) {
+    // Assert
+
+    var arbitrator = new Arbitrator(aData);
+    equal(2, arbitrator.getNumGames(), 'there should be 2 games');
+
+    // Check the characteristics of the first game.
+    checkGame(arbitrator, 4073, DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE,
+              DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE,
+              DONTCARE, false, true);
+
+    // Check the characteristics of the second game.
+    checkGame(arbitrator, 203, DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE,
+              DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE,
+              DONTCARE, true);
+    // Check the summary strings to make sure they are reasonable.
+    var game1 = arbitrator.getGameById(4073);
+    var expectedSS1 = "[106016] Referee (Squirt C Tournament)";
+    var expectedSS2 = "[106016] Referee Scrimmage New Prague v Farmington (10U Girls B)";
+    equal(game1.getSummaryString(), expectedSS1,
+          "Summary string should be: '" + expectedSS1 + "'");
+
+    var game2 = arbitrator.getGameById(203);
+    equal(game2.getSummaryString(), expectedSS2,
+          "Summary string should be: '" + expectedSS2 + "'");
+
+    start();
+  }).error(function(aRequest, aErrorMessage, aErrorThrown) {
+    ok(false, 'Encountered an error during ajax call: ' + aErrorThrown);
+    start();
+  });
 });
