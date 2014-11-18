@@ -41,6 +41,8 @@ var DONTCARE = 'dontcare-1nsy';
  * @param aExpectedSportLevel The expected "sport and level" string of the game.
  *        This _should_ be just something like "Hockey, Boys Varsity", but often
  *        it's used to communicate other information (e.g. the ruleset).
+ * @param aExpectedLevel The expected level of the game, as parsed from the
+          getSportLevel() string.
  * @param aExpectedSite The site of the game, as a string. This must represent
  *        EXACTLY how the online site has it listed. No resolution of lat/long
  *        is currently performed.
@@ -50,7 +52,7 @@ var DONTCARE = 'dontcare-1nsy';
 function checkGame(aArbitrator, aGameId, aExpectedGroup, aExpectedRole,
                    aExpectedDayOfMonth, aExpectedMonth, aExpectedYear,
                    aExpectedHourOfDay, aExpectedMinuteOfHour,
-                   aExpectedSportLevel, aExpectedSite, aExpectedHomeTeam,
+                   aExpectedSportLevel, aExpectedLevel, aExpectedSite, aExpectedHomeTeam,
                    aExpectedAwayTeam) {
   // Only the game id and arbitrator must be present. All other things can be
   // undefined, indicating a "don't care" term.
@@ -103,6 +105,10 @@ function checkGame(aArbitrator, aGameId, aExpectedGroup, aExpectedRole,
 
   if (aExpectedAwayTeam && aExpectedAwayTeam != DONTCARE) {
     equal(game.getAwayTeam(), aExpectedAwayTeam, "Away team should be '" + aExpectedAwayTeam + "'");
+  }
+
+  if (aExpectedLevel && aExpectedLevel != DONTCARE) {
+    equal(game.getLevel(), aExpectedLevel, "Level should be '" + aExpectedLevel + "'");
   }
 }
 
@@ -192,17 +198,17 @@ test("Arbitrator Complex Statement Parsing", function() {
 
     // Check the characteristics of the first game.
     checkGame(arbitrator, 330, '106016', Role.REFEREE, 8, 10, 2014, 9, 50,
-              "D6, Scrimmage SC 60 MIn $27.50 Each",
+              "D6, Scrimmage SC 60 MIn $27.50 Each", "Squirt C",
               "New Prague Community Center", "New Prague", "Dodge County Black");
 
     // Check the characteristics of the second game.
     checkGame(arbitrator, 339, '106016', Role.REFEREE, 8, 10, 2014, 18, 45,
-              "D6, Scrimmage 10B 60 Min $27.50 Each",
+              "D6, Scrimmage 10B 60 Min $27.50 Each", "10U Girls B",
               "Eden Prairie 3", "Eden Prairie Red", "Minnetonka Black");
 
     // Check the characteristics of the third game.
     checkGame(arbitrator, 3839, 'MinneapHO', Role.LINESMAN, 14, 10, 2014, 20, 10,
-              "Hockey Boys, Varsity", "St. Louis Park Recreation Center",
+              "Hockey Boys, Varsity", "Varsity Boys", "St. Louis Park Recreation Center",
               "St Thomas Academy", "Minnetonka");
 
     start();
