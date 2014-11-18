@@ -207,13 +207,17 @@ Game.prototype = {
       summaryString = summaryString + "Officiate ";
     }
 
+   if (this.isScrimmage()) {
+      summaryString = summaryString + "Scrimmage ";
+   }
+
    if (this.areTeamsValid()) {
       summaryString = summaryString + this.mHomeTeam + " v " + this.mAwayTeam + " ";
    }
 
    var level = this.getLevel();
    if (level != 'UNKNOWN') {
-     summaryString = summaryString + "(" + level + ")";
+     summaryString = summaryString + "(" + level + (this.isTournament() ? " Tournament" : "") + ")";
    }
 
    return summaryString.trim();
@@ -224,8 +228,6 @@ Game.prototype = {
   },
 
   getEventJSON: function() {
-    var timestamp = this.getTimestamp();
-    var hour = this.get
     return  {
       "end": {
         "dateTime": this.getISOEndDate()
@@ -236,5 +238,13 @@ Game.prototype = {
       "description": "Game starts at " + this.getTime12Hr(),
       "summary": this.getSummaryString()
     };
+  },
+
+  isScrimmage: function() {
+    return this.getSportLevel().search(/scrimmage/i) != -1;
+  },
+
+  isTournament: function() {
+    return this.getSportLevel().search(/tournament/i) != -1;
   }
 }
