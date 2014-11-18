@@ -29,7 +29,7 @@ var gameLevels = {
   'Boys, Varsity'   : 'Varsity Boys',
   'Girls, Varsity'  : 'Varsity Girls',
   'Boys, JV'        : 'Junior Varsity Boys',
-  'Girls, JV'       : ' Junior Varsity Girls'
+  'Girls, JV'       : 'Junior Varsity Girls'
 };
 
 /**
