@@ -310,3 +310,15 @@ test("Tournament and Scrimmage Parsing", function() {
     start();
   });
 });
+
+test("Identification String and Hash Computation", function() {
+  var testData = "1111 		106016 	Referee 1 	11/9/2013 Sat 12:30 PM 	D6, 12B 	Bloomington Ice Garden 1 	Bloomington 	Minnetonka Black 	$29.50  Accepted on 10/18/2013";
+  var arbitrator = new Arbitrator(testData);
+  var game = arbitrator.getGameById(1111);
+  ok(game, "game should not be undefined");
+
+  var expectedIdString = "111110601612UGirlsBBloomingtonvMinnetonkaBlack";
+  var expectedHash = CryptoJS.SHA1(expectedIdString).toString(CryptoJS.enc.Hex);
+  equal(game.getIdentificationString(), expectedIdString, "identification string should be " + expectedIdString);
+  equal(game.getHash(), expectedHash, "hash should be " + expectedHash);
+});

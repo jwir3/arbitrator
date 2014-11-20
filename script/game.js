@@ -235,7 +235,7 @@ Game.prototype = {
       "start": {
         "dateTime": this.getISOStartDate()
       },
-      "description": "Game starts at " + this.getTime12Hr(),
+      "description": "Game starts at " + this.getTime12Hr() + "\n\n" + + "{ArbitratorHash: " + this.getHash() + "}",
       "summary": this.getSummaryString()
     };
   },
@@ -246,5 +246,31 @@ Game.prototype = {
 
   isTournament: function() {
     return this.getSportLevel().search(/tournament/i) != -1;
+  },
+
+  /**
+   * Retrieve an identification string for this game. Essentially, this is
+   * just a concatenation of the game id, the group, teams playing, and level.
+   *
+   * @return A string that is an identifier for this game. This identifier should
+   *         not change, even if the game dates/times change.
+   */
+   getIdentificationString: function() {
+      var level = this.getLevel() === "UNKNOWN" ? "" : this.getLevel();
+      var teams = this.areTeamsValid() ? this.getHomeTeam() + "v" + this.getAwayTeam() : "";
+      var idString = String(this.getId());
+      idString = idString + this.getGroup() + level + teams;
+
+      return idString.replace(/\s+/gm, "");
+   },
+
+  /**
+   * Retrieve a hash of the unique identifying information of this game. This
+   * serves to identify the game if the date/time changes.
+   *
+   * @return A string of a SHA-1 hash of the game id, group, teams playing, and level.
+   */
+  getHash: function() {
+    return CryptoJS.SHA1(this.getIdentificationString()).toString(CryptoJS.enc.Hex);
   }
 }
