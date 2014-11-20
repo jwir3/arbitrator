@@ -235,7 +235,7 @@ Game.prototype = {
       "start": {
         "dateTime": this.getISOStartDate()
       },
-      "description": "Game starts at " + this.getTime12Hr() + "\n\n" + + "{ArbitratorHash: " + this.getHash() + "}",
+      "description": "Game starts at " + String(this.getTime12Hr()) + "\n\n" + "{ArbitratorHash: " + String(this.getHash()) + "}",
       "summary": this.getSummaryString()
     };
   },
