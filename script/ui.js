@@ -29,6 +29,21 @@ function clearMessage() {
   $('#message').html('');
 }
 
+function setTimePref(aTimePrefName) {
+  var timePrefVal = $('#timePref-' + aTimePrefName).val();
+  var prefName = '';
+  Arbitrator.addTimePreference(aTimePrefName, timePrefVal);
+}
+
+function updateTimePreferenceUI() {
+  var timePrefs = Arbitrator.getTimePreferences();
+  for (var key in timePrefs) {
+    if (timePrefs.hasOwnProperty(key)) {
+      $('#timePref-' + key).val(timePrefs[key]);
+    }
+  }
+}
+
 function addAlias(aGroupName) {
     var alias = $('#alias-' + aGroupName).val();
     Arbitrator.addGroupAlias(aGroupName, alias);

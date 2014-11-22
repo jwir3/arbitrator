@@ -1,4 +1,5 @@
 <!doctype html>
+<meta charset="UTF-8">
 <html>
   <head>
     <title>Arbitrator</title>
@@ -44,6 +45,8 @@
       // if (Arbitrator.hasAliasedGroups()) {
       //   showAliases();
       // }
+
+      updateTimePreferenceUI();
     }
 
     function arbitrate() {
@@ -57,9 +60,9 @@
       $("#prefArea").show();
     }
 
-    // $(document).ready(function() {
-    //   initAuth();
-    // });
+    $(document).ready(function() {
+      initAuth();
+    });
 
     </script>
   </head>
@@ -86,14 +89,14 @@
         You can add preferences for start/end times here.<br />
         <div class="inputSet">
           <div class="labelSet">
-            <label for="minStart">Minutes before start:</label>
-            <button id="setMinStart">Set</button>
-            <input type="number" id="minStart" value="30" />
+            <label for="timePref-priorToStart">Minutes before start:</label>
+            <button id="setMinStart" onclick="setTimePref('priorToStart')">Set</button>
+            <input type="number" id="timePref-priorToStart" value="30" />
           </div>
           <div class="labelSet">
-            <label for="minEnd">Length of game:</label>
-            <button id="setMinEnd">Set</button>
-            <input type="number" id="minEnd" value="60" />
+            <label for="timePref-gameLength">Length of game:</label>
+            <button id="setMinEnd" onclick="setTimePref('gameLength')">Set</button>
+            <input type="number" id="timePref-gameLength" value="60" />
           </div>
         </div>
       </div>
