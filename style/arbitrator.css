@@ -36,12 +36,49 @@
 }
 
 #prefArea {
-  display: none;
+  display: block;
   border: 1px solid #330099;
   border-radius: 8px;
   background-color: #99ccff;
   padding: 1em 1em 1em 1em;
+  width: 45%;
+  float: left;
+}
+
+#schedule {
+  width: 90%;
+  height: 30em;
+}
+
+.inputSet {
+  position: relative;
+  width: 30em;
   margin-top: 1em;
+}
+
+.labelSet label {
+  float: left;
+  position: relative;
+}
+
+.labelSet input {
+  float: right;
+  position: relative;
+}
+
+.labelSet button {
+  float: right;
+  position: relative;
+  margin-left: 1em;
+}
+
+.labelSet {
+  clear: both;
+}
+
+#mainContent {
+    width: 50%;
+    float: left;
 }
 
 body {
