@@ -310,3 +310,17 @@ test("Tournament and Scrimmage Parsing", function() {
     start();
   });
 });
+
+
+test("Time Preferences", function() {
+  var timePrefs = Arbitrator.getTimePreferences();
+  equal(JSON.stringify(timePrefs), "{}", "time preferences should be empty");
+
+  Arbitrator.addTimePreference(TimeType.PRIOR_TO_START, 61);
+  equal(Arbitrator.getTimePreference(TimeType.PRIOR_TO_START), 61, "should have set prior to start minutes to 61");
+
+  Arbitrator.removeTimePreference(TimeType.PRIOR_TO_START);
+
+  timePrefs = Arbitrator.getTimePreferences();
+  equal(JSON.stringify(timePrefs), "{}", "time preferences should be empty");
+});
