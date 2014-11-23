@@ -29,6 +29,31 @@ function clearMessage() {
   $('#message').html('');
 }
 
+function setTimePref(aTimePrefName) {
+  var timePrefVal = $('#timePref-' + aTimePrefName).val();
+  var prefName = '';
+  Arbitrator.addTimePreference(aTimePrefName, timePrefVal);
+
+  $('#msg-' + aTimePrefName).css('color', 'green')
+  .html("&#x2713; Preference set!")
+  .show();
+  setTimeout(function() {
+    $('#msg-' + aTimePrefName).fadeOut(function() {
+      $(this).html('');
+    });
+  }, 1000);
+
+}
+
+function updateTimePreferenceUI() {
+  var timePrefs = Arbitrator.getTimePreferences();
+  for (var key in timePrefs) {
+    if (timePrefs.hasOwnProperty(key)) {
+      $('#timePref-' + key).val(timePrefs[key]);
+    }
+  }
+}
+
 function addAlias(aGroupName) {
     var alias = $('#alias-' + aGroupName).val();
     Arbitrator.addGroupAlias(aGroupName, alias);

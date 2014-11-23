@@ -1,3 +1,18 @@
+// Identifiers for whether we want to use start time or length of game
+// when setting time preferences.
+var TimeType = Object.freeze({
+  /**
+   * Flag for indicating the time type is prior to the game start.
+   */
+  PRIOR_TO_START: 'priorToStart',
+
+  /**
+   * Flag for indicating the time type is after the game start until the game
+   * ends (i.e. the length of the game).
+   */
+  LENGTH_OF_GAME: 'gameLength'
+});
+
 var Arbitrator = function(aString) {
   this.mBaseString = aString;
   this.mGames = {};
@@ -11,6 +26,9 @@ Arbitrator.prototype = {
 
   // Preferences associated with group aliases
   PREFERENCE_GROUP_ALIAS: this.PREFERENCE_PREFIX + "groupAlias.",
+
+  // Preferences associated with time
+  PREFERENCE_TIME: this.PREFERENCE_PREFIX + "time.",
 
   parseFromText: function() {
     this.mBaseString = this.mBaseString.replace(/Accepted\ on\ [0-9]+\/[0-9]+\/([0-9]{4})/g, '')
@@ -131,11 +149,40 @@ Arbitrator.hasAliasedGroups = function() {
  * @param aGroupAlias The alias to replace the group id with.
  */
 Arbitrator.addGroupAlias = function(aGroupId, aGroupAlias) {
-  console.log("Adding alias for " + aGroupId + " -> " + aGroupAlias);
   var groupAliases = Arbitrator.getGroupAliases();
 
   groupAliases[aGroupId] = aGroupAlias;
   window.localStorage[Arbitrator.PREFERENCE_GROUP_ALIAS] = JSON.stringify(groupAliases);
+},
+
+/**
+ * Add a time preference to the preference store.
+ *
+ * @param aType The type to add. Must be one of TimeType available options.
+ * @param aTimeInMinutes The time value, in minutes, to add to the preference
+ *        store. If not >= 0, then will be set to 0.
+ */
+Arbitrator.addTimePreference = function(aType, aTimeInMinutes) {
+  var timePref = Arbitrator.getTimePreferences();
+  if (aTimeInMinutes < 0) {
+    console.log("Unable to set a time preference value < 0. Resetting time to 0.");
+    aTimeInMinutes = 0;
+  }
+
+  switch(aType) {
+    case TimeType.PRIOR_TO_START:
+      timePref[TimeType.PRIOR_TO_START] = aTimeInMinutes;
+      break;
+
+    case TimeType.LENGTH_OF_GAME:
+      timePref[TimeType.LENGTH_OF_GAME] = aTimeInMinutes;
+      break;
+
+    default:
+      throw "Unable to determine type for '" + aType + "'";
+  }
+
+  window.localStorage[Arbitrator.PREFERENCE_TIME] = JSON.stringify(timePref);
 },
 
 /**
@@ -154,12 +201,49 @@ Arbitrator.getGroupAliases = function() {
 },
 
 /**
+ * Retrive all time preferences as an Object.
+ *
+ * @return A JSON-style object (NOT a string) with members corresponding to
+ *         individual time preferences, and each member having the value of the
+ *         associated time preference from local storage; an empty object if no
+ *         time preferences are yet defined.
+ */
+Arbitrator.getTimePreferences = function() {
+    var timePreferenceString = window.localStorage[Arbitrator.PREFERENCE_TIME];
+    if (!timePreferenceString) {
+      timePreferenceString = '{}';
+    }
+
+    return JSON.parse(timePreferenceString);
+},
+
+
+/**
+ * Retrieve the value of a single time preference.
+ *
+ * @param aTimeType The time of time preference to retrieve. Must be one of the
+ *        types specified in TimeType.
+ * @param aDefault The default time (in minutes) to specify if one has not been
+ *        added to the preference store.
+ *
+ * @return A numeric value indicating the number of minutes specified for the
+ *         given time preference.
+ */
+Arbitrator.getTimePreference = function(aTimeType, aDefault) {
+    var timePreferences = Arbitrator.getTimePreferences();
+    if (timePreferences[aTimeType]) {
+      return parseInt(timePreferences[aTimeType], 10);
+    }
+
+    return aDefault;
+},
+
+/**
  * Retrieve an alias for a group, based on an ID submitted.
  */
 Arbitrator.getAliasForGroupId = function(aGroupId) {
   var groupAliases = Arbitrator.getGroupAliases();
   var actualName = groupAliases[aGroupId];
-  console.log("Group alias for '" + aGroupId + "': '" + actualName + "'")
   if (actualName) {
     addAliasUIFor(aGroupId, actualName);
     return actualName;
@@ -182,4 +266,19 @@ Arbitrator.removeGroupAlias = function(aGroupId) {
   }
 
   window.localStorage[Arbitrator.PREFERENCE_GROUP_ALIAS] = JSON.stringify(groupAliases);
+},
+
+/**
+ * Remove the instance of a single time preference from the preference store.
+ *
+ * @param aTimeType The type of time preference to remove. Must be one of the
+ *        values specified in TimeType.
+ */
+Arbitrator.removeTimePreference = function(aTimeType) {
+  var timePrefs = Arbitrator.getTimePreferences();
+  if (timePrefs) {
+    delete timePrefs[aTimeType];
+  }
+
+  window.localStorage[Arbitrator.PREFERENCE_TIME] = JSON.stringify(timePrefs);
 }

@@ -1,4 +1,5 @@
 <!doctype html>
+<meta charset="UTF-8">
 <html>
   <head>
     <title>Arbitrator</title>
@@ -44,6 +45,8 @@
       if (Arbitrator.hasAliasedGroups()) {
         showAliases();
       }
+
+      updateTimePreferenceUI();
     }
 
     function arbitrate() {
@@ -64,20 +67,40 @@
     </script>
   </head>
   <body>
-    <div id="messageContainer" class="hidden"><div id="message"></div><div class="instructions">Click to Dismiss</div></div>
-    <textarea id="schedule" rows="30" cols="80">Cut and paste your schedule here.</textarea>
-    <br />
-    <select id="calendarList" style="display: none">
-      <option id="noCalendarSelectedOption">Select Calendar</option>
-    </select>
-    <br />
-    <button id="arbitrate-button" onclick="arbitrate();">Submit</button>
+    <div id="mainContent">
+      <div id="messageContainer" class="hidden"><div id="message"></div><div class="instructions">Click to Dismiss</div></div>
+      <textarea id="schedule">Cut and paste your schedule here.</textarea>
+      <br />
+      <select id="calendarList" style="display: none">
+        <option id="noCalendarSelectedOption">Select Calendar</option>
+      </select>
+      <br />
+      <button id="arbitrate-button" onclick="arbitrate();">Submit</button>
+    </div>
     <div id="prefArea">
       <h2>Preferences</h2>
       <hr>
       <div class="prefGroup" id="aliasPrefs">
         <h4>Group Aliases</h4>
         You can add aliases for specific groups here so they are more readable in your calendar.
+      </div>
+      <div class="prefGroup" id="timingPrefs">
+        <h4>Time</h4>
+        You can add preferences for start/end times here.<br />
+        <div class="inputSet">
+          <div class="labelSet">
+            <label for="timePref-priorToStart">Minutes before start:</label>
+            <div class="inputMessageAreaFloatContainer"><span id="msg-priorToStart" class="inputMessageArea"></span></div>
+            <button id="setMinStart" onclick="setTimePref('priorToStart')">Set</button>
+            <input type="number" id="timePref-priorToStart" value="30" />
+          </div>
+          <div class="labelSet">
+            <label for="timePref-gameLength">Length of game:</label>
+            <div class="inputMessageAreaFloatContainer"><span id="msg-gameLength" class="inputMessageArea"></span></div>
+            <button id="setMinEnd" onclick="setTimePref('gameLength')">Set</button>
+            <input type="number" id="timePref-gameLength" value="60" />
+          </div>
+        </div>
       </div>
     </div>
   </body>
