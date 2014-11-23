@@ -21,15 +21,6 @@ var Arbitrator = function(aString) {
 }
 
 Arbitrator.prototype = {
-  // General preference prefix
-  PREFERENCE_PREFIX: 'arbitrator.',
-
-  // Preferences associated with group aliases
-  PREFERENCE_GROUP_ALIAS: this.PREFERENCE_PREFIX + "groupAlias.",
-
-  // Preferences associated with time
-  PREFERENCE_TIME: this.PREFERENCE_PREFIX + "time.",
-
   parseFromText: function() {
     this.mBaseString = this.mBaseString.replace(/Accepted\ on\ [0-9]+\/[0-9]+\/([0-9]{4})/g, '')
     var cols = this.mBaseString.split(/[\t\n]+/);
@@ -152,7 +143,7 @@ Arbitrator.addGroupAlias = function(aGroupId, aGroupAlias) {
   var groupAliases = Arbitrator.getGroupAliases();
 
   groupAliases[aGroupId] = aGroupAlias;
-  window.localStorage[Arbitrator.PREFERENCE_GROUP_ALIAS] = JSON.stringify(groupAliases);
+  window.localStorage[PreferenceType.GROUP_ALIASES] = JSON.stringify(groupAliases);
 },
 
 /**
@@ -182,7 +173,7 @@ Arbitrator.addTimePreference = function(aType, aTimeInMinutes) {
       throw "Unable to determine type for '" + aType + "'";
   }
 
-  window.localStorage[Arbitrator.PREFERENCE_TIME] = JSON.stringify(timePref);
+  window.localStorage[PreferenceType.TIME] = JSON.stringify(timePref);
 },
 
 /**
@@ -192,7 +183,7 @@ Arbitrator.addTimePreference = function(aType, aTimeInMinutes) {
  *         to associated group aliases.
  */
 Arbitrator.getGroupAliases = function() {
-  var groupAliasString = window.localStorage[Arbitrator.PREFERENCE_GROUP_ALIAS];
+  var groupAliasString = window.localStorage[PreferenceType.GROUP_ALIASES];
   if (!groupAliasString) {
       groupAliasString = '{}';
   }
@@ -209,7 +200,7 @@ Arbitrator.getGroupAliases = function() {
  *         time preferences are yet defined.
  */
 Arbitrator.getTimePreferences = function() {
-    var timePreferenceString = window.localStorage[Arbitrator.PREFERENCE_TIME];
+    var timePreferenceString = window.localStorage[PreferenceType.TIME];
     if (!timePreferenceString) {
       timePreferenceString = '{}';
     }
@@ -265,7 +256,7 @@ Arbitrator.removeGroupAlias = function(aGroupId) {
     delete groupAliases[aGroupId];
   }
 
-  window.localStorage[Arbitrator.PREFERENCE_GROUP_ALIAS] = JSON.stringify(groupAliases);
+  window.localStorage[PreferenceType.GROUP_ALIASES] = JSON.stringify(groupAliases);
 },
 
 /**
@@ -280,5 +271,5 @@ Arbitrator.removeTimePreference = function(aTimeType) {
     delete timePrefs[aTimeType];
   }
 
-  window.localStorage[Arbitrator.PREFERENCE_TIME] = JSON.stringify(timePrefs);
+  window.localStorage[PreferenceType.TIME] = JSON.stringify(timePrefs);
 }
