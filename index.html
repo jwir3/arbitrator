@@ -41,10 +41,10 @@
         'scope': 'https://www.googleapis.com/auth/calendar',
         'authuser' : -1
       };
-      // gapi.auth.authorize(config, handleAuthResult);
-      // if (Arbitrator.hasAliasedGroups()) {
-      //   showAliases();
-      // }
+      gapi.auth.authorize(config, handleAuthResult);
+      if (Arbitrator.hasAliasedGroups()) {
+        showAliases();
+      }
 
       updateTimePreferenceUI();
     }
