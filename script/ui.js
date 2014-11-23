@@ -33,6 +33,16 @@ function setTimePref(aTimePrefName) {
   var timePrefVal = $('#timePref-' + aTimePrefName).val();
   var prefName = '';
   Arbitrator.addTimePreference(aTimePrefName, timePrefVal);
+
+  $('#msg-' + aTimePrefName).css('color', 'green')
+  .html("&#x2713; Preference set!")
+  .show();
+  setTimeout(function() {
+    $('#msg-' + aTimePrefName).fadeOut(function() {
+      $(this).html('');
+    });
+  }, 1000);
+
 }
 
 function updateTimePreferenceUI() {

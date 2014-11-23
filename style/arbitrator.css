@@ -31,6 +31,14 @@
   vertical-align: middle;
 }
 
+.inputMessageAreaFloatContainer {
+  display: block;
+  width: 8em;
+  height: 1em;
+  float: right;
+  margin-left: 0.5em;
+}
+
 .inputMessageArea {
   display: hidden;
 }
@@ -52,7 +60,7 @@
 
 .inputSet {
   position: relative;
-  width: 30em;
+  width: 100%;
   margin-top: 1em;
 }
 
