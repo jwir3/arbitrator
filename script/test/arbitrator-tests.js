@@ -311,15 +311,26 @@ test("Tournament and Scrimmage Parsing", function() {
   });
 });
 
-
 test("Time Preferences", function() {
   var timePrefs = Arbitrator.getTimePreferences();
   equal(JSON.stringify(timePrefs), "{}", "time preferences should be empty");
 
   Arbitrator.addTimePreference(TimeType.PRIOR_TO_START, 61);
+  Arbitrator.addTimePreference(TimeType.LENGTH_OF_GAME, 90);
   equal(Arbitrator.getTimePreference(TimeType.PRIOR_TO_START), 61, "should have set prior to start minutes to 61");
 
+  var testString = "1111 		106016 	Referee 1 	11/9/2013 Sat 12:30 PM 	D6, 12B 	Bloomington Ice Garden 1 	Bloomington 	Minnetonka Black 	$29.50  Accepted on 10/18/2013";
+  var arbitrator = new Arbitrator(testString);
+  var game = arbitrator.getGameById(1111);
+  equal(game.getISOStartDate(), "2013-11-09T17:29:00.000Z", "ISO start date should be 61 minutes prior to game start");
+  equal(game.getISOEndDate(), "2013-11-09T20:00:00.000Z", "ISO end date should be 90 minutes after start of game");
+  ok(game.getEventJSON()['description'].contains("Game starts at 12:30pm"), 'the game should start at 12:30pm and this should be in the calendar event description');
+
   Arbitrator.removeTimePreference(TimeType.PRIOR_TO_START);
+  Arbitrator.removeTimePreference(TimeType.LENGTH_OF_GAME);
+
+  equal(game.getISOEndDate(), "2013-11-09T19:30:00.000Z", "game should default to 60 minute lengths");
+  equal(game.getISOStartDate(), "2013-11-09T18:00:00.000Z", "game should default to 30 minute prior to start time");
 
   timePrefs = Arbitrator.getTimePreferences();
   equal(JSON.stringify(timePrefs), "{}", "time preferences should be empty");

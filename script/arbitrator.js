@@ -149,7 +149,6 @@ Arbitrator.hasAliasedGroups = function() {
  * @param aGroupAlias The alias to replace the group id with.
  */
 Arbitrator.addGroupAlias = function(aGroupId, aGroupAlias) {
-  console.log("Adding alias for " + aGroupId + " -> " + aGroupAlias);
   var groupAliases = Arbitrator.getGroupAliases();
 
   groupAliases[aGroupId] = aGroupAlias;
@@ -164,7 +163,7 @@ Arbitrator.addGroupAlias = function(aGroupId, aGroupAlias) {
  *        store. If not >= 0, then will be set to 0.
  */
 Arbitrator.addTimePreference = function(aType, aTimeInMinutes) {
-  var timePref = new Object();
+  var timePref = Arbitrator.getTimePreferences();
   if (aTimeInMinutes < 0) {
     console.log("Unable to set a time preference value < 0. Resetting time to 0.");
     aTimeInMinutes = 0;
@@ -224,13 +223,15 @@ Arbitrator.getTimePreferences = function() {
  *
  * @param aTimeType The time of time preference to retrieve. Must be one of the
  *        types specified in TimeType.
+ * @param aDefault The default time (in minutes) to specify if one has not been
+ *        added to the preference store.
  *
  * @return A numeric value indicating the number of minutes specified for the
  *         given time preference.
  */
-Arbitrator.getTimePreference = function(aTimeType) {
+Arbitrator.getTimePreference = function(aTimeType, aDefault) {
     var timePreferences = Arbitrator.getTimePreferences();
-    return timePreferences[aTimeType];
+    return timePreferences[aTimeType] ? timePreferences[aTimeType] : aDefault;
 },
 
 /**
@@ -239,7 +240,6 @@ Arbitrator.getTimePreference = function(aTimeType) {
 Arbitrator.getAliasForGroupId = function(aGroupId) {
   var groupAliases = Arbitrator.getGroupAliases();
   var actualName = groupAliases[aGroupId];
-  console.log("Group alias for '" + aGroupId + "': '" + actualName + "'")
   if (actualName) {
     addAliasUIFor(aGroupId, actualName);
     return actualName;
