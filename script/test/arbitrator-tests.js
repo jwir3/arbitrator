@@ -84,7 +84,7 @@ function checkGame(aArbitrator, aGameId, aExpectedGroup, aExpectedRole,
   }
 
   if (aExpectedYear && aExpectedYear != DONTCARE) {
-    equal(date.getFullYear(), aExpectedYear, '2013', "Year should be " + aExpectedYear);
+    equal(date.getFullYear(), aExpectedYear, "Year should be " + aExpectedYear);
   }
 
   if (aExpectedHourOfDay && aExpectedHourOfDay != DONTCARE) {
@@ -334,4 +334,25 @@ test("Time Preferences", function() {
 
   timePrefs = Arbitrator.getTimePreferences();
   equal(JSON.stringify(timePrefs), "{}", "time preferences should be empty");
+});
+
+test("Time Preference Regression Test", function() {
+  var testData = "5422 		OSL 	Referee 2 	11/22/2014 Sat 8:40 PM 	OSL, Choice Tournament SL1 80 min 	Ken Yackel West Side 	Super League 1 	TBA 	$45.00 Accepted on 10/31/2014";
+  var arbitrator = new Arbitrator(testData);
+  var game = arbitrator.getGameById(5422);
+
+  ok(game, "game should not be undefined");
+
+  Arbitrator.addTimePreference(TimeType.PRIOR_TO_START, 60);
+  Arbitrator.addTimePreference(TimeType.LENGTH_OF_GAME, 120);
+
+  // Basic game checking
+  checkGame(arbitrator, 5422, DONTCARE, DONTCARE, 22, 10, 2014, 20, 40);
+
+  // Check ISO start and end times
+  equal(game.getISOStartDate(), "2014-11-23T01:40:00.000Z", "Game should start on 11-23-14 at 2:40am UTC, minus 60 minutes for the time pref");
+  equal(game.getISOEndDate(), "2014-11-23T04:40:00.000Z", "Game should end on 11-23-14 at 4:40am UTC");
+
+  Arbitrator.removeTimePreference(TimeType.PRIOR_TO_START);
+  Arbitrator.removeTimePreference(TimeType.LENGTH_OF_GAME);
 });
