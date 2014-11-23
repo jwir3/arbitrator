@@ -231,7 +231,11 @@ Arbitrator.getTimePreferences = function() {
  */
 Arbitrator.getTimePreference = function(aTimeType, aDefault) {
     var timePreferences = Arbitrator.getTimePreferences();
-    return timePreferences[aTimeType] ? timePreferences[aTimeType] : aDefault;
+    if (timePreferences[aTimeType]) {
+      return parseInt(timePreferences[aTimeType], 10);
+    }
+
+    return aDefault;
 },
 
 /**
