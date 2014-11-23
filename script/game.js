@@ -162,12 +162,9 @@ Game.prototype = {
     var yearStringIdx = levelString.search(/([0-9]{4})/g);
     var yearString = levelString.slice(yearStringIdx, yearStringIdx+4);
 
-    console.log("yearString: " + yearString);
     if (yearString) {
         var currentYear = (new Date()).getFullYear();
-        console.log("Current year: " + currentYear);
         var age = parseInt(currentYear,10) - yearString;
-        console.log("Current age: " + age);
         if (age <= 8) {
           return 'Mite';
         } else if (age > 8 && age <= 10) {
