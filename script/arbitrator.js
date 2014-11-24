@@ -79,6 +79,7 @@ Arbitrator.prototype = {
 
   notifyGameAdded: function(aGame) {
     addToMessage('Game #' + aGame.getId() + ' was added to Google Calendar.');
+    updateGroupAliasPreferenceUI();
   },
 
   submitGamesToCalendar: function(aCalendarId) {

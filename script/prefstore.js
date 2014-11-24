@@ -132,6 +132,9 @@ PreferenceStore.prototype = {
       }
     }
 
+    // Once it's been seen, we should add it to the preference store.
+    this.addGroupAlias(aGroupId, aGroupId);
+
     return aGroupId;
   },
 

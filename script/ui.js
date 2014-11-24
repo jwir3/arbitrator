@@ -32,7 +32,8 @@ function clearMessage() {
 function setTimePref(aTimePrefName) {
   var timePrefVal = $('#timePref-' + aTimePrefName).val();
   var prefName = '';
-  Arbitrator.addTimePreference(aTimePrefName, timePrefVal);
+  var prefStore = new PreferenceStore();
+  prefStore.addTimePreference(aTimePrefName, timePrefVal);
 
   $('#msg-' + aTimePrefName).css('color', 'green')
   .html("&#x2713; Preference set!")
@@ -57,7 +58,8 @@ function updateTimePreferenceUI() {
 
 function addAlias(aGroupName) {
     var alias = $('#alias-' + aGroupName).val();
-    Arbitrator.addGroupAlias(aGroupName, alias);
+    var prefStore = new PreferenceStore();
+    prefStore.addGroupAlias(aGroupName, alias);
     $('#msg-' + aGroupName).css('color', 'green')
       .html("&#x2713; Alias added!")
       .show();
