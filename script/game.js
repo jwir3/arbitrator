@@ -51,8 +51,9 @@ var Role = Object.freeze({
 });
 
 var Game = function(aId, aGroup, aRole, aTimestamp, aSportLevel, aSite, aHomeTeam, aAwayTeam, aFees) {
+  var prefStore = new PreferenceStore();
   this.mId = aId;
-  this.mGroup = Arbitrator.getAliasForGroupId(aGroup);
+  this.mGroup = prefStore.getAliasForGroupId(aGroup);
   this.setRole(aRole);
   this.mTimestamp = aTimestamp;
   this.mSportLevel = aSportLevel;
@@ -111,16 +112,18 @@ Game.prototype = {
   },
 
   getISOStartDate: function() {
+    var prefStore = new PreferenceStore();
     var startDate = this.getTimestamp();
-    var priorToStart = Arbitrator.getTimePreference(TimeType.PRIOR_TO_START, 30);
+    var priorToStart = prefStore.getTimePreference(TimeType.PRIOR_TO_START, 30);
     return new Date(startDate.setMinutes(startDate.getMinutes() - priorToStart)).toISOString();
   },
 
   getISOEndDate: function() {
+    var prefStore = new PreferenceStore();
     var endDate = this.getTimestamp();
 
     // Default to 1 hour if no time preference is specified.
-    var gameLengthMins = Arbitrator.getTimePreference(TimeType.LENGTH_OF_GAME, 60);
+    var gameLengthMins = prefStore.getTimePreference(TimeType.LENGTH_OF_GAME, 60);
     return new Date(endDate.setMinutes(endDate.getMinutes() + gameLengthMins)).toISOString();
   },
 
