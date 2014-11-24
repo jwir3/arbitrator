@@ -43,10 +43,8 @@
         'authuser' : -1
       };
       gapi.auth.authorize(config, handleAuthResult);
-      if (Arbitrator.hasAliasedGroups()) {
-        showAliases();
-      }
 
+      updateGroupAliasPreferenceUI();
       updateTimePreferenceUI();
     }
 

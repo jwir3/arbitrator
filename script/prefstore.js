@@ -92,6 +92,36 @@ PreferenceStore.prototype = {
   },
 
   /**
+   * Retrieve all preferences related to time currently in the preference store.
+   *
+   * @return An object with members corresponding to time preferences as defined
+   *         in TimeType, if they exist in the local storage; an empty object,
+   *         otherwise.
+   */
+  getAllTimePreferences: function() {
+    if (this.time) {
+      return Object.freeze(this.time);
+    }
+
+    return new Object();
+  },
+
+  /**
+   * Retrieve all preferences related to group aliases currently in the
+   * preference store.
+   *
+   * @return An object with members corresponding to group alias preferences if
+   *         any exist in the local storage; an empty object, otherwise.
+   */
+  getAllGroupAliases: function() {
+      if (this.groupAliases) {
+        return Object.freeze(this.groupAliases);
+      }
+
+      return new Object();
+  },
+
+  /**
    * Retrieve an alias for a group, based on an ID submitted.
    */
   getAliasForGroupId: function(aGroupId) {

@@ -46,7 +46,8 @@ function setTimePref(aTimePrefName) {
 }
 
 function updateTimePreferenceUI() {
-  var timePrefs = Arbitrator.getTimePreferences();
+  var prefStore = new PreferenceStore();
+  var timePrefs = prefStore.getAllTimePreferences();
   for (var key in timePrefs) {
     if (timePrefs.hasOwnProperty(key)) {
       $('#timePref-' + key).val(timePrefs[key]);
@@ -70,16 +71,15 @@ function addAlias(aGroupName) {
 /**
  * Show all aliases currently in local storage in the preference UI area.
  */
-function showAliases() {
-    var aliasedGroups = Arbitrator.getGroupAliases();
-    for (var prop in aliasedGroups) {
-      if (aliasedGroups.hasOwnProperty(prop)) {
-        var groupAlias = aliasedGroups[prop];
-        addAliasUIFor(prop, groupAlias);
-      }
+function updateGroupAliasPreferenceUI() {
+  var prefStore = new PreferenceStore();
+  var aliasedGroups = prefStore.getAllGroupAliases();
+  for (var prop in aliasedGroups) {
+    if (aliasedGroups.hasOwnProperty(prop)) {
+      var groupAlias = aliasedGroups[prop];
+      addAliasUIFor(prop, groupAlias);
     }
-
-    $('#prefArea').show();
+  }
 }
 
 function addAliasUIFor(aGroupName, aGroupAlias) {
