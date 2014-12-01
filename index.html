@@ -3,9 +3,10 @@
 <html>
   <head>
     <title>Arbitrator</title>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="script/modules/jquery.js"></script>
     <script src="https://apis.google.com/js/client.js"></script>
     <script type="text/javascript" src="script/prefstore.js"></script>
+    <script src="script/modules/sha1.js"></script>
     <script type="text/javascript" src="script/arbitrator.js"></script>
     <script type="text/javascript" src="script/game.js"></script>
     <script type="text/javascript" src="script/ui.js"></script>
@@ -53,8 +54,7 @@
       var arb = new Arbitrator(scheduleText);
       var calSelectionElement = document.getElementById('calendarList');
       var selectedId = calSelectionElement[calSelectionElement.selectedIndex].id;
-      arb.submitGamesToCalendar(selectedId);
-      showMessaging();
+      arb.adjustGamesOrSubmitToCalendar(selectedId);
 
       updateGroupAliasPreferenceUI();
     }

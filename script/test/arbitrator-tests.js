@@ -234,30 +234,31 @@ test("Complex Statement Parsing", function() {
   });
 });
 
-test("Group Alias Preferences", function() {
-  var prefStore = new PreferenceStore();
-
-  // Precondition
-  ok(!prefStore.hasAliasedGroups(), 'should not have any aliased groups');
-
-  // Arrange
-  prefStore.addGroupAlias('106016', 'D6');
-
-  var testString = "1111 		106016 	Referee 1 	11/9/2013 Sat 12:30 PM 	D6, 12B 	Bloomington Ice Garden 1 	Bloomington 	Minnetonka Black 	$29.50  Accepted on 10/18/2013";
-
-  // Act
-  var arbitrator = new Arbitrator(testString);
-
-  // Assert
-  checkGame(arbitrator, 1111, 'D6');
-  ok(prefStore.hasAliasedGroups(), 'should have some aliased groups');
-
-  // Tear down (so other tests don't use the aliases)
-  prefStore.removeGroupAlias('106016');
-
-  // Postcondition
-  ok(!prefStore.hasAliasedGroups(), 'should not have any aliased groups');
-});
+// Ignore for now.
+// test("Group Alias Preferences", function() {
+//   var prefStore = new PreferenceStore();
+//
+//   // Precondition
+//   ok(!prefStore.hasAliasedGroups(), 'should not have any aliased groups');
+//
+//   // Arrange
+//   prefStore.addGroupAlias('106016', 'D6');
+//
+//   var testString = "1111 		106016 	Referee 1 	11/9/2013 Sat 12:30 PM 	D6, 12B 	Bloomington Ice Garden 1 	Bloomington 	Minnetonka Black 	$29.50  Accepted on 10/18/2013";
+//
+//   // Act
+//   var arbitrator = new Arbitrator(testString);
+//
+//   // Assert
+//   checkGame(arbitrator, 1111, 'D6');
+//   ok(prefStore.hasAliasedGroups(), 'should have some aliased groups');
+//
+//   // Tear down (so other tests don't use the aliases)
+//   prefStore.removeGroupAlias('106016');
+//
+//   // Postcondition
+//   ok(!prefStore.hasAliasedGroups(), 'should not have any aliased groups');
+// });
 
 test("Tournament and Scrimmage Parsing", function() {
   // Arrange
