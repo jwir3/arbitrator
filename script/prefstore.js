@@ -203,6 +203,14 @@ PreferenceStore.prototype = {
   },
 
   /**
+   * Remove all previously created group aliases from the preference store.
+   */
+  removeAllGroupAliases: function() {
+    this.groupAliases = new Object();
+    this._putPreferences();
+  },
+
+  /**
    * Put all preferences into local storage to be saved for a later date.
    */
   _putPreferences: function() {
