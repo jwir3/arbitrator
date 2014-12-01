@@ -52,8 +52,7 @@
       var arb = new Arbitrator(scheduleText);
       var calSelectionElement = document.getElementById('calendarList');
       var selectedId = calSelectionElement[calSelectionElement.selectedIndex].id;
-      arb.submitGamesToCalendar(selectedId);
-      showMessaging();
+      arb.adjustGamesOrSubmitToCalendar(selectedId);
 
       $("#prefArea").show();
     }
