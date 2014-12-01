@@ -1,21 +1,3 @@
-// Polyfill for non-functional ECMAScript 5 Object.keys in FF 32
-if (!Object.prototype.keys) {
-  Object.prototype.keys = function() {
-    if (this !== Object(this)) {
-      throw new TypeError('Object.keys called on non-object');
-    }
-
-    var ret = [], p;
-    for (p in this) {
-      if (Object.prototype.hasOwnProperty.call(this, p)) {
-        ret.push(p);
-      }
-    }
-
-    return ret;
-  }
-}
-
 // Constant used for terms which we don't care about in checkGame().
 var DONTCARE = 'dontcare-1nsy';
 
@@ -128,233 +110,188 @@ function checkGame(aArbitrator, aGameId, aExpectedGroup, aExpectedRole,
   }
 }
 
+module("Basic Parse Testing", {
+  setup: function() {
+    this.testString = "1111 		106016 	Referee 1 	11/9/2013 Sat 12:30 PM 	D6, 12B 	Bloomington Ice Garden 1 	Bloomington 	Minnetonka Black 	$29.50  Accepted on 10/18/2013\n598 		Showcase 	Linesman 	4/26/2014 Sat 8:15 PM 	Hockey, 16U AAA 	Saint Louis Park, East 	TBA 	TBA 	$38.00";
+    this.arbitrator = new Arbitrator(this.testString);
+    this.columns = this.arbitrator.getColumns(0);
+  },
+
+  teardown: function() {
+    // Clear local storage so we don't have any leftover preferences.
+    localStorage.clear();
+  }
+});
+
 test("Basic Parse Test", function() {
-  // Arrange
-  var testString = "1111 		106016 	Referee 1 	11/9/2013 Sat 12:30 PM 	D6, 12B 	Bloomington Ice Garden 1 	Bloomington 	Minnetonka Black 	$29.50  Accepted on 10/18/2013";
-
-  // Act
-  var arbitrator = new Arbitrator(testString);
-  var cols = arbitrator.getColumns(0);
-
   // Assert
-  ok(arbitrator != null, "arbitrator should be non-null");
-  equal(arbitrator.getRows().length, 1, "there should be exactly one row");
-  equal(cols.length, 9, "row 0 should have 9 columns");
-  equal(cols[0], '1111', "Column 0 should be the game number 1111");
-  equal(cols[2], 'Referee 1', "Column 3 should indicate referee 1");
+  ok(this.arbitrator != null, "arbitrator should be non-null");
+  equal(this.arbitrator.getRows().length, 2, "there should be exactly two rows");
+  equal(this.columns.length, 9, "row 0 should have 9 columns");
+  equal(this.columns[0], '1111', "Column 0 should be the game number 1111");
+  equal(this.columns[2], 'Referee 1', "Column 3 should indicate referee 1");
 });
 
 test("Basic Date Recognition", function() {
-  // Arrange
-  var testString = "1111 		106016 	Referee 1 	11/9/2013 Sat 12:30 PM 	D6, 12B 	Bloomington Ice Garden 1 	Bloomington 	Minnetonka Black 	$29.50  Accepted on 10/18/2013";
-  var arbitrator = new Arbitrator(testString);
-
-  // Act
-  var date = arbitrator.getGameById("1111").getTimestamp();
-
   // Assert
-  equal(arbitrator.getGameById("1111").getTime12Hr(), "12:30pm");
-  checkGame(arbitrator, 1111, DONTCARE, DONTCARE, 9, 10, 2013, 12, 30);
+  equal(this.arbitrator.getGameById("1111").getTime12Hr(), "12:30pm");
+  checkGame(this.arbitrator, 1111, DONTCARE, DONTCARE, 9, 10, 2013, 12, 30);
 });
 
 test("Basic Role Recognition", function() {
-  // Arrange
-  var testRef = "1111 		106016 	Referee 1 	11/9/2013 Sat 12:30 PM 	D6, 12B 	Bloomington Ice Garden 1 	Bloomington 	Minnetonka Black 	$29.50  Accepted on 10/18/2013";
-  var linesString = "598 		Showcase 	Linesman 	4/26/2014 Sat 8:15 PM 	Hockey, 16U AAA 	Saint Louis Park, East 	TBA 	TBA 	$38.00";
-  var arbitrator = new Arbitrator(testRef);
-  var arbitrator2 = new Arbitrator(linesString);
-
-  // Act
   // Assert
-  checkGame(arbitrator, 1111, DONTCARE, Role.REFEREE);
-  checkGame(arbitrator2, 598, DONTCARE, Role.LINESMAN);
+  checkGame(this.arbitrator, 1111, DONTCARE, Role.REFEREE);
+  checkGame(this.arbitrator, 598, DONTCARE, Role.LINESMAN);
 });
 
-test("Object.keys Polyfill", function() {
-  // Arrange
-  var values = {a : 'a', b: 'b'};
+module("Complex Data Parsing", {
+  setup: function(aAssert) {
+    var dest = document.URL.substr(0,document.URL.lastIndexOf('/')) + '/fixtures/complexStatement.txt';
 
-  // Act
-  var keys = values.keys();
+    // Setup context for callbacks
+    var self = this;
 
-  // Assert
-  equal(2, keys.length, 'there should be two items in values.keys');
-  ok(keys.indexOf('a') !== -1, 'a should be one of the keys');
-  ok(keys.indexOf('b') !== -1, 'b should be one of the keys');
+    // Wait for ajax call to finish before proceeding with any tests
+    stop();
+
+    // This makes sure a 'syntax error' isn't thrown due to Firefox expecting valid
+    // XML when the request comes back. It's mostly an error-suppression routine,
+    // because the code keeps working even if it's not valid XML, it's just
+    // annoying that it's reported as a syntax error in the console.
+    $.ajaxSetup({'beforeSend': function(xhr){
+      if (xhr.overrideMimeType)
+          xhr.overrideMimeType("text/plain");
+      }
+    });
+
+    $.ajax({
+      url: dest,
+      dataType: 'text'
+    }).success(function(aData, aTextStatus, aRequest) {
+      self.arbitrator = new Arbitrator(aData);
+      start();
+    }).error(function(aRequest, aErrorMessage, aErrorThrown) {
+      ok(false, 'Encountered an error during ajax call: ' + aErrorThrown);
+      start();
+    });
+  },
+
+  teardown: function() {
+    // Clear local storage so we don't have any leftover preferences.
+    localStorage.clear();
+  }
+});
+
+test("Tournament and Scrimmage Parsing", function() {
+  equal(this.arbitrator.getNumGames(), 5, "there should be 5 games");
+
+  // Check the characteristics of the first game.
+  checkGame(this.arbitrator, 4073, DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE,
+            DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE,
+            DONTCARE, false, true);
+
+  // Check the characteristics of the second game.
+  checkGame(this.arbitrator, 203, DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE,
+            DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE,
+            DONTCARE, true);
+
+  // Check the summary strings to make sure they are reasonable.
+  var game1 = this.arbitrator.getGameById(4073);
+  var expectedSS1 = "[106016] Referee (Squirt C Tournament)";
+  var expectedSS2 = "[106016] Referee Scrimmage New Prague v Farmington (10U Girls B)";
+  equal(game1.getSummaryString(), expectedSS1,
+        "Summary string should be: '" + expectedSS1 + "'");
+
+  var game2 = this.arbitrator.getGameById(203);
+  equal(game2.getSummaryString(), expectedSS2,
+        "Summary string should be: '" + expectedSS2 + "'");
+
 });
 
 test("Complex Statement Parsing", function() {
-  // Arrange
-  var dest = document.URL.substr(0,document.URL.lastIndexOf('/')) + '/fixtures/complexStatement.txt';
-  // Wait for the ajax call to finish before proceeding.
-  stop();
+  equal(5, this.arbitrator.getNumGames(), 'there should be 5 games');
 
-  // This makes sure a 'syntax error' isn't thrown due to Firefox expecting valid
-  // XML when the request comes back. It's mostly an error-suppression routine,
-  // because the code keeps working even if it's not valid XML, it's just
-  // annoying that it's reported as a syntax error in the console.
-  $.ajaxSetup({'beforeSend': function(xhr){
-    if (xhr.overrideMimeType)
-        xhr.overrideMimeType("text/plain");
-    }
-  });
+  // Test don't care terms.
+  checkGame(this.arbitrator, 330);
 
-  // Act
-  $.ajax({
-    url: dest,
-    dataType: 'text'
-  }).success(function(aData, aTextStatus, aRequest) {
-    // Assert
+  // Check the characteristics of the first game.
+  checkGame(this.arbitrator, 330, '106016', Role.REFEREE, 8, 10, 2014, 9, 50,
+            "D6, Scrimmage SC 60 MIn $27.50 Each", "Squirt C",
+            "New Prague Community Center", "New Prague", "Dodge County Black");
 
-    var arbitrator = new Arbitrator(aData);
-    equal(3, arbitrator.getNumGames(), 'there should be 3 games');
+  // Check the characteristics of the second game.
+  checkGame(this.arbitrator, 339, '106016', Role.REFEREE, 8, 10, 2014, 18, 45,
+            "D6, Scrimmage 10B 60 Min $27.50 Each", "10U Girls B",
+            "Eden Prairie 3", "Eden Prairie Red", "Minnetonka Black");
 
-    // Test don't care terms.
-    checkGame(arbitrator, 330);
+  // Check the characteristics of the third game.
+  checkGame(this.arbitrator, 3839, 'MinneapHO', Role.LINESMAN, 14, 10, 2014, 20, 10,
+            "Hockey Boys, Varsity", "Varsity Boys", "St. Louis Park Recreation Center",
+            "St Thomas Academy", "Minnetonka");
 
-    // Check the characteristics of the first game.
-    checkGame(arbitrator, 330, '106016', Role.REFEREE, 8, 10, 2014, 9, 50,
-              "D6, Scrimmage SC 60 MIn $27.50 Each", "Squirt C",
-              "New Prague Community Center", "New Prague", "Dodge County Black");
-
-    // Check the characteristics of the second game.
-    checkGame(arbitrator, 339, '106016', Role.REFEREE, 8, 10, 2014, 18, 45,
-              "D6, Scrimmage 10B 60 Min $27.50 Each", "10U Girls B",
-              "Eden Prairie 3", "Eden Prairie Red", "Minnetonka Black");
-
-    // Check the characteristics of the third game.
-    checkGame(arbitrator, 3839, 'MinneapHO', Role.LINESMAN, 14, 10, 2014, 20, 10,
-              "Hockey Boys, Varsity", "Varsity Boys", "St. Louis Park Recreation Center",
-              "St Thomas Academy", "Minnetonka");
-
-    start();
-  }).error(function(aRequest, aErrorMessage, aErrorThrown) {
-    ok(false, 'Encountered an error during ajax call: ' + aErrorThrown);
-    start();
-  });
 });
 
-// Ignore for now.
-// test("Group Alias Preferences", function() {
-//   var prefStore = new PreferenceStore();
-//
-//   // Precondition
-//   ok(!prefStore.hasAliasedGroups(), 'should not have any aliased groups');
-//
-//   // Arrange
-//   prefStore.addGroupAlias('106016', 'D6');
-//
-//   var testString = "1111 		106016 	Referee 1 	11/9/2013 Sat 12:30 PM 	D6, 12B 	Bloomington Ice Garden 1 	Bloomington 	Minnetonka Black 	$29.50  Accepted on 10/18/2013";
-//
-//   // Act
-//   var arbitrator = new Arbitrator(testString);
-//
-//   // Assert
-//   checkGame(arbitrator, 1111, 'D6');
-//   ok(prefStore.hasAliasedGroups(), 'should have some aliased groups');
-//
-//   // Tear down (so other tests don't use the aliases)
-//   prefStore.removeGroupAlias('106016');
-//
-//   // Postcondition
-//   ok(!prefStore.hasAliasedGroups(), 'should not have any aliased groups');
-// });
+module("Preference Testing", {
+    setup: function() {
+      // Set up and check preconditions
+      this.prefStore = new PreferenceStore();
+      ok(!this.prefStore.hasAliasedGroups(), 'should not have any aliased groups');
+      ok(!this.prefStore.hasTimePreferences(), "time preferences should be empty");
 
-test("Tournament and Scrimmage Parsing", function() {
-  // Arrange
-  var dest = document.URL.substr(0,document.URL.lastIndexOf('/')) + '/fixtures/tournamentScrimmage.txt';
-  // Wait for the ajax call to finish before proceeding.
-  stop();
+      this.prefStore.addTimePreference(TimeType.PRIOR_TO_START, 61);
+      this.prefStore.addTimePreference(TimeType.LENGTH_OF_GAME, 90);
+      this.prefStore.addGroupAlias('106016', 'D6');
 
-  // This makes sure a 'syntax error' isn't thrown due to Firefox expecting valid
-  // XML when the request comes back. It's mostly an error-suppression routine,
-  // because the code keeps working even if it's not valid XML, it's just
-  // annoying that it's reported as a syntax error in the console.
-  $.ajaxSetup({'beforeSend': function(xhr){
-    if (xhr.overrideMimeType)
-        xhr.overrideMimeType("text/plain");
+      this.testString = "1111 		106016 	Referee 1 	11/9/2013 Sat 12:30 PM 	D6, 12B 	Bloomington Ice Garden 1 	Bloomington 	Minnetonka Black 	$29.50  Accepted on 10/18/2013\n5422 		OSL 	Referee 2 	11/22/2014 Sat 8:40 PM 	OSL, Choice Tournament SL1 80 min 	Ken Yackel West Side 	Super League 1 	TBA 	$45.00 Accepted on 10/31/2014";
+      this.arbitrator = new Arbitrator(this.testString);
+
+      equal(this.arbitrator.getNumGames(), 2, 'should have 2 games');
+    },
+
+    teardown: function() {
+      this.prefStore.removeAllGroupAliases();
+      this.prefStore.removeTimePreference(TimeType.PRIOR_TO_START);
+      this.prefStore.removeTimePreference(TimeType.LENGTH_OF_GAME);
+
+      // Check post conditions
+      ok(!this.prefStore.hasAliasedGroups(), 'should not have any aliased groups');
+      ok(!this.prefStore.hasTimePreferences(), "time preferences should be empty");
     }
-  });
+});
 
-  // Act
-  $.ajax({
-    url: dest,
-    dataType: 'text'
-  }).success(function(aData, aTextStatus, aRequest) {
-    // Assert
-
-    var arbitrator = new Arbitrator(aData);
-    equal(2, arbitrator.getNumGames(), 'there should be 2 games');
-
-    // Check the characteristics of the first game.
-    checkGame(arbitrator, 4073, DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE,
-              DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE,
-              DONTCARE, false, true);
-
-    // Check the characteristics of the second game.
-    checkGame(arbitrator, 203, DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE,
-              DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE,
-              DONTCARE, true);
-    // Check the summary strings to make sure they are reasonable.
-    var game1 = arbitrator.getGameById(4073);
-    var expectedSS1 = "[106016] Referee (Squirt C Tournament)";
-    var expectedSS2 = "[106016] Referee Scrimmage New Prague v Farmington (10U Girls B)";
-    equal(game1.getSummaryString(), expectedSS1,
-          "Summary string should be: '" + expectedSS1 + "'");
-
-    var game2 = arbitrator.getGameById(203);
-    equal(game2.getSummaryString(), expectedSS2,
-          "Summary string should be: '" + expectedSS2 + "'");
-
-    start();
-  }).error(function(aRequest, aErrorMessage, aErrorThrown) {
-    ok(false, 'Encountered an error during ajax call: ' + aErrorThrown);
-    start();
-  });
+test("Group Alias Preferences", function() {
+  // Assert
+  checkGame(this.arbitrator, 1111, 'D6');
+  ok(this.prefStore.hasAliasedGroups(), 'should have some aliased groups');
 });
 
 test("Time Preferences", function() {
-  var prefStore = new PreferenceStore();
-  ok(!prefStore.hasTimePreferences(), "time preferences should be empty");
+  equal(this.prefStore.getTimePreference(TimeType.PRIOR_TO_START), 61, "should have set prior to start minutes to 61");
 
-  prefStore.addTimePreference(TimeType.PRIOR_TO_START, 61);
-  prefStore.addTimePreference(TimeType.LENGTH_OF_GAME, 90);
-  equal(prefStore.getTimePreference(TimeType.PRIOR_TO_START), 61, "should have set prior to start minutes to 61");
-
-  var testString = "1111 		106016 	Referee 1 	11/9/2013 Sat 12:30 PM 	D6, 12B 	Bloomington Ice Garden 1 	Bloomington 	Minnetonka Black 	$29.50  Accepted on 10/18/2013";
-  var arbitrator = new Arbitrator(testString);
-  var game = arbitrator.getGameById(1111);
+  var game = this.arbitrator.getGameById(1111);
   equal(game.getISOStartDate(), "2013-11-09T17:29:00.000Z", "ISO start date should be 61 minutes prior to game start");
   equal(game.getISOEndDate(), "2013-11-09T20:00:00.000Z", "ISO end date should be 90 minutes after start of game");
   ok(game.getEventJSON()['description'].contains("Game starts at 12:30pm"), 'the game should start at 12:30pm and this should be in the calendar event description');
 
-  prefStore.removeTimePreference(TimeType.PRIOR_TO_START);
-  prefStore.removeTimePreference(TimeType.LENGTH_OF_GAME);
+  this.prefStore.removeTimePreference(TimeType.PRIOR_TO_START);
+  this.prefStore.removeTimePreference(TimeType.LENGTH_OF_GAME);
 
   equal(game.getISOEndDate(), "2013-11-09T19:30:00.000Z", "game should default to 60 minute lengths");
   equal(game.getISOStartDate(), "2013-11-09T18:00:00.000Z", "game should default to 30 minute prior to start time");
-
-  ok(!prefStore.hasTimePreferences(), "time preferences should be empty");
 });
 
 test("Time Preference Regression Test", function() {
-  var prefStore = new PreferenceStore();
-  var testData = "5422 		OSL 	Referee 2 	11/22/2014 Sat 8:40 PM 	OSL, Choice Tournament SL1 80 min 	Ken Yackel West Side 	Super League 1 	TBA 	$45.00 Accepted on 10/31/2014";
-  var arbitrator = new Arbitrator(testData);
-  var game = arbitrator.getGameById(5422);
+  var game = this.arbitrator.getGameById(5422);
 
   ok(game, "game should not be undefined");
 
-  prefStore.addTimePreference(TimeType.PRIOR_TO_START, 60);
-  prefStore.addTimePreference(TimeType.LENGTH_OF_GAME, 120);
+  this.prefStore.addTimePreference(TimeType.PRIOR_TO_START, 60);
+  this.prefStore.addTimePreference(TimeType.LENGTH_OF_GAME, 120);
 
   // Basic game checking
-  checkGame(arbitrator, 5422, DONTCARE, DONTCARE, 22, 10, 2014, 20, 40);
+  checkGame(this.arbitrator, 5422, DONTCARE, DONTCARE, 22, 10, 2014, 20, 40);
 
   // Check ISO start and end times
   equal(game.getISOStartDate(), "2014-11-23T01:40:00.000Z", "Game should start on 11-23-14 at 2:40am UTC, minus 60 minutes for the time pref");
   equal(game.getISOEndDate(), "2014-11-23T04:40:00.000Z", "Game should end on 11-23-14 at 4:40am UTC");
-
-  prefStore.removeTimePreference(TimeType.PRIOR_TO_START);
-  prefStore.removeTimePreference(TimeType.LENGTH_OF_GAME);
 });
