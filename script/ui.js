@@ -33,9 +33,37 @@ function addToMessage(aMessage) {
   showMessaging();
 }
 
+function setTimePref(aTimePrefName) {
+  var timePrefVal = $('#timePref-' + aTimePrefName).val();
+  var prefName = '';
+  var prefStore = new PreferenceStore();
+  prefStore.addTimePreference(aTimePrefName, timePrefVal);
+
+  $('#msg-' + aTimePrefName).css('color', 'green')
+  .html("&#x2713; Preference set!")
+  .show();
+  setTimeout(function() {
+    $('#msg-' + aTimePrefName).fadeOut(function() {
+      $(this).html('');
+    });
+  }, 1000);
+
+}
+
+function updateTimePreferenceUI() {
+  var prefStore = new PreferenceStore();
+  var timePrefs = prefStore.getAllTimePreferences();
+  for (var key in timePrefs) {
+    if (timePrefs.hasOwnProperty(key)) {
+      $('#timePref-' + key).val(timePrefs[key]);
+    }
+  }
+}
+
 function addAlias(aGroupName) {
     var alias = $('#alias-' + aGroupName).val();
-    Arbitrator.addGroupAlias(aGroupName, alias);
+    var prefStore = new PreferenceStore();
+    prefStore.addGroupAlias(aGroupName, alias);
     $('#msg-' + aGroupName).css('color', 'green')
       .html("&#x2713; Alias added!")
       .show();
@@ -49,16 +77,15 @@ function addAlias(aGroupName) {
 /**
  * Show all aliases currently in local storage in the preference UI area.
  */
-function showAliases() {
-    var aliasedGroups = Arbitrator.getGroupAliases();
-    for (var prop in aliasedGroups) {
-      if (aliasedGroups.hasOwnProperty(prop)) {
-        var groupAlias = aliasedGroups[prop];
-        addAliasUIFor(prop, groupAlias);
-      }
+function updateGroupAliasPreferenceUI() {
+  var prefStore = new PreferenceStore();
+  var aliasedGroups = prefStore.getAllGroupAliases();
+  for (var prop in aliasedGroups) {
+    if (aliasedGroups.hasOwnProperty(prop)) {
+      var groupAlias = aliasedGroups[prop];
+      addAliasUIFor(prop, groupAlias);
     }
-
-    $('#prefArea').show();
+  }
 }
 
 function addAliasUIFor(aGroupName, aGroupAlias) {

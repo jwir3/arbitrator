@@ -84,7 +84,7 @@ function checkGame(aArbitrator, aGameId, aExpectedGroup, aExpectedRole,
   }
 
   if (aExpectedYear && aExpectedYear != DONTCARE) {
-    equal(date.getFullYear(), aExpectedYear, '2013', "Year should be " + aExpectedYear);
+    equal(date.getFullYear(), aExpectedYear, "Year should be " + aExpectedYear);
   }
 
   if (aExpectedHourOfDay && aExpectedHourOfDay != DONTCARE) {
@@ -128,7 +128,7 @@ function checkGame(aArbitrator, aGameId, aExpectedGroup, aExpectedRole,
   }
 }
 
-test("Arbitrator Parse Test", function() {
+test("Basic Parse Test", function() {
   // Arrange
   var testString = "1111 		106016 	Referee 1 	11/9/2013 Sat 12:30 PM 	D6, 12B 	Bloomington Ice Garden 1 	Bloomington 	Minnetonka Black 	$29.50  Accepted on 10/18/2013";
 
@@ -144,7 +144,7 @@ test("Arbitrator Parse Test", function() {
   equal(cols[2], 'Referee 1', "Column 3 should indicate referee 1");
 });
 
-test("Arbitrator Date Recognition", function() {
+test("Basic Date Recognition", function() {
   // Arrange
   var testString = "1111 		106016 	Referee 1 	11/9/2013 Sat 12:30 PM 	D6, 12B 	Bloomington Ice Garden 1 	Bloomington 	Minnetonka Black 	$29.50  Accepted on 10/18/2013";
   var arbitrator = new Arbitrator(testString);
@@ -157,7 +157,7 @@ test("Arbitrator Date Recognition", function() {
   checkGame(arbitrator, 1111, DONTCARE, DONTCARE, 9, 10, 2013, 12, 30);
 });
 
-test("Arbitrator Role Recognition", function() {
+test("Basic Role Recognition", function() {
   // Arrange
   var testRef = "1111 		106016 	Referee 1 	11/9/2013 Sat 12:30 PM 	D6, 12B 	Bloomington Ice Garden 1 	Bloomington 	Minnetonka Black 	$29.50  Accepted on 10/18/2013";
   var linesString = "598 		Showcase 	Linesman 	4/26/2014 Sat 8:15 PM 	Hockey, 16U AAA 	Saint Louis Park, East 	TBA 	TBA 	$38.00";
@@ -170,7 +170,7 @@ test("Arbitrator Role Recognition", function() {
   checkGame(arbitrator2, 598, DONTCARE, Role.LINESMAN);
 });
 
-test("Arbitrator Object.keys polyfill", function() {
+test("Object.keys Polyfill", function() {
   // Arrange
   var values = {a : 'a', b: 'b'};
 
@@ -183,7 +183,7 @@ test("Arbitrator Object.keys polyfill", function() {
   ok(keys.indexOf('b') !== -1, 'b should be one of the keys');
 });
 
-test("Arbitrator Complex Statement Parsing", function() {
+test("Complex Statement Parsing", function() {
   // Arrange
   var dest = document.URL.substr(0,document.URL.lastIndexOf('/')) + '/fixtures/complexStatement.txt';
   // Wait for the ajax call to finish before proceeding.
@@ -234,29 +234,31 @@ test("Arbitrator Complex Statement Parsing", function() {
   });
 });
 
-test("Group aliases", function() {
-  // Precondition
-  ok(!Arbitrator.hasAliasedGroups(), 'should not have any aliased groups');
-
-  // Arrange
-  Arbitrator.addGroupAlias('106016', 'D6');
-
-  var testString = "1111 		106016 	Referee 1 	11/9/2013 Sat 12:30 PM 	D6, 12B 	Bloomington Ice Garden 1 	Bloomington 	Minnetonka Black 	$29.50  Accepted on 10/18/2013";
-
-  // Act
-  var arbitrator = new Arbitrator(testString);
-
-  // Assert
-  checkGame(arbitrator, 1111, 'D6');
-  ok(Arbitrator.hasAliasedGroups(), 'should have some aliased groups');
-  equal(Arbitrator.getGroupAliases().keys().length, 1, 'should have 1 aliased group');
-
-  // Tear down (so other tests don't use the aliases)
-  Arbitrator.removeGroupAlias('106016');
-
-  // Postcondition
-  ok(!Arbitrator.hasAliasedGroups(), 'should not have any aliased groups');
-});
+// Ignore for now.
+// test("Group Alias Preferences", function() {
+//   var prefStore = new PreferenceStore();
+//
+//   // Precondition
+//   ok(!prefStore.hasAliasedGroups(), 'should not have any aliased groups');
+//
+//   // Arrange
+//   prefStore.addGroupAlias('106016', 'D6');
+//
+//   var testString = "1111 		106016 	Referee 1 	11/9/2013 Sat 12:30 PM 	D6, 12B 	Bloomington Ice Garden 1 	Bloomington 	Minnetonka Black 	$29.50  Accepted on 10/18/2013";
+//
+//   // Act
+//   var arbitrator = new Arbitrator(testString);
+//
+//   // Assert
+//   checkGame(arbitrator, 1111, 'D6');
+//   ok(prefStore.hasAliasedGroups(), 'should have some aliased groups');
+//
+//   // Tear down (so other tests don't use the aliases)
+//   prefStore.removeGroupAlias('106016');
+//
+//   // Postcondition
+//   ok(!prefStore.hasAliasedGroups(), 'should not have any aliased groups');
+// });
 
 test("Tournament and Scrimmage Parsing", function() {
   // Arrange
@@ -311,23 +313,48 @@ test("Tournament and Scrimmage Parsing", function() {
   });
 });
 
-test("Identification String and Hash Computation", function() {
-  var testData = "1111 		106016 	Referee 1 	11/9/2013 Sat 12:30 PM 	D6, 12B 	Bloomington Ice Garden 1 	Bloomington 	Minnetonka Black 	$29.50  Accepted on 10/18/2013";
+test("Time Preferences", function() {
+  var prefStore = new PreferenceStore();
+  ok(!prefStore.hasTimePreferences(), "time preferences should be empty");
 
-  var arbitrator = new Arbitrator(testData);
+  prefStore.addTimePreference(TimeType.PRIOR_TO_START, 61);
+  prefStore.addTimePreference(TimeType.LENGTH_OF_GAME, 90);
+  equal(prefStore.getTimePreference(TimeType.PRIOR_TO_START), 61, "should have set prior to start minutes to 61");
+
+  var testString = "1111 		106016 	Referee 1 	11/9/2013 Sat 12:30 PM 	D6, 12B 	Bloomington Ice Garden 1 	Bloomington 	Minnetonka Black 	$29.50  Accepted on 10/18/2013";
+  var arbitrator = new Arbitrator(testString);
   var game = arbitrator.getGameById(1111);
+  equal(game.getISOStartDate(), "2013-11-09T17:29:00.000Z", "ISO start date should be 61 minutes prior to game start");
+  equal(game.getISOEndDate(), "2013-11-09T20:00:00.000Z", "ISO end date should be 90 minutes after start of game");
+  ok(game.getEventJSON()['description'].contains("Game starts at 12:30pm"), 'the game should start at 12:30pm and this should be in the calendar event description');
+
+  prefStore.removeTimePreference(TimeType.PRIOR_TO_START);
+  prefStore.removeTimePreference(TimeType.LENGTH_OF_GAME);
+
+  equal(game.getISOEndDate(), "2013-11-09T19:30:00.000Z", "game should default to 60 minute lengths");
+  equal(game.getISOStartDate(), "2013-11-09T18:00:00.000Z", "game should default to 30 minute prior to start time");
+
+  ok(!prefStore.hasTimePreferences(), "time preferences should be empty");
+});
+
+test("Time Preference Regression Test", function() {
+  var prefStore = new PreferenceStore();
+  var testData = "5422 		OSL 	Referee 2 	11/22/2014 Sat 8:40 PM 	OSL, Choice Tournament SL1 80 min 	Ken Yackel West Side 	Super League 1 	TBA 	$45.00 Accepted on 10/31/2014";
+  var arbitrator = new Arbitrator(testData);
+  var game = arbitrator.getGameById(5422);
+
   ok(game, "game should not be undefined");
 
-  var expectedIdString = "111110601612UGirlsBBloomingtonvMinnetonkaBlack";
-  var expectedHash = CryptoJS.SHA1(expectedIdString).toString(CryptoJS.enc.Hex);
-  equal(game.getIdentificationString(), expectedIdString, "identification string should be " + expectedIdString);
-  equal(game.getHash(), expectedHash, "hash should be " + expectedHash);
+  prefStore.addTimePreference(TimeType.PRIOR_TO_START, 60);
+  prefStore.addTimePreference(TimeType.LENGTH_OF_GAME, 120);
 
-  // Now, test to make sure changing the date doesn't actually change the hash.
-  var testDataNewDate = "1111 		106016 	Referee 1 	12/15/2013 Sun 12:30 PM 	D6, 12B 	Bloomington Ice Garden 1 	Bloomington 	Minnetonka Black 	$29.50  Accepted on 10/18/2013";
-  var arbitratorNewDate = new Arbitrator(testDataNewDate);
-  var gameNewDate = arbitrator.getGameById(1111);
+  // Basic game checking
+  checkGame(arbitrator, 5422, DONTCARE, DONTCARE, 22, 10, 2014, 20, 40);
 
-  ok(gameNewDate, "game with a new date but all other information intact should not be undefined");
-  equal(game.getHash(), gameNewDate.getHash(), "two games differing only in date/time should have the same hash");
+  // Check ISO start and end times
+  equal(game.getISOStartDate(), "2014-11-23T01:40:00.000Z", "Game should start on 11-23-14 at 2:40am UTC, minus 60 minutes for the time pref");
+  equal(game.getISOEndDate(), "2014-11-23T04:40:00.000Z", "Game should end on 11-23-14 at 4:40am UTC");
+
+  prefStore.removeTimePreference(TimeType.PRIOR_TO_START);
+  prefStore.removeTimePreference(TimeType.LENGTH_OF_GAME);
 });
