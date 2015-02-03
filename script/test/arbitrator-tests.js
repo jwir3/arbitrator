@@ -183,7 +183,7 @@ module("Complex Data Parsing", {
 });
 
 test("Tournament and Scrimmage Parsing", function() {
-  equal(this.arbitrator.getNumGames(), 5, "there should be 5 games");
+  equal(this.arbitrator.getNumGames(), 6, "there should be 6 games");
 
   // Check the characteristics of the first game.
   checkGame(this.arbitrator, 4073, DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE,
@@ -209,7 +209,7 @@ test("Tournament and Scrimmage Parsing", function() {
 });
 
 test("Complex Statement Parsing", function() {
-  equal(5, this.arbitrator.getNumGames(), 'there should be 5 games');
+  equal(6, this.arbitrator.getNumGames(), 'there should be 6 games');
 
   // Test don't care terms.
   checkGame(this.arbitrator, 330);
@@ -229,6 +229,13 @@ test("Complex Statement Parsing", function() {
             "Hockey Boys, Varsity", "Varsity Boys", "St. Louis Park Recreation Center",
             "St Thomas Academy", "Minnetonka");
 
+});
+
+test("Note Game Start Time Truncation Regression Test", function() {
+  var game = this.arbitrator.getGameById(5629);
+  ok(game, "game should not be undefined");
+
+  equal(game.getTime12Hr(), "11:00am");
 });
 
 module("Preference Testing", {

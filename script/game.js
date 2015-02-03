@@ -108,7 +108,9 @@ Game.prototype = {
         hour = hour - 12;
       }
 
-      return hour + ":" + timestamp.getMinutes() + ampm;
+      return hour
+             + ":" + (timestamp.getMinutes() < 10 ? "0" : "")
+             + timestamp.getMinutes() + ampm;
   },
 
   getISOStartDate: function() {
