@@ -146,6 +146,8 @@ test("Basic Role Recognition", function() {
 
 module("Complex Data Parsing", {
   setup: function(aAssert) {
+    this.expectedNumGames = 8;
+
     var dest = document.URL.substr(0,document.URL.lastIndexOf('/')) + '/fixtures/complexStatement.txt';
 
     // Setup context for callbacks
@@ -183,7 +185,8 @@ module("Complex Data Parsing", {
 });
 
 test("Tournament and Scrimmage Parsing", function() {
-  equal(this.arbitrator.getNumGames(), 6, "there should be 6 games");
+  equal(this.arbitrator.getNumGames(), this.expectedNumGames,
+        "there should be " + this.expectedNumGames + " games");
 
   // Check the characteristics of the first game.
   checkGame(this.arbitrator, 4073, DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE,
@@ -209,7 +212,8 @@ test("Tournament and Scrimmage Parsing", function() {
 });
 
 test("Complex Statement Parsing", function() {
-  equal(6, this.arbitrator.getNumGames(), 'there should be 6 games');
+  equal(this.arbitrator.getNumGames(), this.expectedNumGames,
+        "there should be " + this.expectedNumGames + " games");
 
   // Test don't care terms.
   checkGame(this.arbitrator, 330);
@@ -251,6 +255,35 @@ test("JSON Output", function() {
 
   var notes = "Game starts at " + String(game.getTime12Hr()) + "\n\n" + "{ArbitratorHash: " + String(game.getHash()) + "}"
   equal(notes, gameJson.description);
+});
+
+test("Consecutive Game Start Time Test", function() {
+  var game1 = this.arbitrator.getGameById(5694);
+  var game2 = this.arbitrator.getGameById(5695);
+
+  ok(game1, "game 1 should not be undefined");
+  ok(game2, "game 2 should not be undefined");
+
+  var startDate1 = game1.getTimestamp();
+  var expectedFirstStartTime = new Date(startDate1.setMinutes(startDate1.getMinutes() - 30)).toISOString();
+  equal(expectedFirstStartTime, game1.getISOStartDate(),
+        "first game should have a calendar start date 30 minutes prior to start of game");
+
+  ok(game2.isConsecutiveGame(), "game 2 should be a consecutive game");
+  var startDate2 = game2.getTimestamp();
+  var expectedSecondStartTime = new Date(startDate2.setMinutes(startDate2.getMinutes() - 0)).toISOString();
+  equal(expectedSecondStartTime, game2.getISOStartDate(),
+        "second game should have a calendar start date 0 minutes prior to start of game");
+
+  // Make sure no other games are consecutive.
+  var allGames = this.arbitrator.getAllGames();
+  for (gameIdx in allGames) {
+    var nonConsGame = allGames[gameIdx];
+    ok(nonConsGame.getId() == 5694
+       || nonConsGame.getId() == 5695
+       || !nonConsGame.isConsecutiveGame(),
+       "game " + nonConsGame.getId() + " should be non-consecutive");
+  }
 });
 
 module("Preference Testing", {
