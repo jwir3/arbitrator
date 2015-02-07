@@ -66,6 +66,8 @@ Arbitrator.prototype = {
         columnPointer = 0;
       }
     }
+
+    this.findConsecutiveGames();
   },
 
   getNumGames: function() {
@@ -181,7 +183,6 @@ Arbitrator.prototype = {
     });
     request.execute(function(aResponse){
       if (!aResponse['error']) {
-        console.log("***** DEBUG_jwir3: Event added to calendar with id: " + aCalendarId);
         console.log(aResponse);
       } else {
         console.log("An error occurred: " + aResponse);
@@ -189,7 +190,6 @@ Arbitrator.prototype = {
     });
 
     if (!aSuppressMessage) {
-      console.log("***** DEBUG_jwir3: Not suppressing message in submit");
       this.notifyGameAdded(aGame);
     }
   },
@@ -227,5 +227,38 @@ Arbitrator.prototype = {
         aCallback.onNoMatchFound(aGame);
       }
     });
+  },
+
+  /**
+   * Retrieve all games in this Arbitrator object.
+   *
+   * @return An array of all Game objects known about by this Arbitrator
+   * instance.
+   */
+  getAllGames: function() {
+    return this.mGames;
+  },
+
+  /**
+   * Search through all games to find those that are consecutive.
+   *
+   * Note that this does not currently search through calendar history. That is,
+   * only games that are entered together in the same Arbitrator object are
+   * under consideration for being linked in a consecutive manner.
+   */
+  findConsecutiveGames: function() {
+    var prefStore = new PreferenceStore();
+    var gameLengthMins = prefStore.getTimePreference(TimeType.LENGTH_OF_GAME, 60);
+    var prevGame;
+    for (index in this.mGames) {
+      var curGame = this.mGames[index];
+      if (prevGame
+          && curGame.isWithinConsecutiveTimeRangeOf(prevGame)
+          && curGame.getSite() == prevGame.getSite()) {
+          curGame.setConsecutiveGame(true);
+        }
+
+        prevGame = curGame;
+      }
   }
 }

@@ -50,7 +50,8 @@ var Role = Object.freeze({
   UNKNOWN: -1
 });
 
-var Game = function(aId, aGroup, aRole, aTimestamp, aSportLevel, aSite, aHomeTeam, aAwayTeam, aFees) {
+var Game = function(aId, aGroup, aRole, aTimestamp, aSportLevel, aSite,
+                    aHomeTeam, aAwayTeam, aFees) {
   var prefStore = new PreferenceStore();
   this.mId = aId;
   this.mGroup = prefStore.getAliasForGroupId(aGroup);
@@ -61,6 +62,7 @@ var Game = function(aId, aGroup, aRole, aTimestamp, aSportLevel, aSite, aHomeTea
   this.mHomeTeam = aHomeTeam;
   this.mAwayTeam = aAwayTeam;
   this.mFees = aFees;
+  this.mIsConsecutiveGame = false;
 }
 
 Game.prototype = {
@@ -117,6 +119,9 @@ Game.prototype = {
     var prefStore = new PreferenceStore();
     var startDate = this.getTimestamp();
     var priorToStart = prefStore.getTimePreference(TimeType.PRIOR_TO_START, 30);
+    if (this.isConsecutiveGame()) {
+      priorToStart = 0;
+    }
     return new Date(startDate.setMinutes(startDate.getMinutes() - priorToStart)).toISOString();
   },
 
@@ -127,6 +132,48 @@ Game.prototype = {
     // Default to 1 hour if no time preference is specified.
     var gameLengthMins = prefStore.getTimePreference(TimeType.LENGTH_OF_GAME, 60);
     return new Date(endDate.setMinutes(endDate.getMinutes() + gameLengthMins)).toISOString();
+  },
+
+  /**
+   * Determines if this game is a consecutive game (a game where the preceding
+   * game is at the same site and ended within two hours of the start of this
+   * game).
+   *
+   * @return true, if this game is a consecutive game; false, otherwise.
+   */
+  isConsecutiveGame: function() {
+    return this.mIsConsecutiveGame;
+  },
+
+  /**
+   * Set whether or not this game is a consecutive game (a game where the
+   * preceding game is at the same site and ended within two hours of the start
+   * of this game).
+   *
+   * @param aIsConsecutive Whether or not this is a consecutive game
+   */
+  setConsecutiveGame: function(aIsConsecutive) {
+    this.mIsConsecutiveGame = aIsConsecutive;
+  },
+
+  /**
+   * Determines if this game is within the time range (2 hours, same day)
+   * necessary to be considered for a possible consecutive game with another
+   * game.
+   *
+   * @param aGame A Game for which this game should be determined to follow by
+   *        less than 2 hours.
+   *
+   * @return true, if this Game is within the time range necessary to make it a
+   *         potential consecutive game; false, otherwise.
+   */
+  isWithinConsecutiveTimeRangeOf: function(aGame) {
+    var aOtherTimestamp = aGame.getTimestamp();
+    var timeStamp = this.getTimestamp();
+    return aOtherTimestamp.getDate() == timeStamp.getDate()
+           && aOtherTimestamp.getFullYear() == timeStamp.getFullYear()
+           && aOtherTimestamp.getMonth() == timeStamp.getMonth()
+           && aOtherTimestamp.getHours() + 2 >= timeStamp.getHours()
   },
 
   setRole: function(aRoleString) {
@@ -240,6 +287,7 @@ Game.prototype = {
       "start": {
         "dateTime": this.getISOStartDate()
       },
+      "location": this.getSite(),
       "description": "Game starts at " + String(this.getTime12Hr()) + "\n\n" + "{ArbitratorHash: " + String(this.getHash()) + "}",
       "summary": this.getSummaryString()
     };
