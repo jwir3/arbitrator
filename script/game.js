@@ -50,7 +50,8 @@ var Role = Object.freeze({
   UNKNOWN: -1
 });
 
-var Game = function(aId, aGroup, aRole, aTimestamp, aSportLevel, aSite, aHomeTeam, aAwayTeam, aFees) {
+var Game = function(aId, aGroup, aRole, aTimestamp, aSportLevel, aSite,
+                    aHomeTeam, aAwayTeam, aFees) {
   var prefStore = new PreferenceStore();
   this.mId = aId;
   this.mGroup = prefStore.getAliasForGroupId(aGroup);
@@ -240,6 +241,7 @@ Game.prototype = {
       "start": {
         "dateTime": this.getISOStartDate()
       },
+      "location": this.getSite(),
       "description": "Game starts at " + String(this.getTime12Hr()) + "\n\n" + "{ArbitratorHash: " + String(this.getHash()) + "}",
       "summary": this.getSummaryString()
     };

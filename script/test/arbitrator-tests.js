@@ -238,6 +238,21 @@ test("Note Game Start Time Truncation Regression Test", function() {
   equal(game.getTime12Hr(), "11:00am");
 });
 
+test("JSON Output", function() {
+  var game = this.arbitrator.getGameById(5629);
+  ok(game, "game should not be undefined");
+
+  var gameJson = game.getEventJSON();
+  ok(gameJson, "game JSON should not be undefined");
+  equal(game.getISOStartDate(), gameJson.start.dateTime);
+  equal(game.getISOEndDate(), gameJson.end.dateTime);
+  equal(game.getSite(), gameJson.location);
+  equal(game.getSummaryString(), gameJson.summary);
+
+  var notes = "Game starts at " + String(game.getTime12Hr()) + "\n\n" + "{ArbitratorHash: " + String(game.getHash()) + "}"
+  equal(notes, gameJson.description);
+});
+
 module("Preference Testing", {
     setup: function() {
       // Set up and check preconditions

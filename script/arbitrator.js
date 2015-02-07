@@ -181,7 +181,6 @@ Arbitrator.prototype = {
     });
     request.execute(function(aResponse){
       if (!aResponse['error']) {
-        console.log("***** DEBUG_jwir3: Event added to calendar with id: " + aCalendarId);
         console.log(aResponse);
       } else {
         console.log("An error occurred: " + aResponse);
@@ -189,7 +188,6 @@ Arbitrator.prototype = {
     });
 
     if (!aSuppressMessage) {
-      console.log("***** DEBUG_jwir3: Not suppressing message in submit");
       this.notifyGameAdded(aGame);
     }
   },
