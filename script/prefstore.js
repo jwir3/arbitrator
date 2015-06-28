@@ -3,15 +3,22 @@
  */
 var TimeType = Object.freeze({
   /**
-  * Flag for indicating the time type is prior to the game start.
-  */
+   * Flag for indicating the time type is prior to the game start.
+   */
   PRIOR_TO_START: 'priorToStart',
 
   /**
-  * Flag for indicating the time type is after the game start until the game
-  * ends (i.e. the length of the game).
-  */
-  LENGTH_OF_GAME: 'gameLength'
+   * Flag for indicating the time type is after the game start until the game
+   * ends (i.e. the length of the game).
+   */
+  LENGTH_OF_GAME: 'gameLength',
+
+  /**
+   * Flag for indicating how long (in hours) between games should be considered
+   * "consecutive" games. Any game at the same location within this number of
+   * hours of a previous game on the same day will be considered "consecutive".
+   */
+  CONSECUTIVE_GAME_THRESHOLD: 'consecutiveGames'
 });
 
 /**
@@ -43,26 +50,30 @@ PreferenceStore.prototype = {
    * Add a time preference to the preference store.
    *
    * @param aType The type to add. Must be one of TimeType available options.
-   * @param aTimeInMinutes The time value, in minutes, to add to the preference
-   *        store. If not >= 0, then will be set to 0.
+   * @param aTimePeriod The time value to add to the preference store. If not
+   *        >= 0, then will be set to 0.
    */
-  addTimePreference: function(aType, aTimeInMinutes) {
+  addTimePreference: function(aType, aTimePeriod) {
     if (!this.time) {
       this.time = new Object();
     }
 
-    if (aTimeInMinutes < 0) {
+    if (aTimePeriod < 0) {
       console.log("Unable to set a time preference value < 0. Resetting time to 0.");
-      aTimeInMinutes = 0;
+      aTimePeriod = 0;
     }
 
     switch(aType) {
       case TimeType.PRIOR_TO_START:
-        this.time[TimeType.PRIOR_TO_START] = aTimeInMinutes;
+        this.time[TimeType.PRIOR_TO_START] = aTimePeriod;
         break;
 
       case TimeType.LENGTH_OF_GAME:
-        this.time[TimeType.LENGTH_OF_GAME] = aTimeInMinutes;
+        this.time[TimeType.LENGTH_OF_GAME] = aTimePeriod;
+        break;
+
+      case TimeType.CONSECUTIVE_GAME_THRESHOLD:
+        this.time[TimeType.CONSECUTIVE_GAME_THRESHOLD] = aTimePeriod;
         break;
 
       default:
