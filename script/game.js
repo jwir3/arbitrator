@@ -157,23 +157,25 @@ Game.prototype = {
   },
 
   /**
-   * Determines if this game is within the time range (2 hours, same day)
-   * necessary to be considered for a possible consecutive game with another
-   * game.
+   * Determines if this game is within the time range (within the same day and
+   * within the consecutive game threshold) necessary to be considered for a
+   * possible consecutive game with another game.
    *
    * @param aGame A Game for which this game should be determined to follow by
-   *        less than 2 hours.
+   *        less than the threshold for consecutive games.
    *
    * @return true, if this Game is within the time range necessary to make it a
    *         potential consecutive game; false, otherwise.
    */
   isWithinConsecutiveTimeRangeOf: function(aGame) {
+    var prefStore = new PreferenceStore();
+    var consecutiveGameThreshold = prefStore.getTimePreference(TimeType.CONSECUTIVE_GAME_THRESHOLD, 2);
     var aOtherTimestamp = aGame.getTimestamp();
     var timeStamp = this.getTimestamp();
     return aOtherTimestamp.getDate() == timeStamp.getDate()
            && aOtherTimestamp.getFullYear() == timeStamp.getFullYear()
            && aOtherTimestamp.getMonth() == timeStamp.getMonth()
-           && aOtherTimestamp.getHours() + 2 >= timeStamp.getHours()
+           && aOtherTimestamp.getHours() + consecutiveGameThreshold >= timeStamp.getHours()
   },
 
   setRole: function(aRoleString) {

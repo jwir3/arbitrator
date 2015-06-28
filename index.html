@@ -85,7 +85,7 @@
       </div>
       <div class="prefGroup" id="timingPrefs">
         <h4>Time</h4>
-        You can add preferences for start/end times here.<br />
+        You can add preferences for game times here.<br />
         <div class="inputSet">
           <div class="labelSet">
             <label for="timePref-priorToStart">Minutes before start:</label>
@@ -98,6 +98,14 @@
             <div class="inputMessageAreaFloatContainer"><span id="msg-gameLength" class="inputMessageArea"></span></div>
             <button id="setMinEnd" onclick="setTimePref('gameLength')">Set</button>
             <input type="number" id="timePref-gameLength" value="60" />
+          </div>
+        </div>
+        <div class="inputSet">
+          <div class="labelSet">
+            <label for="timePref-consecutiveGames">Consecutive Game Threshold (Hours):</label>
+            <div class="inputMessageAreaFloatContainer"><span id="msg-consecutiveGames" class="inputMessageArea"></span></div>
+            <button id="setConsecutiveGameThreshold" onclick="setTimePref('consecutiveGames')">Set</button>
+            <input type="number" id="timePref-consecutiveGames" value="2" />
           </div>
         </div>
       </div>
