@@ -111,6 +111,20 @@
           </div>
         </div>
       </div>
+      <div class="prefGroup" id="locationPrefs">
+        <h4>Locations</h4>
+        You can add preferences for specific locations here so the addresses are
+        stored for later use.
+        <div class="inputSet">
+          <div class="labelSet">
+            <label for="locationPref-vadnaisHeights">Vadnais Heights</label>
+            <div class="inputMessageAreaFloatContainer"><span id="msg-locationPref-vadnaisHeights" class="inputMessageArea"></span></div>
+            <button id="deleteLocationPref-vadnaisHeights" onClick="deleteLocationPref('vadnaisHeights')">Remove</button>
+            <button id="setLocationPref-vadnaisHeights" onClick="setLocationPref('vadnaisHeights')">Set</button>
+            <input type="text" id="locationPref-vadnaisHeights" value="Vadnais Heights" />
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>

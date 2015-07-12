@@ -58,6 +58,10 @@
   height: 30em;
 }
 
+.prefGroup {
+    float: left;
+}
+
 .inputSet {
   position: relative;
   width: 100%;
@@ -67,6 +71,7 @@
 .labelSet label {
   float: left;
   position: relative;
+  margin-right: 2em;
 }
 
 .labelSet input {

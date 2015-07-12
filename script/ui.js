@@ -88,6 +88,10 @@ function updateGroupAliasPreferenceUI() {
   }
 }
 
+function addLocationUIFor(aLocation) {
+
+}
+
 function addAliasUIFor(aGroupName, aGroupAlias) {
   // if a UI already exists for this groupName, then don't show it.
   if ($('#alias-' + aGroupName).length) {
