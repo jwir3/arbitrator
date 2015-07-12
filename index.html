@@ -5,11 +5,13 @@
     <title>Arbitrator</title>
     <script src="script/modules/jquery.js"></script>
     <script src="https://apis.google.com/js/client.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkiyjtUnxlzQUyxnu0WqUtkhyV8Q2KyA0"></script>
     <script type="text/javascript" src="script/prefstore.js"></script>
     <script src="script/modules/sha1.js"></script>
     <script type="text/javascript" src="script/arbitrator.js"></script>
     <script type="text/javascript" src="script/game.js"></script>
     <script type="text/javascript" src="script/ui.js"></script>
+    <script type="text/javascript" src="script/location.js"></script>
     <link rel="stylesheet" href="style/arbitrator.css" type="text/css" />
     <script>
     function populateCalendarList() {
@@ -61,6 +63,7 @@
 
     $(document).ready(function() {
       initAuth();
+      var loc = new Location('Braemar');
     });
 
     </script>
