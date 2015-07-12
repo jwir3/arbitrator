@@ -98,6 +98,6 @@ function addAliasUIFor(aGroupName, aGroupAlias) {
   var input2 = '<input class="aliasUI" type="text" id="alias-' + aGroupName + '" length="10" value="' + aGroupAlias + '" />';
   var submit = '<button class="aliasUI" onclick="addAlias(\'' + aGroupName + '\')">Add</button>';
   var msgArea = '<span id="msg-' + aGroupName + '" class="inputMessageArea"></span>';
-  var uiLine = '<div class="aliasInputLine">' + input1 + input2 + submit + msgArea + '</div>';
-  $('#aliasPrefs').append(uiLine);
+  var uiLine = '<div>' + input1 + input2 + submit + msgArea + '</div>';
+  $('#aliasInputs').append(uiLine);
 }
