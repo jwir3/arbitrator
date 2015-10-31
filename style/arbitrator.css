@@ -79,6 +79,10 @@
   position: relative;
 }
 
+input.locationTextInput {
+  width: 15em;
+}
+
 .labelSet button {
   float: right;
   position: relative;

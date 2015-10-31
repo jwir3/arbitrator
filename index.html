@@ -12,6 +12,7 @@
     <script type="text/javascript" src="script/game.js"></script>
     <script type="text/javascript" src="script/ui.js"></script>
     <script type="text/javascript" src="script/location.js"></script>
+    <script type="text/javascript" src="script/place.js"></script>
     <link rel="stylesheet" href="style/arbitrator.css" type="text/css" />
     <script>
     function populateCalendarList() {
@@ -47,13 +48,9 @@
       };
       gapi.auth.authorize(config, handleAuthResult);
 
-      initializeAutoComplete();
       updateGroupAliasPreferenceUI();
       updateTimePreferenceUI();
-    }
-
-    function initializeAutoComplete() {
-      var loc = new Location(document.getElementById('locationPref-vadnaisHeights'));
+      updateLocationPreferenceUI();
     }
 
     function arbitrate() {
@@ -122,14 +119,8 @@
         <h4>Locations</h4>
         You can add preferences for specific locations here so the addresses are
         stored for later use.
+        <br /><br />
         <div class="inputSet">
-          <div class="labelSet">
-            <label for="locationPref-vadnaisHeights">Vadnais Heights</label>
-            <div class="inputMessageAreaFloatContainer"><span id="msg-locationPref-vadnaisHeights" class="inputMessageArea"></span></div>
-            <button id="deleteLocationPref-vadnaisHeights" onClick="deleteLocationPref('vadnaisHeights')">Remove</button>
-            <button id="setLocationPref-vadnaisHeights" onClick="setLocationPref('vadnaisHeights')">Set</button>
-            <input type="text" id="locationPref-vadnaisHeights" placeholder="Enter address for Vadnais Heights" />
-          </div>
         </div>
       </div>
     </div>

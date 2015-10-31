@@ -83,6 +83,16 @@ PreferenceStore.prototype = {
     this._putPreferences();
   },
 
+  addLocationPreference: function(aPlace) {
+    if (!this.locations) {
+      this.locations = new Object();
+    }
+
+    this.locations[aPlace.getShortName()] = aPlace;
+
+    this._putPreferences();
+  },
+
   /**
    * Retrieve the value of a single time preference.
    *
@@ -102,6 +112,15 @@ PreferenceStore.prototype = {
     return aDefault;
   },
 
+  getLocationPreference: function(aLocationKey) {
+      if (this.locations && this.locations[aLocationKey]) {
+        var genericLoc = this.locations[aLocationKey];
+        return new Place(genericLoc.mShortName, genericLoc.mName, genericLoc.mAddress);
+      }
+
+      return aLocationKey;
+  },
+
   /**
    * Retrieve all preferences related to time currently in the preference store.
    *
@@ -112,6 +131,15 @@ PreferenceStore.prototype = {
   getAllTimePreferences: function() {
     if (this.time) {
       return Object.freeze(this.time);
+    }
+
+    return new Object();
+  },
+
+  getAllLocationPreferences: function() {
+    if (this.locations) {
+      console.log(this.locations);
+      return Object.freeze(this.locations);
     }
 
     return new Object();
@@ -185,6 +213,16 @@ PreferenceStore.prototype = {
     return false;
   },
 
+  hasLocationPreference: function(aPreferenceKey) {
+    if (this.locations) {
+      if (this.locations.hasOwnProperty(aPreferenceKey)) {
+        return true;
+      }
+    }
+
+    return false;
+  },
+
   /**
    * Remove the instance of a single time preference from the preference store.
    *
@@ -194,6 +232,14 @@ PreferenceStore.prototype = {
   removeTimePreference: function(aTimeType) {
     if (this.time) {
       delete this.time[aTimeType];
+    }
+
+    this._putPreferences();
+  },
+
+  removeLocationPreference: function(aLocationKey) {
+    if (this.locations) {
+      delete this.locations[aLocationKey];
     }
 
     this._putPreferences();
@@ -234,10 +280,12 @@ PreferenceStore.prototype = {
    */
   _retrievePreferences: function() {
     var preferenceString = window.localStorage['arbitrator'];
+    console.log('Preference string: ' + preferenceString);
     if (preferenceString) {
       var prefObj = JSON.parse(preferenceString);
       this.groupAliases = prefObj['groupAliases'];
       this.time = prefObj['time'];
+      this.locations = prefObj['locations'];
     }
   }
 };
