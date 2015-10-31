@@ -153,7 +153,6 @@ Arbitrator.prototype = {
    */
   adjustGameInCalendar: function(aCalendarId, aEvent, aGame) {
     // First, delete the old event.
-    console.log("***** DEBUG_jwir3: Deleting event with id: " + aEvent.id + " from calendar with id: " + aCalendarId);
     var request = gapi.client.calendar.events.delete({
       'calendarId' : aCalendarId,
       'eventId' : aEvent.id
@@ -183,7 +182,7 @@ Arbitrator.prototype = {
     });
     request.execute(function(aResponse){
       if (!aResponse['error']) {
-        console.log(aResponse);
+        console.log("Request to submit game to calendar was successful");
       } else {
         console.log("An error occurred: " + aResponse);
       }
@@ -214,7 +213,6 @@ Arbitrator.prototype = {
       var foundEvent = false;
       for (var i = 0; i < results.length; i++) {
         var calEvent = results[i];
-        console.log(calEvent);
         if (calEvent.description
             && calEvent.description.contains(searchString)) {
             aCallback.onMatchFound(aGame, calEvent)
@@ -254,7 +252,7 @@ Arbitrator.prototype = {
       var curGame = this.mGames[index];
       if (prevGame
           && curGame.isWithinConsecutiveTimeRangeOf(prevGame)
-          && curGame.getSite() == prevGame.getSite()) {
+          && curGame.getSite().getName() == prevGame.getSite().getName()) {
           curGame.setConsecutiveGame(true);
         }
 

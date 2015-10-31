@@ -5,11 +5,14 @@
     <title>Arbitrator</title>
     <script src="script/modules/jquery.js"></script>
     <script src="https://apis.google.com/js/client.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
     <script type="text/javascript" src="script/prefstore.js"></script>
     <script src="script/modules/sha1.js"></script>
     <script type="text/javascript" src="script/arbitrator.js"></script>
     <script type="text/javascript" src="script/game.js"></script>
     <script type="text/javascript" src="script/ui.js"></script>
+    <script type="text/javascript" src="script/location.js"></script>
+    <script type="text/javascript" src="script/place.js"></script>
     <link rel="stylesheet" href="style/arbitrator.css" type="text/css" />
     <script>
     function populateCalendarList() {
@@ -37,7 +40,7 @@
       }
     }
 
-    function initAuth() {
+    function initialize() {
       var config = {
         'client_id': '609265890429-c5d69skkd9o2f1fksco00294oom2burf.apps.googleusercontent.com',
         'scope': 'https://www.googleapis.com/auth/calendar',
@@ -47,6 +50,7 @@
 
       updateGroupAliasPreferenceUI();
       updateTimePreferenceUI();
+      updateLocationPreferenceUI();
     }
 
     function arbitrate() {
@@ -60,7 +64,7 @@
     }
 
     $(document).ready(function() {
-      initAuth();
+      initialize();
     });
 
     </script>
@@ -109,6 +113,14 @@
             <button id="setConsecutiveGameThreshold" onclick="setTimePref('consecutiveGames')">Set</button>
             <input type="number" id="timePref-consecutiveGames" value="2" />
           </div>
+        </div>
+      </div>
+      <div class="prefGroup" id="locationPrefs">
+        <h4>Locations</h4>
+        You can add preferences for specific locations here so the addresses are
+        stored for later use.
+        <br /><br />
+        <div class="inputSet">
         </div>
       </div>
     </div>

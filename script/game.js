@@ -58,7 +58,7 @@ var Game = function(aId, aGroup, aRole, aTimestamp, aSportLevel, aSite,
   this.setRole(aRole);
   this.mTimestamp = aTimestamp;
   this.mSportLevel = aSportLevel;
-  this.mSite = aSite;
+  this.mSite = this.getPlaceForSite(aSite);
   this.mHomeTeam = aHomeTeam;
   this.mAwayTeam = aAwayTeam;
   this.mFees = aFees;
@@ -282,6 +282,7 @@ Game.prototype = {
   },
 
   getEventJSON: function() {
+    var siteData = this.getSite().getAddress() ? this.getSite().getAddress() : this.getSite().getName();
     return  {
       "end": {
         "dateTime": this.getISOEndDate()
@@ -289,7 +290,7 @@ Game.prototype = {
       "start": {
         "dateTime": this.getISOStartDate()
       },
-      "location": this.getSite(),
+      "location": siteData,
       "description": "Game starts at " + String(this.getTime12Hr()) + "\n\n" + "{ArbitratorHash: " + String(this.getHash()) + "}",
       "summary": this.getSummaryString()
     };
@@ -327,5 +328,30 @@ Game.prototype = {
    */
   getHash: function() {
     return CryptoJS.SHA1(this.getIdentificationString()).toString(CryptoJS.enc.Hex);
-  }
+  },
+
+
+  /**
+   * Retrieve a Place object for some existing site string.
+   *
+   * @param aSiteName The textual name of the site, as passed in from ArbiterSports.
+   *
+   * @returns A Place object with name equivalent to aSiteName, but with an address
+   *          if one was found in the preference store.
+   */
+  getPlaceForSite: function(aSiteName) {
+    // Convert the site name to a key
+    var placeKey = aSiteName.replace(/\s/g, '');
+
+    var prefStore = new PreferenceStore();
+    if (prefStore.hasLocationPreference(placeKey)) {
+      console.log("We found " + placeKey + " in the preference store");
+      return prefStore.getLocationPreference(placeKey);
+    }
+
+    var place = new Place(placeKey, aSiteName, undefined);
+    prefStore.addLocationPreference(place);
+    return place;
+  },
+
 }

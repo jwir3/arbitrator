@@ -47,7 +47,24 @@ function setTimePref(aTimePrefName) {
       $(this).html('');
     });
   }, 1000);
+}
 
+function setLocationPref(aLocationPrefKey, aLocationPrefName) {
+  var address = $('#locationPref-' + aLocationPrefKey).val();
+
+  var prefName = '';
+  var prefStore = new PreferenceStore();
+  console.log("Adding preference with address: " + address);
+  prefStore.addLocationPreference(new Place(aLocationPrefKey, aLocationPrefName, address));
+
+  $('#msg-' + aLocationPrefName).css('color', 'green')
+  .html("&#x2713; Preference set!")
+  .show();
+  setTimeout(function() {
+    $('#msg-' + aLocationPrefName).fadeOut(function() {
+      $(this).html('');
+    });
+  }, 1000);
 }
 
 function updateTimePreferenceUI() {
@@ -58,6 +75,54 @@ function updateTimePreferenceUI() {
       $('#timePref-' + key).val(timePrefs[key]);
     }
   }
+}
+
+function updateLocationPreferenceUI() {
+    var prefStore = new PreferenceStore();
+    var locPrefs = prefStore.getAllLocationPreferences();
+    console.log("Location prefs:");
+    console.log(locPrefs);
+    for (var key in locPrefs) {
+      if (locPrefs.hasOwnProperty(key)) {
+        addLocationPreference(prefStore.getLocationPreference(key));
+      }
+    }
+}
+
+function deleteLocationPref(aLocationKey) {
+  var prefStore = new PreferenceStore();
+  prefStore.removeLocationPreference(aLocationKey);
+  $('#locationPref-' + aLocationKey).parent().fadeOut(300, function () {
+    $(this).remove();
+  });
+}
+
+function addLocationPreference(aPlace) {
+  var labelSet = $('<div class="labelSet"></div>');
+  var labelElement = $('<label for="locationPref-' + aPlace.getShortName() + '">' + aPlace.getName() + '</label>');
+  labelSet.append(labelElement);
+  var container = $('<div class="inputMessageAreaFloatContainer"><span id="msg-locationPref-' + aPlace.getShortName() + '" class="inputMessageArea"></span></div>');
+  labelSet.append(container);
+  var deleteButton = $('<button id="deleteLocationPref-' + aPlace.getShortName() + '" onClick="deleteLocationPref(\'' + aPlace.getShortName() + '\')">Remove</button>');
+  labelSet.append(deleteButton);
+  var onClickHandler = "setLocationPref('" + aPlace.getShortName() + "', '" + aPlace.getName() + "');";
+
+  var setButton = $('<button id="setLocationPref-' + aPlace.getShortName() + '" onClick="' + onClickHandler + '">Set</button>');
+  labelSet.append(setButton);
+  var placeholderText = 'Enter address for ' + aPlace.getName();
+  if (aPlace.getAddress()) {
+    placeholderText = aPlace.getAddress();
+  }
+
+  var textInput = $('<input type="text" class="locationTextInput" id="locationPref-' + aPlace.getShortName() + '" placeholder="' + placeholderText +'" />');
+  labelSet.append(textInput);
+  $('#locationPrefs > .inputSet').append(labelSet);
+
+  initializeAutoCompleteForElement(document.getElementById('locationPref-' + aPlace.getShortName()));
+}
+
+function initializeAutoCompleteForElement(aLocationDomElement) {
+  var loc = new Location(aLocationDomElement);
 }
 
 function addAlias(aGroupName) {
