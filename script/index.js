@@ -7,8 +7,13 @@
 //
 //   updateGroupAliasPreferenceUI();
 // }
-//
-// initialize();
 
 var ArbitratorGoogleClient = require('./arbitrator-google-client');
-var googleClient = new ArbitratorGoogleClient();
+var googleClient = new ArbitratorGoogleClient(function() {
+  var UIManager = require('./UIManager.js');
+  var manager = new UIManager();
+
+  manager.updatePreferencesFromStore();
+  // updateGroupAliasPreferenceUI();
+  // updateLocationPreferenceUI();
+});

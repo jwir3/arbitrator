@@ -1,10 +1,16 @@
 module.exports = GoogleClient;
 
-function GoogleClient() {
+/**
+ * Create a new instance of a GoogleClient object for use with Arbitrator.
+ *
+ * @param aOptionalCallback (Optional) A callback to be called when the GoogleClient
+ *        has finished its initialization.
+ */
+function GoogleClient(aOptionalCallback) {
   var that = this;
   require('google-client-api')(function (aGapi) {
     that.mGapi = aGapi;
-    that.initialize();
+    that.initialize(aOptionalCallback);
   });
 }
 
@@ -30,7 +36,7 @@ GoogleClient.prototype = {
     });
   },
 
-  initialize: function() {
+  initialize: function(aOptionalCallback) {
       var arbiterConfig = require('./config.js');
       var config = {
         'client_id': arbiterConfig.google_client_id,
@@ -42,11 +48,11 @@ GoogleClient.prototype = {
       this.mGapi.auth.authorize(config, function(authResult) {
         if (authResult && !authResult.error) {
           that.populateCalendarList();
+
+          if (aOptionalCallback) {
+            aOptionalCallback();
+          }
         }
       });
-
-      // updateGroupAliasPreferenceUI();
-      // updateTimePreferenceUI();
-      // updateLocationPreferenceUI();
   }
 };

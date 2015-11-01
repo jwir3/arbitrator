@@ -1,3 +1,5 @@
+module.exports = PreferenceStore;
+
 /**
  * Constants that id the time preferences.
  */
@@ -25,7 +27,7 @@ var TimeType = Object.freeze({
  * An object connected to local storage for persistent storage of setting
  * data.
  */
-var PreferenceStore = function() {
+function PreferenceStore() {
   this._retrievePreferences();
 }
 
@@ -280,7 +282,6 @@ PreferenceStore.prototype = {
    */
   _retrievePreferences: function() {
     var preferenceString = window.localStorage['arbitrator'];
-    console.log('Preference string: ' + preferenceString);
     if (preferenceString) {
       var prefObj = JSON.parse(preferenceString);
       this.groupAliases = prefObj['groupAliases'];
