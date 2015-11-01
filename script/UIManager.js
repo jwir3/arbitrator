@@ -1,7 +1,7 @@
 module.exports = UIManager;
 
 var $ = require('jquery');
-var PreferenceStore = require('./PreferenceStore.js');
+var PreferenceStore = require('./PreferenceStore');
 
 function UIManager() {
   var that = this;

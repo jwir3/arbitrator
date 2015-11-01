@@ -10,7 +10,7 @@
 
 var ArbitratorGoogleClient = require('./arbitrator-google-client');
 var googleClient = new ArbitratorGoogleClient(function() {
-  var UIManager = require('./UIManager.js');
+  var UIManager = require('./UIManager');
   var manager = new UIManager();
 
   manager.updatePreferencesFromStore();

@@ -37,7 +37,7 @@ GoogleClient.prototype = {
   },
 
   initialize: function(aOptionalCallback) {
-      var arbiterConfig = require('./config.js');
+      var arbiterConfig = require('./config');
       var config = {
         'client_id': arbiterConfig.google_client_id,
         'scope': 'https://www.googleapis.com/auth/calendar',
