@@ -1,3 +1,5 @@
+module.exports = Arbitrator;
+
 /**
  * An object for combining two callbacks for what to do when searching for Google
  * Calendar events.
