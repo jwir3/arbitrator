@@ -1,11 +1,13 @@
-var Location = function(aDomElement) {
+var LocationManager = function() {
   this.mCurrentLatitude = 0.0;
   this.mCurrentLongitude = 0.0;
-  this.enableAutoCompleteForElement(aDomElement);
   this._retrieveStartingPosition();
 }
 
-Location.prototype = {
+LocationManager.prototype = {
+  /**
+   * Retrieve the user's current location and store for future use.
+   */
   _retrieveStartingPosition: function() {
     var self = this;
     var options = {
@@ -32,6 +34,12 @@ Location.prototype = {
     }, options);
   },
 
+  /**
+   * Enable auto-completion of Google location search for a specific DOM element.
+   *
+   * @param aDomElement An element retrieved using document.getElementById()
+   *        which will be used to auto-complete location searches.
+   */
   enableAutoCompleteForElement: function(aDomElement) {
     var self = this;
 

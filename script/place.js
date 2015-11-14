@@ -1,3 +1,5 @@
+module.exports = Place;
+
 var Place = function(aShortName, aName, aAddress) {
   this.mShortName = aShortName;
   this.mName = aName;
@@ -17,4 +19,3 @@ Place.prototype = {
     return this.mAddress;
   }
 }
-
