@@ -1,5 +1,7 @@
 module.exports = PreferenceStore;
 
+var Place = require('./Place');
+
 /**
  * Constants that id the time preferences.
  */
