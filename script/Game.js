@@ -1,3 +1,8 @@
+module.exports = Game;
+
+var Place = require('./Place');
+var PreferenceStore = require('./PreferenceStore');
+
 var gameLevels = {
   'Mite'            : 'Mite',
   'Squirt'          : 'Squirt',
@@ -50,8 +55,8 @@ var Role = Object.freeze({
   UNKNOWN: -1
 });
 
-var Game = function(aId, aGroup, aRole, aTimestamp, aSportLevel, aSite,
-                    aHomeTeam, aAwayTeam, aFees) {
+function Game(aId, aGroup, aRole, aTimestamp, aSportLevel, aSite,
+              aHomeTeam, aAwayTeam, aFees) {
   var prefStore = new PreferenceStore();
   this.mId = aId;
   this.mGroup = prefStore.getAliasForGroupId(aGroup);
@@ -352,6 +357,5 @@ Game.prototype = {
     var place = new Place(placeKey, aSiteName, undefined);
     prefStore.addLocationPreference(place);
     return place;
-  },
-
+  }
 }
