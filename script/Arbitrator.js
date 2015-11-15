@@ -252,7 +252,7 @@ Arbitrator.prototype = {
    */
   findConsecutiveGames: function() {
     var prefStore = new PreferenceStore();
-    var gameLengthMins = prefStore.getTimePreference(TimeType.LENGTH_OF_GAME, 60);
+    var gameLengthMins = prefStore.getTimePreference(PreferenceStore.TimeType.LENGTH_OF_GAME, 60);
     var prevGame;
     for (index in this.mGames) {
       var curGame = this.mGames[index];

@@ -38,6 +38,7 @@
     "grunt-ssh-deploy": "^0.3.2"
   },
   "dependencies": {
+    "crypto-js": "^3.1.5",
     "domready": "^1.0.8",
     "google-client-api": "^1.0.4",
     "googlemaps": "^1.0.2",
