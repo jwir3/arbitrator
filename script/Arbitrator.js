@@ -1,5 +1,9 @@
 module.exports = Arbitrator;
 
+var Game = require('./Game');
+var PreferenceStore = require('./PreferenceStore');
+var Place = require('./Place');
+
 /**
  * An object for combining two callbacks for what to do when searching for Google
  * Calendar events.
@@ -20,7 +24,7 @@ var EventSearchObserver = function(aMatchFunction, aNoMatchFunction) {
   this.onNoMatchFound = aNoMatchFunction;
 }
 
-var Arbitrator = function(aString) {
+function Arbitrator(aString) {
   this.mBaseString = aString;
   this.mGames = {};
   this.numGames = 0;
