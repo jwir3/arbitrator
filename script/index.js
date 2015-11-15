@@ -1,21 +1,28 @@
-var Arbitrator = require('./arbitrator');
+var $ = require('jquery');
+
+var domready = require('domready');
+var UIManager = require('./UIManager');
+var manager = new UIManager();
 var ArbitratorGoogleClient = require('./arbitrator-google-client');
 
-function arbitrate() {
-  var scheduleText = document.getElementById('schedule').value;
-  var arb = new Arbitrator(scheduleText);
-  var calSelectionElement = document.getElementById('calendarList');
-  var selectedId = calSelectionElement[calSelectionElement.selectedIndex].id;
-  arb.adjustGamesOrSubmitToCalendar(selectedId);
-
-  // updateGroupAliasPreferenceUI();
+function init() {
+  $('#arbitrate-button').click(function () {
+    console.log("Calling onArbitrate");
+    manager.onArbitrate();
+  });
 }
 
 var googleClient = new ArbitratorGoogleClient(function() {
-  var UIManager = require('./UIManager');
-  var manager = new UIManager();
-
-  manager.updatePreferencesFromStore();
-  // updateGroupAliasPreferenceUI();
+  manager.refreshPreferences();
   // updateLocationPreferenceUI();
+});
+
+// This next set of functions are callbacks that need to be globally accessible
+// (thanks, browser code) :|
+function addAlias(aGroupName) {
+  manager.addAliasToPrefStore(aGroupName);
+}
+
+domready(function() {
+  init();
 });
