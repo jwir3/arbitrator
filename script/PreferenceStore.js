@@ -1,7 +1,16 @@
+module.exports = PreferenceStore;
+
+var Place = require('./Place');
+
 /**
- * Constants that id the time preferences.
+ * An object connected to local storage for persistent storage of setting
+ * data.
  */
-var TimeType = Object.freeze({
+function PreferenceStore() {
+  this._retrievePreferences();
+}
+
+PreferenceStore.TimeType = {
   /**
    * Flag for indicating the time type is prior to the game start.
    */
@@ -19,14 +28,6 @@ var TimeType = Object.freeze({
    * hours of a previous game on the same day will be considered "consecutive".
    */
   CONSECUTIVE_GAME_THRESHOLD: 'consecutiveGames'
-});
-
-/**
- * An object connected to local storage for persistent storage of setting
- * data.
- */
-var PreferenceStore = function() {
-  this._retrievePreferences();
 }
 
 PreferenceStore.prototype = {
@@ -64,15 +65,15 @@ PreferenceStore.prototype = {
     }
 
     switch(aType) {
-      case TimeType.PRIOR_TO_START:
+      case PreferenceStore.TimeType.PRIOR_TO_START:
         this.time[TimeType.PRIOR_TO_START] = aTimePeriod;
         break;
 
-      case TimeType.LENGTH_OF_GAME:
+      case PreferenceStore.TimeType.LENGTH_OF_GAME:
         this.time[TimeType.LENGTH_OF_GAME] = aTimePeriod;
         break;
 
-      case TimeType.CONSECUTIVE_GAME_THRESHOLD:
+      case PreferenceStore.TimeType.CONSECUTIVE_GAME_THRESHOLD:
         this.time[TimeType.CONSECUTIVE_GAME_THRESHOLD] = aTimePeriod;
         break;
 
@@ -280,7 +281,6 @@ PreferenceStore.prototype = {
    */
   _retrievePreferences: function() {
     var preferenceString = window.localStorage['arbitrator'];
-    console.log('Preference string: ' + preferenceString);
     if (preferenceString) {
       var prefObj = JSON.parse(preferenceString);
       this.groupAliases = prefObj['groupAliases'];
