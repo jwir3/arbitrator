@@ -4,71 +4,7 @@
   <head>
     <title>Arbitrator</title>
     <script src="script/index.js"></script>
-    <!-- <script src="script/modules/jquery.js"></script>
-    <script src="https://apis.google.com/js/client.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
-    <script type="text/javascript" src="script/prefstore.js"></script>
-    <script src="script/modules/sha1.js"></script>
-    <script type="text/javascript" src="script/arbitrator.js"></script>
-    <script type="text/javascript" src="script/game.js"></script>
-    <script type="text/javascript" src="script/ui.js"></script>
-    <script type="text/javascript" src="script/location.js"></script>
-    <script type="text/javascript" src="script/place.js"></script> -->
     <link rel="stylesheet" href="style/arbitrator.css" type="text/css" />
-    <!-- <script>
-    function populateCalendarList() {
-      gapi.client.load('calendar', 'v3', function() {
-        var request = gapi.client.calendar.calendarList.list({
-        });
-
-        request.execute(function(aResponse) {
-          var selectEle = document.getElementById('calendarList');
-          for (calendarIdx in aResponse.items) {
-              var calendarItem = aResponse.items[calendarIdx];
-              var listItem = document.createElement('option');
-              listItem.id = calendarItem.id;
-              listItem.text = calendarItem.summary;
-              selectEle.appendChild(listItem);
-          }
-          selectEle.style.display = 'block';
-        });
-      });
-    }
-
-    function handleAuthResult(authResult) {
-      if (authResult && !authResult.error) {
-        populateCalendarList();
-      }
-    }
-
-    function initialize() {
-      var config = {
-        'client_id': '609265890429-c5d69skkd9o2f1fksco00294oom2burf.apps.googleusercontent.com',
-        'scope': 'https://www.googleapis.com/auth/calendar',
-        'authuser' : -1
-      };
-      gapi.auth.authorize(config, handleAuthResult);
-
-      updateGroupAliasPreferenceUI();
-      updateTimePreferenceUI();
-      updateLocationPreferenceUI();
-    }
-
-    function arbitrate() {
-      var scheduleText = document.getElementById('schedule').value;
-      var arb = new Arbitrator(scheduleText);
-      var calSelectionElement = document.getElementById('calendarList');
-      var selectedId = calSelectionElement[calSelectionElement.selectedIndex].id;
-      arb.adjustGamesOrSubmitToCalendar(selectedId);
-
-      updateGroupAliasPreferenceUI();
-    }
-
-    $(document).ready(function() {
-      initialize();
-    });
-
-    </script> -->
   </head>
   <body>
     <div id="mainContent">
