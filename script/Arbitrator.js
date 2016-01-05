@@ -3,6 +3,7 @@ module.exports = Arbitrator;
 var Game = require('./Game');
 var PreferenceStore = require('./PreferenceStore');
 var Place = require('./Place');
+var UIManager = require('./UIManager');
 
 /**
  * An object for combining two callbacks for what to do when searching for Google
@@ -29,6 +30,7 @@ function Arbitrator(aString) {
   this.mGames = {};
   this.numGames = 0;
   this.parseFromText();
+  this.mUiManager = new UIManager();
 }
 
 Arbitrator.prototype = {
@@ -105,13 +107,19 @@ Arbitrator.prototype = {
     return this.mGames[aGameId].getRole();
   },
 
+  /**
+   * Notify the user that a game was added to his/her calendar.
+   */
   notifyGameAdded: function(aGame) {
-    addToMessage('Game #' + aGame.getId() + ' was added to Google Calendar.');
-    updateGroupAliasPreferenceUI();
+    this.mUiManager.setMessage('Game #' + aGame.getId() + ' was added to Google Calendar.');
+    this.mUiManager.refreshPreferences();
   },
 
+  /**
+   * Notify the user that a game was adjusted on his/her calendar.
+   */
   notifyGameAdjusted: function(aGame) {
-    addToMessage('Game #' + aGame.getId() + ' was adjusted in Google Calendar.');
+    this.mUiManager.setMessage('Game #' + aGame.getId() + ' was adjusted in Google Calendar.');
   },
 
   /**
