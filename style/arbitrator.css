@@ -101,3 +101,7 @@ input.locationTextInput {
 body {
   overflow-y: hidden;
 }
+
+#logoutLink {
+  text-align: right;
+}

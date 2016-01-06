@@ -7,8 +7,11 @@ var ArbitratorGoogleClient = require('./arbitrator-google-client');
 
 function init() {
   $('#arbitrate-button').click(function () {
-    console.log("Calling onArbitrate");
     manager.onArbitrate();
+  });
+
+  $('#logoutLink').click(function() {
+    manager.logout();
   });
 }
 

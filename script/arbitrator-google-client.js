@@ -1,5 +1,7 @@
 module.exports = GoogleClient;
 
+var PreferenceStore = require('./PreferenceStore');
+
 /**
  * Create a new instance of a GoogleClient object for use with Arbitrator.
  *
@@ -36,18 +38,36 @@ GoogleClient.prototype = {
     });
   },
 
+  populateUserId: function() {
+    var that = this;
+    this.mGapi.client.load('plus', 'v1', function() {
+      var request = that.mGapi.client.plus.people.get({'userId' : 'me'});
+
+      request.execute(function (aResponse) {
+        var prefStore = new PreferenceStore();
+        prefStore.setUserId(aResponse.id);
+      });
+    });
+  },
+
   initialize: function(aOptionalCallback) {
       var arbiterConfig = require('./config');
       var config = {
         'client_id': arbiterConfig.google_client_id,
-        'scope': 'https://www.googleapis.com/auth/calendar',
-        'authuser' : -1
+        'scope': 'https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/userinfo.profile',
+        'authuser': -1
+      }
+
+      var prefStore = new PreferenceStore();
+      if (prefStore.getUserId()) {
+        config.user_id = prefStore.getUserId();
       }
 
       var that = this;
       this.mGapi.auth.authorize(config, function(authResult) {
         if (authResult && !authResult.error) {
           that.populateCalendarList();
+          that.populateUserId();
 
           if (aOptionalCallback) {
             aOptionalCallback();

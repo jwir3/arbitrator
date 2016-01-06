@@ -260,6 +260,21 @@ PreferenceStore.prototype = {
     this._putPreferences();
   },
 
+  setUserId: function(aUserId) {
+    this.userId = aUserId;
+
+    this._putPreferences();
+  },
+
+  removeUserId: function() {
+    delete this.userId;
+    this._putPreferences();
+  },
+
+  getUserId: function() {
+    return this.userId;
+  },
+
   /**
    * Remove all previously created group aliases from the preference store.
    */
@@ -286,6 +301,7 @@ PreferenceStore.prototype = {
       this.groupAliases = prefObj['groupAliases'];
       this.time = prefObj['time'];
       this.locations = prefObj['locations'];
+      this.userId = prefObj['userId'];
     }
   }
 };
