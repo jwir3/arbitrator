@@ -230,6 +230,12 @@ UIManager.prototype = {
     this._setLocationPreferenceOnClickHandlers();
   },
 
+  logout: function() {
+    var prefStore = new PreferenceStore();
+    prefStore.removeUserId();
+    location.reload();
+  },
+
   /**
    * Set all onClick() handlers for preference UI elements.
    */
