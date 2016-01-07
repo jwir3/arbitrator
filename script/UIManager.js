@@ -11,6 +11,7 @@ var ArbitratorGoogleClient = require('./arbitrator-google-client');
 function UIManager() {
   this.mCurrentMessageTimeoutId = -1;
   this._setPreferenceOnClickHandlers();
+  this._setHeaderScrollListener();
 }
 
 UIManager.prototype = {
@@ -280,6 +281,23 @@ UIManager.prototype = {
       $(this).click(function() {
         that.setLocationPreference($(this).data('locationname'));
       });
+    });
+  },
+
+/**
+ * Enable the scroll listener so we can determine whether to show the box
+ * shadow beneath the app bar. If the view is scrolled, the app bar will have
+ * a shadow underneath it. Otherwise, the app bar will have no shadow.
+ */
+  _setHeaderScrollListener: function() {
+    $(window).scroll(function() {
+      if ($(this).scrollTop() == 0) {
+          $('header').css({'box-shadow': 'none'});
+      } else {
+        $('header').css({
+          'box-shadow': '0px 2px 10px rgba(0, 0, 0, 0.2)'
+        });
+      }
     });
   }
 };

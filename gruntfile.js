@@ -3,12 +3,12 @@ module.exports = function(grunt) {
     secret: grunt.file.readJSON('secret.json'),
     pkg: grunt.file.readJSON("package.json"),
 
-    clean: ['dist/', 'public', '.sass-cache'],
+    clean: ['public', '.sass-cache'],
     browserify: {
-      'dist/script/index.js': ['script/index.js']
+      'public/script/index.js': ['script/index.js']
     },
     rework: {
-      'dist/style/arbitrator.css': ['style/arbitrator.css'],
+      'public/style/arbitrator.css': ['style/arbitrator.css'],
       options: {
         vendors: ['-moz-', '-webkit-']
       }
@@ -16,12 +16,12 @@ module.exports = function(grunt) {
     copy: {
       images: {
         src: 'img/**',
-        dest: 'dist/',
+        dest: 'public/',
         expand: true
       },
       html: {
         src: '*.html',
-        dest: 'dist/',
+        dest: 'public/',
         expand: false
       }
     },
@@ -32,7 +32,7 @@ module.exports = function(grunt) {
           username: '<%= secret.alpha.username %>',
           privateKey: '<%= grunt.file.read(secret.alpha.path_to_private_key) %>',
           deploy_path: '<%= secret.alpha.deploy_path %>',
-          local_path: 'dist',
+          local_path: 'public',
           current_symlink: 'current',
           tag: '<%= pkg.version %>-ALPHA',
           debug: true,

@@ -27,5 +27,5 @@ function addAlias(aGroupName) {
 }
 
 domready(function() {
-  // init();
+  init();
 });
