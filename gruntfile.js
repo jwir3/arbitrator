@@ -3,7 +3,7 @@ module.exports = function(grunt) {
     secret: grunt.file.readJSON('secret.json'),
     pkg: grunt.file.readJSON("package.json"),
 
-    clean: ['dist/'],
+    clean: ['dist/', 'public', '.sass-cache'],
     browserify: {
       'dist/script/index.js': ['script/index.js']
     },
@@ -53,6 +53,18 @@ module.exports = function(grunt) {
           releases_to_keep: 3
         }
       }
+    },
+
+    sass: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: 'style',
+          src: ['*.scss'],
+          dest: 'public/style',
+          ext: '.css'
+        }]
+      }
     }
   });
 
@@ -61,8 +73,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-rework');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-ssh-deploy');
+  grunt.loadNpmTasks('grunt-contrib-sass');
 
-  grunt.registerTask('default', ['clean', 'browserify', 'rework', 'copy']);
+  grunt.registerTask('default', ['clean', 'browserify', 'rework', 'sass', 'copy']);
   grunt.registerTask('deployAlpha', ['default', 'ssh_deploy:alpha']);
   grunt.registerTask('deployRelease', ['default', 'ssh_deploy:release']);
 }
