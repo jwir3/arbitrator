@@ -12,6 +12,9 @@ function UIManager() {
   this.mCurrentMessageTimeoutId = -1;
   this._setPreferenceOnClickHandlers();
   this._setHeaderScrollListener();
+  this._setNavDrawerOnClickHandlers();
+  this._setArbitrateOnClickHandler();
+  this._setLogoutOnClickHandler();
 }
 
 UIManager.prototype = {
@@ -299,6 +302,56 @@ UIManager.prototype = {
         });
       }
     });
+  },
+
+  /**
+   * Set the onClick() handler for the main "arbitrate" button.
+   */
+  _setArbitrateOnClickHandler: function() {
+    $('#arbitrate-button').click(function () {
+      this.onArbitrate();
+    });
+  },
+
+  /**
+   * Set the onClick() handler for the logout link.
+   */
+   _setLogoutOnClickHandler: function() {
+     $('#logoutLink').click(function() {
+       this.logout();
+     });
+   },
+
+  /**
+   * Set the onClick() handler for the navigation drawer button (i.e. the
+   * hamburger icon). Also sets up all the navigation drawer item onClick()
+   * handlers.
+   */
+  _setNavDrawerOnClickHandlers: function() {
+    $('#hamburger').click(function() {
+      $('#nav-drawer').css({
+        'transform': 'translate(0px, 0px)'
+      });
+    });
+
+    $('.nav-drawer-header').click(function() {
+      $('#nav-drawer').css({
+        'transform': 'translate(-256px, 0px)'
+      });
+    });
+
+    $('#nav-drawer-locations').click(function() {
+      $('#nav-drawer').css({
+        'transform': 'translate(-256px, 0px)'
+      });
+
+      setTimeout(function() {
+        window.location = 'locations.html';
+      }, 220); // The animation takes ~218ms.
+    });
+
+    // Set the text of the nav drawer header
+//    $('li.nav-drawer-header').text($('head').find('title').text());
   }
 };
 //

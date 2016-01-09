@@ -2,17 +2,11 @@ var $ = require('jquery');
 
 var domready = require('domready');
 var UIManager = require('./UIManager');
-var manager = new UIManager();
+var manager;
 var ArbitratorGoogleClient = require('./arbitrator-google-client');
 
 function init() {
-  $('#arbitrate-button').click(function () {
-    manager.onArbitrate();
-  });
-
-  $('#logoutLink').click(function() {
-    manager.logout();
-  });
+  manager = new UIManager();
 }
 
 var googleClient = new ArbitratorGoogleClient(function() {
