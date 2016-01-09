@@ -38,6 +38,20 @@ module.exports = function(grunt) {
           debug: true,
           releases_to_keep: 3
         }
+      },
+
+      release: {
+        options: {
+          host: '<%= secret.release.host %>',
+          username: '<%= secret.release.username %>',
+          privateKey: '<%= grunt.file.read(secret.release.path_to_private_key) %>',
+          deploy_path: '<%= secret.release.deploy_path %>',
+          local_path: 'dist',
+          current_symlink: 'current',
+          tag: '<%= pkg.version %>-BETA',
+          debug: true,
+          releases_to_keep: 3
+        }
       }
     }
   });
@@ -50,4 +64,5 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', ['clean', 'browserify', 'rework', 'copy']);
   grunt.registerTask('deployAlpha', ['default', 'ssh_deploy:alpha']);
+  grunt.registerTask('deployRelease', ['default', 'ssh_deploy:release']);
 }
