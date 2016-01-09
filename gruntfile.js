@@ -7,22 +7,11 @@ module.exports = function(grunt) {
     browserify: {
       'public/script/index.js': ['script/index.js']
     },
-    rework: {
-      'public/style/arbitrator.css': ['style/arbitrator.css'],
-      options: {
-        vendors: ['-moz-', '-webkit-']
-      }
-    },
     copy: {
       images: {
-        src: 'img/**',
+        src: 'images/**',
         dest: 'public/',
         expand: true
-      },
-      html: {
-        src: '*.html',
-        dest: 'public/',
-        expand: false
       }
     },
     environments: {
@@ -65,6 +54,18 @@ module.exports = function(grunt) {
           ext: '.css'
         }]
       }
+    },
+
+    includes: {
+      files: {
+        src: ['*.html'], // Source files
+        dest: 'public', // Destination directory
+        flatten: true,
+        cwd: '.',
+        options: {
+          silent: true
+        }
+      }
     }
   });
 
@@ -74,8 +75,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-ssh-deploy');
   grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-includes');
 
-  grunt.registerTask('default', ['clean', 'browserify', 'rework', 'sass', 'copy']);
+  grunt.registerTask('default', ['clean', 'includes', 'browserify', 'sass', 'copy']);
   grunt.registerTask('deployAlpha', ['default', 'ssh_deploy:alpha']);
   grunt.registerTask('deployRelease', ['default', 'ssh_deploy:release']);
 }
