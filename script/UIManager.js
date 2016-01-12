@@ -15,9 +15,13 @@ function UIManager() {
   this._setNavDrawerOnClickHandlers();
   this._setArbitrateOnClickHandler();
   this._setLogoutOnClickHandler();
+
+  this.loadContent('main', 'Arbitrator');
 }
 
 UIManager.prototype = {
+  mBackStack: new Array(),
+
   /**
    * Perform functionality when the user clicks the 'Submit' button to indicate
    * they wish to invoke arbitrator's functionality.
@@ -29,7 +33,7 @@ UIManager.prototype = {
     var selectedId = calSelectionElement[calSelectionElement.selectedIndex].id;
     arb.adjustGamesOrSubmitToCalendar(selectedId);
 
-    this.refreshPreferences();
+    // this.refreshPreferences();
   },
 
   /**
@@ -125,13 +129,14 @@ UIManager.prototype = {
    * Refresh the preference UI from local storage for all location preferences.
    */
   refreshLocationPreferences: function() {
-      var prefStore = new PreferenceStore();
-      var locPrefs = prefStore.getAllLocationPreferences();
-      for (var key in locPrefs) {
-        if (locPrefs.hasOwnProperty(key)) {
-          this.addLocationPreference(prefStore.getLocationPreference(key));
-        }
+    console.log("Refreshing location preferences...");
+    var prefStore = new PreferenceStore();
+    var locPrefs = prefStore.getAllLocationPreferences();
+    for (var key in locPrefs) {
+      if (locPrefs.hasOwnProperty(key)) {
+        this.addLocationPreference(prefStore.getLocationPreference(key));
       }
+    }
   },
 
   /**
@@ -328,11 +333,7 @@ UIManager.prototype = {
    * handlers.
    */
   _setNavDrawerOnClickHandlers: function() {
-    $('#hamburger').click(function() {
-      $('#nav-drawer').css({
-        'transform': 'translate(0px, 0px)'
-      });
-    });
+    var that = this;
 
     $('.nav-drawer-header').click(function() {
       $('#nav-drawer').css({
@@ -341,17 +342,178 @@ UIManager.prototype = {
     });
 
     $('#nav-drawer-locations').click(function() {
-      $('#nav-drawer').css({
-        'transform': 'translate(-256px, 0px)'
-      });
-
-      setTimeout(function() {
-        window.location = 'locations.html';
-      }, 220); // The animation takes ~218ms.
+      that.loadContent('locations', 'Locations');
     });
+  },
+
+  /**
+   * Open the navigation drawer using a transition animation.
+   */
+  openNavDrawer: function() {
+    $('#nav-drawer').css({
+      'transform': 'translate(0px, 0px)'
+    });
+  },
+
+  /**
+   * Close the navigation drawer using a transition animation.
+   */
+  closeNavDrawer: function() {
+    $('#nav-drawer').css({
+      'transform': 'translate(-256px, 0px)'
+    });
+  },
+
+  /**
+   * Load content into the main content pane.
+   *
+   * This asynchronously loads a file prefixed with an appropriate file id into
+   * the main content pane, adjusts the title and back stack, and calls an
+   * optional onComplete() handler when finished.
+   *
+   * @param aContentFileId The id of the content file to load. This must
+   *        correspond to a file in the html/ subdirectory called
+   *        <aContentFileId>.partial.html.
+   * @param aTitle The title of the page to load. Will be presented in the app
+   *        bar.
+   * @param aOnComplete (optional) If included, this will be called when the
+   *        load operation has completed.
+   */
+  loadContent: function(aContentFileName, aTitle, aOnComplete) {
+    var that = this;
 
     // Set the text of the nav drawer header
-//    $('li.nav-drawer-header').text($('head').find('title').text());
+    // $('li.nav-drawer-header').text(aTitle);
+    that.closeNavDrawer();
+
+    $('main#content').load('html/' + aContentFileName + '.partial.html', null,
+                           function() {
+                             that._addToBackStack({
+                               'id': aContentFileName,
+                               'name': aTitle
+                             });
+
+                             if (!that._isBackStackEmpty()) {
+                               that._showBackArrow();
+                             } else {
+                               that._showHamburgerIcon();
+                             }
+
+                             // Add the title to the app bar.
+                             $('#pageTitle').text(aTitle);
+
+                             if (aOnComplete) {
+                               aOnComplete();
+                             }
+                           });
+  },
+
+  /**
+   * Show the back arrow icon in place of the navigation drawer icon and adjust
+   * the onClick() functionality for this icon so that it pops from the back
+   * stack.
+   */
+  _showBackArrow: function() {
+    var that = this;
+
+    $('#hamburger').css({
+      'background': 'no-repeat url("images/back.svg")'
+    });
+
+    that._bindEventHandlerForNavMenu(true);
+  },
+
+  /**
+   * Show the hamburger (navigation drawer indicator) icon and adjust
+   * the onClick() functionality for this icon so that it opens the navigation
+   * drawer.
+   */
+  _showHamburgerIcon: function() {
+    var that = this;
+
+    $('#hamburger').css({
+      'background': 'no-repeat url("images/hamburger.svg")'
+    });
+
+    that._bindEventHandlerForNavMenu(false);
+  },
+
+  /**
+   * Clear current event handlers for the nav menu button in the upper right of
+   * the app bar and re-add the appropriate onClick() handler.
+   */
+  _bindEventHandlerForNavMenu: function(aIsBack) {
+    var that = this;
+    $('#hamburger').unbind('click');
+
+    if (aIsBack) {
+      $('#hamburger').click(function() {
+        that._popBackStack();
+      });
+    } else {
+      $('#hamburger').click(function() {
+        that.openNavDrawer();
+      });
+    }
+  },
+
+  /**
+   * Add a new back stack entry to the back stack.
+   *
+   * A back stack entry consists of an object of the form:
+   * {
+   *   'id': <string>,
+   *   'name': <string
+   * }
+   * where 'id' is a string indicating the id of the content to show, which must
+   * be unique and be the prefix of one of the .partial.html files in the html/
+   * subdirectory, and 'name' is the human-readable title of the content.
+   *
+   * @param aBackStackEntry The back stack entry to add to the back stack.
+   */
+  _addToBackStack: function(aBackStackEntry) {
+    this.mBackStack.push(aBackStackEntry);
+  },
+
+  /**
+   * Remove the last back stack entry from the back stack and return it.
+   *
+   * A back stack entry consists of an object of the form:
+   * {
+   *   'id': <string>,
+   *   'name': <string
+   * }
+   * where 'id' is a string indicating the id of the content to show, which must
+   * be unique and be the prefix of one of the .partial.html files in the html/
+   * subdirectory, and 'name' is the human-readable title of the content.
+   *
+   * @return The back stack entry in the back stack that was last added.
+   */
+  _popBackStack: function() {
+    // Remove the current entry from the back stack first
+    this.mBackStack.pop();
+
+    var lastEntry = this.mBackStack.pop();
+    this.loadContent(lastEntry.id, lastEntry.name, null);
+  },
+
+  /**
+   * Determine if the back stack is empty.
+   *
+   * The back stack is empty if it contains a single content node - that of the
+   * 'main' or root content.
+   *
+   * @return True, if the back stack contains 1 item; false, otherwise.
+   */
+  _isBackStackEmpty: function() {
+    return this._getBackStackSize() == 1;
+  },
+
+  /**
+   * @return The number of items in the back stack.
+   */
+  _getBackStackSize: function() {
+    return this.mBackStack.length;
   }
 };
 //

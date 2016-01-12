@@ -12,6 +12,11 @@ module.exports = function(grunt) {
         src: 'images/**',
         dest: 'public/',
         expand: true
+      },
+      html: {
+        src: 'html/**',
+        dest: 'public/',
+        expand: true
       }
     },
     environments: {

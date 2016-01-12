@@ -12,6 +12,7 @@ header {
   transition-duration: 0.21s;
   transition-property: all;
   transition-timing-function: ease-in-out;
+  z-index: 807;
 
   box-shadow: none;
   font-family: "Roboto", "Droid-Sans", arial, sans-serif;
@@ -24,7 +25,7 @@ header {
     margin: 10px 25px;
     vertical-align: middle;
     background-size: 20px 2px;
-    background: no-repeat url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOC4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4KPCFET0NUWVBFIHN2ZyAgUFVCTElDICctLy9XM0MvL0RURCBTVkcgMS4xLy9FTicgICdodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQnPgo8c3ZnIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbDpzcGFjZT0icHJlc2VydmUiIHZpZXdCb3g9IjAgMCAyMCAyMCIgdmVyc2lvbj0iMS4xIiB5PSIwcHgiIHg9IjBweCIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIj4KICA8cGF0aCBkPSJtMSAxNmgxOHYtMmgtMTh2MnptMC01aDE4di0yaC0xOHYyem0wLTd2MmgxOHYtMmgtMTh6Ii8+Cjwvc3ZnPgo=');
+    background: no-repeat url('images/hamburger.svg');
     cursor: pointer;
   }
 
@@ -34,4 +35,8 @@ header {
     margin: 10px auto;
     vertical-align: middle;
   }
+}
+
+section {
+  margin-top: 75px;
 }
