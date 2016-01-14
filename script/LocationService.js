@@ -58,13 +58,8 @@ LocationService.prototype = {
     console.log("Google client id: " + ArbitratorConfig.google_client_id);
 
     GoogleMapsLoader.load(function(google) {
-      // console.log(google);
-      // console.log(google.maps);
-      // console.log(google.maps.places);
-      // console.log(google.maps.places.Autocomplete);
-
       self.autocomplete = new google.maps.places.Autocomplete(aDomElement,
-                                                              { types: ['geocode'] });
+                                                              { types: ['geocode', 'establishment'] });
       google.maps.event.addListener(self.autocomplete, 'place_changed', function() {
         // When the user selects an address from the dropdown, this will fire.
         var place = self.autocomplete.getPlace();
