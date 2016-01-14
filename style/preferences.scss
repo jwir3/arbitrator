@@ -1,0 +1,35 @@
+@import 'colors';
+
+.labelSet {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+
+  label {
+    display: inline-block;
+    width: 25%;
+    margin-right: 2em;
+    margin-left: 8px;
+    font-size: 14pt;
+  }
+
+  button {
+    font-size: 14pt;
+    margin-left: 0.5em;
+  }
+}
+
+.label-set:first-child {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.labelSet:nth-child(2n) {
+  background-color: $hawkes-blue;
+}
+
+input.locationTextInput {
+  display: inline-block;
+  width: 30%;
+  font-size: 14pt;
+  margin: 0 1em;
+}

@@ -1,6 +1,7 @@
 @import 'core';
 @import 'appbar';
 @import 'navdrawer';
+@import 'preferences';
 
 #messageContainer {
   border-radius: 1em;
@@ -62,43 +63,8 @@
   height: 30em;
 }
 
-.prefGroup {
-    float: left;
-}
-
-.inputSet {
-  position: relative;
-  width: 100%;
-  margin-top: 1em;
-}
-
-.labelSet label {
-  float: left;
-  position: relative;
-  margin-right: 2em;
-}
-
-.labelSet input {
-  float: right;
-  position: relative;
-}
-
-input.locationTextInput {
-  width: 15em;
-}
-
-.labelSet button {
-  float: right;
-  position: relative;
-  margin-left: 1em;
-}
-
-.labelSet {
-  clear: both;
-}
-
 #mainContent {
-  margin-top: 75px;
+  margin-left: 8px;
   width: 50%;
 }
 

@@ -218,6 +218,13 @@ UIManager.prototype = {
     var labelSet = $('<div class="labelSet"></div>');
     var labelElement = $('<label for="locationPref-' + aPlace.getShortName() + '">' + aPlace.getName() + '</label>');
     labelSet.append(labelElement);
+    var placeholderText = 'Enter address for ' + aPlace.getName();
+    if (aPlace.getAddress()) {
+      placeholderText = aPlace.getAddress();
+    }
+
+    var textInput = $('<input type="text" class="locationTextInput" id="locationPref-' + aPlace.getShortName() + '" placeholder="' + placeholderText +'" />');
+    labelSet.append(textInput);
     var container = $('<div class="inputMessageAreaFloatContainer"><span id="msg-locationPref-' + aPlace.getShortName() + '" class="inputMessageArea"></span></div>');
     labelSet.append(container);
     var deleteButton = $('<button id="deleteLocationPref-' + aPlace.getShortName() + '" onClick="deleteLocationPref(\'' + aPlace.getShortName() + '\')">Remove</button>');
@@ -226,13 +233,6 @@ UIManager.prototype = {
 
     var setButton = $('<button class="locationSetButton" data-locationname="' + aPlace.getShortName() + '">Set</button>');
     labelSet.append(setButton);
-    var placeholderText = 'Enter address for ' + aPlace.getName();
-    if (aPlace.getAddress()) {
-      placeholderText = aPlace.getAddress();
-    }
-
-    var textInput = $('<input type="text" class="locationTextInput" id="locationPref-' + aPlace.getShortName() + '" placeholder="' + placeholderText +'" />');
-    labelSet.append(textInput);
     $('#locationPrefs > .inputSet').append(labelSet);
 
     locService.enableAutoCompleteForElement(document.getElementById('locationPref-' + aPlace.getShortName()));
@@ -342,7 +342,9 @@ UIManager.prototype = {
     });
 
     $('#nav-drawer-locations').click(function() {
-      that.loadContent('locations', 'Locations');
+      that.loadContent('locations', 'Locations', function() {
+        that.refreshLocationPreferences();
+      });
     });
   },
 
