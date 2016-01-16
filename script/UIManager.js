@@ -229,9 +229,8 @@ UIManager.prototype = {
     labelSet.append(container);
     var deleteButton = $('<button id="deleteLocationPref-' + aPlace.getShortName() + '" onClick="deleteLocationPref(\'' + aPlace.getShortName() + '\')">Remove</button>');
     labelSet.append(deleteButton);
-    var onClickHandler = "setLocationPref('" + aPlace.getShortName() + "', '" + aPlace.getName() + "');";
 
-    var setButton = $('<button class="locationSetButton" data-locationname="' + aPlace.getShortName() + '">Set</button>');
+    var setButton = $('<button class="locationSetButton" data-locationname="' + aPlace.getName() + '" data-locationshortname="' + aPlace.getShortName() + '">Set</button>');
     labelSet.append(setButton);
     $('#locationPrefs > .inputSet').append(labelSet);
 
@@ -287,7 +286,7 @@ UIManager.prototype = {
     var that = this;
     $('.locationSetButton').each(function() {
       $(this).click(function() {
-        that.setLocationPreference($(this).data('locationname'));
+        that.setLocationPreference($(this).data('locationshortname'), $(this).data('locationname'));
       });
     });
   },
