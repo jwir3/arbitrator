@@ -214,6 +214,11 @@ UIManager.prototype = {
     this.acknowledgePreference(aLocationPrefName);
   },
 
+  deleteLocationPreference: function(aLocationKey) {
+    var prefStore = new PreferenceStore();
+    prefStore.removeLocationPreference(aLocationKey);
+  },
+
   addLocationPreference: function(aPlace) {
     var labelSet = $('<div class="labelSet"></div>');
     var labelElement = $('<label for="locationPref-' + aPlace.getShortName() + '">' + aPlace.getName() + '</label>');
@@ -227,7 +232,7 @@ UIManager.prototype = {
     labelSet.append(textInput);
     var container = $('<div class="inputMessageAreaFloatContainer"><span id="msg-locationPref-' + aPlace.getShortName() + '" class="inputMessageArea"></span></div>');
     labelSet.append(container);
-    var deleteButton = $('<button id="deleteLocationPref-' + aPlace.getShortName() + '" onClick="deleteLocationPref(\'' + aPlace.getShortName() + '\')">Remove</button>');
+    var deleteButton = $('<button class="locationRemoveButton" data-locationshortname="' + aPlace.getShortName() + '">Remove</button>');
     labelSet.append(deleteButton);
 
     var setButton = $('<button class="locationSetButton" data-locationname="' + aPlace.getName() + '" data-locationshortname="' + aPlace.getShortName() + '">Set</button>');
@@ -287,6 +292,15 @@ UIManager.prototype = {
     $('.locationSetButton').each(function() {
       $(this).click(function() {
         that.setLocationPreference($(this).data('locationshortname'), $(this).data('locationname'));
+      });
+    });
+
+    $('.locationRemoveButton').each(function() {
+      $(this).click(function() {
+        that.deleteLocationPreference($(this).data('locationshortname'));
+        $(this).parent().fadeOut(300, function () {
+          $(this).remove();
+        });
       });
     });
   },
@@ -517,11 +531,3 @@ UIManager.prototype = {
     return this.mBackStack.length;
   }
 };
-//
-// function deleteLocationPref(aLocationKey) {
-//   var prefStore = new PreferenceStore();
-//   prefStore.removeLocationPreference(aLocationKey);
-//   $('#locationPref-' + aLocationKey).parent().fadeOut(300, function () {
-//     $(this).remove();
-//   });
-// }
