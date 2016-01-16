@@ -133,6 +133,7 @@ Arbitrator.prototype = {
    * @param aCalendarId The ID of the calendar where the games should be placed.
    */
   adjustGamesOrSubmitToCalendar: function(aCalendarId) {
+    console.log("ARBITRATING!");
     // Save this pointer so it can be used in the callback.
     var self = this;
     var callback = new EventSearchObserver(

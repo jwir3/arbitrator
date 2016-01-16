@@ -5,15 +5,6 @@ var UIManager = require('./UIManager');
 var manager;
 var ArbitratorGoogleClient = require('./arbitrator-google-client');
 
-function init() {
-  manager = new UIManager();
-}
-
-var googleClient = new ArbitratorGoogleClient(function() {
-  manager.refreshPreferences();
-  // updateLocationPreferenceUI();
-});
-
 // This next set of functions are callbacks that need to be globally accessible
 // (thanks, browser code) :|
 function addAlias(aGroupName) {
@@ -21,5 +12,8 @@ function addAlias(aGroupName) {
 }
 
 domready(function() {
-  init();
+  var googleClient = new ArbitratorGoogleClient(function() {
+    manager = new UIManager();
+    manager.refreshPreferences();
+  });
 });

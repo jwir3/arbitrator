@@ -55,8 +55,6 @@ LocationService.prototype = {
     GoogleMapsLoader.LIBRARIES = ['places'];
     GoogleMapsLoader.SENSOR = false;
 
-    console.log("Google client id: " + ArbitratorConfig.google_client_id);
-
     GoogleMapsLoader.load(function(google) {
       self.autocomplete = new google.maps.places.Autocomplete(aDomElement,
                                                               { types: ['geocode', 'establishment'] });

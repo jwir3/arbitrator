@@ -139,7 +139,6 @@ PreferenceStore.prototype = {
 
   getAllLocationPreferences: function() {
     if (this.locations) {
-      console.log(this.locations);
       return Object.freeze(this.locations);
     }
 

@@ -10,13 +10,14 @@ var ArbitratorGoogleClient = require('./arbitrator-google-client');
 
 function UIManager() {
   this.mCurrentMessageTimeoutId = -1;
-  this._setPreferenceOnClickHandlers();
-  this._setHeaderScrollListener();
-  this._setNavDrawerOnClickHandlers();
-  this._setArbitrateOnClickHandler();
-  this._setLogoutOnClickHandler();
-
-  this.loadContent('main', 'Arbitrator');
+  var that = this;
+  this.loadContent('main', 'Arbitrator', function() {
+    that._setPreferenceOnClickHandlers();
+    that._setHeaderScrollListener();
+    that._setNavDrawerOnClickHandlers();
+    that._setArbitrateOnClickHandler();
+    that._setLogoutOnClickHandler();
+  });
 }
 
 UIManager.prototype = {
@@ -129,7 +130,6 @@ UIManager.prototype = {
    * Refresh the preference UI from local storage for all location preferences.
    */
   refreshLocationPreferences: function() {
-    console.log("Refreshing location preferences...");
     var prefStore = new PreferenceStore();
     var locPrefs = prefStore.getAllLocationPreferences();
     for (var key in locPrefs) {
@@ -208,7 +208,6 @@ UIManager.prototype = {
 
     var prefName = '';
     var prefStore = new PreferenceStore();
-    console.log("Adding preference with address: " + address);
     prefStore.addLocationPreference(new Place(aLocationPrefKey, aLocationPrefName, address));
 
     this.acknowledgePreference(aLocationPrefName);
@@ -326,8 +325,9 @@ UIManager.prototype = {
    * Set the onClick() handler for the main "arbitrate" button.
    */
   _setArbitrateOnClickHandler: function() {
+    var that = this;
     $('#arbitrate-button').click(function () {
-      this.onArbitrate();
+      that.onArbitrate();
     });
   },
 
