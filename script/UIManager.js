@@ -7,6 +7,7 @@ var locService = new LocationService();
 var Place = require('./Place');
 var Arbitrator = require('./Arbitrator');
 var ArbitratorGoogleClient = require('./arbitrator-google-client');
+var StringUtils = require('./StringUtils');
 
 function UIManager() {
   this.mCurrentMessageTimeoutId = -1;
@@ -354,9 +355,14 @@ UIManager.prototype = {
       });
     });
 
-    $('#nav-drawer-locations').click(function() {
-      that.loadContent('locations', 'Locations', function() {
-        that.refreshLocationPreferences();
+    $('.nav-drawer-item').each(function() {
+      var data = $(this).data('item');
+
+      // var stringamajig = new StringUtils();
+      $(this).click(function() {
+        that.loadContent(data, StringUtils.capitalize(data), function() {
+          that.refreshPreferences();
+        });
       });
     });
   },
