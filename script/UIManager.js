@@ -177,31 +177,36 @@ UIManager.prototype = {
    * @param aGroupAlias The name of the alias to use for this group.
    */
   addAliasUIFor: function(aGroupName, aGroupAlias) {
-    // if a UI already exists for this groupName, then don't show it.
-    if ($('#alias-' + aGroupName).length) {
-        return;
-    }
+    var that = this;
+    $.get('html/alias-preference.partial.html', function(data) {
+      var dataElement = $(data);
+      dataElement.find('.originalName')
+                 .data('actualname', aGroupName)
+                 .attr('value', aGroupName);
 
-    var input1 = '<input class="aliasUI" disabled type="text" id="' + aGroupName + '" length="10" value="' + aGroupName + '" />';
-    var input2 = '<input class="aliasUI" type="text" id="alias-' + aGroupName + '" length="10" value="' + aGroupAlias + '" />';
-    var submit = '<button class="aliasUI aliasAddButton" data-groupName="' + aGroupName + '">Add</button>';
-    var msgArea = '<span id="msg-' + aGroupName + '" class="inputMessageArea"></span>';
-    var uiLine = '<div>' + input1 + input2 + submit + msgArea + '</div>';
-    $('#aliasInputs').append(uiLine);
-    this._setAliasPreferenceOnClickHandlers();
+      // If the group name is the same as the alias name, just assume we don't
+      // have an alias set.
+      if (aGroupAlias != aGroupName) {
+        dataElement.find('.aliasName').attr('value', aGroupAlias);
+      }
+
+      $('#aliasInputs').append(dataElement);
+      that._setAliasPreferenceOnClickHandlers();
+    });
   },
 
   /**
-   * Add an alias to the preference store for a given group name.
+   * Add an alias to the preference store for a given group name and alias.
    *
    * @param aGroupName The name of the group for which the alias should be
    *        retrieved from the UI and placed in the preference store.
+   * @param aAliasName The name of the alias to use which should be stored in
+   *        the preference store.
    */
-  addAliasToPrefStore: function(aGroupName) {
-      var alias = $('#alias-' + aGroupName).val();
+  addAliasToPrefStore: function(aGroupName, aAliasName) {
       var prefStore = new PreferenceStore();
-      prefStore.addGroupAlias(aGroupName, alias);
-      this.acknowledgePreference(aGroupName);
+      prefStore.addGroupAlias(aGroupName, aAliasName);
+      // this.acknowledgePreference(aGroupName);
   },
 
   setLocationPreference: function(aLocationPrefKey, aLocationPrefName) {
@@ -282,8 +287,12 @@ UIManager.prototype = {
   _setAliasPreferenceOnClickHandlers: function() {
     var that = this;
     var prefStore = new PreferenceStore();
-    $('.aliasAddButton').click(function() {
-      that.addAliasToPrefStore($(this).data('groupname'));
+    $('button.setAlias').each(function() {
+      $(this).click(function() {
+        var actualName = $(this).parent().find('.originalName').data('actualname');
+        var aliasName = $(this).parent().find('.aliasName').val();
+        that.addAliasToPrefStore(actualName, aliasName);
+      });
     });
   },
 

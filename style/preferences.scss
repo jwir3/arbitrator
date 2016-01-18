@@ -27,7 +27,7 @@
   background-color: $hawkes-blue;
 }
 
-input.locationTextInput {
+input[type='text'] {
   display: inline-block;
   width: 30%;
   font-size: 14pt;
