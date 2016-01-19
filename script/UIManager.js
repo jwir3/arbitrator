@@ -82,7 +82,6 @@ UIManager.prototype = {
   refreshAliasPreferences: function() {
     var prefStore = new PreferenceStore();
     var aliasedGroups = prefStore.getAllGroupAliases();
-    console.log(aliasedGroups);
     for (var prop in aliasedGroups) {
       if (aliasedGroups.hasOwnProperty(prop)) {
         var groupAlias = aliasedGroups[prop];
@@ -167,27 +166,28 @@ UIManager.prototype = {
   },
 
   addLocationPreference: function(aPlace) {
-    var labelSet = $('<div class="labelSet"></div>');
-    var labelElement = $('<label for="locationPref-' + aPlace.getShortName() + '">' + aPlace.getName() + '</label>');
-    labelSet.append(labelElement);
-    var placeholderText = 'Enter address for ' + aPlace.getName();
-    if (aPlace.getAddress()) {
-      placeholderText = aPlace.getAddress();
-    }
+    var that = this;
+    $.get('html/location-preference.partial.html', function(data) {
+      var dataElement = $(data);
+      var textInputId = 'locationPref-' + aPlace.getShortName();
+      var placeholderText = 'Enter address for ' + aPlace.getName();
+      if (aPlace.getAddress()) {
+        placeholderText = aPlace.getAddress();
+      }
 
-    var textInput = $('<input type="text" class="locationTextInput" id="locationPref-' + aPlace.getShortName() + '" placeholder="' + placeholderText +'" />');
-    labelSet.append(textInput);
-    var container = $('<div class="inputMessageAreaFloatContainer"><span id="msg-locationPref-' + aPlace.getShortName() + '" class="inputMessageArea"></span></div>');
-    labelSet.append(container);
-    var deleteButton = $('<button class="locationRemoveButton" data-locationshortname="' + aPlace.getShortName() + '">Remove</button>');
-    labelSet.append(deleteButton);
+      dataElement.find('label').attr('for', textInputId).text(aPlace.getName());
+      dataElement.find('.locationTextInput').attr('id', textInputId)
+                 .attr('placeholder', placeholderText);
+      dataElement.find('.locationRemoveButton')
+                 .data('locationshortname', aPlace.getShortName());
+      dataElement.find('.locationSetButton')
+                 .data('locationshortname', aPlace.getShortName())
+                 .data('locationname', aPlace.getName());
 
-    var setButton = $('<button class="locationSetButton" data-locationname="' + aPlace.getName() + '" data-locationshortname="' + aPlace.getShortName() + '">Set</button>');
-    labelSet.append(setButton);
-    $('#locationPrefs > .inputSet').append(labelSet);
-
-    locService.enableAutoCompleteForElement(document.getElementById('locationPref-' + aPlace.getShortName()));
-    this._setLocationPreferenceOnClickHandlers();
+      $('#locationInputs').append(dataElement);
+      locService.enableAutoCompleteForElement(document.getElementById('locationPref-' + aPlace.getShortName()));
+      that._setLocationPreferenceOnClickHandlers();
+    });
   },
 
   logout: function() {
