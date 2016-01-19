@@ -39,29 +39,13 @@ UIManager.prototype = {
   },
 
   /**
-   * Add a temporary indicator that a preference has been set appropriately.
-   *
-   * @param aPrefName The name of the preference that was set.
-   */
-  acknowledgePreference: function(aPrefName) {
-    $('#msg-' + aPrefName).css('color', 'green')
-    .html("&#x2713; Preference set!")
-    .show();
-    setTimeout(function() {
-      $('#msg-' + aPrefName).fadeOut(function() {
-        $(this).html('');
-      });
-    }, 1000);
-  },
-
-  /**
    * Refresh the preference UI from local storage and populate the UI
    * accordingly.
    */
   refreshPreferences: function() {
     var prefStore = new PreferenceStore();
     this.refreshTimePreferences();
-    this.refreshGroupPreferences();
+    this.refreshAliasPreferences();
     this.refreshLocationPreferences();
   },
 
@@ -95,9 +79,10 @@ UIManager.prototype = {
    * Refresh the preference UI from local storage for all group/alias
    * preferences.
    */
-  refreshGroupPreferences: function() {
+  refreshAliasPreferences: function() {
     var prefStore = new PreferenceStore();
     var aliasedGroups = prefStore.getAllGroupAliases();
+    console.log(aliasedGroups);
     for (var prop in aliasedGroups) {
       if (aliasedGroups.hasOwnProperty(prop)) {
         var groupAlias = aliasedGroups[prop];
@@ -117,7 +102,7 @@ UIManager.prototype = {
       var prefName = '';
       var prefStore = new PreferenceStore();
       prefStore.addTimePreference(aTimePrefName, timePrefVal);
-      this.acknowledgePreference(aTimePrefName);
+      // this.acknowledgePreference(aTimePrefName);
   },
 
   /**
@@ -163,6 +148,7 @@ UIManager.prototype = {
       var prefStore = new PreferenceStore();
       prefStore.addGroupAlias(aGroupName, aAliasName);
       // this.acknowledgePreference(aGroupName);
+      this.showSnackbar("Alias '" + aAliasName + "' set");
   },
 
   setLocationPreference: function(aLocationPrefKey, aLocationPrefName) {
@@ -172,7 +158,7 @@ UIManager.prototype = {
     var prefStore = new PreferenceStore();
     prefStore.addLocationPreference(new Place(aLocationPrefKey, aLocationPrefName, address));
 
-    this.acknowledgePreference(aLocationPrefName);
+    this.showSnackbar("Address for '" + aLocationPrefName + "' set");
   },
 
   deleteLocationPreference: function(aLocationKey) {
