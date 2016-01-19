@@ -10,7 +10,6 @@ var ArbitratorGoogleClient = require('./arbitrator-google-client');
 var StringUtils = require('./StringUtils');
 
 function UIManager() {
-  this.mCurrentMessageTimeoutId = -1;
   var that = this;
   this.loadContent('main', 'Arbitrator', function() {
     that._setPreferenceOnClickHandlers();
@@ -18,6 +17,7 @@ function UIManager() {
     that._setNavDrawerOnClickHandlers();
     that._setArbitrateOnClickHandler();
     that._setLogoutOnClickHandler();
+    that._setDismissSnackBarOnClickHandler();
   });
 }
 
@@ -36,55 +36,6 @@ UIManager.prototype = {
     arb.adjustGamesOrSubmitToCalendar(selectedId);
 
     // this.refreshPreferences();
-  },
-
-  /**
-   * Hide the messaging UI that slides down from the top of the screen.
-   */
-  hideMessaging: function() {
-    $('#messageContainer').each(function(index, element){
-      element.classList.add('hidden');
-    });
-  },
-
-  /**
-   * Perform an animation that slides the top messaging UI up and then hides it.
-   */
-  slideUpMessageAndHide: function() {
-    if (this.mCurrentMessageTimeoutId > 0) {
-      clearTimeout(this.mCurrentMessageTimeoutId);
-    }
-
-    this.hideMessaging();
-  },
-
-  /**
-   * Show the messaging UI at the top of the screen.
-   */
-  showMessaging: function() {
-    var that = this;
-    $('#messageContainer').each(function(index, element) {
-      element.classList.remove('hidden');
-      $(this).click(function() {
-        that.slideUpMessageAndHide();
-      });
-
-      if (that.mCurrentMessageTimeoutId > 0) {
-        clearTimeout(that.mCurrentMessageTimeoutId);
-      }
-
-      that.mCurrentMessageTimeoutId = setTimeout(that.slideUpMessageAndHide, 5000);
-    });
-  },
-
-  /**
-   * Set the message displayed by the messaging UI at the top of the screen.
-   *
-   * @param aMessage The message to show within the messaging UI.
-   */
-  setMessage: function(aMessage) {
-    $('#message').html(aMessage);
-    this.showMessaging();
   },
 
   /**
@@ -193,6 +144,11 @@ UIManager.prototype = {
       $('#aliasInputs').append(dataElement);
       that._setAliasPreferenceOnClickHandlers();
     });
+  },
+
+  showSnackbar: function(aMessage) {
+    $('#snackbar-message').text(aMessage);
+    $('dialog.snackbar').show();
   },
 
   /**
@@ -347,6 +303,13 @@ UIManager.prototype = {
    _setLogoutOnClickHandler: function() {
      $('#logoutLink').click(function() {
        this.logout();
+     });
+   },
+
+   _setDismissSnackBarOnClickHandler: function() {
+     $('#dismissSnackbar').click(function(){
+       $('#snackbar-message').text('');
+       $('.snackbar').hide();
      });
    },
 

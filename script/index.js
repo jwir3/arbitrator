@@ -15,5 +15,4 @@ domready(function() {
   var googleClient = new ArbitratorGoogleClient(function() {
     manager = new UIManager();
     manager.refreshPreferences();
-  });
 });

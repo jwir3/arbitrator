@@ -10,49 +10,11 @@
     include "nav-drawer.html"
     <main id="content">
     </main>
-    <!-- <div id="prefArea">
-      <h2>Preferences</h2><a id="logoutLink" href="#">Logout</a>
-      <hr>
-      <div class="prefGroup" id="aliasPrefs">
-        <h4>Group Aliases</h4>
-        You can add aliases for specific groups here so they are more readable in your calendar.
-        <div class="inputSet" id="aliasInputs">
-        </div>
-      </div>
-      <div class="prefGroup" id="timingPrefs">
-        <h4>Time</h4>
-        You can add preferences for game times here.<br />
-        <div class="inputSet">
-          <div class="labelSet">
-            <label for="timePref-priorToStart">Minutes before start:</label>
-            <div class="inputMessageAreaFloatContainer"><span id="msg-priorToStart" class="inputMessageArea"></span></div>
-            <button id="setPriorToStart">Set</button>
-            <input type="number" id="timePref-priorToStart" value="30" />
-          </div>
-          <div class="labelSet">
-            <label for="timePref-gameLength">Length of game:</label>
-            <div class="inputMessageAreaFloatContainer"><span id="msg-gameLength" class="inputMessageArea"></span></div>
-            <button id="setGameLength">Set</button>
-            <input type="number" id="timePref-gameLength" value="60" />
-          </div>
-        </div>
-        <div class="inputSet">
-          <div class="labelSet">
-            <label for="timePref-consecutiveGames">Consecutive Game Threshold (Hours):</label>
-            <div class="inputMessageAreaFloatContainer"><span id="msg-consecutiveGames" class="inputMessageArea"></span></div>
-            <button id="setConsecutiveGames">Set</button>
-            <input type="number" id="timePref-consecutiveGames" value="2" />
-          </div>
-        </div>
-      </div>
-      <div class="prefGroup" id="locationPrefs">
-        <h4>Locations</h4>
-        You can add preferences for specific locations here so the addresses are
-        stored for later use.
-        <br /><br />
-        <div class="inputSet">
-        </div>
-      </div>
-    </div> -->
   </body>
+  <dialog class="snackbar">
+    <div class="snackbar-inner">
+      <span id="snackbar-message"></span>
+      <button id="dismissSnackbar"><div class="smallIcon times"></div></button>
+    </div>
+  </dialog>
 </html>

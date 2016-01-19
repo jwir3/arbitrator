@@ -110,17 +110,17 @@ Arbitrator.prototype = {
   /**
    * Notify the user that a game was added to his/her calendar.
    */
-  notifyGameAdded: function(aGame) {
-    this.mUiManager.setMessage('Game #' + aGame.getId() + ' was added to Google Calendar.');
-    this.mUiManager.refreshPreferences();
-  },
+  // notifyGameAdded: function(aGame) {
+  //   this.mUiManager.setMessage('Game #' + aGame.getId() + ' was added to Google Calendar.');
+  //   this.mUiManager.refreshPreferences();
+  // },
 
   /**
    * Notify the user that a game was adjusted on his/her calendar.
    */
-  notifyGameAdjusted: function(aGame) {
-    this.mUiManager.setMessage('Game #' + aGame.getId() + ' was adjusted in Google Calendar.');
-  },
+  // notifyGameAdjusted: function(aGame) {
+  //   this.mUiManager.setMessage('Game #' + aGame.getId() + ' was adjusted in Google Calendar.');
+  // },
 
   /**
    * Submit games in Arbitrator to Google Calendar.
@@ -177,7 +177,7 @@ Arbitrator.prototype = {
     this.submitGameToCalendar(aCalendarId, aGame, true);
 
     // Finally, notify that the game was adjusted.
-    this.notifyGameAdjusted(aGame);
+    // this.notifyGameAdjusted(aGame);
   },
 
   /**
@@ -202,9 +202,9 @@ Arbitrator.prototype = {
       }
     });
 
-    if (!aSuppressMessage) {
-      this.notifyGameAdded(aGame);
-    }
+    // if (!aSuppressMessage) {
+    //   this.notifyGameAdded(aGame);
+    // }
   },
 
   /**
