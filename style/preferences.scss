@@ -33,3 +33,17 @@ input[type='text'] {
   font-size: 14pt;
   margin: 0 1em;
 }
+
+section {
+  h2, h3 {
+    display: inline-block;
+    margin-left: 8px;
+  }
+}
+
+input[type='number'] {
+  display: inline-block;
+  width: 5%;
+  font-size: 14pt;
+  margin: 0 1em;
+}

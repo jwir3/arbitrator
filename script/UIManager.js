@@ -47,6 +47,8 @@ UIManager.prototype = {
     this.refreshTimePreferences();
     this.refreshAliasPreferences();
     this.refreshLocationPreferences();
+
+    this._setPreferenceOnClickHandlers();
   },
 
   /**
@@ -97,11 +99,10 @@ UIManager.prototype = {
    * @param aTimePrefName The name of the time preference to set from the UI.
    */
   setTimePreferenceFromUI: function(aTimePrefName) {
-      var timePrefVal = $('#timePref-' + aTimePrefName).val();
-      var prefName = '';
-      var prefStore = new PreferenceStore();
-      prefStore.addTimePreference(aTimePrefName, timePrefVal);
-      // this.acknowledgePreference(aTimePrefName);
+    var timePrefVal = $('#timePref-' + aTimePrefName).val();
+    var prefName = '';
+    var prefStore = new PreferenceStore();
+    prefStore.addTimePreference(aTimePrefName, timePrefVal);
   },
 
   /**
@@ -211,15 +212,21 @@ UIManager.prototype = {
   _setTimePreferenceOnClickHandlers: function() {
     var that = this;
     $('#setPriorToStart').click(function() {
+      var minutes = $('#timePref-priorToStart').val();
       that.setTimePreferenceFromUI('priorToStart');
+      that.showSnackbar('Calendar events will start ' + minutes + ' minutes prior to the game start');
     });
 
     $('#setGameLength').click(function() {
+      var length = $('#timePref-gameLength').val();
       that.setTimePreferenceFromUI('gameLength');
+      that.showSnackbar('Calendar events will be set to ' + length + ' minutes in length');
     });
 
     $('#setConsecutiveGames').click(function() {
+      var consecutiveThresh = $('#timePref-consecutiveGames').val();
       that.setTimePreferenceFromUI('consecutiveGames');
+      that.showSnackbar("Any games within " + consecutiveThresh + " hours of each other at the same location will be considered consecutive");
     });
   },
 
@@ -316,7 +323,6 @@ UIManager.prototype = {
     $('.nav-drawer-item').each(function() {
       var data = $(this).data('item');
 
-      // var stringamajig = new StringUtils();
       $(this).click(function() {
         that.loadContent(data, StringUtils.capitalize(data), function() {
           that.refreshPreferences();
@@ -362,7 +368,6 @@ UIManager.prototype = {
     var that = this;
 
     // Set the text of the nav drawer header
-    // $('li.nav-drawer-header').text(aTitle);
     that.closeNavDrawer();
 
     $('main#content').load('html/' + aContentFileName + '.partial.html', null,

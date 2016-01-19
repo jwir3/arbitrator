@@ -66,15 +66,15 @@ PreferenceStore.prototype = {
 
     switch(aType) {
       case PreferenceStore.TimeType.PRIOR_TO_START:
-        this.time[TimeType.PRIOR_TO_START] = aTimePeriod;
+        this.time[PreferenceStore.TimeType.PRIOR_TO_START] = aTimePeriod;
         break;
 
       case PreferenceStore.TimeType.LENGTH_OF_GAME:
-        this.time[TimeType.LENGTH_OF_GAME] = aTimePeriod;
+        this.time[PreferenceStore.TimeType.LENGTH_OF_GAME] = aTimePeriod;
         break;
 
       case PreferenceStore.TimeType.CONSECUTIVE_GAME_THRESHOLD:
-        this.time[TimeType.CONSECUTIVE_GAME_THRESHOLD] = aTimePeriod;
+        this.time[PreferenceStore.TimeType.CONSECUTIVE_GAME_THRESHOLD] = aTimePeriod;
         break;
 
       default:

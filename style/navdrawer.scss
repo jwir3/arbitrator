@@ -1,3 +1,5 @@
+@import 'colors';
+
 nav {
   background-color: #FFF;
   bottom: 0px;
@@ -46,6 +48,14 @@ nav {
       opacity: 1;
     }
   }
+
+  hr {
+    margin-top: 2em;
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
 }
 
 .nav-drawer-header {
@@ -72,6 +82,10 @@ nav {
 
 #locations {
   background: no-repeat url('../images/castle.svg');
+}
+
+#settings {
+  background: no-repeat url('../images/settings.svg');
 }
 
 #arbitrator {
