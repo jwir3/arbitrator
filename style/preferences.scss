@@ -1,0 +1,49 @@
+@import 'colors';
+
+.labelSet {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+
+  label {
+    display: inline-block;
+    width: 25%;
+    margin-right: 2em;
+    margin-left: 8px;
+    font-size: 14pt;
+  }
+
+  button {
+    font-size: 14pt;
+    margin-left: 0.5em;
+  }
+}
+
+.label-set:first-child {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.labelSet:nth-child(2n) {
+  background-color: $hawkes-blue;
+}
+
+input[type='text'] {
+  display: inline-block;
+  width: 30%;
+  font-size: 14pt;
+  margin: 0 1em;
+}
+
+section {
+  h2, h3 {
+    display: inline-block;
+    margin-left: 8px;
+  }
+}
+
+input[type='number'] {
+  display: inline-block;
+  width: 5%;
+  font-size: 14pt;
+  margin: 0 1em;
+}

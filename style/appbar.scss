@@ -1,0 +1,42 @@
+@import 'colors';
+
+header {
+  position: fixed;
+  background-color: $columbia-blue;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  transition-duration: 0.21s;
+  transition-property: all;
+  transition-timing-function: ease-in-out;
+  z-index: 807;
+
+  box-shadow: none;
+  font-family: "Roboto", "Droid-Sans", arial, sans-serif;
+
+  #hamburger {
+    position: static;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: 10px 25px;
+    vertical-align: middle;
+    background-size: 20px 2px;
+    background: no-repeat url('../images/hamburger.svg');
+    cursor: pointer;
+  }
+
+  h2 {
+    position: static;
+    display: inline-block;
+    margin: 10px auto;
+    vertical-align: middle;
+  }
+}
+
+section {
+  margin-top: 75px;
+}

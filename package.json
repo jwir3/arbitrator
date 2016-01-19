@@ -1,6 +1,6 @@
 {
   "name": "arbitrator",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A utility to transmit schedules from ArbiterSports to Google Calendar.",
   "main": "bundle.js",
   "scripts": {
@@ -32,7 +32,9 @@
     "grunt-contrib-copy": "^0.8.2",
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-nodeunit": "~0.4.1",
+    "grunt-contrib-sass": "^0.9.2",
     "grunt-contrib-uglify": "~0.5.0",
+    "grunt-includes": "^0.5.2",
     "grunt-rework": "^0.1.0",
     "grunt-scp": "^0.1.8",
     "grunt-ssh-deploy": "^0.3.2"
