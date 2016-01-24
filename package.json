@@ -1,6 +1,6 @@
 {
   "name": "arbitrator",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A utility to transmit schedules from ArbiterSports to Google Calendar.",
   "main": "bundle.js",
   "scripts": {
