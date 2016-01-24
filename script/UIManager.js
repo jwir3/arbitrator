@@ -184,8 +184,16 @@ UIManager.prototype = {
                  .data('locationname', aPlace.getName());
 
       $('#locationInputs').append(dataElement);
-      locService.enableAutoCompleteForElement(document.getElementById('locationPref-' + aPlace.getShortName()));
-      that._setLocationPreferenceOnClickHandlers();
+      var element = document.getElementById('locationPref-' + aPlace.getShortName())
+
+      // Since this method is run every time preferences are refreshed, and in
+      // order to generalize the loadContent() method a bit we refresh all
+      // preferences on every content load, this should only be called if there
+      // actually _is_ a location preference input element in the DOM.
+      if (element) {
+        locService.enableAutoCompleteForElement(element);
+        that._setLocationPreferenceOnClickHandlers();
+      }
     });
   },
 
