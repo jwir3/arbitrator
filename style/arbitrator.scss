@@ -5,23 +5,13 @@
 @import 'snackbar';
 @import 'icons';
 
-// #messageContainer {
-//   border-radius: 1em;
-//   border: 1px solid #669966;
-//   background-color: #CCFF99;
-//   width: 50em;
-//   margin-left: auto;
-//   margin-right: auto;
-//   padding: 3em 1em 1em 1em;
-//   transition: transform, 800ms;
-//   transform: translateY(-2em);
-//   position: absolute;
-//   left: calc(50% - 25em);
-// }
-//
-// #messageContainer.hidden {
-//     transform: translateY(calc(-100% - 2em));
-// }
+button, select {
+  font-size: 14pt;
+}
+
+select {
+  margin-top: 1em;
+}
 
 .instructions {
     position: absolute;

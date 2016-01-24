@@ -8,6 +8,9 @@ var ArbitratorGoogleClient = require('./arbitrator-google-client');
 domready(function() {
   var googleClient = new ArbitratorGoogleClient(function() {
     manager = new UIManager();
-    manager.refreshPreferences();
+    manager.loadContent('main', 'Arbitrator', function() {
+      manager.refreshPreferences();
+      manager.setUIListeners();
+    });
   });
 });

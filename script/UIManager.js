@@ -10,15 +10,6 @@ var ArbitratorGoogleClient = require('./arbitrator-google-client');
 var StringUtils = require('./StringUtils');
 
 function UIManager() {
-  var that = this;
-  this.loadContent('main', 'Arbitrator', function() {
-    that._setPreferenceOnClickHandlers();
-    that._setHeaderScrollListener();
-    that._setNavDrawerOnClickHandlers();
-    that._setArbitrateOnClickHandler();
-    that._setLogoutOnClickHandler();
-    that._setDismissSnackBarOnClickHandler();
-  });
 }
 
 UIManager.prototype = {
@@ -34,8 +25,15 @@ UIManager.prototype = {
     var calSelectionElement = document.getElementById('calendarList');
     var selectedId = calSelectionElement[calSelectionElement.selectedIndex].id;
     arb.adjustGamesOrSubmitToCalendar(selectedId);
+  },
 
-    // this.refreshPreferences();
+  setUIListeners: function() {
+    this._setPreferenceOnClickHandlers();
+    this._setHeaderScrollListener();
+    this._setNavDrawerOnClickHandlers();
+    this._setArbitrateOnClickHandler();
+    this._setLogoutOnClickHandler();
+    this._setDismissSnackBarOnClickHandler();
   },
 
   /**
