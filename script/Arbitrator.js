@@ -135,14 +135,24 @@ Arbitrator.prototype = {
   adjustGamesOrSubmitToCalendar: function(aCalendarId) {
     // Save this pointer so it can be used in the callback.
     var self = this;
+    var numGames = Object.keys(this.mGames).length;
+    var gamesProcessed = 0;
     var callback = new EventSearchObserver(
       function(aGame, aCalendarEvent) {
         // Do nothing for right now.
-        self.adjustGameInCalendar(aCalendarId, aCalendarEvent, aGame);
+        // self.adjustGameInCalendar(aCalendarId, aCalendarEvent, aGame);
+        gamesProcessed++;
+        if (gamesProcessed == numGames) {
+          self.mUiManager.showSnackbar('Game(s) added to calendar');
+        }
       },
 
       function(aGame) {
-        self.submitGameToCalendar(aCalendarId, aGame);
+        // self.submitGameToCalendar(aCalendarId, aGame);
+        gamesProcessed++;
+        if (gamesProcessed == numGames) {
+          self.mUiManager.showSnackbar('Game(s) added to calendar');
+        }
       });
 
     for (var key in this.mGames) {
@@ -174,10 +184,7 @@ Arbitrator.prototype = {
     request.execute();
 
     // Now, submit the new event.
-    this.submitGameToCalendar(aCalendarId, aGame, true);
-
-    // Finally, notify that the game was adjusted.
-    // this.notifyGameAdjusted(aGame);
+    this.submitGameToCalendar(aCalendarId, aGame);
   },
 
   /**
@@ -188,7 +195,7 @@ Arbitrator.prototype = {
    * @param aSuppressMessage If true, then no message will be shown for this event
    *        being added. Defaults to false.
    */
-  submitGameToCalendar: function(aCalendarId, aGame, aSuppressMessage) {
+  submitGameToCalendar: function(aCalendarId, aGame) {
     var eventToInsert = aGame.getEventJSON();
     var request = gapi.client.calendar.events.insert({
       'calendarId' : aCalendarId,
@@ -201,10 +208,6 @@ Arbitrator.prototype = {
         console.log("An error occurred: " + aResponse);
       }
     });
-
-    // if (!aSuppressMessage) {
-    //   this.notifyGameAdded(aGame);
-    // }
   },
 
   /**
