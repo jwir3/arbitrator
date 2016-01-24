@@ -40,7 +40,7 @@ module.exports = function(grunt) {
           username: '<%= secret.release.username %>',
           privateKey: '<%= grunt.file.read(secret.release.path_to_private_key) %>',
           deploy_path: '<%= secret.release.deploy_path %>',
-          local_path: 'dist',
+          local_path: 'public',
           current_symlink: 'current',
           tag: '<%= pkg.version %>-BETA',
           debug: true,
