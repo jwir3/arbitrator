@@ -140,7 +140,7 @@ Arbitrator.prototype = {
     var callback = new EventSearchObserver(
       function(aGame, aCalendarEvent) {
         // Do nothing for right now.
-        // self.adjustGameInCalendar(aCalendarId, aCalendarEvent, aGame);
+        self.adjustGameInCalendar(aCalendarId, aCalendarEvent, aGame);
         gamesProcessed++;
         if (gamesProcessed == numGames) {
           self.mUiManager.showSnackbar('Game(s) added to calendar');
@@ -148,7 +148,7 @@ Arbitrator.prototype = {
       },
 
       function(aGame) {
-        // self.submitGameToCalendar(aCalendarId, aGame);
+        self.submitGameToCalendar(aCalendarId, aGame);
         gamesProcessed++;
         if (gamesProcessed == numGames) {
           self.mUiManager.showSnackbar('Game(s) added to calendar');
