@@ -117,6 +117,8 @@ UIManager.prototype = {
       dataElement.find('.originalName')
                  .data('actualname', aGroupName)
                  .attr('value', aGroupName);
+      dataElement.find('.aliasRemoveButton')
+                 .data('actualname', aGroupName);
 
       // If the group name is the same as the alias name, just assume we don't
       // have an alias set.
@@ -162,6 +164,11 @@ UIManager.prototype = {
   deleteLocationPreference: function(aLocationKey) {
     var prefStore = new PreferenceStore();
     prefStore.removeLocationPreference(aLocationKey);
+  },
+
+  deleteAliasPreference: function(aGroupName) {
+    var prefStore = new PreferenceStore();
+    prefStore.removeGroupAlias(aGroupName);
   },
 
   addLocationPreference: function(aPlace) {
@@ -247,6 +254,15 @@ UIManager.prototype = {
         var actualName = $(this).parent().find('.originalName').data('actualname');
         var aliasName = $(this).parent().find('.aliasName').val();
         that.addAliasToPrefStore(actualName, aliasName);
+      });
+    });
+
+    $('.aliasRemoveButton').each(function() {
+      $(this).click(function() {
+        that.deleteAliasPreference($(this).data('actualname'));
+        $(this).parent().fadeOut(300, function () {
+          $(this).remove();
+        });
       });
     });
   },
