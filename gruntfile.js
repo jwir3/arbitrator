@@ -94,6 +94,10 @@ module.exports = function(grunt) {
             {
               match: 'googleAPIKey',
               replacement: '<%= secret.alpha.googleAPIKey %>'
+            },
+            {
+              match: 'version_number',
+              replacement: '<%= pkg.version %>-ALPHA'
             }
           ]
         },
@@ -118,6 +122,10 @@ module.exports = function(grunt) {
             {
               match: 'googleAPIKey',
               replacement: '<%= secret.release.googleAPIKey %>'
+            },
+            {
+              match: 'version_number',
+              replacement: '<%= pkg.version %>-BETA'
             }
           ]
         },

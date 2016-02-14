@@ -35,6 +35,11 @@ header {
     margin: 10px auto;
     vertical-align: middle;
   }
+
+  h2#versionNumber {
+    position: absolute;
+    right: 1em;
+  }
 }
 
 section {
