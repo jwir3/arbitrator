@@ -136,6 +136,10 @@ UIManager.prototype = {
   showSnackbar: function(aMessage) {
     $('#snackbar-message').text(aMessage);
     $('dialog.snackbar').show();
+
+    setTimeout(function() {
+      $('dialog.snackbar').hide();
+    }, 4000);
   },
 
   /**
