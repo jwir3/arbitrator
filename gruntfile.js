@@ -5,7 +5,7 @@ module.exports = function(grunt) {
 
     clean: ['public', '.sass-cache'],
     browserify: {
-      'public/script/index.js': ['script/index.js']
+      'public/script/index.js': ['build/script/index.js']
     },
     copy: {
       images: {
@@ -22,6 +22,11 @@ module.exports = function(grunt) {
         src: 'assets/**',
         dest: 'public/',
         expand: true
+      },
+      script: {
+        src: 'script/**',
+        dest: 'build/',
+        expand: true,
       }
     },
     environments: {
@@ -76,6 +81,64 @@ module.exports = function(grunt) {
           silent: true
         }
       }
+    },
+
+    replace: {
+      alpha: {
+        options: {
+          patterns: [
+            {
+              match: 'googleClientId',
+              replacement: '<%= secret.alpha.googleClientId %>'
+            },
+            {
+              match: 'googleAPIKey',
+              replacement: '<%= secret.alpha.googleAPIKey %>'
+            },
+            {
+              match: 'version_number',
+              replacement: '<%= pkg.version %>-ALPHA'
+            }
+          ]
+        },
+
+        files: [
+          {
+            expand: true,
+            flatten: true,
+            src: ['script/config.js'],
+            dest: 'build/script/'
+          }
+        ]
+      },
+
+      release: {
+        options: {
+          patterns: [
+            {
+              match: 'googleClientId',
+              replacement: '<%= secret.release.googleClientId %>'
+            },
+            {
+              match: 'googleAPIKey',
+              replacement: '<%= secret.release.googleAPIKey %>'
+            },
+            {
+              match: 'version_number',
+              replacement: '<%= pkg.version %>-BETA'
+            }
+          ]
+        },
+
+        files: [
+          {
+            expand: true,
+            flatten: true,
+            src: ['script/config.js'],
+            dest: 'build/script/'
+          }
+        ]
+      }
     }
   });
 
@@ -86,8 +149,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-ssh-deploy');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-includes');
+  grunt.loadNpmTasks('grunt-replace');
 
-  grunt.registerTask('default', ['clean', 'includes', 'browserify', 'sass', 'copy']);
-  grunt.registerTask('deployAlpha', ['default', 'ssh_deploy:alpha']);
-  grunt.registerTask('deployRelease', ['default', 'ssh_deploy:release']);
+  grunt.registerTask('default', ['clean', 'includes', 'copy']);
+  grunt.registerTask('deployAlpha', ['default', 'replace:alpha', 'browserify', 'sass', 'ssh_deploy:alpha']);
+  grunt.registerTask('deployRelease', ['default', 'replace:release', 'browserify', 'sass', 'ssh_deploy:release']);
 }

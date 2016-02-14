@@ -406,6 +406,7 @@ UIManager.prototype = {
    */
   loadContent: function(aContentFileName, aTitle, aOnComplete) {
     var that = this;
+    var arbitratorConfig = require('./config');
 
     // Set the text of the nav drawer header
     that.closeNavDrawer();
@@ -425,6 +426,9 @@ UIManager.prototype = {
 
                              // Add the title to the app bar.
                              $('#pageTitle').text(aTitle);
+
+                             // Add the version number to the app bar
+                             $('#versionNumber').text('v' + arbitratorConfig.version_number);
 
                              if (aOnComplete) {
                                aOnComplete();
