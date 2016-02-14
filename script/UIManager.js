@@ -80,11 +80,13 @@ UIManager.prototype = {
    * preferences.
    */
   refreshAliasPreferences: function() {
+    $('#aliasInputs').html('');
     var prefStore = new PreferenceStore();
     var aliasedGroups = prefStore.getAllGroupAliases();
     for (var prop in aliasedGroups) {
       if (aliasedGroups.hasOwnProperty(prop)) {
         var groupAlias = aliasedGroups[prop];
+
         this.addAliasUIFor(prop, groupAlias);
       }
     }
@@ -249,7 +251,9 @@ UIManager.prototype = {
   _setAliasPreferenceOnClickHandlers: function() {
     var that = this;
     var prefStore = new PreferenceStore();
+
     $('button.setAlias').each(function() {
+      $(this).off('click');
       $(this).click(function() {
         var actualName = $(this).parent().find('.originalName').data('actualname');
         var aliasName = $(this).parent().find('.aliasName').val();
@@ -258,12 +262,26 @@ UIManager.prototype = {
     });
 
     $('.aliasRemoveButton').each(function() {
+      $(this).off('click');
       $(this).click(function() {
         that.deleteAliasPreference($(this).data('actualname'));
         $(this).parent().fadeOut(300, function () {
           $(this).remove();
         });
       });
+    });
+
+    $('#aliasAddButton').off('click');
+    $('#aliasAddButton').click(function() {
+      var actualName = $('#aliasAddName').text();
+      var aliasName = $('#aliasAddAlias').text();
+
+      that.addAliasToPrefStore(actualName, aliasName);
+
+      $('#aliasAddName').text('');
+      $('#aliasAddAlias').text('');
+
+      that.refreshAliasPreferences();
     });
   },
 
