@@ -1,9 +1,10 @@
-@import 'core';
+@import 'arbitrator-core';
 @import 'appbar';
 @import 'navdrawer';
 @import 'preferences';
 @import 'snackbar';
-@import 'icons';
+@import 'arbitrator-icons';
+@import 'font-awesome';
 
 button, select {
   font-size: 14pt;

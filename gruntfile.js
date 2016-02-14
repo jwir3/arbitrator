@@ -17,6 +17,11 @@ module.exports = function(grunt) {
         src: 'html/**',
         dest: 'public/',
         expand: true
+      },
+      assets: {
+        src: 'assets/**',
+        dest: 'public/',
+        expand: true
       }
     },
     environments: {

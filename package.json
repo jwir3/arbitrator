@@ -34,6 +34,7 @@
     "grunt-contrib-nodeunit": "~0.4.1",
     "grunt-contrib-sass": "^0.9.2",
     "grunt-contrib-uglify": "~0.5.0",
+    "grunt-font-awesome-vars": "^1.0.1",
     "grunt-includes": "^0.5.2",
     "grunt-rework": "^0.1.0",
     "grunt-scp": "^0.1.8",
