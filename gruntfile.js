@@ -5,8 +5,30 @@ module.exports = function(grunt) {
 
     clean: ['public', '.sass-cache'],
     browserify: {
-      'public/script/index.js': ['build/script/index.js']
+      'public/script/index.js': ['build/script/index.js', 'build/script/_bower.js']
     },
+
+    bower_concat: {
+      all: {
+        dest: {
+          'js': 'build/script/_bower.js',
+          'css': 'style/_bower.scss'
+        },
+        exclude: [
+          'jquery',
+          'modernizr'
+        ],
+        dependencies: {
+          'underscore': 'jquery',
+          'backbone': 'underscore',
+          'jquery-mousewheel': 'jquery'
+        },
+        bowerOptions: {
+          relative: false
+        }
+      }
+    },
+
     copy: {
       images: {
         src: 'images/**',
@@ -150,8 +172,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-includes');
   grunt.loadNpmTasks('grunt-replace');
+  grunt.loadNpmTasks('grunt-bower-concat');
 
   grunt.registerTask('default', ['clean', 'includes', 'copy']);
-  grunt.registerTask('deployAlpha', ['default', 'replace:alpha', 'browserify', 'sass', 'ssh_deploy:alpha']);
-  grunt.registerTask('deployRelease', ['default', 'replace:release', 'browserify', 'sass', 'ssh_deploy:release']);
+  grunt.registerTask('deployAlpha', ['default', 'replace:alpha', 'bower_concat', 'browserify', 'sass', 'ssh_deploy:alpha']);
+  grunt.registerTask('deployRelease', ['default', 'replace:release', 'bower_concat', 'browserify', 'sass', 'ssh_deploy:release']);
 }
