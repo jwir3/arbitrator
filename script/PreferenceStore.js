@@ -66,15 +66,15 @@ PreferenceStore.prototype = {
 
     switch(aType) {
       case PreferenceStore.TimeType.PRIOR_TO_START:
-        this.time[TimeType.PRIOR_TO_START] = aTimePeriod;
+        this.time[PreferenceStore.TimeType.PRIOR_TO_START] = aTimePeriod;
         break;
 
       case PreferenceStore.TimeType.LENGTH_OF_GAME:
-        this.time[TimeType.LENGTH_OF_GAME] = aTimePeriod;
+        this.time[PreferenceStore.TimeType.LENGTH_OF_GAME] = aTimePeriod;
         break;
 
       case PreferenceStore.TimeType.CONSECUTIVE_GAME_THRESHOLD:
-        this.time[TimeType.CONSECUTIVE_GAME_THRESHOLD] = aTimePeriod;
+        this.time[PreferenceStore.TimeType.CONSECUTIVE_GAME_THRESHOLD] = aTimePeriod;
         break;
 
       default:
@@ -139,7 +139,6 @@ PreferenceStore.prototype = {
 
   getAllLocationPreferences: function() {
     if (this.locations) {
-      console.log(this.locations);
       return Object.freeze(this.locations);
     }
 
@@ -260,6 +259,21 @@ PreferenceStore.prototype = {
     this._putPreferences();
   },
 
+  setUserId: function(aUserId) {
+    this.userId = aUserId;
+
+    this._putPreferences();
+  },
+
+  removeUserId: function() {
+    delete this.userId;
+    this._putPreferences();
+  },
+
+  getUserId: function() {
+    return this.userId;
+  },
+
   /**
    * Remove all previously created group aliases from the preference store.
    */
@@ -286,6 +300,7 @@ PreferenceStore.prototype = {
       this.groupAliases = prefObj['groupAliases'];
       this.time = prefObj['time'];
       this.locations = prefObj['locations'];
+      this.userId = prefObj['userId'];
     }
   }
 };

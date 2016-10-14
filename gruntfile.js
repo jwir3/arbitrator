@@ -3,26 +3,52 @@ module.exports = function(grunt) {
     secret: grunt.file.readJSON('secret.json'),
     pkg: grunt.file.readJSON("package.json"),
 
-    clean: ['dist/'],
+    clean: ['public', '.sass-cache'],
     browserify: {
-      'dist/script/index.js': ['script/index.js']
+      'public/script/index.js': ['build/script/index.js', 'build/script/_bower.js']
     },
-    rework: {
-      'dist/style/arbitrator.css': ['style/arbitrator.css'],
-      options: {
-        vendors: ['-moz-', '-webkit-']
+
+    bower_concat: {
+      all: {
+        dest: {
+          'js': 'build/script/_bower.js',
+          'css': 'style/_bower.scss'
+        },
+        exclude: [
+          'jquery',
+          'modernizr'
+        ],
+        dependencies: {
+          'underscore': 'jquery',
+          'backbone': 'underscore',
+          'jquery-mousewheel': 'jquery'
+        },
+        bowerOptions: {
+          relative: false
+        }
       }
     },
+
     copy: {
       images: {
-        src: 'img/**',
-        dest: 'dist/',
+        src: 'images/**',
+        dest: 'public/',
         expand: true
       },
       html: {
-        src: '*.html',
-        dest: 'dist/',
-        expand: false
+        src: 'html/**',
+        dest: 'public/',
+        expand: true
+      },
+      assets: {
+        src: 'assets/**',
+        dest: 'public/',
+        expand: true
+      },
+      script: {
+        src: 'script/**',
+        dest: 'build/',
+        expand: true,
       }
     },
     environments: {
@@ -32,12 +58,108 @@ module.exports = function(grunt) {
           username: '<%= secret.alpha.username %>',
           privateKey: '<%= grunt.file.read(secret.alpha.path_to_private_key) %>',
           deploy_path: '<%= secret.alpha.deploy_path %>',
-          local_path: 'dist',
+          local_path: 'public',
           current_symlink: 'current',
           tag: '<%= pkg.version %>-ALPHA',
           debug: true,
           releases_to_keep: 3
         }
+      },
+
+      release: {
+        options: {
+          host: '<%= secret.release.host %>',
+          username: '<%= secret.release.username %>',
+          privateKey: '<%= grunt.file.read(secret.release.path_to_private_key) %>',
+          deploy_path: '<%= secret.release.deploy_path %>',
+          local_path: 'public',
+          current_symlink: 'current',
+          tag: '<%= pkg.version %>-BETA',
+          debug: true,
+          releases_to_keep: 3
+        }
+      }
+    },
+
+    sass: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: 'style',
+          src: ['*.scss'],
+          dest: 'public/style',
+          ext: '.css'
+        }]
+      }
+    },
+
+    includes: {
+      files: {
+        src: ['*.html'], // Source files
+        dest: 'public', // Destination directory
+        flatten: true,
+        cwd: '.',
+        options: {
+          silent: true
+        }
+      }
+    },
+
+    replace: {
+      alpha: {
+        options: {
+          patterns: [
+            {
+              match: 'googleClientId',
+              replacement: '<%= secret.alpha.googleClientId %>'
+            },
+            {
+              match: 'googleAPIKey',
+              replacement: '<%= secret.alpha.googleAPIKey %>'
+            },
+            {
+              match: 'version_number',
+              replacement: '<%= pkg.version %>-ALPHA'
+            }
+          ]
+        },
+
+        files: [
+          {
+            expand: true,
+            flatten: true,
+            src: ['script/config.js'],
+            dest: 'build/script/'
+          }
+        ]
+      },
+
+      release: {
+        options: {
+          patterns: [
+            {
+              match: 'googleClientId',
+              replacement: '<%= secret.release.googleClientId %>'
+            },
+            {
+              match: 'googleAPIKey',
+              replacement: '<%= secret.release.googleAPIKey %>'
+            },
+            {
+              match: 'version_number',
+              replacement: '<%= pkg.version %>-BETA'
+            }
+          ]
+        },
+
+        files: [
+          {
+            expand: true,
+            flatten: true,
+            src: ['script/config.js'],
+            dest: 'build/script/'
+          }
+        ]
       }
     }
   });
@@ -47,7 +169,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-rework');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-ssh-deploy');
+  grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-includes');
+  grunt.loadNpmTasks('grunt-replace');
+  grunt.loadNpmTasks('grunt-bower-concat');
 
-  grunt.registerTask('default', ['clean', 'browserify', 'rework', 'copy']);
-  grunt.registerTask('deployAlpha', ['default', 'ssh_deploy:alpha']);
+  grunt.registerTask('default', ['clean', 'includes', 'copy']);
+  grunt.registerTask('deployAlpha', ['default', 'replace:alpha', 'bower_concat', 'browserify', 'sass', 'ssh_deploy:alpha']);
+  grunt.registerTask('deployRelease', ['default', 'replace:release', 'bower_concat', 'browserify', 'sass', 'ssh_deploy:release']);
 }

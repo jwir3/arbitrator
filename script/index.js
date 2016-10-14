@@ -2,27 +2,20 @@ var $ = require('jquery');
 
 var domready = require('domready');
 var UIManager = require('./UIManager');
-var manager = new UIManager();
+var manager;
 var ArbitratorGoogleClient = require('./arbitrator-google-client');
-
-function init() {
-  $('#arbitrate-button').click(function () {
-    console.log("Calling onArbitrate");
-    manager.onArbitrate();
-  });
-}
-
-var googleClient = new ArbitratorGoogleClient(function() {
-  manager.refreshPreferences();
-  // updateLocationPreferenceUI();
-});
-
-// This next set of functions are callbacks that need to be globally accessible
-// (thanks, browser code) :|
-function addAlias(aGroupName) {
-  manager.addAliasToPrefStore(aGroupName);
-}
+require('../../bower_components/magnific-popup/magnific-popup.jquery.json')
 
 domready(function() {
-  init();
+  var googleClient = new ArbitratorGoogleClient(function() {
+    manager = new UIManager();
+    manager.loadContent('main', 'Arbitrator', function() {
+      manager.refreshPreferences();
+      manager.setUIListeners();
+    });
+
+    $('.ajax-popup-link').magnificPopup({
+      type: 'ajax'
+    });
+  });
 });

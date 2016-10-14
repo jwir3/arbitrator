@@ -1,0 +1,66 @@
+@import 'arbitrator-core';
+@import 'appbar';
+@import 'navdrawer';
+@import 'preferences';
+@import 'snackbar';
+@import 'arbitrator-icons';
+@import 'font-awesome';
+
+button, select {
+  font-size: 14pt;
+}
+
+select {
+  margin-top: 1em;
+}
+
+.instructions {
+    position: absolute;
+    right: 1em;
+    bottom: 1em;
+    color: #888888;
+    font-size: 8pt;
+}
+
+.aliasUI {
+  min-height: 2em;
+  margin-top: 1em;
+  margin-right: 0.5em;
+  vertical-align: middle;
+}
+
+.inputMessageAreaFloatContainer {
+  display: block;
+  width: 8em;
+  height: 1em;
+  float: right;
+  margin-left: 0.5em;
+}
+
+.inputMessageArea {
+  display: hidden;
+}
+
+#prefArea {
+  display: block;
+  border: 1px solid #330099;
+  border-radius: 8px;
+  background-color: #99ccff;
+  padding: 1em 1em 1em 1em;
+  width: 45%;
+  float: left;
+}
+
+#schedule {
+  width: 90%;
+  height: 30em;
+}
+
+#mainContent {
+  margin-left: 8px;
+  width: 50%;
+}
+
+#logoutLink {
+  text-align: right;
+}

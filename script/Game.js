@@ -351,7 +351,6 @@ Game.prototype = {
 
     var prefStore = new PreferenceStore();
     if (prefStore.hasLocationPreference(placeKey)) {
-      console.log("We found " + placeKey + " in the preference store");
       return prefStore.getLocationPreference(placeKey);
     }
 

@@ -1,4 +1,14 @@
 **/dist
 **/node_modules
+**/.sass-cache
+**/public
+**/build/
+
+
+# Ignore bower-generated items
+# TODO: This should really be put in some type of build directory and copied
+#       over.
+**/style/_bower.scss
+**/script/_bower.js
 
 secret.json
