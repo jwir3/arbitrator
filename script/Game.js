@@ -20,7 +20,6 @@ var gameLevels = {
   'BC'              : 'Bantam C',
   'BB'              : 'Bantam B',
   'BA'              : 'Bantam A/AA/AAA',
-  'JGC'             : 'Junior Gold C',
   'JGB'             : 'Junior Gold B',
   'JGA'             : 'Junior Gold A/AA/AAA',
   '10U'             : '10U Girls',
@@ -213,7 +212,7 @@ Game.prototype = {
     var levelString = this.getSportLevel();
     var levelKeys = Object.keys(gameLevels);
     for (var level in levelKeys) {
-      if (levelString.contains(levelKeys[level])) {
+      if (levelString.indexOf(levelKeys[level])) {
         return gameLevels[levelKeys[level]];
       }
     }
