@@ -212,7 +212,7 @@ Game.prototype = {
     var levelString = this.getSportLevel();
     var levelKeys = Object.keys(gameLevels);
     for (var level in levelKeys) {
-      if (levelString.indexOf(levelKeys[level])) {
+      if (levelString.indexOf(levelKeys[level]) > 0) {
         return gameLevels[levelKeys[level]];
       }
     }
