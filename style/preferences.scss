@@ -91,13 +91,35 @@ input[type='text'] {
   display: inline-block;
   width: 30%;
   font-size: 14pt;
-  margin: 0 1em;
+}
+
+input[type='text'].small {
+  display: inline-block;
+  width: 5%;
+  font-size: 14pt;
 }
 
 section {
   h2, h3 {
     display: inline-block;
     margin-left: 8px;
+    margin: 0 1em;
+  }
+
+  h3#locationDataHeader {
+    width: 25%;
+    margin-right: 2em;
+    margin-left: 8px;
+  }
+
+  h3#locationAddressHeader {
+    width: 30%;
+    margin-left: 0;
+  }
+
+  h3#subLocationHeader {
+    width: 5%;
+    margin-left: 0;
   }
 }
 
@@ -105,5 +127,4 @@ input[type='number'] {
   display: inline-block;
   width: 5%;
   font-size: 14pt;
-  margin: 0 1em;
 }
