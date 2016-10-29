@@ -158,11 +158,12 @@ UIManager.prototype = {
   },
 
   setLocationPreference: function(aLocationPrefKey, aLocationPrefName) {
-    var address = $('#locationPref-' + aLocationPrefKey).val();
+    var address = $('#locationAddressPref-' + aLocationPrefKey).val();
+    var subLocationName = $('#locationSubLocationPref-' + aLocationPrefKey).val();
 
     var prefName = '';
     var prefStore = new PreferenceStore();
-    prefStore.addLocationPreference(new Place(aLocationPrefKey, aLocationPrefName, address));
+    prefStore.addLocationPreference(new Place(aLocationPrefKey, aLocationPrefName, address, subLocationName));
 
     this.showSnackbar("Address for '" + aLocationPrefName + "' set");
   },
@@ -181,15 +182,23 @@ UIManager.prototype = {
     var that = this;
     $.get('html/location-preference.partial.html', function(data) {
       var dataElement = $(data);
-      var textInputId = 'locationPref-' + aPlace.getShortName();
-      var placeholderText = 'Enter address for ' + aPlace.getName();
+      var addressTextInputId = 'locationAddressPref-' + aPlace.getShortName();
+      var subLocationTextInputId = 'locationSubLocationPref-' + aPlace.getShortName();
+      var addressPlaceholderText = 'Enter address for ' + aPlace.getName();
       if (aPlace.getAddress()) {
-        placeholderText = aPlace.getAddress();
+        addressPlaceholderText = aPlace.getAddress();
       }
 
-      dataElement.find('label').attr('for', textInputId).text(aPlace.getName());
-      dataElement.find('.locationTextInput').attr('id', textInputId)
-                 .attr('placeholder', placeholderText);
+      var subLocationPlaceholderText = '';
+      if (aPlace.hasSubLocation()) {
+        subLocationPlaceholderText = aPlace.getSubLocationName();
+      }
+
+      dataElement.find('label').attr('for', addressTextInputId).text(aPlace.getName());
+      dataElement.find('.locationTextInput').attr('id', addressTextInputId)
+                 .attr('placeholder', addressPlaceholderText);
+      dataElement.find('.locationTextInput.small').attr('id', subLocationTextInputId)
+                 .attr('placeholder', subLocationPlaceholderText);
       dataElement.find('.locationRemoveButton')
                  .data('locationshortname', aPlace.getShortName());
       dataElement.find('.locationSetButton')
@@ -197,14 +206,14 @@ UIManager.prototype = {
                  .data('locationname', aPlace.getName());
 
       $('#locationInputs').append(dataElement);
-      var element = document.getElementById('locationPref-' + aPlace.getShortName())
+      var addressElement = document.getElementById('locationAddressPref-' + aPlace.getShortName())
 
       // Since this method is run every time preferences are refreshed, and in
       // order to generalize the loadContent() method a bit we refresh all
       // preferences on every content load, this should only be called if there
       // actually _is_ a location preference input element in the DOM.
-      if (element) {
-        locService.enableAutoCompleteForElement(element);
+      if (addressElement) {
+        locService.enableAutoCompleteForElement(addressElement);
         that._setLocationPreferenceOnClickHandlers();
       }
     });

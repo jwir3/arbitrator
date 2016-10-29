@@ -116,7 +116,8 @@ PreferenceStore.prototype = {
   getLocationPreference: function(aLocationKey) {
       if (this.locations && this.locations[aLocationKey]) {
         var genericLoc = this.locations[aLocationKey];
-        return new Place(genericLoc.mShortName, genericLoc.mName, genericLoc.mAddress);
+        return new Place(genericLoc.mShortName, genericLoc.mName,
+                        genericLoc.mAddress, genericLoc.mSubLocationName);
       }
 
       return aLocationKey;
