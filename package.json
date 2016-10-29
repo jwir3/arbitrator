@@ -27,6 +27,7 @@
   "homepage": "https://github.com/jwir3/arbitrator#readme",
   "devDependencies": {
     "grunt": "^0.4.5",
+    "grunt-bower-concat": "^1.0.0",
     "grunt-browserify": "^4.0.1",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-copy": "^0.8.2",
@@ -42,7 +43,7 @@
     "grunt-ssh-deploy": "^0.3.2"
   },
   "dependencies": {
-    "crypto-js": "^3.1.5",
+    "crypto-js": "^3.1.6",
     "domready": "^1.0.8",
     "google-client-api": "^1.0.4",
     "google-maps": "^3.1.0",

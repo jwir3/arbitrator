@@ -20,7 +20,6 @@ var gameLevels = {
   'BC'              : 'Bantam C',
   'BB'              : 'Bantam B',
   'BA'              : 'Bantam A/AA/AAA',
-  'JGC'             : 'Junior Gold C',
   'JGB'             : 'Junior Gold B',
   'JGA'             : 'Junior Gold A/AA/AAA',
   '10U'             : '10U Girls',
@@ -213,7 +212,7 @@ Game.prototype = {
     var levelString = this.getSportLevel();
     var levelKeys = Object.keys(gameLevels);
     for (var level in levelKeys) {
-      if (levelString.contains(levelKeys[level])) {
+      if (levelString.indexOf(levelKeys[level]) > 0) {
         return gameLevels[levelKeys[level]];
       }
     }
@@ -289,6 +288,7 @@ Game.prototype = {
 
   getEventJSON: function() {
     var siteData = this.getSite().getAddress() ? this.getSite().getAddress() : this.getSite().getName();
+    var subLocationString = this.getSite().hasSubLocation() ? "\n\nRink " + this.getSite().getSubLocationName() : "";
     return  {
       "end": {
         "dateTime": this.getISOEndDate()
@@ -297,7 +297,9 @@ Game.prototype = {
         "dateTime": this.getISOStartDate()
       },
       "location": siteData,
-      "description": "Game starts at " + String(this.getTime12Hr()) + "\n\n" + "{ArbitratorHash: " + String(this.getHash()) + "}",
+      "description": "Game starts at " + String(this.getTime12Hr())
+                     + subLocationString
+                     + "\n\n{ArbitratorHash: " + String(this.getHash()) + "}",
       "summary": this.getSummaryString()
     };
   },
@@ -318,10 +320,10 @@ Game.prototype = {
    *         not change, even if the game dates/times change.
    */
    getIdentificationString: function() {
-      var level = this.getLevel() === "UNKNOWN" ? "" : this.getLevel();
-      var teams = this.areTeamsValid() ? this.getHomeTeam() + "v" + this.getAwayTeam() : "";
+      // var level = this.getLevel() === "UNKNOWN" ? "" : this.getLevel();
+      // var teams = this.areTeamsValid() ? this.getHomeTeam() + "v" + this.getAwayTeam() : "";
       var idString = String(this.getId());
-      idString = idString + this.getGroup() + level + teams;
+      // idString = idString + this.getGroup() + level + teams;
 
       return idString.replace(/\s+/gm, "");
    },
@@ -330,7 +332,7 @@ Game.prototype = {
    * Retrieve a hash of the unique identifying information of this game. This
    * serves to identify the game if the date/time changes.
    *
-   * @return A string of a SHA-1 hash of the game id, group, teams playing, and level.
+   * @return A string of a SHA-1 hash of the game id.
    */
   getHash: function() {
     return CryptoJS.SHA1(this.getIdentificationString()).toString(CryptoJS.enc.Hex);
@@ -354,7 +356,7 @@ Game.prototype = {
       return prefStore.getLocationPreference(placeKey);
     }
 
-    var place = new Place(placeKey, aSiteName, undefined);
+    var place = new Place(placeKey, aSiteName, undefined, "");
     prefStore.addLocationPreference(place);
     return place;
   }

@@ -231,7 +231,7 @@ Arbitrator.prototype = {
       for (var i = 0; i < results.length; i++) {
         var calEvent = results[i];
         if (calEvent.description
-            && calEvent.description.contains(searchString)) {
+            && calEvent.description.indexOf(searchString) > 0) {
             aCallback.onMatchFound(aGame, calEvent)
             foundEvent = true;
             break;

@@ -12,5 +12,9 @@ domready(function() {
       manager.refreshPreferences();
       manager.setUIListeners();
     });
+
+//    $('.ajax-popup-link').magnificPopup({
+//      type: 'ajax'
+//    });
   });
 });
