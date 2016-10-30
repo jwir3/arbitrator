@@ -13,6 +13,7 @@ function UIManager() {
 }
 
 UIManager.prototype = {
+  mGoogleClient: null,
   mBackStack: new Array(),
 
   /**
@@ -424,6 +425,13 @@ UIManager.prototype = {
     // Set the text of the nav drawer header
     that.closeNavDrawer();
 
+    if (aContentFileName == 'main') {
+      that.refreshGoogleClient(function(aGoogleClient) {
+        aGoogleClient.populateCalendarList();
+        aGoogleClient.populateUserId();
+      });
+    }
+
     $('main#content').load('html/' + aContentFileName + '.partial.html', null,
                            function() {
                              that._addToBackStack({
@@ -447,6 +455,28 @@ UIManager.prototype = {
                                aOnComplete();
                              }
                            });
+  },
+
+  /**
+   * Refresh the ArbitratorGoogleClient object held internally.
+   *
+   * If necessary, this will create a new ArbitratorGoogleClient object.
+   *
+   * @param aOnComplete A function to execute after the ArbitratorGoogleClient
+   *        is initialized. If the ArbitratorGoogleClient is already set up, it
+   *        will execute immediately; otherwise, it will execute once the
+   *        ArbitratorGoogleClient is completely initialized. This function
+   *        should take a single argument: the ArbitratorGoogleClient instance
+   *        (in the event you want to work with it in the callback).
+   */
+  refreshGoogleClient: function(aOnComplete) {
+    if (this.mGoogleClient == null) {
+      this.mGoogleClient = new ArbitratorGoogleClient(function() {
+        aOnComplete(this.mGoogleClient);
+      });
+    } else {
+      aOnComplete(this.mGoogleClient);
+    }
   },
 
   /**
@@ -535,6 +565,7 @@ UIManager.prototype = {
     this.mBackStack.pop();
 
     var lastEntry = this.mBackStack.pop();
+
     this.loadContent(lastEntry.id, lastEntry.name, null);
   },
 
