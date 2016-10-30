@@ -66,6 +66,20 @@ module.exports = function(grunt) {
         }
       },
 
+      beta: {
+        options: {
+          host: '<%= secret.beta.host %>',
+          username: '<%= secret.beta.username %>',
+          privateKey: '<%= grunt.file.read(secret.beta.path_to_private_key) %>',
+          deploy_path: '<%= secret.beta.deploy_path %>',
+          local_path: 'public',
+          current_symlink: 'current',
+          tag: '<%= pkg.version %>-BETA',
+          debug: true,
+          releases_to_keep: 3
+        }
+      },
+
       release: {
         options: {
           host: '<%= secret.release.host %>',
@@ -74,7 +88,7 @@ module.exports = function(grunt) {
           deploy_path: '<%= secret.release.deploy_path %>',
           local_path: 'public',
           current_symlink: 'current',
-          tag: '<%= pkg.version %>-BETA',
+          tag: '<%= pkg.version %>',
           debug: true,
           releases_to_keep: 3
         }
@@ -134,6 +148,34 @@ module.exports = function(grunt) {
         ]
       },
 
+      beta: {
+        options: {
+          patterns: [
+            {
+              match: 'googleClientId',
+              replacement: '<%= secret.beta.googleClientId %>'
+            },
+            {
+              match: 'googleAPIKey',
+              replacement: '<%= secret.beta.googleAPIKey %>'
+            },
+            {
+              match: 'version_number',
+              replacement: '<%= pkg.version %>-BETA'
+            }
+          ]
+        },
+
+        files: [
+          {
+            expand: true,
+            flatten: true,
+            src: ['script/config.js'],
+            dest: 'build/script/'
+          }
+        ]
+      },
+
       release: {
         options: {
           patterns: [
@@ -147,7 +189,7 @@ module.exports = function(grunt) {
             },
             {
               match: 'version_number',
-              replacement: '<%= pkg.version %>-BETA'
+              replacement: '<%= pkg.version %>'
             }
           ]
         },
@@ -176,5 +218,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', ['clean', 'includes', 'copy']);
   grunt.registerTask('deployAlpha', ['default', 'replace:alpha', 'bower_concat', 'browserify', 'sass', 'ssh_deploy:alpha']);
+  grunt.registerTask('deployBeta', ['default', 'replace:beta', 'bower_concat', 'browserify', 'sass', 'ssh_deploy:beta']);
   grunt.registerTask('deployRelease', ['default', 'replace:release', 'bower_concat', 'browserify', 'sass', 'ssh_deploy:release']);
 }
