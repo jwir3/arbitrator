@@ -1,11 +1,9 @@
-module.exports = Place;
-
 /**
  * A Place consists of a name, a shorter name (the alias used within Arbiter to
  * identify the site), an address, and a sub-location name (possibly blank). The
  * address may be undefined if no address was specified for this Place.
  */
-function Place(aShortName, aName, aAddress, aSubLocationName) {
+export var Place = function(aShortName, aName, aAddress, aSubLocationName) {
   this.mShortName = aShortName;
   this.mName = aName;
   this.mAddress = aAddress;

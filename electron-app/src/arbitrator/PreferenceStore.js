@@ -1,12 +1,10 @@
-module.exports = PreferenceStore;
-
-var Place = require('./Place');
+import { Place } from './Place'
 
 /**
  * An object connected to local storage for persistent storage of setting
  * data.
  */
-function PreferenceStore() {
+export var PreferenceStore = function() {
   this._retrievePreferences();
 }
 

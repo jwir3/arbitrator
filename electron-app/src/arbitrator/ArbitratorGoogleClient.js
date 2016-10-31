@@ -1,14 +1,13 @@
-module.exports = GoogleClient;
-
-var PreferenceStore = require('./PreferenceStore');
+import { PreferenceStore } from './PreferenceStore'
+import { ArbitratorConfig } from './ArbitratorConfig'
 
 /**
- * Create a new instance of a GoogleClient object for use with Arbitrator.
+ * Create a new instance of an ArbitratorGoogleClient object for use with Arbitrator.
  *
- * @param aOptionalCallback (Optional) A callback to be called when the GoogleClient
- *        has finished its initialization.
+ * @param aOptionalCallback (Optional) A callback to be called when the
+ *        ArbitratorGoogleClient has finished its initialization.
  */
-function GoogleClient(aOptionalCallback) {
+export var ArbitratorGoogleClient = function(aOptionalCallback) {
   var that = this;
   require('google-client-api')(function (aGapi) {
     that.mGapi = aGapi;
@@ -16,7 +15,7 @@ function GoogleClient(aOptionalCallback) {
   });
 }
 
-GoogleClient.prototype = {
+ArbitratorGoogleClient.prototype = {
   populateCalendarList: function() {
     var that = this;
     this.mGapi.client.load('calendar', 'v3', function() {
@@ -51,7 +50,7 @@ GoogleClient.prototype = {
   },
 
   initialize: function(aOptionalCallback) {
-      var arbiterConfig = require('./config');
+      var arbiterConfig = ArbitratorConfig;
       var config = {
         'client_id': arbiterConfig.google_client_id,
         'scope': 'https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/userinfo.profile',
