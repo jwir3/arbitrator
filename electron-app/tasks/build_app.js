@@ -9,40 +9,35 @@ var jetpack = require('fs-jetpack');
 var bundle = require('./bundle');
 var utils = require('./utils');
 var fileinclude = require('gulp-file-include');
-var scss = require('gulp-scss');
+var sass = require('gulp-ruby-sass');
 
 var projectDir = jetpack;
 var srcDir = jetpack.cwd('./src');
 var destDir = jetpack.cwd('./app');
 
 gulp.task('fileinclude', function() {
-  gulp.src(['app/app.html'])
+  gulp.src([srcDir.path('app.html')])
+    .pipe(plumber())
     .pipe(fileinclude({
       prefix: '@@',
       basepath: '@file'
     }))
-    .pipe(gulp.dest('./'));
+    .pipe(gulp.dest('./app'))
 });
 
-gulp.task('bundle', ['fileinclude'], function () {
+gulp.task('bundle', function () {
     return Promise.all([
         bundle(srcDir.path('background.js'), destDir.path('background.js')),
         bundle(srcDir.path('app.js'), destDir.path('app.js')),
     ]);
 });
 
-// gulp.task('less', function () {
-//     return gulp.src(srcDir.path('stylesheets/main.less'))
-//         .pipe(plumber())
-//         .pipe(less())
-//         .pipe(gulp.dest(destDir.path('stylesheets')));
-// });
-
-gulp.task("scss", function () {
-  gulp.src(srcDir.path('stylesheets/*.scss'))
-        .pipe(scss({"bundleExec": true}))
-        .pipe(gulp.dest(destDir.path('stylesheets')));
-});
+gulp.task('sass', () =>
+    sass('src/stylesheets/*.scss')
+        .on('error', sass.logError)
+        .pipe(plumber())
+        .pipe(gulp.dest(destDir.path('stylesheets')))
+);
 
 gulp.task('environment', function () {
     var configFile = 'config/env_' + utils.getEnvName() + '.json';
@@ -59,6 +54,9 @@ gulp.task('watch', function () {
         };
     };
 
+    watch('src/**/*.html', batch(function(events, done) {
+        gulp.start('fileinclude', beepOnError(done));
+    }));
     watch('src/**/*.js', batch(function (events, done) {
         gulp.start('bundle', beepOnError(done));
     }));
@@ -67,4 +65,4 @@ gulp.task('watch', function () {
     }));
 });
 
-gulp.task('build', ['bundle', 'scss', 'environment']);
+gulp.task('build', ['fileinclude', 'bundle', 'sass', 'environment']);

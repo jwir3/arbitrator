@@ -11,6 +11,9 @@ Thumbs.db
 /app/env.json
 /app/**/*.map
 
+# Our app.html is generated from within the src/ directory
+app/app.html
+
 /dist
 
 /coverage
