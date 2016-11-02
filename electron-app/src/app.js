@@ -24,16 +24,5 @@
 // });
 
 import $ from 'jquery'
+import { remote } from 'electron'
 import jQuery from 'jquery'
-import domready from 'domready'
-import { UIManager } from './arbitrator/UIManager'
-
-domready(function() {
-  var manager = new UIManager();
-  manager.refreshGoogleClient(function(aGoogleClient) {
-//     manager.loadContent('main', 'Arbitrator', function() {
-      // manager.refreshPreferences();
-//       manager.setUIListeners();
-    // });
-  });
-});

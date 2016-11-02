@@ -7,6 +7,9 @@ import { app, Menu } from 'electron';
 import { devMenuTemplate } from './menu/dev_menu_template';
 import { editMenuTemplate } from './menu/edit_menu_template';
 import createWindow from './helpers/window';
+import { UIManager } from './arbitrator/UIManager'
+import { ArbitratorGoogleClient } from './arbitrator/ArbitratorGoogleClient'
+
 
 // Special module holding environment variables which you declared
 // in config/env_xxx.json file.
@@ -43,6 +46,19 @@ app.on('ready', function () {
     if (env.name === 'development') {
         mainWindow.openDevTools();
     }
+
+    var manager = new UIManager();
+    var client = new ArbitratorGoogleClient();
+    client.getToken()
+          .then(token => {
+              console.log(JSON.stringify(token, null, 2));
+          });
+    // manager.refreshGoogleClient(function(aGoogleClient) {
+    //     manager.loadContent('main', 'Arbitrator', function() {
+    //         manager.refreshPreferences();
+    //         manager.setUIListeners();
+    //     });
+    // });
 });
 
 app.on('window-all-closed', function () {

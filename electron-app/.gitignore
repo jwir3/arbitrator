@@ -18,3 +18,5 @@ app/app.html
 /dist
 
 /coverage
+
+**/secret.js
