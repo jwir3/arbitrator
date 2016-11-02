@@ -1,4 +1,7 @@
 import { Place } from './Place'
+import * as fs from 'fs';
+import * as path from 'path';
+import jetpack from 'fs-jetpack'
 
 /**
  * An object connected to local storage for persistent storage of setting
@@ -29,6 +32,8 @@ PreferenceStore.TimeType = {
 }
 
 PreferenceStore.prototype = {
+  authToken: null,
+
   /**
    * Add an alias for a group ID so that it can be reported as a human-readable
    * name.
@@ -281,11 +286,29 @@ PreferenceStore.prototype = {
     this._putPreferences();
   },
 
+  setAuthToken: function(aAuthToken) {
+    this.authToken = aAuthToken;
+    this._putPreferences();
+  },
+
+  getAuthToken: function() {
+    return this.authToken;
+  },
+
   /**
    * Put all preferences into local storage to be saved for a later date.
    */
   _putPreferences: function() {
-    window.localStorage['arbitrator'] = JSON.stringify(this);
+    // var configDirPath = path.posix.basename(this._getUserHome() + "/.arbitrator");
+    // var configPath = path.posix.basename(configDirPath + "/config.json");
+    // if (!fs.existsSync(configDirPath)) {
+    //   fs.mkdirSync(configDirPath);
+    // }
+    //
+    // fs.writeFileSync(configPath, JSON.stringify(this));
+    var storedPrefs = jetpack.cwd(this._getUserHome())
+                             .dir(".arbitrator")
+                             .write("userConfig.json", this);
   },
 
   /**
@@ -293,13 +316,18 @@ PreferenceStore.prototype = {
    * data from the store.
    */
   _retrievePreferences: function() {
-    var preferenceString = window.localStorage['arbitrator'];
-    if (preferenceString) {
-      var prefObj = JSON.parse(preferenceString);
-      this.groupAliases = prefObj['groupAliases'];
-      this.time = prefObj['time'];
-      this.locations = prefObj['locations'];
-      this.userId = prefObj['userId'];
+    var storedPrefs = jetpack.cwd(this._getUserHome())
+                             .read(".arbitrator/userConfig.json", 'json');
+    if (storedPrefs) {
+      this.groupAliases = storedPrefs.groupAliases;
+      this.time = storedPrefs.time;
+      this.locations = storedPrefs.locations;
+      this.userId = storedPrefs.userId;
+      this.authToken = storedPrefs.authToken;
     }
+  },
+
+  _getUserHome: function() {
+    return process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
   }
 };
