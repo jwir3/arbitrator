@@ -13,29 +13,30 @@ export var ArbitratorGoogleClient = function() {
 }
 
 ArbitratorGoogleClient.prototype = {
-  mToken: null,
+  client: null,
 
   getToken: function() {
     var that = this;
     return new Promise((resolve, reject) => {
       var prefStore = new PreferenceStore();
-      this.mToken = prefStore.getAuthToken();
-      if (this.mToken) {
-        resolve(this.mToken);
-      } else {
-        var OAuth2 = google.auth.OAuth2;
-        var oauth2Client = new OAuth2(
-          ArbitratorConfig.google_client_id,
-          ArbitratorConfig.google_client_secret,
-          'urn:ietf:wg:oauth:2.0:oob' // Instruct google to return the auth code via the title
-        );
+      var OAuth2 = google.auth.OAuth2;
+      that.client = new OAuth2(
+        ArbitratorConfig.google_client_id,
+        ArbitratorConfig.google_client_secret,
+        'urn:ietf:wg:oauth:2.0:oob' // Instruct google to return the auth code via the title
+      );
 
+      var tokens = prefStore.getAuthTokens();
+      if (tokens) {
+        that.client.setCredentials(tokens);
+        resolve(tokens);
+      } else {
         var scopes = [
           'https://www.googleapis.com/auth/calendar',
           'https://www.googleapis.com/auth/userinfo.profile'
         ];
 
-        var url = oauth2Client.generateAuthUrl({
+        var url = that.client.generateAuthUrl({
           // 'online' (default) or 'offline' (gets refresh_token)
           access_type: 'offline',
           scope: scopes
@@ -53,14 +54,13 @@ ArbitratorGoogleClient.prototype = {
               window.close();
             } else if (title.startsWith('Success')) {
               var code = title.split(/[ =]/)[2];
-              oauth2Client.getToken(code, function (err, tokens) {
+              that.client.getToken(code, function (err, tokens) {
                 // Now tokens contains an access_token and an optional refresh_token. Save them.
                 if (!err) {
-                  oauth2Client.setCredentials(tokens);
-                  that.mToken = tokens.access_token;
+                  that.client.setCredentials(tokens);
                   var prefStore = new PreferenceStore();
-                  prefStore.setAuthToken(that.mToken);
-                  resolve(that.mToken);
+                  prefStore.setAuthTokens(tokens);
+                  resolve(tokens);
                   window.removeAllListeners('closed');
                   window.close();
                 }

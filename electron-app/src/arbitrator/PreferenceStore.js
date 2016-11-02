@@ -32,7 +32,7 @@ PreferenceStore.TimeType = {
 }
 
 PreferenceStore.prototype = {
-  authToken: null,
+  authTokens: null,
 
   /**
    * Add an alias for a group ID so that it can be reported as a human-readable
@@ -286,13 +286,13 @@ PreferenceStore.prototype = {
     this._putPreferences();
   },
 
-  setAuthToken: function(aAuthToken) {
-    this.authToken = aAuthToken;
+  setAuthTokens: function(aAuthTokens) {
+    this.authTokens = aAuthTokens;
     this._putPreferences();
   },
 
-  getAuthToken: function() {
-    return this.authToken;
+  getAuthTokens: function() {
+    return this.authTokens;
   },
 
   /**
@@ -323,7 +323,7 @@ PreferenceStore.prototype = {
       this.time = storedPrefs.time;
       this.locations = storedPrefs.locations;
       this.userId = storedPrefs.userId;
-      this.authToken = storedPrefs.authToken;
+      this.authTokens = storedPrefs.authTokens;
     }
   },
 
