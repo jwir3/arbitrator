@@ -24,5 +24,14 @@
 // });
 
 import $ from 'jquery'
-import { remote } from 'electron'
 import jQuery from 'jquery'
+import { remote, ipcRenderer } from 'electron'
+import { UIManager } from './arbitrator/UIManager'
+
+ipcRenderer.on('ready', (event, arg) => {
+  var manager = new UIManager();
+  manager.loadContent('main', 'Arbitrator', function() {
+    manager.refreshPreferences();
+    manager.setUIListeners();
+  });
+});

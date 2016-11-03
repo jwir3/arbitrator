@@ -5,9 +5,13 @@
 // var ArbitratorGoogleClient = require('./arbitrator-google-client');
 // var StringUtils = require('./StringUtils');
 
+import jQuery from 'jquery'
+import $ from 'jquery'
 import { Place } from './Place'
 import { PreferenceStore } from './PreferenceStore'
 import { ArbitratorGoogleClient } from './ArbitratorGoogleClient'
+import { ArbitratorConfig } from './ArbitratorConfig'
+import { StringUtils } from './StringUtils'
 
 export var UIManager = function() {
 }
@@ -28,14 +32,14 @@ UIManager.prototype = {
   //   arb.adjustGamesOrSubmitToCalendar(selectedId);
   // },
 
-  // setUIListeners: function() {
-  //   this._setPreferenceOnClickHandlers();
-  //   this._setHeaderScrollListener();
-  //   this._setNavDrawerOnClickHandlers();
-  //   this._setArbitrateOnClickHandler();
-  //   this._setLogoutOnClickHandler();
-  //   this._setDismissSnackBarOnClickHandler();
-  // },
+  setUIListeners: function() {
+    // this._setPreferenceOnClickHandlers();
+    // this._setHeaderScrollListener();
+    this._setNavDrawerOnClickHandlers();
+    // this._setArbitrateOnClickHandler();
+    // this._setLogoutOnClickHandler();
+    // this._setDismissSnackBarOnClickHandler();
+  },
 
   /**
    * Refresh the preference UI from local storage and populate the UI
@@ -43,55 +47,55 @@ UIManager.prototype = {
    */
   refreshPreferences: function() {
     var prefStore = new PreferenceStore();
-    // this.refreshTimePreferences();
-    // this.refreshAliasPreferences();
-    // this.refreshLocationPreferences();
-    //
-    // this._setPreferenceOnClickHandlers();
+    this.refreshTimePreferences();
+    this.refreshAliasPreferences();
+    this.refreshLocationPreferences();
+
+    this._setPreferenceOnClickHandlers();
   },
 
   /**
    * Refresh the preference UI from local storage for all time preferences.
    */
-  // refreshTimePreferences: function() {
-  //   var prefStore = new PreferenceStore();
-  //   var timePrefs = prefStore.getAllTimePreferences();
-  //   for (var key in timePrefs) {
-  //     if (timePrefs.hasOwnProperty(key)) {
-  //       $('#timePref-' + key).val(timePrefs[key]);
-  //     }
-  //   }
-  // },
+  refreshTimePreferences: function() {
+    var prefStore = new PreferenceStore();
+    var timePrefs = prefStore.getAllTimePreferences();
+    for (var key in timePrefs) {
+      if (timePrefs.hasOwnProperty(key)) {
+        $('#timePref-' + key).val(timePrefs[key]);
+      }
+    }
+  },
 
   /**
    * Refresh the preference UI from local storage for all location preferences.
    */
-  // refreshLocationPreferences: function() {
-  //   var prefStore = new PreferenceStore();
-  //   var locPrefs = prefStore.getAllLocationPreferences();
-  //   for (var key in locPrefs) {
-  //     if (locPrefs.hasOwnProperty(key)) {
-  //       this.addLocationPreference(prefStore.getLocationPreference(key));
-  //     }
-  //   }
-  // },
+  refreshLocationPreferences: function() {
+    var prefStore = new PreferenceStore();
+    var locPrefs = prefStore.getAllLocationPreferences();
+    for (var key in locPrefs) {
+      if (locPrefs.hasOwnProperty(key)) {
+        this.addLocationPreference(prefStore.getLocationPreference(key));
+      }
+    }
+  },
 
   /**
    * Refresh the preference UI from local storage for all group/alias
    * preferences.
    */
-  // refreshAliasPreferences: function() {
-  //   $('#aliasInputs').html('');
-  //   var prefStore = new PreferenceStore();
-  //   var aliasedGroups = prefStore.getAllGroupAliases();
-  //   for (var prop in aliasedGroups) {
-  //     if (aliasedGroups.hasOwnProperty(prop)) {
-  //       var groupAlias = aliasedGroups[prop];
-  //
-  //       this.addAliasUIFor(prop, groupAlias);
-  //     }
-  //   }
-  // },
+  refreshAliasPreferences: function() {
+    $('#aliasInputs').html('');
+    var prefStore = new PreferenceStore();
+    var aliasedGroups = prefStore.getAllGroupAliases();
+    for (var prop in aliasedGroups) {
+      if (aliasedGroups.hasOwnProperty(prop)) {
+        var groupAlias = aliasedGroups[prop];
+
+        this.addAliasUIFor(prop, groupAlias);
+      }
+    }
+  },
 
   /**
    * Set a time preference from the UI an propagate this preference to the
@@ -229,11 +233,11 @@ UIManager.prototype = {
   /**
    * Set all onClick() handlers for preference UI elements.
    */
-  // _setPreferenceOnClickHandlers: function() {
-  //   this._setTimePreferenceOnClickHandlers();
-  //   this._setAliasPreferenceOnClickHandlers();
-  //   this._setLocationPreferenceOnClickHandlers();
-  // },
+  _setPreferenceOnClickHandlers: function() {
+    // this._setTimePreferenceOnClickHandlers();
+    // this._setAliasPreferenceOnClickHandlers();
+    // this._setLocationPreferenceOnClickHandlers();
+  },
 
   /**
    * Set the onClick() handlers for time preferences.
@@ -365,43 +369,43 @@ UIManager.prototype = {
    * hamburger icon). Also sets up all the navigation drawer item onClick()
    * handlers.
    */
-  // _setNavDrawerOnClickHandlers: function() {
-  //   var that = this;
-  //
-  //   $('.nav-drawer-header').click(function() {
-  //     $('#nav-drawer').css({
-  //       'transform': 'translate(-256px, 0px)'
-  //     });
-  //   });
-  //
-  //   $('.nav-drawer-item').each(function() {
-  //     var data = $(this).data('item');
-  //
-  //     $(this).click(function() {
-  //       that.loadContent(data, StringUtils.capitalize(data), function() {
-  //         that.refreshPreferences();
-  //       });
-  //     });
-  //   });
-  // },
+  _setNavDrawerOnClickHandlers: function() {
+    var that = this;
+
+    $('.nav-drawer-header').click(function() {
+      $('#nav-drawer').css({
+        'transform': 'translate(-256px, 0px)'
+      });
+    });
+
+    $('.nav-drawer-item').each(function() {
+      var data = $(this).data('item');
+
+      $(this).click(function() {
+        that.loadContent(data, StringUtils.capitalize(data), function() {
+          that.refreshPreferences();
+        });
+      });
+    });
+  },
 
   /**
    * Open the navigation drawer using a transition animation.
    */
-  // openNavDrawer: function() {
-  //   $('#nav-drawer').css({
-  //     'transform': 'translate(0px, 0px)'
-  //   });
-  // },
+  openNavDrawer: function() {
+    $('#nav-drawer').css({
+      'transform': 'translate(0px, 0px)'
+    });
+  },
 
   /**
    * Close the navigation drawer using a transition animation.
    */
-  // closeNavDrawer: function() {
-  //   $('#nav-drawer').css({
-  //     'transform': 'translate(-256px, 0px)'
-  //   });
-  // },
+  closeNavDrawer: function() {
+    $('#nav-drawer').css({
+      'transform': 'translate(-256px, 0px)'
+    });
+  },
 
   /**
    * Load content into the main content pane.
@@ -418,44 +422,43 @@ UIManager.prototype = {
    * @param aOnComplete (optional) If included, this will be called when the
    *        load operation has completed.
    */
-  // loadContent: function(aContentFileName, aTitle, aOnComplete) {
-  //   var that = this;
-  //   var arbitratorConfig = require('./config');
-  //
-  //   // Set the text of the nav drawer header
-  //   that.closeNavDrawer();
-  //
-  //   if (aContentFileName == 'main') {
-  //     that.refreshGoogleClient(function(aGoogleClient) {
-  //       aGoogleClient.populateCalendarList();
-  //       aGoogleClient.populateUserId();
-  //     });
-  //   }
-  //
-  //   $('main#content').load('html/' + aContentFileName + '.partial.html', null,
-  //                          function() {
-  //                            that._addToBackStack({
-  //                              'id': aContentFileName,
-  //                              'name': aTitle
-  //                            });
-  //
-  //                            if (!that._isBackStackEmpty()) {
-  //                              that._showBackArrow();
-  //                            } else {
-  //                              that._showHamburgerIcon();
-  //                            }
-  //
-  //                            // Add the title to the app bar.
-  //                            $('#pageTitle').text(aTitle);
-  //
-  //                            // Add the version number to the app bar
-  //                            $('#versionNumber').text('v' + arbitratorConfig.version_number);
-  //
-  //                            if (aOnComplete) {
-  //                              aOnComplete();
-  //                            }
-  //                          });
-  // },
+  loadContent: function(aContentFileName, aTitle, aOnComplete) {
+    var that = this;
+
+    // Set the text of the nav drawer header
+    that.closeNavDrawer();
+
+    // if (aContentFileName == 'main') {
+    //   that.refreshGoogleClient(function(aGoogleClient) {
+    //     aGoogleClient.populateCalendarList();
+    //     aGoogleClient.populateUserId();
+    //   });
+    // }
+
+    $('main#content').load('partials/' + aContentFileName + '.partial.html', null,
+                           function() {
+                             that._addToBackStack({
+                               'id': aContentFileName,
+                               'name': aTitle
+                             });
+
+                             if (!that._isBackStackEmpty()) {
+                               that._showBackArrow();
+                             } else {
+                               that._showHamburgerIcon();
+                             }
+
+                             // Add the title to the app bar.
+                             $('#pageTitle').text(aTitle);
+
+                             // Add the version number to the app bar
+                             $('#versionNumber').text('v' + ArbitratorConfig.version_number);
+
+                             if (aOnComplete) {
+                               aOnComplete();
+                             }
+                           });
+  },
 
   /**
    * Refresh the ArbitratorGoogleClient object held internally.
@@ -484,49 +487,49 @@ UIManager.prototype = {
    * the onClick() functionality for this icon so that it pops from the back
    * stack.
    */
-  // _showBackArrow: function() {
-  //   var that = this;
-  //
-  //   $('#hamburger').css({
-  //     'background': 'no-repeat url("images/back.svg")'
-  //   });
-  //
-  //   that._bindEventHandlerForNavMenu(true);
-  // },
+  _showBackArrow: function() {
+    var that = this;
+
+    $('#hamburger').css({
+      'background': 'no-repeat url("images/back.svg")'
+    });
+
+    that._bindEventHandlerForNavMenu(true);
+  },
 
   /**
    * Show the hamburger (navigation drawer indicator) icon and adjust
    * the onClick() functionality for this icon so that it opens the navigation
    * drawer.
    */
-  // _showHamburgerIcon: function() {
-  //   var that = this;
-  //
-  //   $('#hamburger').css({
-  //     'background': 'no-repeat url("images/hamburger.svg")'
-  //   });
-  //
-  //   that._bindEventHandlerForNavMenu(false);
-  // },
+  _showHamburgerIcon: function() {
+    var that = this;
+
+    $('#hamburger').css({
+      'background': 'no-repeat url("images/hamburger.svg")'
+    });
+
+    that._bindEventHandlerForNavMenu(false);
+  },
 
   /**
    * Clear current event handlers for the nav menu button in the upper right of
    * the app bar and re-add the appropriate onClick() handler.
    */
-  // _bindEventHandlerForNavMenu: function(aIsBack) {
-  //   var that = this;
-  //   $('#hamburger').unbind('click');
-  //
-  //   if (aIsBack) {
-  //     $('#hamburger').click(function() {
-  //       that._popBackStack();
-  //     });
-  //   } else {
-  //     $('#hamburger').click(function() {
-  //       that.openNavDrawer();
-  //     });
-  //   }
-  // },
+  _bindEventHandlerForNavMenu: function(aIsBack) {
+    var that = this;
+    $('#hamburger').unbind('click');
+
+    if (aIsBack) {
+      $('#hamburger').click(function() {
+        that._popBackStack();
+      });
+    } else {
+      $('#hamburger').click(function() {
+        that.openNavDrawer();
+      });
+    }
+  },
 
   /**
    * Add a new back stack entry to the back stack.
@@ -542,9 +545,9 @@ UIManager.prototype = {
    *
    * @param aBackStackEntry The back stack entry to add to the back stack.
    */
-  // _addToBackStack: function(aBackStackEntry) {
-  //   this.mBackStack.push(aBackStackEntry);
-  // },
+  _addToBackStack: function(aBackStackEntry) {
+    this.mBackStack.push(aBackStackEntry);
+  },
 
   /**
    * Remove the last back stack entry from the back stack and return it.
@@ -560,14 +563,14 @@ UIManager.prototype = {
    *
    * @return The back stack entry in the back stack that was last added.
    */
-  // _popBackStack: function() {
-  //   // Remove the current entry from the back stack first
-  //   this.mBackStack.pop();
-  //
-  //   var lastEntry = this.mBackStack.pop();
-  //
-  //   this.loadContent(lastEntry.id, lastEntry.name, null);
-  // },
+  _popBackStack: function() {
+    // Remove the current entry from the back stack first
+    this.mBackStack.pop();
+
+    var lastEntry = this.mBackStack.pop();
+
+    this.loadContent(lastEntry.id, lastEntry.name, null);
+  },
 
   /**
    * Determine if the back stack is empty.
