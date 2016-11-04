@@ -428,12 +428,12 @@ UIManager.prototype = {
     // Set the text of the nav drawer header
     that.closeNavDrawer();
 
-    // if (aContentFileName == 'main') {
-    //   that.refreshGoogleClient(function(aGoogleClient) {
-    //     aGoogleClient.populateCalendarList();
-    //     aGoogleClient.populateUserId();
-    //   });
-    // }
+    if (aContentFileName == 'main') {
+      that.refreshGoogleClient(function(aGoogleClient) {
+        that.populateCalendarList(aGoogleClient);
+        that.populateUserId(aGoogleClient);
+      });
+    }
 
     $('main#content').load('partials/' + aContentFileName + '.partial.html', null,
                            function() {
@@ -474,12 +474,46 @@ UIManager.prototype = {
    */
   refreshGoogleClient: function(aOnComplete) {
     if (this.mGoogleClient == null) {
-      this.mGoogleClient = new ArbitratorGoogleClient(function() {
-        aOnComplete(this.mGoogleClient);
-      });
-    } else {
-      aOnComplete(this.mGoogleClient);
+      this.mGoogleClient = new ArbitratorGoogleClient();
     }
+
+    this.mGoogleClient.getToken().then(() => {
+      aOnComplete(this.mGoogleClient);
+    });
+  },
+
+  /**
+   * Populate the list of calendars in the main user interface.
+   *
+   * @param  {[ArbitratorGoogleClient]} aGoogleClient The client with which the
+   *                                    api calls should be run with.
+   */
+  populateCalendarList: function(aGoogleClient) {
+    aGoogleClient.getCalendarList()
+      .then((items) => {
+        var selectEle = $('#calendarList');
+        for (var calendarIdx in items) {
+            var calendarItem = items[calendarIdx];
+            var listItem = $('<option></option>');
+            listItem.attr('id', calendarItem.id);
+            listItem.text(calendarItem.summary);
+            selectEle.append(listItem);
+        }
+        selectEle.css('display', 'block');
+      });
+  },
+
+/**
+ * Populate the Google+ user id of the user in the preference store.
+ *
+ * @param  {[ArbitratorGoogleClient]} aGoogleClient The client with which the
+ *                                    api calls should be run with.
+ */
+  populateUserId: function(aGoogleClient) {
+    aGoogleClient.getUserId().then((id) => {
+      var prefStore = new PreferenceStore();
+      prefStore.setUserId(id);
+    });
   },
 
   /**

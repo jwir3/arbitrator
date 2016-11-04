@@ -72,35 +72,35 @@ ArbitratorGoogleClient.prototype = {
     });
   },
 
-  populateCalendarList: function() {
+  getCalendarList: function() {
     var that = this;
-    this.mGapi.client.load('calendar', 'v3', function() {
-      var request = that.mGapi.client.calendar.calendarList.list({
+    return new Promise((resolve, reject) => {
+      var cal = google.calendar({
+        version: 'v3',
+        auth: that.client
       });
 
-      request.execute(function(aResponse) {
-        var $ = require('jquery');
-        var selectEle = $('#calendarList');
-        for (calendarIdx in aResponse.items) {
-            var calendarItem = aResponse.items[calendarIdx];
-            var listItem = $('<option></option>');
-            listItem.attr('id', calendarItem.id);
-            listItem.text(calendarItem.summary);
-            selectEle.append(listItem);
-        }
-        selectEle.css('display', 'block');
+      cal.calendarList.list(null, null,
+        function (err, result) {
+          if (err) {
+            reject(err);
+          }
+
+          resolve(result.items);
       });
     });
   },
 
-  populateUserId: function() {
+  getUserId: function() {
     var that = this;
-    this.mGapi.client.load('plus', 'v1', function() {
-      var request = that.mGapi.client.plus.people.get({'userId' : 'me'});
+    return new Promise((resolve, reject) => {
+      var plus = google.plus({version: 'v1', auth: that.client});
+      plus.people.get({'userId': 'me'}, function(err, result) {
+        if (err) {
+          reject(err);
+        }
 
-      request.execute(function (aResponse) {
-        var prefStore = new PreferenceStore();
-        prefStore.setUserId(aResponse.id);
+        resolve(result.id);
       });
     });
   },
