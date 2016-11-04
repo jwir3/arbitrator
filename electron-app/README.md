@@ -1,142 +1,122 @@
-electron-boilerplate
-==============
+arbitrator
+=================
+A utility allowing schedules from [ArbiterSports](http://www.arbitersports.com) to be added to Google Calendar with a minimum of effort.
 
-[![Build Status](https://travis-ci.org/szwacz/electron-boilerplate.svg?branch=master)](https://travis-ci.org/szwacz/electron-boilerplate) [![Build status](https://ci.appveyor.com/api/projects/status/s9htc1k5ojkn08fr?svg=true)](https://ci.appveyor.com/project/szwacz/electron-boilerplate)
+_arbitrator_, the developers of _arbitrator_, and Glass Tower Studios are in no way related to ArbiterSports, ArbiterOne, or ArbiterPay. Use of this software is conditional on agreement with the license(s) described in LICENSE.md.
 
-A minimalistic yet comprehensive boilerplate application for [Electron runtime](http://electron.atom.io). Tested on OSX, Windows and Linux.  
+## Setup
 
-This project does not impose on you any framework (like Angular or React). Instead, it tries to give you only the 'electron' part of technology stack so you can pick your favorite tools for the rest.
+There are two options for using _arbitrator_:
 
-# Quick start
-The only development dependency of this project is [Node.js](https://nodejs.org). So just make sure you have it installed.
-Then type few commands known to every Node developer...
+1. Use the currently setup instance on glasstowerstudios.com.
+2. Create your own instance using a web server.
+
+Method 1 is the easiest to get up and running quickly, but if you're worried about security, or you simply want to start developing with _arbitrator_, then you might want to use method 2.
+
+### Using an existing instance
+
+There are currently two separate instances set up on glasstowerstudios.com. The first one, the _alpha_ instance, is our most recent deployment, and is thus probably less stable than the _beta_ version. If you're not sure which one to use, you should probably use the _beta_ instance.
+
+To access an instance, navigate your browser to the location described below for that instance. Note that most of the code was tested in Firefox. This doesn't mean it won't work in, say, Chrome, but just keep in mind that there may be unknown bugs in other browsers.
+
+| Version | Web Address |
+| -------- | ------------ |
+| Beta    | http://arbitrator.glasstowerstudios.com |
+| Alpha   | http://alpha.arbitrator.glasstowerstudios.com |
+
+From there, you can follow the instructions for usage below.
+
+### Setting up a new instance
+
+If you are concerned about security, or you want to contribute to the development of _arbitrator_, then you should set up your own instance of the code. Most of _arbitrator_ runs on the client, but it needs to be served by a web server that has a domain reachable by Google (so that it can communicate with your instance of _arbitrator_).
+
+Installation of a web server and configuration of DNS is beyond the scope of this document. It assumes configuration with Apache 2. You will want to setup a CNAME record for `arbitrator.mydomain.com` prior to configuring web services.
+
+#### Download Arbitrator source code
+1. Create a new directory on your web server for _arbitrator_ to live in:
 ```
-git clone https://github.com/szwacz/electron-boilerplate.git
-cd electron-boilerplate
-npm install
-npm start
+mkdir /path/to/arbitrator
 ```
-... and boom! You have a running desktop application on your screen.
+It doesn't matter what the `/path/to/arbitrator` is, but it needs to be accessible by the web server. (e.g. `/var/www/` is a good choice).
 
-# Structure of the project
-
-## Declaring dependencies
-
-There are **two** `package.json` files:
-
-#### 1. `package.json` for development
-Sits on path: `electron-boilerplate/package.json`. This is where you should declare dependencies for your development environment and build scripts. **This file is not distributed with real application!**
-
-It's also the place to specify the Electron runtime version you want to use:
-```json
-"devDependencies": {
-  "electron": "1.3.3"
-}
+2. Download the arbitrator source
 ```
-Note: [Electron authors advise](http://electron.atom.io/docs/tutorial/electron-versioning/) to use fixed version here.
-
-#### 2. `package.json` for your application
-Sits on path: `electron-boilerplate/app/package.json`. This is **real** manifest of your application. Declare your app dependencies here.
-
-#### OMG, but seriously why there are two `package.json`?
-1. Native npm modules (those written in C, not JavaScript) need to be compiled, and here we have two different compilation targets for them. Those used in application need to be compiled against electron runtime, and all `devDependencies` need to be compiled against your locally installed node.js. Thanks to having two files this is trivial.
-2. When you package the app for distribution there is no need to add up to size of the app with your `devDependencies`. Here those are always not included (reside outside the `app` directory).
-
-## Folders for application code
-
-The application is split between two main folders...
-
-`src` - this folder is intended for files which need to be transpiled or compiled (files which can't be used directly by electron).
-
-`app` - contains all static assets (put here images, css, html etc.) which don't need any pre-processing.
-
-The build process compiles all stuff from the `src` folder and puts it into the `app` folder, so after the build has finished, your `app` folder contains the full, runnable application.
-
-Treat `src` and `app` folders like two halves of one bigger thing.
-
-The drawback of this design is that `app` folder contains some files which should be git-ignored and some which shouldn't (see `.gitignore` file). But thanks to this two-folders split development builds are much (much!) faster.
-
-# Development
-
-### Installation
-
+cd /path/to/arbitrator
+git clone github:jwir3/arbitrator
 ```
-npm install
+If you want to use a more stable release, you can check out the tag for that release using:
 ```
-It will also download Electron runtime and install dependencies for the second `package.json` file inside the `app` folder.
-
-### Starting the app
-
+git checkout <RELEASE TAG>
 ```
-npm start
+Otherwise, you can use `master`, as it should be the most stable development build.
+
+#### Adding Web Server Configuration
+
+Add the following to your configuration file for your site:
+```
+<VirtualHost *>
+  ServerName arbitrator.mydomain.com
+  ServerAdmin me@myemail.com
+  DocumentRoot /path/to/arbitrator
+  Options -Indexes +FollowSymLinks
+</VirtualHost>
 ```
 
-### Adding npm modules to your app
+#### Configure Google APIs
 
-Remember to add your dependencies to `app/package.json` file:
+You will need the following APIs available to you from the [Google Developer Console](console.developers.google.com):
+  * Calendar API
+  * BigQuery API
+  * Google Cloud SQL
+  * Google Cloud Storage
+  * Google Cloud Storage JSON API
+  * Google Maps JavaScript API
+  * Google+ API
+  * URL Shortener API
+
+Enable the above from within the developer console.
+
+Next, make sure you have an API Key (Under `Credentials` on the left side of the Google Developer Console) and make sure that `*.mydomain.com` is in "Accept Requests from these HTTP referrers" for that API key.
+
+Finally, add an OAuth2 Client ID and make sure that `http://arbitrator.mydomain.com` is in both "Authorized Javascript Origins" and "Authorized Redirect URIs". Add this client ID to the file `index.html` in _arbitrator_'s root directory, inside of the `initialize()` function:
 ```
-cd app
-npm install name_of_npm_module --save
+function initialize() {                                                     
+      var config = {                                                            
+        'client_id': 'YOUR_CLIENT_ID_GOES_HERE',
+        'scope': 'https://www.googleapis.com/auth/calendar',                    
+        'authuser' : -1                                                        
+      }
+      ...
 ```
 
-### Working with modules
+You should now be able to navigate to `arbitrator.mydomain.com` and have it prompt you for a Google account to login with.
 
-Thanks to [rollup](https://github.com/rollup/rollup) you can (and should) use ES6 modules for all code in `src` folder. But because ES6 modules still aren't natively supported you can't use them in the `app` folder.
+## Instructions
 
-Use ES6 syntax in the `src` folder like this:
-```js
-import myStuff from './my_lib/my_stuff';
+**Warning**: _arbitrator_ is designed as a tool to help you manage your game assignments. It's also in active development, meaning that there could be bugs. You should _always_ double-check your game assignments against your Google Calendar if you use _arbitrator_. The developers of _arbitrator_ are in NO WAY RESPONSIBLE for any problems arising out of the use of this product. You are responsible for your own game assignments, and _arbitrator_ is a dumb tool designed to help you with some mundane tasks. Please see the LICENSE.md file for more information on the license agreement of _arbitrator_.
+
+Using _arbitrator_ is pretty simple. Simply copy all of the text in your schedule from ArbiterSports and paste it into the text box in the _arbitrator_ main interface. Then, select the calendar which you want to populate your data to beneath the text entry, and click Submit.
+
+_arbitrator_ is smart enough to adjust games that it thinks are the same as games it already "knows" about. So, it shouldn't add a duplicate calendar entry for a game it already added a calendar entry for. Thus, when you receive new game assignments from ArbiterSports, you can always copy and paste your entire schedule, without worrying about which games were already entered.
+
+Note that this is somewhat cumbersome at this time. We're working on a way to get an automatic synchronization from ArbiterSports -> Arbitrator, but it's not available yet.
+
+### Preferences
+
+There are a few preferences on the right side that you can configure if you so choose. These are explained below. _All preferences take effect on the next set of data that Arbitrator runs on, so adjusting preferences will not affect games you already migrated to Google Calendar._
+
+#### Group Aliases
+_arbitrator_ adds calendar entries with the subject line:
+```
+[Group] <Position> <Home Team> v. <Away Team Name> (Game Level)
 ```
 
-But use CommonJS syntax in `app` folder. So the code from above should look as follows:
-```js
-var myStuff = require('./my_lib/my_stuff');
-```
+The `Group` entry is, by default, whatever was entered into the ArbiterSports group field (which is probably understandable for schedulers, but can sometimes be unintelligible for officials). Once _arbitrator_ has seen a given group abbreviation, it gives you the option to add an alias for that group to make it more understandable.
 
-# Testing
+#### Time Preferences
+  * **Minutes Before Start**: Adding a number here allows you to configure how many minutes before the start of the game you want the calendar entry to start at. This is useful if, for example, you want to arrive 30 minutes prior to the start of the game (in order to get ready). Google calendar will then notify you in time so that you arrive at this time, rather than at the start of the game.
+  * **Length of Game**: This is a setting that indicates how long games should last within Google calendar. If you have hour-long games, you can set this here, or you can set it for longer if you have games that will likely run longer.
+  * **Consecutive Game Threshold**: This is the number of hours between which games will be considered "consecutive", assuming they take place at the same location. This enables _arbitrator_ to not add the start time padding to consecutive games (since it's assumed you're already going to be on site).
 
-### Unit tests
-
-Using [electron-mocha](https://github.com/jprichardson/electron-mocha) test runner with the [chai](http://chaijs.com/api/assert/) assertion library. To run the tests go with standard and use the npm test script:
-```
-npm test
-```
-This task searches for all files in `src` directory which respect pattern `*.spec.js`.
-
-### End to end tests
-
-Using [mocha](https://mochajs.org/) test runner and [spectron](http://electron.atom.io/spectron/). Run with command:
-```
-npm run e2e
-```
-This task searches for all files in `e2e` directory which respect pattern `*.e2e.js`.
-
-### Code coverage
-
-Using [istanbul](http://gotwarlost.github.io/istanbul/) code coverage tool. Run with command:
-```
-npm run coverage
-```
-You can set the reporter(s) by setting `ISTANBUL_REPORTERS` environment variable (defaults to `text-summary` and `html`). The report directory can be set with `ISTANBUL_REPORT_DIR` (defaults to `coverage`).
-
-### Continuous integration
-
-Electron [can be plugged](https://github.com/atom/electron/blob/master/docs/tutorial/testing-on-headless-ci.md) into CI systems. Here two CIs are preconfigured for you. [Travis CI](https://travis-ci.org/) covers testing on OSX and Linux and [App Veyor](https://www.appveyor.com) on Windows.
-
-# Making a release
-
-To package your app into an installer use command:
-```
-npm run release
-```
-It will start the packaging process for operating system you are running this command on. Ready for distribution file will be outputted to `dist` directory.
-
-You can create Windows installer only when running on Windows, the same is true for Linux and OSX. So to generate all three installers you need all three operating systems.
-
-All packaging actions are handled by [electron-builder](https://github.com/electron-userland/electron-builder). See docs of this tool if you want to customize something.
-
-**Note:** There are various icons and bitmap files in `resources` directory. Those are used in installers and intended to be replaced by your own graphics.
-
-# License
-
-Released under the MIT license.
+#### Location Preferences
+In a similar manner to _Group Aliases_, _arbitrator_ will keep track of location fields from ArbiterSports. Unfortunately, since ArbiterSports doesn't have an open API, we can't gather this data directly. Instead, when a new location is seen, you can enter an address for future occurrences of that location. If an address exists for a given location, _arbitrator_ will add that address to the calendar event. If an address does not exist, then the name of the site (taken directly from ArbiterSports) will be added as the location of the calendar event.
