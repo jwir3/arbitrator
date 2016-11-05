@@ -1,8 +1,7 @@
-module.exports = Game;
-
-var Place = require('./Place');
-var PreferenceStore = require('./PreferenceStore');
-var CryptoJS = require('crypto-js');
+import * as CryptoJS from 'crypto-js'
+import { Place } from './Place'
+import { PreferenceStore } from './PreferenceStore'
+import * as moment from 'moment';
 
 var gameLevels = {
   'Mite'            : 'Mite',
@@ -49,14 +48,14 @@ var gameLevels = {
  * support other roles, but it's unclear how long this polyfill for lack of
  * Google calendar support in AS will last.
  */
-var Role = Object.freeze({
+export var Role = Object.freeze({
   REFEREE: 0,
   LINESMAN: 1,
   UNKNOWN: -1
 });
 
-function Game(aId, aGroup, aRole, aTimestamp, aSportLevel, aSite,
-              aHomeTeam, aAwayTeam, aFees) {
+export var Game = function (aId, aGroup, aRole, aTimestamp, aSportLevel, aSite,
+                            aHomeTeam, aAwayTeam, aFees) {
   var prefStore = new PreferenceStore();
   this.mId = aId;
   this.mGroup = prefStore.getAliasForGroupId(aGroup);
@@ -100,11 +99,52 @@ Game.prototype = {
   },
 
   getTimestampAsString: function() {
-    return this.mTimestamp;
+    var components = this.mTimestamp.split(" ");
+    return components[0] + " " + components[2] +  " " + components[3];
   },
 
+  /**
+   * Retrieve the moment for which this game starts.
+   *
+   * @return {Moment} A Moment.js moment for which this game is set to start,
+   *                  based on the data from ArbiterSports.
+   */
   getTimestamp: function() {
-    return new Date(Date.parse(this.getTimestampAsString()));
+    return moment(this.getTimestampAsString());
+    // var arbiterDateString = this.mTimestamp;
+    // console.log(arbiterDateString);
+    // var dateComponents = arbiterDateString.split(" ");
+    // // Now, the first component is the date (yet to be split)
+    // // The second component is the day of the week (can be ignored)
+    // // The third component is the time of day (12 hour)
+    // // The fourth component is the am/pm indicator.
+    //
+    // // Split month, day, and year
+    // var dayMonthYear = dateComponents[0].split("/")
+    // console.log(dayMonthYear[0]);
+    // console.log(dayMonthYear[1]);
+    // console.log(dayMonthYear[2]);
+    //
+    // // Split hours and minutes
+    // var hoursMinutes = dateComponents[2].split(":");
+    //
+    // // Convert to 24-hour time
+    // if (dateComponents[3].toLowerCase().startsWith('p')
+    //     && hoursMinutes[0] < 12) {
+    //       hoursMinutes[0] = hoursMinutes[0] + 12;
+    // }
+    //
+    // var finalDate = new Date();
+    // finalDate.setFullYear(dayMonthYear[2]);
+    // finalDate.setMonth(dayMonthYear[0]-1, dayMonthYear[1]);
+    // finalDate.setHours(hoursMinutes[0]);
+    // finalDate.setMinutes(hoursMinutes[1]);
+    // finalDate.setSeconds(0);
+    // finalDate.setMilliseconds(0);
+    // console.log("Final Date Month: " + finalDate.getMonth());
+    // console.log("Final Date Day: " + finalDate.getDate());
+    // console.log(finalDate.toString());
+    // return finalDate;
   },
 
   getTime12Hr: function() {
