@@ -1,10 +1,6 @@
-// var PreferenceStore = require('./PreferenceStore');
-// var Place = require('./Place');
-// var UIManager = require('./UIManager');
-
 import { Game } from './Game.js'
 import { UIManager } from './UIManager'
-import { PreferenceStore } from './PreferenceStore'
+import { PreferenceSingleton, TimeType } from './PreferenceStore'
 
 /**
  * An object for combining two callbacks for what to do when searching for Google
@@ -267,8 +263,8 @@ Arbitrator.prototype = {
 //    * under consideration for being linked in a consecutive manner.
 //    */
   findConsecutiveGames: function() {
-    var prefStore = new PreferenceStore();
-    var gameLengthMins = prefStore.getTimePreference(PreferenceStore.TimeType.LENGTH_OF_GAME, 60);
+    var prefStore = PreferenceSingleton.instance;
+    var gameLengthMins = prefStore.getTimePreference(TimeType.LENGTH_OF_GAME, 60);
     var prevGame;
     for (var index in this.mGames) {
       var curGame = this.mGames[index];

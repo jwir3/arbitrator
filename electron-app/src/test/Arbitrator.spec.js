@@ -1,9 +1,10 @@
 import { Role, Game } from '../arbitrator/Game';
-import { expect } from 'chai';
+import { expect, assert } from 'chai';
 import { env } from '../env';
 import { Arbitrator } from '../arbitrator/Arbitrator';
 import { DONTCARE, checkGame } from './checkGame';
 import * as moment from 'moment';
+import { PreferenceSingleton, TimeType } from '../arbitrator/PreferenceStore'
 import jetpack from 'fs-jetpack';
 
 var complexSchedule = jetpack.read('src/test/fixtures/complexSchedule.txt');
@@ -117,20 +118,37 @@ describe("Arbitrator", function () {
     expect(game1.getISOStartDate()).to.equal(expectedFirstStartTime.toISOString());
     expect(game2.isConsecutiveGame()).to.be.ok;
     expect(game2.getISOStartDate()).to.equal(expectedSecondStartTime.toISOString());
+  });
 
-    // expect(game2.isConsecutiveGame()).to.be.truthy;
-    // var startDate2 = game2.getTimestamp();
-    // var expectedSecondStartTime = moment(startDate2.toISOString()).toISOString();
-    // console.log(expectedSecondStartTime);
-    // expect(game2.getISOStartDate()).to.equal(expectedSecondStartTime);
-    // // // Make sure no other games are consecutive.
-    // var allGames = arbitrator.getAllGames();
-    // for (gameIdx in allGames) {
-    //   var nonConsGame = allGames[gameIdx];
-    //   ok(nonConsGame.getId() == 5694
-    //      || nonConsGame.getId() == 5695
-    //      || !nonConsGame.isConsecutiveGame(),
-    //      "game " + nonConsGame.getId() + " should be non-consecutive");
-    // }
+  it("intializes preferences to sane defaults", function() {
+    var prefStore = PreferenceSingleton.instance;
+    expect(prefStore.hasAliasedGroups()).to.be.falsy;
+    expect(prefStore.hasTimePreferences()).to.be.falsy;
+  });
+
+  it ("recognizes time preferences set prior to parsing strings", function() {
+    var prefStore = PreferenceSingleton.instance;
+
+    prefStore.addTimePreference(TimeType.PRIOR_TO_START, 61);
+    prefStore.addTimePreference(TimeType.LENGTH_OF_GAME, 90);
+    prefStore.addGroupAlias('106016', 'D6');
+
+    var testString = "1111 		106016 	Referee 1 	11/9/2013 Sat 12:30 PM 	D6, 12B 	Bloomington Ice Garden 1 	Bloomington 	Minnetonka Black 	$29.50  Accepted on 10/18/2013\n5422 		OSL 	Referee 2 	11/22/2014 Sat 8:40 PM 	OSL, Choice Tournament SL1 80 min 	Ken Yackel West Side 	Super League 1 	TBA 	$45.00 Accepted on 10/31/2014";
+
+    var arbitrator = new Arbitrator(testString);
+
+    expect(arbitrator.getNumGames()).to.equal(2);
+    expect(prefStore.getTimePreference(TimeType.PRIOR_TO_START)).to.equal(61);
+
+    var game = arbitrator.getGameById(1111);
+    expect(game.getISOStartDate()).to.equal(moment("11/9/2013 12:30 PM").subtract(61, 'minutes').toISOString());
+    expect(game.getISOEndDate()).to.equal(moment("11/9/2013 12:30 PM").add(90, 'minutes').toISOString());
+    assert(game.getEventJSON().description.indexOf("Game starts at 12:30pm") > -1, 'the game should start at 12:30pm and this should be in the calendar event description');
+
+    prefStore.removeTimePreference(TimeType.PRIOR_TO_START);
+    prefStore.removeTimePreference(TimeType.LENGTH_OF_GAME);
+
+    expect(game.getISOEndDate()).to.equal("2013-11-09T19:30:00.000Z");
+    expect(game.getISOStartDate()).to.equal("2013-11-09T18:00:00.000Z");
   });
 });

@@ -1,6 +1,6 @@
 import * as CryptoJS from 'crypto-js'
 import { Place } from './Place'
-import { PreferenceStore } from './PreferenceStore'
+import { PreferenceSingleton, TimeType } from './PreferenceStore'
 import * as moment from 'moment';
 
 var gameLevels = {
@@ -56,7 +56,7 @@ export var Role = Object.freeze({
 
 export var Game = function (aId, aGroup, aRole, aTimestamp, aSportLevel, aSite,
                             aHomeTeam, aAwayTeam, aFees) {
-  var prefStore = new PreferenceStore();
+  var prefStore = PreferenceSingleton.instance;
   this.mId = aId;
   this.mGroup = prefStore.getAliasForGroupId(aGroup);
   this.setRole(aRole);
@@ -118,9 +118,9 @@ Game.prototype = {
   },
 
   getISOStartDate: function() {
-    var prefStore = new PreferenceStore();
+    var prefStore = PreferenceSingleton.instance;
     var startDate = this.getTimestamp();
-    var priorToStart = prefStore.getTimePreference(PreferenceStore.TimeType.PRIOR_TO_START, 30);
+    var priorToStart = prefStore.getTimePreference(TimeType.PRIOR_TO_START, 30);
     if (this.isConsecutiveGame()) {
       priorToStart = 0;
     }
@@ -129,11 +129,11 @@ Game.prototype = {
   },
 
   getISOEndDate: function() {
-    var prefStore = new PreferenceStore();
+    var prefStore = PreferenceSingleton.instance;
     var endDate = this.getTimestamp();
 
     // Default to 1 hour if no time preference is specified.
-    var gameLengthMins = prefStore.getTimePreference(PreferenceStore.TimeType.LENGTH_OF_GAME, 60);
+    var gameLengthMins = prefStore.getTimePreference(TimeType.LENGTH_OF_GAME, 60);
     return endDate.add(gameLengthMins, 'minutes').toISOString();
   },
 
@@ -171,8 +171,8 @@ Game.prototype = {
    *         potential consecutive game; false, otherwise.
    */
   isWithinConsecutiveTimeRangeOf: function(aGame) {
-    var prefStore = new PreferenceStore();
-    var consecutiveGameThreshold = prefStore.getTimePreference(PreferenceStore.TimeType.CONSECUTIVE_GAME_THRESHOLD, 2);
+    var prefStore = PreferenceSingleton.instance;
+    var consecutiveGameThreshold = prefStore.getTimePreference(TimeType.CONSECUTIVE_GAME_THRESHOLD, 2);
     var aOtherTimestamp = aGame.getTimestamp();
     var timeStamp = this.getTimestamp();
     return aOtherTimestamp.date() == timeStamp.date()
@@ -349,7 +349,7 @@ Game.prototype = {
     // Convert the site name to a key
     var placeKey = aSiteName.replace(/\s/g, '');
 
-    var prefStore = new PreferenceStore();
+    var prefStore = PreferenceSingleton.instance;
     if (prefStore.hasLocationPreference(placeKey)) {
       return prefStore.getLocationPreference(placeKey);
     }

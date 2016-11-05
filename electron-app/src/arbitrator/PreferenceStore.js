@@ -2,16 +2,23 @@ import { Place } from './Place'
 import * as fs from 'fs';
 import * as path from 'path';
 import jetpack from 'fs-jetpack'
+import env from '../env'
+
+const PREFERENCE_STORE_KEY = Symbol("PreferenceStore");
 
 /**
  * An object connected to local storage for persistent storage of setting
  * data.
  */
-export var PreferenceStore = function() {
+var PreferenceStore = function() {
+  if (env.name == 'test') {
+    this.shouldStore = false;
+  }
+
   this._retrievePreferences();
 }
 
-PreferenceStore.TimeType = {
+export var TimeType = {
   /**
    * Flag for indicating the time type is prior to the game start.
    */
@@ -29,10 +36,11 @@ PreferenceStore.TimeType = {
    * hours of a previous game on the same day will be considered "consecutive".
    */
   CONSECUTIVE_GAME_THRESHOLD: 'consecutiveGames'
-}
+};
 
 PreferenceStore.prototype = {
   authTokens: null,
+  shouldStore: true,
 
   /**
    * Add an alias for a group ID so that it can be reported as a human-readable
@@ -68,16 +76,16 @@ PreferenceStore.prototype = {
     }
 
     switch(aType) {
-      case PreferenceStore.TimeType.PRIOR_TO_START:
-        this.time[PreferenceStore.TimeType.PRIOR_TO_START] = aTimePeriod;
+      case TimeType.PRIOR_TO_START:
+        this.time[TimeType.PRIOR_TO_START] = aTimePeriod;
         break;
 
-      case PreferenceStore.TimeType.LENGTH_OF_GAME:
-        this.time[PreferenceStore.TimeType.LENGTH_OF_GAME] = aTimePeriod;
+      case TimeType.LENGTH_OF_GAME:
+        this.time[TimeType.LENGTH_OF_GAME] = aTimePeriod;
         break;
 
-      case PreferenceStore.TimeType.CONSECUTIVE_GAME_THRESHOLD:
-        this.time[PreferenceStore.TimeType.CONSECUTIVE_GAME_THRESHOLD] = aTimePeriod;
+      case TimeType.CONSECUTIVE_GAME_THRESHOLD:
+        this.time[TimeType.CONSECUTIVE_GAME_THRESHOLD] = aTimePeriod;
         break;
 
       default:
@@ -299,16 +307,12 @@ PreferenceStore.prototype = {
    * Put all preferences into local storage to be saved for a later date.
    */
   _putPreferences: function() {
-    // var configDirPath = path.posix.basename(this._getUserHome() + "/.arbitrator");
-    // var configPath = path.posix.basename(configDirPath + "/config.json");
-    // if (!fs.existsSync(configDirPath)) {
-    //   fs.mkdirSync(configDirPath);
-    // }
-    //
-    // fs.writeFileSync(configPath, JSON.stringify(this));
-    var storedPrefs = jetpack.cwd(this._getUserHome())
-                             .dir(".arbitrator")
-                             .write("userConfig.json", this);
+    if (this.shouldStore) {
+      console.log("Storing prefs...");
+      var storedPrefs = jetpack.cwd(this._getUserHome())
+                               .dir(".arbitrator")
+                               .write("userConfig.json", this);
+     }
   },
 
   /**
@@ -318,7 +322,7 @@ PreferenceStore.prototype = {
   _retrievePreferences: function() {
     var storedPrefs = jetpack.cwd(this._getUserHome())
                              .read(".arbitrator/userConfig.json", 'json');
-    if (storedPrefs) {
+    if (this.shouldStore && storedPrefs) {
       this.groupAliases = storedPrefs.groupAliases;
       this.time = storedPrefs.time;
       this.locations = storedPrefs.locations;
@@ -331,3 +335,17 @@ PreferenceStore.prototype = {
     return process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
   }
 };
+
+export var PreferenceSingleton = {};
+
+Object.defineProperty(PreferenceSingleton, "instance", {
+  get: function() {
+    if (!global[PREFERENCE_STORE_KEY]) {
+      global[PREFERENCE_STORE_KEY] = new PreferenceStore();
+    }
+
+    return global[PREFERENCE_STORE_KEY];
+  }
+});
+
+Object.freeze(PreferenceSingleton);

@@ -1,7 +1,7 @@
-import { PreferenceStore } from './PreferenceStore'
 import { ArbitratorConfig } from './ArbitratorConfig'
 import * as google from 'googleapis'
 import createWindow from '../helpers/window';
+import { PreferenceSingleton, TimeType } from './PreferenceStore';
 
 /**
  * Create a new instance of an ArbitratorGoogleClient object for use with Arbitrator.
@@ -18,7 +18,7 @@ ArbitratorGoogleClient.prototype = {
   getToken: function() {
     var that = this;
     return new Promise((resolve, reject) => {
-      var prefStore = new PreferenceStore();
+      var prefStore = PreferenceSingleton.instance;
       var OAuth2 = google.auth.OAuth2;
       that.client = new OAuth2(
         ArbitratorConfig.google_client_id,
@@ -58,7 +58,7 @@ ArbitratorGoogleClient.prototype = {
                 // Now tokens contains an access_token and an optional refresh_token. Save them.
                 if (!err) {
                   that.client.setCredentials(tokens);
-                  var prefStore = new PreferenceStore();
+                  var prefStore = PreferenceSingleton.instance;
                   prefStore.setAuthTokens(tokens);
                   resolve(tokens);
                   window.removeAllListeners('closed');
@@ -114,9 +114,7 @@ ArbitratorGoogleClient.prototype = {
         'authuser': -1
       }
 
-      console.log(config);
-
-      var prefStore = new PreferenceStore();
+      var prefStore = PreferenceSingleton.instance;
       if (prefStore.getUserId()) {
         config.user_id = prefStore.getUserId();
       }

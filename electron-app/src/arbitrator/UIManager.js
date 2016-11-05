@@ -1,17 +1,10 @@
-// var $ = require('jquery');
-// var LocationService = require('./LocationService');
-// var locService = new LocationService();
-// var Arbitrator = require('./Arbitrator');
-// var ArbitratorGoogleClient = require('./arbitrator-google-client');
-// var StringUtils = require('./StringUtils');
-
 import jQuery from 'jquery'
 import $ from 'jquery'
 import { Place } from './Place'
-import { PreferenceStore } from './PreferenceStore'
 import { ArbitratorGoogleClient } from './ArbitratorGoogleClient'
 import { ArbitratorConfig } from './ArbitratorConfig'
 import { StringUtils } from './StringUtils'
+import { PreferenceSingleton, TimeType } from './PreferenceStore'
 
 export var UIManager = function() {
 }
@@ -46,7 +39,7 @@ UIManager.prototype = {
    * accordingly.
    */
   refreshPreferences: function() {
-    var prefStore = new PreferenceStore();
+    var prefStore = PreferenceSingleton.instance;
     this.refreshTimePreferences();
     this.refreshAliasPreferences();
     this.refreshLocationPreferences();
@@ -58,7 +51,7 @@ UIManager.prototype = {
    * Refresh the preference UI from local storage for all time preferences.
    */
   refreshTimePreferences: function() {
-    var prefStore = new PreferenceStore();
+    var prefStore = PreferenceSingleton.instance;
     var timePrefs = prefStore.getAllTimePreferences();
     for (var key in timePrefs) {
       if (timePrefs.hasOwnProperty(key)) {
@@ -71,7 +64,7 @@ UIManager.prototype = {
    * Refresh the preference UI from local storage for all location preferences.
    */
   refreshLocationPreferences: function() {
-    var prefStore = new PreferenceStore();
+    var prefStore = PreferenceSingleton.instance;
     var locPrefs = prefStore.getAllLocationPreferences();
     for (var key in locPrefs) {
       if (locPrefs.hasOwnProperty(key)) {
@@ -86,7 +79,7 @@ UIManager.prototype = {
    */
   refreshAliasPreferences: function() {
     $('#aliasInputs').html('');
-    var prefStore = new PreferenceStore();
+    var prefStore = PreferenceSingleton.instance;
     var aliasedGroups = prefStore.getAllGroupAliases();
     for (var prop in aliasedGroups) {
       if (aliasedGroups.hasOwnProperty(prop)) {
@@ -106,7 +99,7 @@ UIManager.prototype = {
   // setTimePreferenceFromUI: function(aTimePrefName) {
   //   var timePrefVal = $('#timePref-' + aTimePrefName).val();
   //   var prefName = '';
-  //   var prefStore = new PreferenceStore();
+  //   var prefStore = PreferenceSingleton.instance;
   //   prefStore.addTimePreference(aTimePrefName, timePrefVal);
   // },
 
@@ -156,7 +149,7 @@ UIManager.prototype = {
    *        the preference store.
    */
   // addAliasToPrefStore: function(aGroupName, aAliasName) {
-  //     var prefStore = new PreferenceStore();
+  //     var prefStore = PreferenceSingleton.instance;
   //     prefStore.addGroupAlias(aGroupName, aAliasName);
   //     // this.acknowledgePreference(aGroupName);
   //     this.showSnackbar("Alias '" + aAliasName + "' set");
@@ -167,19 +160,19 @@ UIManager.prototype = {
   //   var subLocationName = $('#locationSubLocationPref-' + aLocationPrefKey).val();
   //
   //   var prefName = '';
-  //   var prefStore = new PreferenceStore();
+  //   var prefStore = PreferenceSingleton.instance;
   //   prefStore.addLocationPreference(new Place(aLocationPrefKey, aLocationPrefName, address, subLocationName));
   //
   //   this.showSnackbar("Address for '" + aLocationPrefName + "' set");
   // },
 
   // deleteLocationPreference: function(aLocationKey) {
-  //   var prefStore = new PreferenceStore();
+  //   var prefStore = PreferenceSingleton.instance;
   //   prefStore.removeLocationPreference(aLocationKey);
   // },
   //
   // deleteAliasPreference: function(aGroupName) {
-  //   var prefStore = new PreferenceStore();
+  //   var prefStore = PreferenceSingleton.instance;
   //   prefStore.removeGroupAlias(aGroupName);
   // },
 
@@ -225,7 +218,7 @@ UIManager.prototype = {
   // },
 
   // logout: function() {
-  //   var prefStore = new PreferenceStore();
+  //   var prefStore = PreferenceSingleton.instance;
   //   prefStore.removeUserId();
   //   location.reload();
   // },
@@ -268,7 +261,7 @@ UIManager.prototype = {
    */
   // _setAliasPreferenceOnClickHandlers: function() {
   //   var that = this;
-  //   var prefStore = new PreferenceStore();
+  //   var prefStore = PreferenceSingleton.instance;
   //
   //   $('button.setAlias').each(function() {
   //     $(this).off('click');
@@ -511,7 +504,7 @@ UIManager.prototype = {
  */
   populateUserId: function(aGoogleClient) {
     aGoogleClient.getUserId().then((id) => {
-      var prefStore = new PreferenceStore();
+      var prefStore = PreferenceSingleton.instance;
       prefStore.setUserId(id);
     });
   },
