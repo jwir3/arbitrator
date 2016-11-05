@@ -111,53 +111,10 @@ Game.prototype = {
    */
   getTimestamp: function() {
     return moment(this.getTimestampAsString());
-    // var arbiterDateString = this.mTimestamp;
-    // console.log(arbiterDateString);
-    // var dateComponents = arbiterDateString.split(" ");
-    // // Now, the first component is the date (yet to be split)
-    // // The second component is the day of the week (can be ignored)
-    // // The third component is the time of day (12 hour)
-    // // The fourth component is the am/pm indicator.
-    //
-    // // Split month, day, and year
-    // var dayMonthYear = dateComponents[0].split("/")
-    // console.log(dayMonthYear[0]);
-    // console.log(dayMonthYear[1]);
-    // console.log(dayMonthYear[2]);
-    //
-    // // Split hours and minutes
-    // var hoursMinutes = dateComponents[2].split(":");
-    //
-    // // Convert to 24-hour time
-    // if (dateComponents[3].toLowerCase().startsWith('p')
-    //     && hoursMinutes[0] < 12) {
-    //       hoursMinutes[0] = hoursMinutes[0] + 12;
-    // }
-    //
-    // var finalDate = new Date();
-    // finalDate.setFullYear(dayMonthYear[2]);
-    // finalDate.setMonth(dayMonthYear[0]-1, dayMonthYear[1]);
-    // finalDate.setHours(hoursMinutes[0]);
-    // finalDate.setMinutes(hoursMinutes[1]);
-    // finalDate.setSeconds(0);
-    // finalDate.setMilliseconds(0);
-    // console.log("Final Date Month: " + finalDate.getMonth());
-    // console.log("Final Date Day: " + finalDate.getDate());
-    // console.log(finalDate.toString());
-    // return finalDate;
   },
 
   getTime12Hr: function() {
-      var timestamp = this.getTimestamp();
-      var hour = timestamp.getHours();
-      var ampm = (hour >= 12) ? 'pm' : 'am';
-      if (hour > 12) {
-        hour = hour - 12;
-      }
-
-      return hour
-             + ":" + (timestamp.getMinutes() < 10 ? "0" : "")
-             + timestamp.getMinutes() + ampm;
+    return this.getTimestamp().format("h:mma");
   },
 
   getISOStartDate: function() {

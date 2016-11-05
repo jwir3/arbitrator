@@ -3,6 +3,9 @@ import { expect } from 'chai';
 import { env } from '../env';
 import { Arbitrator } from '../arbitrator/Arbitrator';
 import { DONTCARE, checkGame } from './checkGame';
+import jetpack from 'fs-jetpack';
+
+var complexSchedule = jetpack.read('src/test/fixtures/complexSchedule.txt');
 
 describe("Arbitrator", function () {
   it ("parses a basic string with two games", function() {
@@ -23,5 +26,61 @@ describe("Arbitrator", function () {
               'Minnetonka Black', false, false);
     checkGame(arbitrator, 598, 'Showcase', Role.LINESMAN, 4, 26, 2014, 20, 15,
               '16U Girls', 'Saint Louis Park, East', 'TBA', 'TBA', false, false);
+  });
+
+  it ("parses tournaments and scrimmages correctly", function() {
+    var arbitrator = new Arbitrator(complexSchedule);
+    expect(arbitrator.getNumGames()).to.equal(8);
+
+    // Check the characteristics of the first game.
+    checkGame(arbitrator, 4073, DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE,
+              DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE,
+              false, true);
+
+    // Check the characteristics of the second game.
+    checkGame(arbitrator, 203, DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE,
+              DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE, DONTCARE, true);
+
+              // Check the summary strings to make sure they are reasonable.
+    var game1 = arbitrator.getGameById(4073);
+    var expectedSS1 = "[106016] Referee (Squirt C Tournament)";
+    expect(game1.getSummaryString()).to.equal(expectedSS1);
+
+    var game2 = arbitrator.getGameById(203);
+    var expectedSS2 = "[106016] Referee Scrimmage New Prague v Farmington (10U Girls B)";
+    expect(game2.getSummaryString()).to.equal(expectedSS2);
+  });
+
+  it ("parses complex schedules with many games", function() {
+    var arbitrator = new Arbitrator(complexSchedule);
+
+    expect(arbitrator.getNumGames()).to.equal(8);
+
+    // Test don't care terms.
+    checkGame(arbitrator, 330);
+
+    // Check the characteristics of the first game.
+    checkGame(arbitrator, 330, '106016', Role.REFEREE, 11, 8, 2014, 9, 50,
+              "Squirt C", "New Prague Community Center", "New Prague",
+              "Dodge County Black");
+
+    // Check the characteristics of the second game.
+    checkGame(arbitrator, 339, '106016', Role.REFEREE, 11, 8, 2014, 18, 45,
+              "10U Girls B", "Eden Prairie 3", "Eden Prairie Red",
+              "Minnetonka Black");
+
+    // Check the characteristics of the third game.
+    checkGame(arbitrator, 3839, 'MinneapHO', Role.LINESMAN, 11, 14, 2014, 20, 10,
+              "Varsity Boys", "St. Louis Park Recreation Center",
+              "St Thomas Academy", "Minnetonka");
+  });
+
+  it ("does not truncate the start time", function() {
+    var arbitrator = new Arbitrator(complexSchedule);
+    var game = arbitrator.getGameById(5629);
+    
+    expect(game).to.be.ok;
+
+    expect(game.getTime12Hr()).to.equal("11:00am");
   });
 });
