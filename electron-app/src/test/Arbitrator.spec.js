@@ -151,4 +151,36 @@ describe("Arbitrator", function () {
     expect(game.getISOEndDate()).to.equal("2013-11-09T19:30:00.000Z");
     expect(game.getISOStartDate()).to.equal("2013-11-09T18:00:00.000Z");
   });
+
+  it ("outputs the correct start and end dates when end date is days in the future", function() {
+    var testData = "5422 		OSL 	Referee 2 	11/22/2014 Sat 8:40 PM 	OSL, Choice Tournament SL1 80 min 	Ken Yackel West Side 	Super League 1 	TBA 	$45.00 Accepted on 10/31/2014";
+    var prefStore = PreferenceSingleton.instance;
+    var arbitrator = new Arbitrator(testData);
+    var game = arbitrator.getGameById(5422);
+
+    expect(game).to.be.ok;
+
+    prefStore.addTimePreference(TimeType.PRIOR_TO_START, 60);
+    prefStore.addTimePreference(TimeType.LENGTH_OF_GAME, 120);
+
+    // Basic game checking
+    checkGame(arbitrator, 5422, DONTCARE, DONTCARE, 11, 22, 2014, 20, 40);
+
+    // Check ISO start and end times
+    expect(game.getISOStartDate()).to.equal("2014-11-23T01:40:00.000Z");
+    expect(game.getISOEndDate()).to.equal("2014-11-23T04:40:00.000Z");
+  });
+
+  it ("correctly recognizes group aliases", function () {
+    var prefStore = PreferenceSingleton.instance;
+    prefStore.addGroupAlias('106016', 'D6');
+
+    var testString = "1111 		106016 	Referee 1 	11/9/2013 Sat 12:30 PM 	D6, 12B 	Bloomington Ice Garden 1 	Bloomington 	Minnetonka Black 	$29.50  Accepted on 10/18/2013\n598 		Showcase 	Linesman 	4/26/2014 Sat 8:15 PM 	Hockey, 16U AAA 	Saint Louis Park, East 	TBA 	TBA 	$38.00";
+    var arbitrator = new Arbitrator(testString);
+    checkGame(arbitrator, 1111, 'D6');
+
+    expect(prefStore.hasAliasedGroups()).to.be.truthy;
+
+    prefStore.removeGroupAlias('D6');
+  });
 });
