@@ -124,7 +124,8 @@ Game.prototype = {
     if (this.isConsecutiveGame()) {
       priorToStart = 0;
     }
-    return new Date(startDate.setMinutes(startDate.getMinutes() - priorToStart)).toISOString();
+
+    return startDate.subtract(priorToStart, 'minutes').toISOString();
   },
 
   getISOEndDate: function() {
@@ -133,7 +134,7 @@ Game.prototype = {
 
     // Default to 1 hour if no time preference is specified.
     var gameLengthMins = prefStore.getTimePreference(PreferenceStore.TimeType.LENGTH_OF_GAME, 60);
-    return new Date(endDate.setMinutes(endDate.getMinutes() + gameLengthMins)).toISOString();
+    return endDate.add(gameLengthMins, 'minutes').toISOString();
   },
 
   /**
@@ -174,10 +175,10 @@ Game.prototype = {
     var consecutiveGameThreshold = prefStore.getTimePreference(PreferenceStore.TimeType.CONSECUTIVE_GAME_THRESHOLD, 2);
     var aOtherTimestamp = aGame.getTimestamp();
     var timeStamp = this.getTimestamp();
-    return aOtherTimestamp.getDate() == timeStamp.getDate()
-           && aOtherTimestamp.getFullYear() == timeStamp.getFullYear()
-           && aOtherTimestamp.getMonth() == timeStamp.getMonth()
-           && aOtherTimestamp.getHours() + consecutiveGameThreshold >= timeStamp.getHours()
+    return aOtherTimestamp.date() == timeStamp.date()
+           && aOtherTimestamp.year() == timeStamp.year()
+           && aOtherTimestamp.month() == timeStamp.month()
+           && aOtherTimestamp.hours() + consecutiveGameThreshold >= timeStamp.hours()
   },
 
   setRole: function(aRoleString) {

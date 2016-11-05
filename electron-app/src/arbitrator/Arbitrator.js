@@ -4,6 +4,7 @@
 
 import { Game } from './Game.js'
 import { UIManager } from './UIManager'
+import { PreferenceStore } from './PreferenceStore'
 
 /**
  * An object for combining two callbacks for what to do when searching for Google
@@ -75,7 +76,7 @@ Arbitrator.prototype = {
       }
     }
 
-    // this.findConsecutiveGames();
+    this.findConsecutiveGames();
   },
 
   getNumGames: function() {
@@ -265,19 +266,19 @@ Arbitrator.prototype = {
 //    * only games that are entered together in the same Arbitrator object are
 //    * under consideration for being linked in a consecutive manner.
 //    */
-//   findConsecutiveGames: function() {
-//     var prefStore = new PreferenceStore();
-//     var gameLengthMins = prefStore.getTimePreference(PreferenceStore.TimeType.LENGTH_OF_GAME, 60);
-//     var prevGame;
-//     for (index in this.mGames) {
-//       var curGame = this.mGames[index];
-//       if (prevGame
-//           && curGame.isWithinConsecutiveTimeRangeOf(prevGame)
-//           && curGame.getSite().getName() == prevGame.getSite().getName()) {
-//           curGame.setConsecutiveGame(true);
-//         }
-//
-//         prevGame = curGame;
-//       }
-//   }
+  findConsecutiveGames: function() {
+    var prefStore = new PreferenceStore();
+    var gameLengthMins = prefStore.getTimePreference(PreferenceStore.TimeType.LENGTH_OF_GAME, 60);
+    var prevGame;
+    for (var index in this.mGames) {
+      var curGame = this.mGames[index];
+      if (prevGame
+          && curGame.isWithinConsecutiveTimeRangeOf(prevGame)
+          && curGame.getSite().getName() == prevGame.getSite().getName()) {
+          curGame.setConsecutiveGame(true);
+        }
+
+        prevGame = curGame;
+      }
+  }
 }

@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { env } from '../env';
 import { Arbitrator } from '../arbitrator/Arbitrator';
 import { DONTCARE, checkGame } from './checkGame';
+import * as moment from 'moment';
 import jetpack from 'fs-jetpack';
 
 var complexSchedule = jetpack.read('src/test/fixtures/complexSchedule.txt');
@@ -78,9 +79,58 @@ describe("Arbitrator", function () {
   it ("does not truncate the start time", function() {
     var arbitrator = new Arbitrator(complexSchedule);
     var game = arbitrator.getGameById(5629);
-    
+
     expect(game).to.be.ok;
 
     expect(game.getTime12Hr()).to.equal("11:00am");
+  });
+
+  it ("outputs JSON formatted for Google calendar", function() {
+    var arbitrator = new Arbitrator(complexSchedule);
+
+    var game = arbitrator.getGameById(5629);
+    expect(game).to.be.ok;
+
+    var gameJson = game.getEventJSON();
+    expect(gameJson).to.be.ok;
+    expect(game.getISOStartDate()).to.equal(gameJson.start.dateTime);
+    expect(game.getISOEndDate()).to.equal(gameJson.end.dateTime);
+
+    expect(game.getSite().getName()).to.equal(gameJson.location);
+    expect(game.getSummaryString()).to.equal(gameJson.summary);
+
+    var notes = "Game starts at " + String(game.getTime12Hr()) + "\n\n" + "{ArbitratorHash: " + String(game.getHash()) + "}"
+    expect(notes).to.equal(gameJson.description);
+  });
+
+  it ("records no preparation time for consecutive games", function() {
+    var arbitrator = new Arbitrator(complexSchedule);
+
+    var game1 = arbitrator.getGameById(5694);
+    var game2 = arbitrator.getGameById(5695);
+    expect(game1).to.be.ok;
+    expect(game2).to.be.ok;
+
+    var expectedFirstStartTime = game1.getTimestamp().subtract(30, 'minutes');
+    var expectedSecondStartTime = game2.getTimestamp();
+
+    expect(game1.getISOStartDate()).to.equal(expectedFirstStartTime.toISOString());
+    expect(game2.isConsecutiveGame()).to.be.ok;
+    expect(game2.getISOStartDate()).to.equal(expectedSecondStartTime.toISOString());
+
+    // expect(game2.isConsecutiveGame()).to.be.truthy;
+    // var startDate2 = game2.getTimestamp();
+    // var expectedSecondStartTime = moment(startDate2.toISOString()).toISOString();
+    // console.log(expectedSecondStartTime);
+    // expect(game2.getISOStartDate()).to.equal(expectedSecondStartTime);
+    // // // Make sure no other games are consecutive.
+    // var allGames = arbitrator.getAllGames();
+    // for (gameIdx in allGames) {
+    //   var nonConsGame = allGames[gameIdx];
+    //   ok(nonConsGame.getId() == 5694
+    //      || nonConsGame.getId() == 5695
+    //      || !nonConsGame.isConsecutiveGame(),
+    //      "game " + nonConsGame.getId() + " should be non-consecutive");
+    // }
   });
 });
