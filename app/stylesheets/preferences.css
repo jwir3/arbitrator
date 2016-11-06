@@ -1,0 +1,95 @@
+.topInputSet {
+  display: block;
+  width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2em;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+  -moz-transition: max-height .218s ease-in;
+  background-color: #fafafa;
+  height: 46px !important;
+  box-sizing: border-box;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 2px;
+  transition: max-height .218s ease-in;
+  transition-duration: .218s;
+  transition-property: background,opacity,box-shadow,transform;
+  transition-timing-function: ease-in; }
+  .topInputSet .aliasAddInput {
+    display: inline;
+    font-size: 14px;
+    line-height: 19px;
+    min-height: 46px;
+    padding: 12px 15px 15px 15px;
+    box-sizing: border-box;
+    font-family: 'Roboto Slab','Times New Roman',serif;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    outline: none; }
+  .topInputSet #aliasAddName {
+    position: absolute;
+    left: 15em; }
+  .topInputSet #aliasAddAlias {
+    position: absolute;
+    font-weight: bold; }
+  .topInputSet #aliasAddButton {
+    position: absolute;
+    right: 30px;
+    cursor: pointer; }
+  .topInputSet [contentEditable=true]:empty:not(:focus):before {
+    content: attr(data-placeholder); }
+  .topInputSet button {
+    font-size: 14pt;
+    margin-left: 0.5em; }
+
+.labelSet {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em; }
+  .labelSet label {
+    display: inline-block;
+    width: 25%;
+    margin-right: 2em;
+    margin-left: 8px;
+    font-size: 14pt; }
+  .labelSet button {
+    font-size: 14pt;
+    margin-left: 0.5em; }
+
+.label-set:first-child {
+  padding-top: 0;
+  padding-bottom: 0; }
+
+.labelSet:nth-child(2n) {
+  background-color: #d3eaff; }
+
+input[type='text'] {
+  display: inline-block;
+  width: 30%;
+  font-size: 14pt; }
+
+input[type='text'].small {
+  display: inline-block;
+  width: 5%;
+  font-size: 14pt; }
+
+section h2, section h3 {
+  display: inline-block;
+  margin-left: 8px;
+  margin: 0 1em; }
+section h3#locationDataHeader {
+  width: 25%;
+  margin-right: 2em;
+  margin-left: 8px; }
+section h3#locationAddressHeader {
+  width: 30%;
+  margin-left: 0; }
+section h3#subLocationHeader {
+  width: 5%;
+  margin-left: 0; }
+
+input[type='number'] {
+  display: inline-block;
+  width: 5%;
+  font-size: 14pt; }

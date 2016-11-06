@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Arbitrator</title>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="stylesheets/arbitrator.css" type="text/css" />
+  </head>
+  <body>
+
+    <header id="app-bar">
+  <div id="hamburger" alt="Navigation Drawer"></div>
+  <h2 id="pageTitle"></h2>
+  <h2 id="versionNumber"></h2>
+  <nav id="nav-drawer">
+    <ul>
+      <li class="nav-drawer-header"><div id="arbitrator" class="nav-drawer-image"></div>Arbitrator</li>
+      <li class="nav-drawer-item" data-item="aliases"><div id="aliases" class="nav-drawer-image"></div>Aliases</li>
+      <li class="nav-drawer-item" data-item="locations"><div id="locations" class="nav-drawer-image"></div>Locations</li>
+    </ul>
+    <hr>
+    <ul>
+      <li class="nav-drawer-item" data-item="settings"><div id="settings" class="nav-drawer-image"></div>Settings</li>
+    </ul>
+  </nav>
+</header>
+
+
+    <main id="content">
+    </main>
+    <dialog class="snackbar">
+      <div class="snackbar-inner">
+        <span id="snackbar-message"></span>
+        <button id="dismissSnackbar"><div class="smallIcon times"></div></button>
+      </div>
+    </dialog>
+  </body>
+</html>
