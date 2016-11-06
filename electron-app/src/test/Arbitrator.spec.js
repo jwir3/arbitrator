@@ -7,12 +7,13 @@ import * as moment from 'moment';
 import { PreferenceSingleton, TimeType } from '../arbitrator/PreferenceStore'
 import jetpack from 'fs-jetpack';
 
+var singleGame = jetpack.read('src/test/fixtures/singleGame.txt');
+var basicSchedule = jetpack.read('src/test/fixtures/basicSchedule.txt');
 var complexSchedule = jetpack.read('src/test/fixtures/complexSchedule.txt');
 
 describe("Arbitrator", function () {
   it ("parses a basic string with two games", function() {
-    var testString = "1111 		106016 	Referee 1 	11/9/2013 Sat 12:30 PM 	D6, 12B 	Bloomington Ice Garden 1 	Bloomington 	Minnetonka Black 	$29.50  Accepted on 10/18/2013\n598 		Showcase 	Linesman 	4/26/2014 Sat 8:15 PM 	Hockey, 16U AAA 	Saint Louis Park, East 	TBA 	TBA 	$38.00";
-    var arbitrator = new Arbitrator(testString);
+    var arbitrator = new Arbitrator(basicSchedule);
 
     expect(arbitrator).to.not.be.null;
     expect(arbitrator.getNumGames()).to.equal(2);
@@ -133,9 +134,7 @@ describe("Arbitrator", function () {
     prefStore.addTimePreference(TimeType.LENGTH_OF_GAME, 90);
     prefStore.addGroupAlias('106016', 'D6');
 
-    var testString = "1111 		106016 	Referee 1 	11/9/2013 Sat 12:30 PM 	D6, 12B 	Bloomington Ice Garden 1 	Bloomington 	Minnetonka Black 	$29.50  Accepted on 10/18/2013\n5422 		OSL 	Referee 2 	11/22/2014 Sat 8:40 PM 	OSL, Choice Tournament SL1 80 min 	Ken Yackel West Side 	Super League 1 	TBA 	$45.00 Accepted on 10/31/2014";
-
-    var arbitrator = new Arbitrator(testString);
+    var arbitrator = new Arbitrator(basicSchedule);
 
     expect(arbitrator.getNumGames()).to.equal(2);
     expect(prefStore.getTimePreference(TimeType.PRIOR_TO_START)).to.equal(61);
@@ -153,9 +152,8 @@ describe("Arbitrator", function () {
   });
 
   it ("outputs the correct start and end dates when end date is days in the future", function() {
-    var testData = "5422 		OSL 	Referee 2 	11/22/2014 Sat 8:40 PM 	OSL, Choice Tournament SL1 80 min 	Ken Yackel West Side 	Super League 1 	TBA 	$45.00 Accepted on 10/31/2014";
     var prefStore = PreferenceSingleton.instance;
-    var arbitrator = new Arbitrator(testData);
+    var arbitrator = new Arbitrator(singleGame);
     var game = arbitrator.getGameById(5422);
 
     expect(game).to.be.ok;
