@@ -24,7 +24,7 @@ UIManager.prototype = {
     var calSelectionElement = document.getElementById('calendarList');
     var selectedId = calSelectionElement[calSelectionElement.selectedIndex].id;
     console.log("Arbitrating: " + scheduleText);
-    // arb.adjustGamesOrSubmitToCalendar(selectedId);
+    arb.adjustGamesOrSubmitToCalendar(selectedId);
   },
 
   setUIListeners: function() {
@@ -472,7 +472,7 @@ UIManager.prototype = {
       this.mGoogleClient = new ArbitratorGoogleClient();
     }
 
-    this.mGoogleClient.getToken().then(() => {
+    this.mGoogleClient.getClient().then((client) => {
       aOnComplete(this.mGoogleClient);
     });
   },

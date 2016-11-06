@@ -43,9 +43,9 @@ app.on('ready', function () {
     mainWindow.webContents.on('dom-ready', function() {
         var manager = new UIManager();
         var client = new ArbitratorGoogleClient();
-        client.getToken()
-              .then(token => {
-                  sendMessageToRenderer(mainWindow, token)
+        client.getClient()
+              .then((client) => {
+                  sendMessageToRenderer(mainWindow, client)
               });
     });
 

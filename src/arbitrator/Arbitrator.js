@@ -1,6 +1,7 @@
-import { Game } from './Game.js'
-import { UIManager } from './UIManager'
-import { PreferenceSingleton, TimeType } from './PreferenceStore'
+import { Game } from './Game.js';
+import { UIManager } from './UIManager';
+import { PreferenceSingleton, TimeType } from './PreferenceStore';
+import { ArbitratorGoogleClient } from './ArbitratorGoogleClient';
 
 /**
  * An object for combining two callbacks for what to do when searching for Google
@@ -17,10 +18,10 @@ import { PreferenceSingleton, TimeType } from './PreferenceStore'
  *        onNoMatchFound(aGame)
  *        where aGame represents the Game object which was searched for.
  */
-// var EventSearchObserver = function(aMatchFunction, aNoMatchFunction) {
-//   this.onMatchFound = aMatchFunction;
-//   this.onNoMatchFound = aNoMatchFunction;
-// }
+var EventSearchObserver = function(aMatchFunction, aNoMatchFunction) {
+  this.onMatchFound = aMatchFunction;
+  this.onNoMatchFound = aNoMatchFunction;
+}
 
 export var Arbitrator = function(aString) {
   this.mBaseString = aString;
@@ -28,6 +29,7 @@ export var Arbitrator = function(aString) {
   this.numGames = 0;
   this.parseFromText();
   this.mUiManager = new UIManager();
+  this.mGoogleClient = new ArbitratorGoogleClient();
 }
 
 Arbitrator.prototype = {
@@ -122,128 +124,58 @@ Arbitrator.prototype = {
 //   // notifyGameAdjusted: function(aGame) {
 //   //   this.mUiManager.setMessage('Game #' + aGame.getId() + ' was adjusted in Google Calendar.');
 //   // },
-//
-//   /**
-//    * Submit games in Arbitrator to Google Calendar.
-//    *
-//    * If any games in this object correspond to games already listed in Google
-//    * Calendar, then these games will be updated with new date/time information.
-//    * If a game does not already exist in Google Calendar, then it will be added
-//    * using the submitGameToCalendar() function.
-//    *
-//    * @param aCalendarId The ID of the calendar where the games should be placed.
-//    */
-//   adjustGamesOrSubmitToCalendar: function(aCalendarId) {
-//     // Save this pointer so it can be used in the callback.
-//     var self = this;
-//     var numGames = Object.keys(this.mGames).length;
-//     var gamesProcessed = 0;
-//     var callback = new EventSearchObserver(
-//       function(aGame, aCalendarEvent) {
-//         // Do nothing for right now.
-//         self.adjustGameInCalendar(aCalendarId, aCalendarEvent, aGame);
-//         gamesProcessed++;
-//         if (gamesProcessed == numGames) {
-//           self.mUiManager.showSnackbar('Game(s) added to calendar');
-//         }
-//       },
-//
-//       function(aGame) {
-//         self.submitGameToCalendar(aCalendarId, aGame);
-//         gamesProcessed++;
-//         if (gamesProcessed == numGames) {
-//           self.mUiManager.showSnackbar('Game(s) added to calendar');
-//         }
-//       });
-//
-//     for (var key in this.mGames) {
-//       if (this.mGames.hasOwnProperty(key)) {
-//         var game = this.mGames[key];
-//         this.findGameInCalendar(aCalendarId, game, callback);
-//       }
-//     }
-//   },
-//
-//   /**
-//    * Adjust a game that is already in Google Calendar to have new data.
-//    *
-//    * This is accomplished by removing the current event in Google Calendar and
-//    * adding a new event with the corresponding data. No checking is done to
-//    * determine if these two events represent the same game.
-//    *
-//    * @param aCalendarId The id of the calendar which should have the event.
-//    * @param aEvent The event data structure given from Google that should be
-//    *        deleted.
-//    * @param aGame The game data structure that has the new data.
-//    */
-//   adjustGameInCalendar: function(aCalendarId, aEvent, aGame) {
-//     // First, delete the old event.
-//     var request = gapi.client.calendar.events.delete({
-//       'calendarId' : aCalendarId,
-//       'eventId' : aEvent.id
-//     });
-//     request.execute();
-//
-//     // Now, submit the new event.
-//     this.submitGameToCalendar(aCalendarId, aGame);
-//   },
-//
-//   /**
-//    * Submits a game to Google Calendar using the javascript rest api.
-//    *
-//    * @param aCalendarId The id of the calendar which should have the event.
-//    * @param aGame The Game to submit to the calendar.
-//    * @param aSuppressMessage If true, then no message will be shown for this event
-//    *        being added. Defaults to false.
-//    */
-//   submitGameToCalendar: function(aCalendarId, aGame) {
-//     var eventToInsert = aGame.getEventJSON();
-//     var request = gapi.client.calendar.events.insert({
-//       'calendarId' : aCalendarId,
-//       'resource' : eventToInsert
-//     });
-//     request.execute(function(aResponse){
-//       if (!aResponse['error']) {
-//         console.log("Request to submit game to calendar was successful");
-//       } else {
-//         console.log("An error occurred: " + aResponse);
-//       }
-//     });
-//   },
-//
-//   /**
-//    * Find a game within a given calendar.
-//    *
-//    * @param aCalendarId The google calendar id for the calendar which should be
-//    *        searched for events.
-//    * @param aGame The game that should be searched for within the calendar.
-//    * @param aCallback An object with two functions: foundMatchingEvent() and
-//    *        noMatchingEventFound(), representing logic to perform when an event
-//    *        was found or not found, respectively.
-//    */
-//   findGameInCalendar: function(aCalendarId, aGame, aCallback) {
-//     var searchString = "{ArbitratorHash: " + aGame.getHash() + "}";
-//     var request = gapi.client.calendar.events.list({
-//       'calendarId' : aCalendarId
-//     });
-//     request.execute(function(aResponse) {
-//       var results = aResponse.items;
-//       var foundEvent = false;
-//       for (var i = 0; i < results.length; i++) {
-//         var calEvent = results[i];
-//         if (calEvent.description
-//             && calEvent.description.indexOf(searchString) > 0) {
-//             aCallback.onMatchFound(aGame, calEvent)
-//             foundEvent = true;
-//             break;
-//         }
-//       }
-//
-//       if (!foundEvent) {
-//         aCallback.onNoMatchFound(aGame);
-//       }
-//     });
-//   },
+
+  /**
+   * Submit games in Arbitrator to Google Calendar.
+   *
+   * If any games in this object correspond to games already listed in Google
+   * Calendar, then these games will be updated with new date/time information.
+   * If a game does not already exist in Google Calendar, then it will be added
+   * using the submitGameToCalendar() function.
+   *
+   * @param aCalendarId The ID of the calendar where the games should be placed.
+   */
+  adjustGamesOrSubmitToCalendar: function(aCalendarId) {
+    // Save this pointer so it can be used in the callback.
+    var self = this;
+    var numGames = Object.keys(this.mGames).length;
+    var gamesProcessed = 0;
+    var callback = new EventSearchObserver(
+      function(aGame, aCalendarEvent) {
+        self.mGoogleClient.adjustGameInCalendar(aCalendarId, aCalendarEvent, aGame)
+          .then(() => {
+            gamesProcessed++;
+            if (gamesProcessed == numGames) {
+              self.mUiManager.showSnackbar('Game(s) added to calendar');
+            }
+          });
+      },
+
+      function(aGame) {
+        console.log("Saw no match");
+      });
+
+    for (var key in this.mGames) {
+      if (this.mGames.hasOwnProperty(key)) {
+        var game = this.mGames[key];
+        // self.mGoogleClient.findGameInCalendar(aCalendarId, game)
+          // .then((foundEventId) => {
+            // if (!foundEventId) {
+              // var googleClient = new ArbitratorGoogleClient();
+              self.mGoogleClient.submitGameToCalendar(aCalendarId, game)
+                .then(() => {
+                  gamesProcessed++;
+                  if (gamesProcessed == numGames) {
+                    self.mUiManager.showSnackbar('Game(s) added to calendar');
+                  }
+              });
+            // } else {
+              // console.log("Game found with event id: " + foundEventId);
+            // }
+          // });
+      }
+    }
+  },
 
   /**
    * Retrieve all games in this Arbitrator object.
