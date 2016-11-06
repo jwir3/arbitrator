@@ -99,6 +99,8 @@ Game.prototype = {
   },
 
   getTimestampAsString: function() {
+    // Retrieves the arbiter-printed string, which currently has the format:
+    // MM/DD/YYYY h:MM A
     var components = this.mTimestamp.split(" ");
     return components[0] + " " + components[2] +  " " + components[3];
   },
@@ -110,7 +112,7 @@ Game.prototype = {
    *                  based on the data from ArbiterSports.
    */
   getTimestamp: function() {
-    return moment(this.getTimestampAsString());
+    return moment(this.getTimestampAsString(), "MM/DD/YYYY h:mm a");
   },
 
   getTime12Hr: function() {
