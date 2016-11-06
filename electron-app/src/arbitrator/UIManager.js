@@ -5,6 +5,7 @@ import { ArbitratorGoogleClient } from './ArbitratorGoogleClient'
 import { ArbitratorConfig } from './ArbitratorConfig'
 import { StringUtils } from './StringUtils'
 import { PreferenceSingleton, TimeType } from './PreferenceStore'
+import { Arbitrator } from './Arbitrator'
 
 export var UIManager = function() {
 }
@@ -17,21 +18,22 @@ UIManager.prototype = {
    * Perform functionality when the user clicks the 'Submit' button to indicate
    * they wish to invoke arbitrator's functionality.
    */
-  // onArbitrate: function() {
-  //   var scheduleText = $('#schedule').val();
-  //   var arb = new Arbitrator(scheduleText);
-  //   var calSelectionElement = document.getElementById('calendarList');
-  //   var selectedId = calSelectionElement[calSelectionElement.selectedIndex].id;
-  //   arb.adjustGamesOrSubmitToCalendar(selectedId);
-  // },
+  onArbitrate: function() {
+    var scheduleText = $('#schedule').val();
+    var arb = new Arbitrator(scheduleText);
+    var calSelectionElement = document.getElementById('calendarList');
+    var selectedId = calSelectionElement[calSelectionElement.selectedIndex].id;
+    console.log("Arbitrating: " + scheduleText);
+    // arb.adjustGamesOrSubmitToCalendar(selectedId);
+  },
 
   setUIListeners: function() {
-    // this._setPreferenceOnClickHandlers();
-    // this._setHeaderScrollListener();
+    this._setPreferenceOnClickHandlers();
+    this._setHeaderScrollListener();
     this._setNavDrawerOnClickHandlers();
-    // this._setArbitrateOnClickHandler();
-    // this._setLogoutOnClickHandler();
-    // this._setDismissSnackBarOnClickHandler();
+    this._setArbitrateOnClickHandler();
+    this._setLogoutOnClickHandler();
+    this._setDismissSnackBarOnClickHandler();
   },
 
   /**
@@ -96,12 +98,12 @@ UIManager.prototype = {
    *
    * @param aTimePrefName The name of the time preference to set from the UI.
    */
-  // setTimePreferenceFromUI: function(aTimePrefName) {
-  //   var timePrefVal = $('#timePref-' + aTimePrefName).val();
-  //   var prefName = '';
-  //   var prefStore = PreferenceSingleton.instance;
-  //   prefStore.addTimePreference(aTimePrefName, timePrefVal);
-  // },
+  setTimePreferenceFromUI: function(aTimePrefName) {
+    var timePrefVal = $('#timePref-' + aTimePrefName).val();
+    var prefName = '';
+    var prefStore = PreferenceSingleton.instance;
+    prefStore.addTimePreference(aTimePrefName, timePrefVal);
+  },
 
   /**
    * Add an alias UI element for a given group name and alias.
@@ -110,35 +112,35 @@ UIManager.prototype = {
    *        an alias was created.
    * @param aGroupAlias The name of the alias to use for this group.
    */
-  // addAliasUIFor: function(aGroupName, aGroupAlias) {
-  //   var that = this;
-  //   $.get('html/alias-preference.partial.html', function(data) {
-  //     var dataElement = $(data);
-  //     dataElement.find('.originalName')
-  //                .data('actualname', aGroupName)
-  //                .attr('value', aGroupName);
-  //     dataElement.find('.aliasRemoveButton')
-  //                .data('actualname', aGroupName);
-  //
-  //     // If the group name is the same as the alias name, just assume we don't
-  //     // have an alias set.
-  //     if (aGroupAlias != aGroupName) {
-  //       dataElement.find('.aliasName').attr('value', aGroupAlias);
-  //     }
-  //
-  //     $('#aliasInputs').append(dataElement);
-  //     that._setAliasPreferenceOnClickHandlers();
-  //   });
-  // },
+  addAliasUIFor: function(aGroupName, aGroupAlias) {
+    var that = this;
+    $.get('partials/alias-preference.partial.html', function(data) {
+      var dataElement = $(data);
+      dataElement.find('.originalName')
+                 .data('actualname', aGroupName)
+                 .attr('value', aGroupName);
+      dataElement.find('.aliasRemoveButton')
+                 .data('actualname', aGroupName);
 
-  // showSnackbar: function(aMessage) {
-  //   $('#snackbar-message').text(aMessage);
-  //   $('dialog.snackbar').show();
-  //
-  //   setTimeout(function() {
-  //     $('dialog.snackbar').hide();
-  //   }, 4000);
-  // },
+      // If the group name is the same as the alias name, just assume we don't
+      // have an alias set.
+      if (aGroupAlias != aGroupName) {
+        dataElement.find('.aliasName').attr('value', aGroupAlias);
+      }
+
+      $('#aliasInputs').append(dataElement);
+      that._setAliasPreferenceOnClickHandlers();
+    });
+  },
+
+  showSnackbar: function(aMessage) {
+    $('#snackbar-message').text(aMessage);
+    $('dialog.snackbar').show();
+
+    setTimeout(function() {
+      $('dialog.snackbar').hide();
+    }, 4000);
+  },
 
   /**
    * Add an alias to the preference store for a given group name and alias.
@@ -148,74 +150,74 @@ UIManager.prototype = {
    * @param aAliasName The name of the alias to use which should be stored in
    *        the preference store.
    */
-  // addAliasToPrefStore: function(aGroupName, aAliasName) {
-  //     var prefStore = PreferenceSingleton.instance;
-  //     prefStore.addGroupAlias(aGroupName, aAliasName);
-  //     // this.acknowledgePreference(aGroupName);
-  //     this.showSnackbar("Alias '" + aAliasName + "' set");
-  // },
+  addAliasToPrefStore: function(aGroupName, aAliasName) {
+      var prefStore = PreferenceSingleton.instance;
+      prefStore.addGroupAlias(aGroupName, aAliasName);
+      // this.acknowledgePreference(aGroupName);
+      this.showSnackbar("Alias '" + aAliasName + "' set");
+  },
 
-  // setLocationPreference: function(aLocationPrefKey, aLocationPrefName) {
-  //   var address = $('#locationAddressPref-' + aLocationPrefKey).val();
-  //   var subLocationName = $('#locationSubLocationPref-' + aLocationPrefKey).val();
-  //
-  //   var prefName = '';
-  //   var prefStore = PreferenceSingleton.instance;
-  //   prefStore.addLocationPreference(new Place(aLocationPrefKey, aLocationPrefName, address, subLocationName));
-  //
-  //   this.showSnackbar("Address for '" + aLocationPrefName + "' set");
-  // },
+  setLocationPreference: function(aLocationPrefKey, aLocationPrefName) {
+    var address = $('#locationAddressPref-' + aLocationPrefKey).val();
+    var subLocationName = $('#locationSubLocationPref-' + aLocationPrefKey).val();
 
-  // deleteLocationPreference: function(aLocationKey) {
-  //   var prefStore = PreferenceSingleton.instance;
-  //   prefStore.removeLocationPreference(aLocationKey);
-  // },
-  //
-  // deleteAliasPreference: function(aGroupName) {
-  //   var prefStore = PreferenceSingleton.instance;
-  //   prefStore.removeGroupAlias(aGroupName);
-  // },
+    var prefName = '';
+    var prefStore = PreferenceSingleton.instance;
+    prefStore.addLocationPreference(new Place(aLocationPrefKey, aLocationPrefName, address, subLocationName));
 
-  // addLocationPreference: function(aPlace) {
-  //   var that = this;
-  //   $.get('html/location-preference.partial.html', function(data) {
-  //     var dataElement = $(data);
-  //     var addressTextInputId = 'locationAddressPref-' + aPlace.getShortName();
-  //     var subLocationTextInputId = 'locationSubLocationPref-' + aPlace.getShortName();
-  //     var addressPlaceholderText = 'Enter address for ' + aPlace.getName();
-  //     if (aPlace.getAddress()) {
-  //       addressPlaceholderText = aPlace.getAddress();
-  //     }
-  //
-  //     var subLocationPlaceholderText = '';
-  //     if (aPlace.hasSubLocation()) {
-  //       subLocationPlaceholderText = aPlace.getSubLocationName();
-  //     }
-  //
-  //     dataElement.find('label').attr('for', addressTextInputId).text(aPlace.getName());
-  //     dataElement.find('.locationTextInput').attr('id', addressTextInputId)
-  //                .attr('placeholder', addressPlaceholderText);
-  //     dataElement.find('.locationTextInput.small').attr('id', subLocationTextInputId)
-  //                .attr('placeholder', subLocationPlaceholderText);
-  //     dataElement.find('.locationRemoveButton')
-  //                .data('locationshortname', aPlace.getShortName());
-  //     dataElement.find('.locationSetButton')
-  //                .data('locationshortname', aPlace.getShortName())
-  //                .data('locationname', aPlace.getName());
-  //
-  //     $('#locationInputs').append(dataElement);
-  //     var addressElement = document.getElementById('locationAddressPref-' + aPlace.getShortName())
-  //
-  //     // Since this method is run every time preferences are refreshed, and in
-  //     // order to generalize the loadContent() method a bit we refresh all
-  //     // preferences on every content load, this should only be called if there
-  //     // actually _is_ a location preference input element in the DOM.
-  //     if (addressElement) {
-  //       locService.enableAutoCompleteForElement(addressElement);
-  //       that._setLocationPreferenceOnClickHandlers();
-  //     }
-  //   });
-  // },
+    this.showSnackbar("Address for '" + aLocationPrefName + "' set");
+  },
+
+  deleteLocationPreference: function(aLocationKey) {
+    var prefStore = PreferenceSingleton.instance;
+    prefStore.removeLocationPreference(aLocationKey);
+  },
+
+  deleteAliasPreference: function(aGroupName) {
+    var prefStore = PreferenceSingleton.instance;
+    prefStore.removeGroupAlias(aGroupName);
+  },
+
+  addLocationPreference: function(aPlace) {
+    var that = this;
+    $.get('partials/location-preference.partial.html', function(data) {
+      var dataElement = $(data);
+      var addressTextInputId = 'locationAddressPref-' + aPlace.getShortName();
+      var subLocationTextInputId = 'locationSubLocationPref-' + aPlace.getShortName();
+      var addressPlaceholderText = 'Enter address for ' + aPlace.getName();
+      if (aPlace.getAddress()) {
+        addressPlaceholderText = aPlace.getAddress();
+      }
+
+      var subLocationPlaceholderText = '';
+      if (aPlace.hasSubLocation()) {
+        subLocationPlaceholderText = aPlace.getSubLocationName();
+      }
+
+      dataElement.find('label').attr('for', addressTextInputId).text(aPlace.getName());
+      dataElement.find('.locationTextInput').attr('id', addressTextInputId)
+                 .attr('placeholder', addressPlaceholderText);
+      dataElement.find('.locationTextInput.small').attr('id', subLocationTextInputId)
+                 .attr('placeholder', subLocationPlaceholderText);
+      dataElement.find('.locationRemoveButton')
+                 .data('locationshortname', aPlace.getShortName());
+      dataElement.find('.locationSetButton')
+                 .data('locationshortname', aPlace.getShortName())
+                 .data('locationname', aPlace.getName());
+
+      $('#locationInputs').append(dataElement);
+      var addressElement = document.getElementById('locationAddressPref-' + aPlace.getShortName())
+
+      // Since this method is run every time preferences are refreshed, and in
+      // order to generalize the loadContent() method a bit we refresh all
+      // preferences on every content load, this should only be called if there
+      // actually _is_ a location preference input element in the DOM.
+      if (addressElement) {
+        // locService.enableAutoCompleteForElement(addressElement);
+        that._setLocationPreferenceOnClickHandlers();
+      }
+    });
+  },
 
   // logout: function() {
   //   var prefStore = PreferenceSingleton.instance;
@@ -227,135 +229,135 @@ UIManager.prototype = {
    * Set all onClick() handlers for preference UI elements.
    */
   _setPreferenceOnClickHandlers: function() {
-    // this._setTimePreferenceOnClickHandlers();
-    // this._setAliasPreferenceOnClickHandlers();
-    // this._setLocationPreferenceOnClickHandlers();
+    this._setTimePreferenceOnClickHandlers();
+    this._setAliasPreferenceOnClickHandlers();
+    this._setLocationPreferenceOnClickHandlers();
   },
 
   /**
    * Set the onClick() handlers for time preferences.
    */
-  // _setTimePreferenceOnClickHandlers: function() {
-  //   var that = this;
-  //   $('#setPriorToStart').click(function() {
-  //     var minutes = $('#timePref-priorToStart').val();
-  //     that.setTimePreferenceFromUI('priorToStart');
-  //     that.showSnackbar('Calendar events will start ' + minutes + ' minutes prior to the game start');
-  //   });
-  //
-  //   $('#setGameLength').click(function() {
-  //     var length = $('#timePref-gameLength').val();
-  //     that.setTimePreferenceFromUI('gameLength');
-  //     that.showSnackbar('Calendar events will be set to ' + length + ' minutes in length');
-  //   });
-  //
-  //   $('#setConsecutiveGames').click(function() {
-  //     var consecutiveThresh = $('#timePref-consecutiveGames').val();
-  //     that.setTimePreferenceFromUI('consecutiveGames');
-  //     that.showSnackbar("Any games within " + consecutiveThresh + " hours of each other at the same location will be considered consecutive");
-  //   });
-  // },
+  _setTimePreferenceOnClickHandlers: function() {
+    var that = this;
+    $('#setPriorToStart').click(function() {
+      var minutes = $('#timePref-priorToStart').val();
+      that.setTimePreferenceFromUI('priorToStart');
+      that.showSnackbar('Calendar events will start ' + minutes + ' minutes prior to the game start');
+    });
+
+    $('#setGameLength').click(function() {
+      var length = $('#timePref-gameLength').val();
+      that.setTimePreferenceFromUI('gameLength');
+      that.showSnackbar('Calendar events will be set to ' + length + ' minutes in length');
+    });
+
+    $('#setConsecutiveGames').click(function() {
+      var consecutiveThresh = $('#timePref-consecutiveGames').val();
+      that.setTimePreferenceFromUI('consecutiveGames');
+      that.showSnackbar("Any games within " + consecutiveThresh + " hours of each other at the same location will be considered consecutive");
+    });
+  },
 
   /**
    * Set the onClick() handlers for alias/group preferences.
    */
-  // _setAliasPreferenceOnClickHandlers: function() {
-  //   var that = this;
-  //   var prefStore = PreferenceSingleton.instance;
-  //
-  //   $('button.setAlias').each(function() {
-  //     $(this).off('click');
-  //     $(this).click(function() {
-  //       var actualName = $(this).parent().find('.originalName').data('actualname');
-  //       var aliasName = $(this).parent().find('.aliasName').val();
-  //       that.addAliasToPrefStore(actualName, aliasName);
-  //     });
-  //   });
-  //
-  //   $('.aliasRemoveButton').each(function() {
-  //     $(this).off('click');
-  //     $(this).click(function() {
-  //       that.deleteAliasPreference($(this).data('actualname'));
-  //       $(this).parent().fadeOut(300, function () {
-  //         $(this).remove();
-  //       });
-  //     });
-  //   });
-  //
-  //   $('#aliasAddButton').off('click');
-  //   $('#aliasAddButton').click(function() {
-  //     var actualName = $('#aliasAddName').text();
-  //     var aliasName = $('#aliasAddAlias').text();
-  //
-  //     that.addAliasToPrefStore(actualName, aliasName);
-  //
-  //     $('#aliasAddName').text('');
-  //     $('#aliasAddAlias').text('');
-  //
-  //     that.refreshAliasPreferences();
-  //   });
-  // },
+  _setAliasPreferenceOnClickHandlers: function() {
+    var that = this;
+    var prefStore = PreferenceSingleton.instance;
 
-  // _setLocationPreferenceOnClickHandlers: function() {
-  //   var that = this;
-  //   $('.locationSetButton').each(function() {
-  //     $(this).click(function() {
-  //       that.setLocationPreference($(this).data('locationshortname'), $(this).data('locationname'));
-  //     });
-  //   });
-  //
-  //   $('.locationRemoveButton').each(function() {
-  //     $(this).click(function() {
-  //       that.deleteLocationPreference($(this).data('locationshortname'));
-  //       $(this).parent().fadeOut(300, function () {
-  //         $(this).remove();
-  //       });
-  //     });
-  //   });
-  // },
+    $('button.setAlias').each(function() {
+      $(this).off('click');
+      $(this).click(function() {
+        var actualName = $(this).parent().find('.originalName').data('actualname');
+        var aliasName = $(this).parent().find('.aliasName').val();
+        that.addAliasToPrefStore(actualName, aliasName);
+      });
+    });
+
+    $('.aliasRemoveButton').each(function() {
+      $(this).off('click');
+      $(this).click(function() {
+        that.deleteAliasPreference($(this).data('actualname'));
+        $(this).parent().fadeOut(300, function () {
+          $(this).remove();
+        });
+      });
+    });
+
+    $('#aliasAddButton').off('click');
+    $('#aliasAddButton').click(function() {
+      var actualName = $('#aliasAddName').text();
+      var aliasName = $('#aliasAddAlias').text();
+
+      that.addAliasToPrefStore(actualName, aliasName);
+
+      $('#aliasAddName').text('');
+      $('#aliasAddAlias').text('');
+
+      that.refreshAliasPreferences();
+    });
+  },
+
+  _setLocationPreferenceOnClickHandlers: function() {
+    var that = this;
+    $('.locationSetButton').each(function() {
+      $(this).click(function() {
+        that.setLocationPreference($(this).data('locationshortname'), $(this).data('locationname'));
+      });
+    });
+
+    $('.locationRemoveButton').each(function() {
+      $(this).click(function() {
+        that.deleteLocationPreference($(this).data('locationshortname'));
+        $(this).parent().fadeOut(300, function () {
+          $(this).remove();
+        });
+      });
+    });
+  },
 
 /**
  * Enable the scroll listener so we can determine whether to show the box
  * shadow beneath the app bar. If the view is scrolled, the app bar will have
  * a shadow underneath it. Otherwise, the app bar will have no shadow.
  */
-  // _setHeaderScrollListener: function() {
-  //   $(window).scroll(function() {
-  //     if ($(this).scrollTop() == 0) {
-  //         $('header').css({'box-shadow': 'none'});
-  //     } else {
-  //       $('header').css({
-  //         'box-shadow': '0px 2px 10px rgba(0, 0, 0, 0.2)'
-  //       });
-  //     }
-  //   });
-  // },
+  _setHeaderScrollListener: function() {
+    $(window).scroll(function() {
+      if ($(this).scrollTop() == 0) {
+          $('header').css({'box-shadow': 'none'});
+      } else {
+        $('header').css({
+          'box-shadow': '0px 2px 10px rgba(0, 0, 0, 0.2)'
+        });
+      }
+    });
+  },
 
   /**
    * Set the onClick() handler for the main "arbitrate" button.
    */
-  // _setArbitrateOnClickHandler: function() {
-  //   var that = this;
-  //   $('#arbitrate-button').click(function () {
-  //     that.onArbitrate();
-  //   });
-  // },
+  _setArbitrateOnClickHandler: function() {
+    var that = this;
+    $('#arbitrate-button').click(function () {
+      that.onArbitrate();
+    });
+  },
 
   /**
    * Set the onClick() handler for the logout link.
    */
-  //  _setLogoutOnClickHandler: function() {
-  //    $('#logoutLink').click(function() {
-  //      this.logout();
-  //    });
-  //  },
+   _setLogoutOnClickHandler: function() {
+     $('#logoutLink').click(function() {
+       this.logout();
+     });
+   },
 
-  //  _setDismissSnackBarOnClickHandler: function() {
-  //    $('#dismissSnackbar').click(function(){
-  //      $('#snackbar-message').text('');
-  //      $('.snackbar').hide();
-  //    });
-  //  },
+   _setDismissSnackBarOnClickHandler: function() {
+     $('#dismissSnackbar').click(function(){
+       $('#snackbar-message').text('');
+       $('.snackbar').hide();
+     });
+   },
 
   /**
    * Set the onClick() handler for the navigation drawer button (i.e. the
@@ -408,7 +410,7 @@ UIManager.prototype = {
    * optional onComplete() handler when finished.
    *
    * @param aContentFileId The id of the content file to load. This must
-   *        correspond to a file in the html/ subdirectory called
+   *        correspond to a file in the partials/ subdirectory called
    *        <aContentFileId>.partial.html.
    * @param aTitle The title of the page to load. Will be presented in the app
    *        bar.
@@ -567,7 +569,7 @@ UIManager.prototype = {
    *   'name': <string
    * }
    * where 'id' is a string indicating the id of the content to show, which must
-   * be unique and be the prefix of one of the .partial.html files in the html/
+   * be unique and be the prefix of one of the .partial.html files in the partials/
    * subdirectory, and 'name' is the human-readable title of the content.
    *
    * @param aBackStackEntry The back stack entry to add to the back stack.
@@ -585,7 +587,7 @@ UIManager.prototype = {
    *   'name': <string
    * }
    * where 'id' is a string indicating the id of the content to show, which must
-   * be unique and be the prefix of one of the .partial.html files in the html/
+   * be unique and be the prefix of one of the .partial.html files in the partials/
    * subdirectory, and 'name' is the human-readable title of the content.
    *
    * @return The back stack entry in the back stack that was last added.

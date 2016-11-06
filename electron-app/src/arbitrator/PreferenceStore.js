@@ -51,8 +51,10 @@ PreferenceStore.prototype = {
    */
   addGroupAlias: function(aGroupId, aGroupAlias) {
     if (!this.groupAliases) {
-      this.groupAliases = new Object();
+      this.groupAliases = {};
     }
+
+    this._verifyExtensibility("groupAliases");
 
     this.groupAliases[aGroupId] = aGroupAlias;
     this._putPreferences();
@@ -67,7 +69,7 @@ PreferenceStore.prototype = {
    */
   addTimePreference: function(aType, aTimePeriod) {
     if (!this.time) {
-      this.time = new Object();
+      this.time = {};
     }
 
     if (aTimePeriod < 0) {
@@ -75,30 +77,42 @@ PreferenceStore.prototype = {
       aTimePeriod = 0;
     }
 
+    var priorStart = this.time[TimeType.PRIOR_TO_START];
+    var gameLength = this.time[TimeType.LENGTH_OF_GAME];
+    var consecThreshold = this.time[TimeType.CONSECUTIVE_GAME_THRESHOLD];
+
     switch(aType) {
       case TimeType.PRIOR_TO_START:
-        this.time[TimeType.PRIOR_TO_START] = aTimePeriod;
+        priorStart = aTimePeriod;
         break;
 
       case TimeType.LENGTH_OF_GAME:
-        this.time[TimeType.LENGTH_OF_GAME] = aTimePeriod;
+        gameLength = aTimePeriod;
         break;
 
       case TimeType.CONSECUTIVE_GAME_THRESHOLD:
-        this.time[TimeType.CONSECUTIVE_GAME_THRESHOLD] = aTimePeriod;
+        consecThreshold = aTimePeriod;
         break;
 
       default:
         throw "Unable to determine type for '" + aType + "'";
     }
 
+    this.time = {
+      [TimeType.PRIOR_TO_START]: priorStart,
+      [TimeType.LENGTH_OF_GAME]: gameLength,
+      [TimeType.CONSECUTIVE_GAME_THRESHOLD]: consecThreshold
+    };
+
     this._putPreferences();
   },
 
   addLocationPreference: function(aPlace) {
     if (!this.locations) {
-      this.locations = new Object();
+      this.locations = {};
     }
+
+    this._verifyExtensibility("locations");
 
     this.locations[aPlace.getShortName()] = aPlace;
 
@@ -250,6 +264,8 @@ PreferenceStore.prototype = {
   },
 
   removeLocationPreference: function(aLocationKey) {
+    this._verifyExtensibility("locations");
+
     if (this.locations) {
       delete this.locations[aLocationKey];
     }
@@ -264,6 +280,8 @@ PreferenceStore.prototype = {
    *         removed.
    */
   removeGroupAlias: function(aGroupId) {
+    this._verifyExtensibility("groupAliases");
+    
     if (this.groupAliases) {
       delete this.groupAliases[aGroupId];
     }
@@ -308,7 +326,6 @@ PreferenceStore.prototype = {
    */
   _putPreferences: function() {
     if (this.shouldStore) {
-      console.log("Storing prefs...");
       var storedPrefs = jetpack.cwd(this._getUserHome())
                                .dir(".arbitrator")
                                .write("userConfig.json", this);
@@ -333,6 +350,20 @@ PreferenceStore.prototype = {
 
   _getUserHome: function() {
     return process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
+  },
+
+  _verifyExtensibility: function(aProperty) {
+    if (!Object.isExtensible(this[aProperty])) {
+      // Make a copy of the object, because somewhere along the line, it became
+      // non-extensible. :(
+      var newObj = {};
+      for (var x in this[aProperty]) {
+        newObj[x] = this[aProperty][x];
+      }
+
+      this[aProperty] = newObj;
+    }
+
   }
 };
 
