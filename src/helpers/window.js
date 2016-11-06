@@ -12,7 +12,8 @@ export default function (name, options) {
     var stateStoreFile = 'window-state-' + name +'.json';
     var defaultSize = {
         width: options.width,
-        height: options.height
+        height: options.height,
+        icon: 'resources/icons/512x512.png'
     };
     var state = {};
     var win;
