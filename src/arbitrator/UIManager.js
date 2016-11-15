@@ -256,10 +256,15 @@ UIManager.prototype = {
    */
   _setPreferenceOnClickHandlers: function() {
     this._setTimePreferenceOnClickHandlers();
+    this._setArbiterConnectionPreferenceOnClickHandlers();
     this._setAliasPreferenceOnClickHandlers();
     this._setLocationPreferenceOnClickHandlers();
   },
 
+  _setArbiterConnectionPreferenceOnClickHandlers: function() {
+
+  },
+  
   /**
    * Set the onClick() handlers for time preferences.
    */
