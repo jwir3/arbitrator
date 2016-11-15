@@ -11,6 +11,5 @@ export var ArbitratorConfig = {
   // NOTE: These values should all be injected, based on the appropriate
   //       environment, during the build.
   'google_client_id': secret.googleClientId,
-  'google_client_secret': secret.googleClientSecret,
-  'version_number': "2.0.0"
+  'google_client_secret': secret.googleClientSecret
 };

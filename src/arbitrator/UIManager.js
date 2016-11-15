@@ -13,6 +13,7 @@ export var UIManager = function() {
 UIManager.prototype = {
   mGoogleClient: null,
   mBackStack: new Array(),
+  mVersion: '0.0.0',
 
   /**
    * Perform functionality when the user clicks the 'Submit' button to indicate
@@ -23,8 +24,15 @@ UIManager.prototype = {
     var arb = new Arbitrator(scheduleText);
     var calSelectionElement = document.getElementById('calendarList');
     var selectedId = calSelectionElement[calSelectionElement.selectedIndex].id;
-    console.log("Arbitrating: " + scheduleText);
     arb.adjustGamesOrSubmitToCalendar(selectedId);
+  },
+
+  setVersion: function(aVersion) {
+    this.mVersion = aVersion;
+  },
+
+  getVersion: function() {
+    return this.mVersion
   },
 
   setUIListeners: function() {
@@ -447,7 +455,7 @@ UIManager.prototype = {
                              $('#pageTitle').text(aTitle);
 
                              // Add the version number to the app bar
-                             $('#versionNumber').text('v' + ArbitratorConfig.version_number);
+                             $('#versionNumber').text('v' + that.getVersion());
 
                              if (aOnComplete) {
                                aOnComplete();

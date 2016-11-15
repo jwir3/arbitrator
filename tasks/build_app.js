@@ -9,10 +9,12 @@ var bundle = require('./bundle');
 var utils = require('./utils');
 var fileinclude = require('gulp-file-include');
 var sass = require('gulp-ruby-sass');
+var replace = require('gulp-replace');
 
 var projectDir = jetpack;
 var srcDir = jetpack.cwd('./src');
 var destDir = jetpack.cwd('./app');
+var buildDir = jetpack.cwd('./build/script')
 
 gulp.task('fileinclude', function() {
   gulp.src([srcDir.path('app.html')])
