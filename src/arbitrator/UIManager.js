@@ -6,6 +6,8 @@ import { ArbitratorConfig } from './ArbitratorConfig'
 import { StringUtils } from './StringUtils'
 import { PreferenceSingleton, TimeType } from './PreferenceStore'
 import { Arbitrator } from './Arbitrator'
+import { Strings } from './Strings'
+import util from 'util'
 
 export var UIManager = function() {
 }
@@ -173,7 +175,9 @@ UIManager.prototype = {
     var prefStore = PreferenceSingleton.instance;
     prefStore.addLocationPreference(new Place(aLocationPrefKey, aLocationPrefName, address, subLocationName));
 
-    this.showSnackbar("Address for '" + aLocationPrefName + "' set");
+    var addressConfirmed = util.format(Strings.address_for_set,
+                                       aLocationPrefName);
+    this.showSnackbar(addressConfirmed);
   },
 
   deleteLocationPreference: function(aLocationKey) {
@@ -192,7 +196,9 @@ UIManager.prototype = {
       var dataElement = $(data);
       var addressTextInputId = 'locationAddressPref-' + aPlace.getShortName();
       var subLocationTextInputId = 'locationSubLocationPref-' + aPlace.getShortName();
-      var addressPlaceholderText = 'Enter address for ' + aPlace.getName();
+
+      var addressPlaceholderText = util.format(Strings.enter_address_for,
+                                               aPlace.getName());
       if (aPlace.getAddress()) {
         addressPlaceholderText = aPlace.getAddress();
       }
@@ -250,19 +256,25 @@ UIManager.prototype = {
     $('#setPriorToStart').click(function() {
       var minutes = $('#timePref-priorToStart').val();
       that.setTimePreferenceFromUI('priorToStart');
-      that.showSnackbar('Calendar events will start ' + minutes + ' minutes prior to the game start');
+      var priorToStartAcknowledge = util.format(Strings.calendar_events_will_start,
+                                                minutes);
+      that.showSnackbar(priorToStartAcknowledge);
     });
 
     $('#setGameLength').click(function() {
       var length = $('#timePref-gameLength').val();
       that.setTimePreferenceFromUI('gameLength');
-      that.showSnackbar('Calendar events will be set to ' + length + ' minutes in length');
+      var gameLengthAcknowledge = util.format(Strings.calendar_events_length,
+                                              length);
+      that.showSnackbar(gameLengthAcknowledge);
     });
 
     $('#setConsecutiveGames').click(function() {
       var consecutiveThresh = $('#timePref-consecutiveGames').val();
       that.setTimePreferenceFromUI('consecutiveGames');
-      that.showSnackbar("Any games within " + consecutiveThresh + " hours of each other at the same location will be considered consecutive");
+      var consecutiveAcknowledge = util.format(Strings.consecutive_games_acknowledgement,
+                                               consecutiveThresh);
+      that.showSnackbar(consecutiveAcknowledge);
     });
   },
 
@@ -431,13 +443,6 @@ UIManager.prototype = {
     // Set the text of the nav drawer header
     that.closeNavDrawer();
 
-    if (aContentFileName == 'main') {
-      that.refreshGoogleClient(function(aGoogleClient) {
-        that.populateCalendarList(aGoogleClient);
-        that.populateUserId(aGoogleClient);
-      });
-    }
-
     $('main#content').load('partials/' + aContentFileName + '.partial.html', null,
                            function() {
                              that._addToBackStack({
@@ -456,6 +461,13 @@ UIManager.prototype = {
 
                              // Add the version number to the app bar
                              $('#versionNumber').text('v' + that.getVersion());
+
+                             if (aContentFileName == 'main') {
+                               that.refreshGoogleClient(function(aGoogleClient) {
+                                 that.populateCalendarList(aGoogleClient);
+                                 that.populateUserId(aGoogleClient);
+                               });
+                             }
 
                              if (aOnComplete) {
                                aOnComplete();
@@ -492,6 +504,10 @@ UIManager.prototype = {
    *                                    api calls should be run with.
    */
   populateCalendarList: function(aGoogleClient) {
+    var calendarSelector = $('#calendarList');
+    var noCalendarSelectedOption = $('<option id="noCalendarSelectedOption">' + Strings.select_calendar + '</option>');
+    calendarSelector.append(noCalendarSelectedOption);
+
     aGoogleClient.getCalendarList()
       .then((items) => {
         var selectEle = $('#calendarList');

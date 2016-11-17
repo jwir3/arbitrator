@@ -1,0 +1,15 @@
+{
+  "games_added_message": "Game(s) added to calendar",
+  "referee": "Referee",
+  "linesman": "Linesman",
+  "officiate": "Officiate",
+  "scrimmage": "Scrimmage",
+  "tournament": "Tournament",
+  "rink": "Rink",
+  "select_calendar": "Select Calendar",
+  "address_for_set": "Address for %s set",
+  "enter_address_for": "Enter address for %s",
+  "calendar_events_will_start": "Calendar events will start %d minutes prior to the game start",
+  "calendar_events_length": "Calendar events will be set to %d minutes in length",
+  "consecutive_games_acknowledgement": "Any games within %d hours of each other at the same location will be considered consecutive"
+}

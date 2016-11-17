@@ -2,6 +2,7 @@ import * as CryptoJS from 'crypto-js'
 import { Place } from './Place'
 import { PreferenceSingleton, TimeType } from './PreferenceStore'
 import * as moment from 'moment';
+import { Strings } from './Strings'
 
 var gameLevels = {
   'Mite'            : 'Mite',
@@ -259,15 +260,15 @@ Game.prototype = {
 
     var role = this.getRole();
     if (role == Role.REFEREE) {
-      summaryString = summaryString + "Referee ";
+      summaryString = summaryString + Strings.referee + " ";
     } else if (role == Role.LINESMAN) {
-      summaryString = summaryString + "Linesman ";
+      summaryString = summaryString + Strings.linesman + " ";
     } else {
-      summaryString = summaryString + "Officiate ";
+      summaryString = summaryString + Strings.officiate + " ";
     }
 
    if (this.isScrimmage()) {
-      summaryString = summaryString + "Scrimmage ";
+      summaryString = summaryString + Strings.scrimmage + " ";
    }
 
    if (this.areTeamsValid()) {
@@ -276,7 +277,7 @@ Game.prototype = {
 
    var level = this.getLevel();
    if (level != 'UNKNOWN') {
-     summaryString = summaryString + "(" + level + (this.isTournament() ? " Tournament" : "") + ")";
+     summaryString = summaryString + "(" + level + (this.isTournament() ? " " + Strings.tournament : "") + ")";
    }
 
    return summaryString.trim();
@@ -288,7 +289,7 @@ Game.prototype = {
 
   getEventJSON: function() {
     var siteData = this.getSite().getAddress() ? this.getSite().getAddress() : this.getSite().getName();
-    var subLocationString = this.getSite().hasSubLocation() ? "\n\nRink " + this.getSite().getSubLocationName() : "";
+    var subLocationString = this.getSite().hasSubLocation() ? "\n\n" + Strings.rink + " " + this.getSite().getSubLocationName() : "";
     return  {
       "end": {
         "dateTime": this.getISOEndDate()

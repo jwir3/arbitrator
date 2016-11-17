@@ -2,6 +2,7 @@ import { Game } from './Game.js';
 import { UIManager } from './UIManager';
 import { PreferenceSingleton, TimeType } from './PreferenceStore';
 import { ArbitratorGoogleClient } from './ArbitratorGoogleClient';
+import { Strings } from './Strings'
 
 /**
  * An object for combining two callbacks for what to do when searching for Google
@@ -146,7 +147,7 @@ Arbitrator.prototype = {
           .then(() => {
             gamesProcessed++;
             if (gamesProcessed == numGames) {
-              self.mUiManager.showSnackbar('Game(s) added to calendar');
+              self.mUiManager.showSnackbar(Strings.games_added_message);
             }
           });
       },
@@ -166,7 +167,7 @@ Arbitrator.prototype = {
                 .then(() => {
                   gamesProcessed++;
                   if (gamesProcessed == numGames) {
-                    self.mUiManager.showSnackbar('Game(s) added to calendar');
+                    self.mUiManager.showSnackbar(Strings.games_added_message);
                   }
               });
             // } else {

@@ -122,7 +122,6 @@ ArbitratorGoogleClient.prototype = {
    * @param aGame The game data structure that has the new data.
    */
   adjustGameInCalendar: function(aCalendarId, aEvent, aGame) {
-    console.log("Adjusting game in calendar...");
     var that = this;
     return new Promise((resolve, reject) => {
       that.getToken(() => {
@@ -192,14 +191,11 @@ ArbitratorGoogleClient.prototype = {
     return new Promise((resolve, reject) => {
       var that = this;
       that.getClient().then((oAuthClient) => {
-        console.log("CLIENT:");
-        console.log(oAuthClient);
         var cal = google.calendar({
           version: 'v3',
           auth: oAuthClient
         });
 
-        console.log("Searching for game with hash: " + aGame.getHash());
         var searchString = "{ArbitratorHash: " + aGame.getHash() + "}";
         var req = cal.events.list({
           'calendarId' : aCalendarId
