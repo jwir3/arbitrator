@@ -14,11 +14,5 @@ export var devMenuTemplate = {
         click: function () {
             BrowserWindow.getFocusedWindow().toggleDevTools();
         }
-    },{
-        label: 'Quit',
-        accelerator: 'CmdOrCtrl+Q',
-        click: function () {
-            app.quit();
-        }
     }]
 };
