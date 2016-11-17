@@ -4,6 +4,7 @@
 // window from here.
 
 import { app, Menu, ipcMain} from 'electron';
+import { fileMenuTemplate } from './menu/file_menu_template'
 import { devMenuTemplate } from './menu/dev_menu_template';
 import { editMenuTemplate } from './menu/edit_menu_template';
 import createWindow from './helpers/window';
@@ -18,6 +19,12 @@ var mainWindow;
 
 var setApplicationMenu = function () {
     var menus = [editMenuTemplate];
+    if (process.platform == 'darwin') {
+      menus.unshift(fileMenuTemplate);
+    } else {
+      menus = [fileMenuTemplate, editMenuTemplate];
+    }
+
     if (env.name !== 'production') {
         menus.push(devMenuTemplate);
     }
