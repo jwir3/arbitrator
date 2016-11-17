@@ -45,6 +45,11 @@ gulp.task('environment', function () {
     projectDir.copy(configFile, destDir.path('env.json'), { overwrite: true });
 });
 
+gulp.task('strings', function() {
+  var stringFile = 'config/strings.json';
+  projectDir.copy(stringFile, destDir.path('strings.json'), { overwrite: true });
+});
+
 gulp.task('watch', function () {
     var beepOnError = function (done) {
         return function (err) {
@@ -66,4 +71,4 @@ gulp.task('watch', function () {
     }));
 });
 
-gulp.task('build', ['fileinclude', 'bundle', 'sass', 'environment']);
+gulp.task('build', ['fileinclude', 'bundle', 'sass', 'environment', 'strings']);
