@@ -11,7 +11,7 @@ var singleGame = jetpack.read('src/test/fixtures/singleGame.txt');
 var basicSchedule = jetpack.read('src/test/fixtures/basicSchedule.txt');
 var complexSchedule = jetpack.read('src/test/fixtures/complexSchedule.txt');
 
-describe("Arbitrator", function () {
+describe("Arbitrator Translation Functionality", function () {
   it ("parses a basic string with two games", function() {
     var arbitrator = new Arbitrator(basicSchedule);
 
