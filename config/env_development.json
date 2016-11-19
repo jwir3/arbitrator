@@ -1,4 +1,6 @@
 {
   "name": "development",
-  "description": "Add here any environment specific stuff you like."
+  "google_client_id": "609265890429-0evcp2uqktl726lf6ijfu56fpkh8c7cv.apps.googleusercontent.com",
+  "google_api_key": "AIzaSyDkiyjtUnxlzQUyxnu0WqUtkhyV8Q2KyA0",
+  "google_client_secret": "m-hzuH_h2O81XJkd2xNYY6QU"
 }

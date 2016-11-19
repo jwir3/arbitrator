@@ -1,66 +1,73 @@
-module.exports = LocationService;
+import { Client } from 'node-rest-client'
+import { ArbitratorConfig } from './ArbitratorConfig'
 
-var GoogleMapsLoader = require('google-maps');
-var ArbitratorConfig = require('./config');
-
-function LocationService() {
-  this.mCurrentLatitude = 0.0;
-  this.mCurrentLongitude = 0.0;
-  this._retrieveStartingPosition();
+export var LocationService = function () {
 }
 
 LocationService.prototype = {
+  mCurrentLatitude: 0.0,
+  mCurrentLongitude: 0.0,
+  mGoogleMapsClient: require('@google/maps').createClient({
+    key: ArbitratorConfig.google_api_key
+  }),
+  mDistanceCircle: null,
+
   /**
-   * Retrieve the user's current location and store for future use.
+   * A replacement for navigator.geolocation.getCurrentPosition().
+   *
+   * It's still unclear why navigator.geolocation.getCurrentPosition doesn't
+   * work within electron, but it's possible that it has something to do with:
+   * https://github.com/electron/electron/issues/1376
    */
-  _retrieveStartingPosition: function() {
-    var self = this;
-    var options = {
-      enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0
-    }
-
-    navigator.geolocation.getCurrentPosition(function(aPosition) {
-      // Success
-      this.mCurrentLatitude = aPosition.coords.latitude;
-      this.mCurrentLongitude = aPosition.coords.longitude;
-      GoogleMapsLoader.load(function(google) {
-        var geolocation = new google.maps.LatLng(this.mCurrentLatitude,
-                                                 this.mCurrentLongitude);
-        var distanceCircle = new google.maps.Circle({
-          center: geolocation,
-          radius: aPosition.coords.accuracy
-        });
-
-        self.autocomplete.setBounds(distanceCircle.getBounds());
+  _getCurrentPosition: function(callback) {
+    var client = new Client();
+      client.get('https://maps.googleapis.com/maps/api/browserlocation/json?browser=chromium&sensor=true', function(data) {
+          if (data.location) {
+            var position = {
+                coords : {
+                    latitude : data.location.lat,
+                    longitude : data.location.lng
+                }
+            };
+            callback(position);
+          }
       });
-    }, function(aError) {
-      // Error
-      console.warn("An error occurred while trying to find your current position. You may need to allow Arbitrator to find your location. As a result, location queries will likely be much less accurate.");
-    }, options);
   },
 
   /**
-   * Enable auto-completion of Google location search for a specific DOM element.
+   * Use the Google Maps API to retrieve Google place predictions for a given
+   * string query.
    *
-   * @param aDomElement An element retrieved using document.getElementById()
-   *        which will be used to auto-complete location searches.
+   * @param query [string] The search term for the prediction query
+   * @param callback [function(Array)] The function to call when results are
+   *        available. These results are sent as an array to the callback.
    */
-  enableAutoCompleteForElement: function(aDomElement) {
+  getPredictionsForQuery: function(query, callback) {
     var self = this;
+    self._getCurrentPosition(function(aPosition) {
+      // Success
+      self.mCurrentLatitude = aPosition.coords.latitude;
+      self.mCurrentLongitude = aPosition.coords.longitude;
+      self.mGoogleMapsClient.placesQueryAutoComplete({
+        input: query,
+        language: 'en',
+        location: [self.mCurrentLatitude, self.mCurrentLongitude],
+        radius: 5000
+      }, function (error, response) {
+        var results = [];
+        var predictions = response.json.predictions;
+        for (var i = 0; i < predictions.length; i++) {
+          var nextPrediction = predictions[i];
+          if (nextPrediction.types) {
+            // We only want establishments and geocode types of places.
+            if (nextPrediction.types.includes('establishment')
+                || nextPrediction.types.includes('geocode')) {
+                results.push(nextPrediction.description);
+            }
+          }
+        }
 
-    // The geocode type restricts the search to geographical location types.
-    GoogleMapsLoader.KEY = ArbitratorConfig.google_api_key;
-    GoogleMapsLoader.LIBRARIES = ['places'];
-    GoogleMapsLoader.SENSOR = false;
-
-    GoogleMapsLoader.load(function(google) {
-      self.autocomplete = new google.maps.places.Autocomplete(aDomElement,
-                                                              { types: ['geocode', 'establishment'] });
-      google.maps.event.addListener(self.autocomplete, 'place_changed', function() {
-        // When the user selects an address from the dropdown, this will fire.
-        var place = self.autocomplete.getPlace();
+        callback(results);
       });
     });
   }
