@@ -8,6 +8,7 @@ import { PreferenceSingleton, TimeType } from './PreferenceStore'
 import { Arbitrator } from './Arbitrator'
 import { Strings } from './Strings'
 import util from 'util'
+import { LocationService } from './LocationService'
 
 export var UIManager = function() {
 }
@@ -16,6 +17,7 @@ UIManager.prototype = {
   mGoogleClient: null,
   mBackStack: new Array(),
   mVersion: '0.0.0',
+  mLocationService: new LocationService(),
 
   /**
    * Perform functionality when the user clicks the 'Submit' button to indicate
@@ -209,7 +211,8 @@ UIManager.prototype = {
       }
 
       dataElement.find('label').attr('for', addressTextInputId).text(aPlace.getName());
-      dataElement.find('.locationTextInput').attr('id', addressTextInputId)
+      dataElement.find('.locationTextInput')
+                 .attr('id', addressTextInputId)
                  .attr('placeholder', addressPlaceholderText);
       dataElement.find('.locationTextInput.small').attr('id', subLocationTextInputId)
                  .attr('placeholder', subLocationPlaceholderText);
@@ -222,12 +225,21 @@ UIManager.prototype = {
       $('#locationInputs').append(dataElement);
       var addressElement = document.getElementById('locationAddressPref-' + aPlace.getShortName())
 
+      var Typeahead = require('typeahead');
+
       // Since this method is run every time preferences are refreshed, and in
       // order to generalize the loadContent() method a bit we refresh all
       // preferences on every content load, this should only be called if there
       // actually _is_ a location preference input element in the DOM.
       if (addressElement) {
-        // locService.enableAutoCompleteForElement(addressElement);
+        // Enable typeahead input on the address input element.
+        var locService = new LocationService();
+        Typeahead(addressElement, {
+          source: function (query, result) {
+            locService.getPredictionsForQuery(query, result);
+          }
+        });
+
         that._setLocationPreferenceOnClickHandlers();
       }
     });

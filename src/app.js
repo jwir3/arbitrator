@@ -18,8 +18,6 @@ import jetpack from 'fs-jetpack'; // module loaded from npm
 var app = remote.app;
 var appDir = jetpack.cwd(app.getAppPath());
 
-console.log('The author of this app is:', appDir.read('package.json', 'json').author);
-
 ipcRenderer.on('ready', (event, arg) => {
   var manager = new UIManager();
   manager.setVersion(appDir.read('package.json', 'json').version);
