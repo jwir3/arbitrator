@@ -2,7 +2,7 @@ import { Game } from './Game.js';
 import { UIManager } from './UIManager';
 import { PreferenceSingleton, TimeType } from './PreferenceStore';
 import { ArbitratorGoogleClient } from './ArbitratorGoogleClient';
-import { Strings } from './Strings'
+import { Strings } from './Strings';
 
 /**
  * An object for combining two callbacks for what to do when searching for Google

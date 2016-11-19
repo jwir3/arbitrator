@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
     "electron": "^1.4.5",
     "electron-builder": "^5.12.1",
     "electron-mocha": "^3.0.0",
@@ -63,6 +64,7 @@
     "crypto-js": "^3.1.8",
     "googleapis": "^14.1.0",
     "jquery": "^3.1.1",
+    "macaddress": "^0.2.8",
     "moment": "^2.15.2",
     "node-rest-client": "^2.0.1",
     "typeahead": "^0.2.2",
