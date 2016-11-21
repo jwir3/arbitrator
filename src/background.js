@@ -53,6 +53,9 @@ app.on('ready', function () {
         client.getClient()
               .then((client) => {
                   sendMessageToRenderer(mainWindow, client)
+              })
+              .catch((error) => {
+                console.warn(error);
               });
     });
 
