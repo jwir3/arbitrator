@@ -10,10 +10,6 @@ export var QuickCrypto = function() {
 QuickCrypto.prototype = {
   mMachineKeyPromise: null, // This is a Promise to a machine key, not an actual one.
 
-  setMachineKey: function(aMachineKey) {
-    self.mMachineKeyPromise = aMachineKey;
-  },
-
   encrypt: function(aData) {
     return new Promise((resolve, reject) => {
       var self = this;

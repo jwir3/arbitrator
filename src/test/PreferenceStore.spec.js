@@ -1,7 +1,24 @@
 import { PreferenceSingleton, TimeType } from '../arbitrator/PreferenceStore';
 import { expect } from 'chai';
 
-describe("PreferenceStore", function () {
+describe("Preference Storage and Retrieval", function () {
+  it ("is able to set and retrieve a username and password for ArbiterSports", function(done) {
+    var expectedUsername = 'poohbear';
+    var expectedPassword = 'iluvhunny';
+    var prefStore = PreferenceSingleton.instance;
+    prefStore.setArbiterAuthentication(expectedUsername, expectedPassword)
+      .then(() => {
+        var arbiterInfo = prefStore.getArbiterAuthentication();
+        expect(arbiterInfo).to.not.be.null;
+        expect(arbiterInfo.arbiterUsername).to.eq(expectedUsername);
+        expect(arbiterInfo.arbiterPassword).to.eq('57a5d6b52b97055cb791757990447f0a');
+        done();
+      })
+      .catch((error) => {
+        done(error);
+      });
+  });
+
   it ("is able to retrieve an instance of the PreferenceStore", function() {
     var prefStore = PreferenceSingleton.instance;
     expect(prefStore).to.be.ok;
