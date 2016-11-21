@@ -9,6 +9,7 @@ import { Arbitrator } from './Arbitrator'
 import { Strings } from './Strings'
 import util from 'util'
 import { LocationService } from './LocationService'
+import { QuickCrypto } from './QuickCrypto'
 
 export var UIManager = function() {
 }
@@ -57,8 +58,22 @@ UIManager.prototype = {
     this.refreshTimePreferences();
     this.refreshAliasPreferences();
     this.refreshLocationPreferences();
+    this.refreshArbiterAuthenticationPreferences();
 
     this._setPreferenceOnClickHandlers();
+  },
+
+  refreshArbiterAuthenticationPreferences: function() {
+    var prefStore = PreferenceSingleton.instance;
+    var arbiterAuth = prefStore.getArbiterAuthentication();
+    if (arbiterAuth.arbiterUsername && arbiterAuth.arbiterPassword) {
+      var quickCrypto = new QuickCrypto();
+      quickCrypto.decrypt(arbiterAuth.arbiterPassword)
+        .then((decryptedPassword) => {
+          $('#arbiterUsername').val(arbiterAuth.arbiterUsername);
+          $('#arbiterPassword').val(decryptedPassword);
+        });
+    }
   },
 
   /**
@@ -112,9 +127,15 @@ UIManager.prototype = {
    */
   setTimePreferenceFromUI: function(aTimePrefName) {
     var timePrefVal = $('#timePref-' + aTimePrefName).val();
-    var prefName = '';
     var prefStore = PreferenceSingleton.instance;
     prefStore.addTimePreference(aTimePrefName, timePrefVal);
+  },
+
+  setArbiterAuthenticationFromUI: function() {
+    var arbiterUsername = $('#arbiterUsername').val();
+    var arbiterPassword = $('#arbiterPassword').val();
+    var prefStore = PreferenceSingleton.instance;
+    prefStore.setArbiterAuthentication(arbiterUsername, arbiterPassword);
   },
 
   /**
@@ -262,9 +283,12 @@ UIManager.prototype = {
   },
 
   _setArbiterConnectionPreferenceOnClickHandlers: function() {
-
+    var self = this;
+    $('#setArbiterAuth').click(function() {
+      self.setArbiterAuthenticationFromUI();
+    });
   },
-  
+
   /**
    * Set the onClick() handlers for time preferences.
    */
