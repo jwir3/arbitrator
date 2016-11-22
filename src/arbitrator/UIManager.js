@@ -10,6 +10,7 @@ import { Strings } from './Strings'
 import util from 'util'
 import { LocationService } from './LocationService'
 import { QuickCrypto } from './QuickCrypto'
+import Lockr from 'lockr';
 
 export var UIManager = function() {
 }
@@ -286,6 +287,39 @@ UIManager.prototype = {
     var self = this;
     $('#setArbiterAuth').click(function() {
       self.setArbiterAuthenticationFromUI();
+    });
+
+    $('#setupArbiterConnection').click(() => {
+      const prefStore = PreferenceSingleton.instance;
+      const { BrowserWindow } = require('electron').remote;
+
+      let win = new BrowserWindow({width: 800,
+        height: 600,
+        webPreferences: {
+          partition: 'persist:arbiterSports'
+        }
+      });
+
+      var aspAuth = Lockr.get('ASPXAUTH_ARBITER');
+      if (aspAuth) {
+        const cookie = {url: 'https://www1.arbitersports.com', name: '.ASPXAUTH', value: aspAuth}
+        win.webContents.session.cookies.set(cookie, (error) => {
+          if (error) {
+            console.warn("Could not set authentication cookie for ArbiterSports. You will need to login again.");
+          }
+        });
+      }
+
+      win.loadURL('https://www1.arbitersports.com/Official/GameScheduleEdit.aspx');
+      win.webContents.on('did-finish-load', () => {
+        win.webContents.session.cookies.get({}, (error, cookies) => {
+          for (var i = 0; i < cookies.length; i++) {
+            if (cookies[i].name == ".ASPXAUTH") {
+              Lockr.set("ASPXAUTH_ARBITER", cookies[i].value);
+            }
+          }
+        });
+      });
     });
   },
 

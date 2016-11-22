@@ -1,5 +1,4 @@
 import { remote } from 'electron';
-import jetpack from 'fs-jetpack';
 import env from '../env';
 
 export var ArbitratorConfig = {

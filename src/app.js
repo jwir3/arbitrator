@@ -12,7 +12,6 @@ import $ from 'jquery'
 import jQuery from 'jquery'
 import { ipcRenderer, remote } from 'electron'
 import { UIManager } from './arbitrator/UIManager'
-
 import jetpack from 'fs-jetpack'; // module loaded from npm
 
 var app = remote.app;
