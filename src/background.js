@@ -16,6 +16,7 @@ import { ArbitratorGoogleClient } from './arbitrator/ArbitratorGoogleClient'
 import env from './env';
 
 var mainWindow;
+var arbiterWindow;
 
 var setApplicationMenu = function () {
     var menus = [editMenuTemplate];
@@ -66,8 +67,32 @@ app.on('ready', function () {
     }
 });
 
+app.on('before-quit', function() {
+  if (arbiterWindow != null) {
+    arbiterWindow.close();
+  }
+});
+
 app.on('window-all-closed', function () {
-    app.quit();
+  app.quit();
+});
+
+ipcMain.on('arbiter-window-opened', (window) => {
+  arbiterWindow = window;
+});
+
+ipcMain.on('arbiter-window-closed', () => {
+  arbiterWindow = null;
+});
+
+ipcMain.on('arbiter-page-loaded', (event, dom) => {
+  if (arbiterWindow == null) {
+    console.warn("Unable to communicate with ArbiterSports window. Something went wrong.");
+    return;
+  }
+
+  event.sender.send('arbiter-document-received', dom);
+  // arbiterWebContents.send('arbiter-document-received', dom);
 });
 
 function sendMessageToRenderer(window, message) {

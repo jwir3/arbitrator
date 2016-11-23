@@ -126,6 +126,14 @@ section {
   }
 }
 
+button#setupArbiterConnection {
+  margin-left: 1em;
+}
+
+#connectionIndicator {
+  display: none;
+}
+
 input[type='number'] {
   display: inline-block;
   width: 5%;

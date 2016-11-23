@@ -283,6 +283,23 @@ UIManager.prototype = {
     this._setLocationPreferenceOnClickHandlers();
   },
 
+  /**
+   * Set whether the "Setup Connection" button is visible on the settings page.
+   *
+   * @param isVisible [boolean] If true, the "Setup Connection" button will be
+   *        visible, and the refreshing indicator will be hidden; if false, the
+   *        opposite will be true.
+   */
+  _setConnectionButtonVisible(isVisible) {
+    if (isVisible) {
+      $('#setupArbiterConnection').show();
+      $('#connectionIndicator').hide();
+    } else {
+      $('#setupArbiterConnection').hide();
+      $('#connectionIndicator').show();
+    }
+  },
+
   _setArbiterConnectionPreferenceOnClickHandlers: function() {
     var self = this;
     $('#setArbiterAuth').click(function() {
@@ -290,8 +307,10 @@ UIManager.prototype = {
     });
 
     $('#setupArbiterConnection').click(() => {
+      self._setConnectionButtonVisible(false);
       const prefStore = PreferenceSingleton.instance;
       const { BrowserWindow } = require('electron').remote;
+      var ipcRenderer = require('electron').ipcRenderer;
 
       let win = new BrowserWindow({width: 800,
         height: 600,
@@ -299,6 +318,8 @@ UIManager.prototype = {
           partition: 'persist:arbiterSports'
         }
       });
+
+      ipcRenderer.send('arbiter-window-opened', win);
 
       var aspAuth = Lockr.get('ASPXAUTH_ARBITER');
       if (aspAuth) {
@@ -310,16 +331,42 @@ UIManager.prototype = {
         });
       }
 
-      win.loadURL('https://www1.arbitersports.com/Official/GameScheduleEdit.aspx');
-      win.webContents.on('did-finish-load', () => {
-        win.webContents.session.cookies.get({}, (error, cookies) => {
-          for (var i = 0; i < cookies.length; i++) {
-            if (cookies[i].name == ".ASPXAUTH") {
-              Lockr.set("ASPXAUTH_ARBITER", cookies[i].value);
-            }
-          }
-        });
+      win.openDevTools();
+      win.on("close", () => {
+        self._setConnectionButtonVisible(true);
+        ipcRenderer.send('arbiter-window-closed', null);
       });
+
+      // win.webContents.on('arbiter-document-received', (dom) => {
+      // });
+
+      win.webContents.on('did-finish-load', () => {
+        self._storeArbiterSessionInformationInLockr(win.webContents.session);
+        win.webContents.executeJavaScript(`require('electron').ipcRenderer.send('arbiter-page-loaded', document.body.innerHTML);`);
+        win.webContents.executeJavaScript(`
+          require('electron').ipcRenderer.on('arbiter-document-received', (event, dom) => {
+            console.log(dom);
+          });
+        `
+        );
+      });
+
+      win.loadURL('https://www1.arbitersports.com/Official/GameScheduleEdit.aspx');
+    });
+  },
+
+  sayHello: function() {
+    console.log("Hello");
+  },
+
+  _storeArbiterSessionInformationInLockr: function(session) {
+    // ctl00_ContentHolder_pgeDefault_conDefault_dgAccounts
+    session.cookies.get({}, (error, cookies) => {
+      for (var i = 0; i < cookies.length; i++) {
+        if (cookies[i].name == ".ASPXAUTH") {
+          Lockr.set("ASPXAUTH_ARBITER", cookies[i].value);
+        }
+      }
     });
   },
 
