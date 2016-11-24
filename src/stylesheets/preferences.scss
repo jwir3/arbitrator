@@ -131,7 +131,19 @@ button#setupArbiterConnection {
 }
 
 #connectionIndicator {
+    display: none;
+}
+
+#connection-successful, #connection-failed {
   display: none;
+}
+
+.successColor {
+  color: green;
+}
+
+.failureColor {
+  color: red;
 }
 
 input[type='number'] {
