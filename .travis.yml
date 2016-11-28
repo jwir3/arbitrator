@@ -1,21 +1,37 @@
+language: node_js
+
 os:
   - linux
-  - osx
 
 branches:
   only:
-    - master
+    - develop
+    - task/#29-travis-ci
 
-env:
-  - NODE_VERSION="6.3.0"
+node_js:
+  - "6"
 
-script: ./scripts/travis-build.sh
+before_script:
+  - npm install
+  - echo 'America/Chicago' | sudo tee /etc/timezone
+  - sudo dpkg-reconfigure --frontend noninteractive tzdata
 
-cache:
-  directories:
-    - node_modules
+install:
+  - export DISPLAY=':99.0'
+  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
 
 notifications:
   email:
     on_success: never
     on_failure: change
+
+env:
+  - CXX=g++-4.8
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
+      - xvfb
