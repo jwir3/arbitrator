@@ -1,5 +1,7 @@
 arbitrator
 =================
+[![Build Status](https://travis-ci.org/jwir3/arbitrator.svg?branch=task%2F%2329-travis-ci)](https://travis-ci.org/jwir3/arbitrator)
+
 A utility allowing schedules from [ArbiterSports](http://www.arbitersports.com)
 to be added to Google Calendar with a minimum of effort.
 
