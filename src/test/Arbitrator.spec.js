@@ -2,7 +2,7 @@ import { Role, Game } from '../arbitrator/Game';
 import { expect, assert } from 'chai';
 import { env } from '../env';
 import { Arbitrator } from '../arbitrator/Arbitrator';
-import { DONTCARE, checkGame } from './checkGame';
+import { DONTCARE, checkGame } from './CheckGame';
 import * as moment from 'moment';
 import { PreferenceSingleton, TimeType } from '../arbitrator/PreferenceStore'
 import jetpack from 'fs-jetpack';

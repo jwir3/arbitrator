@@ -44,52 +44,6 @@ PreferenceStore.prototype = {
   shouldStore: true,
 
   /**
-   * Set a user's authentication information for logging in to ArbiterSports.
-   *
-   * Note that the user's password will be stored in an encrypted format.
-   *
-   * @param aUsername [string] The username to login using.
-   * @param aPassword [string] An unencrypted password to use to login.
-   *
-   * @return A Promise that can be used to determine when the operation has
-   *         completed.
-   */
-  setArbiterAuthentication: function(aUsername, aPassword) {
-    return new Promise((resolve, reject) => {
-      if (!this.arbiterAuthenticationInfo) {
-        this.arbiterAuthenticationInfo = {};
-      }
-
-      this._verifyExtensibility("arbiterAuthenticationInfo");
-
-      var quickCrypto = new QuickCrypto();
-      quickCrypto.encrypt(aPassword)
-        .then((encryptedPassword) => {
-          this.arbiterAuthenticationInfo["arbiterUsername"] = aUsername;
-          this.arbiterAuthenticationInfo["arbiterPassword"] = encryptedPassword;
-
-          this._putPreferences();
-          resolve();
-        });
-    });
-  },
-
-  /**
-   * Retrieve authentication information (username/password) for ArbiterSports.
-   *
-   * @return An object containing two items: a username and password (enrypted)
-   *         that can be used to login to ArbiterSports, if the current user
-   *         has set this information; an empty Object, otherwise.
-   */
-  getArbiterAuthentication: function() {
-    if (this.arbiterAuthenticationInfo) {
-      return Object.freeze(this.arbiterAuthenticationInfo);
-    }
-
-    return new Object();
-  },
-
-  /**
    * Add an alias for a group ID so that it can be reported as a human-readable
    * name.
    *

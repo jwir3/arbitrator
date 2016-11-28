@@ -62,22 +62,8 @@ UIManager.prototype = {
     this.refreshTimePreferences();
     this.refreshAliasPreferences();
     this.refreshLocationPreferences();
-    this.refreshArbiterAuthenticationPreferences();
 
     this._setPreferenceOnClickHandlers();
-  },
-
-  refreshArbiterAuthenticationPreferences: function() {
-    var prefStore = PreferenceSingleton.instance;
-    var arbiterAuth = prefStore.getArbiterAuthentication();
-    if (arbiterAuth.arbiterUsername && arbiterAuth.arbiterPassword) {
-      var quickCrypto = new QuickCrypto();
-      quickCrypto.decrypt(arbiterAuth.arbiterPassword)
-        .then((decryptedPassword) => {
-          $('#arbiterUsername').val(arbiterAuth.arbiterUsername);
-          $('#arbiterPassword').val(decryptedPassword);
-        });
-    }
   },
 
   /**
