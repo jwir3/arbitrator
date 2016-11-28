@@ -9,6 +9,8 @@ import { Arbitrator } from './Arbitrator'
 import { Strings } from './Strings'
 import util from 'util'
 import { LocationService } from './LocationService'
+import { QuickCrypto } from './QuickCrypto'
+import Lockr from 'lockr';
 
 export var UIManager = function() {
 }
@@ -54,6 +56,9 @@ UIManager.prototype = {
    */
   refreshPreferences: function() {
     var prefStore = PreferenceSingleton.instance;
+
+    this._hidePreferencesBasedOnFeatureFlags();
+
     this.refreshTimePreferences();
     this.refreshAliasPreferences();
     this.refreshLocationPreferences();
@@ -112,9 +117,15 @@ UIManager.prototype = {
    */
   setTimePreferenceFromUI: function(aTimePrefName) {
     var timePrefVal = $('#timePref-' + aTimePrefName).val();
-    var prefName = '';
     var prefStore = PreferenceSingleton.instance;
     prefStore.addTimePreference(aTimePrefName, timePrefVal);
+  },
+
+  setArbiterAuthenticationFromUI: function() {
+    var arbiterUsername = $('#arbiterUsername').val();
+    var arbiterPassword = $('#arbiterPassword').val();
+    var prefStore = PreferenceSingleton.instance;
+    prefStore.setArbiterAuthentication(arbiterUsername, arbiterPassword);
   },
 
   /**
@@ -251,13 +262,88 @@ UIManager.prototype = {
   //   location.reload();
   // },
 
+  _hidePreferencesBasedOnFeatureFlags: function() {
+    if (!ArbitratorConfig.hasOwnProperty('feature_arbiter_sports_login')) {
+      console.warn("Could not find feature flag feature_arbiter_sports_login. Assuming it's set to false.");
+    }
+
+    if (ArbitratorConfig.feature_arbiter_sports_login) {
+      $('#feature_arbiter_sports_login').show();
+    } else {
+      $('#feature_arbiter_sports_login').hide();
+    }
+  },
+
   /**
    * Set all onClick() handlers for preference UI elements.
    */
   _setPreferenceOnClickHandlers: function() {
     this._setTimePreferenceOnClickHandlers();
+    this._setArbiterConnectionPreferenceOnClickHandlers();
     this._setAliasPreferenceOnClickHandlers();
     this._setLocationPreferenceOnClickHandlers();
+  },
+
+  /**
+   * Set whether the "Setup Connection" button is visible on the settings page.
+   *
+   * @param isVisible [boolean] If true, the "Setup Connection" button will be
+   *        visible, and the refreshing indicator will be hidden; if false, the
+   *        opposite will be true.
+   */
+  _setConnectionButtonVisible(isVisible) {
+    if (isVisible) {
+      $('#setupArbiterConnection').show();
+      $('#connectionIndicator').hide();
+    } else {
+      $('#setupArbiterConnection').hide();
+      $('#connectionIndicator').show();
+    }
+  },
+
+  _setArbiterConnectionPreferenceOnClickHandlers: function() {
+    var self = this;
+    $('#setArbiterAuth').click(function() {
+      self.setArbiterAuthenticationFromUI();
+    });
+
+    $('#setupArbiterConnection').click(() => {
+      self._setConnectionButtonVisible(false);
+      $('#connection-successful').hide();
+      $('#connection-failed').hide();
+
+      const prefStore = PreferenceSingleton.instance;
+      const { BrowserWindow, app } = require('electron').remote;
+      var ipcRenderer = require('electron').ipcRenderer;
+
+      var aspAuth = Lockr.get('ASPXAUTH_ARBITER');
+      ipcRenderer.send('arbiter-request-create-window', aspAuth);
+      ipcRenderer.on('arbiter-window-closed', (event, message) => {
+        self._setConnectionButtonVisible(true);
+      });
+
+      ipcRenderer.on('arbiter-authenticated', (event, aspAuth) => {
+        Lockr.set("ASPXAUTH_ARBITER", aspAuth);
+
+        // This next part closes the window and returns a positive
+        // authentication status.
+        ipcRenderer.send('arbiter-request-destroy-window', true);
+      });
+
+      ipcRenderer.on('arbiter-connection-check-finished', (event, wasSuccessful) => {
+        if (wasSuccessful) {
+          $('#connection-successful').show();
+          $('#connection-failed').hide();
+        } else {
+          $('#connection-successful').hide();
+          $('#connection-failed').show();
+        }
+      });
+
+      // ipcRenderer.on('arbiter-document-received', (event, dom) => {
+      //   console.log(dom);
+      // });
+    });
   },
 
   /**

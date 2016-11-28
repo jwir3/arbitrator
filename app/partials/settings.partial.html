@@ -15,4 +15,23 @@
     <input type="number" id="timePref-consecutiveGames" value="4" />
     <button id="setConsecutiveGames">Set</button>
   </div>
+  <br>
+  <div id="feature_arbiter_sports_login">
+    <h3>ArbiterSports Connection</h3>
+    <div class="labelSet">
+      <button id="setupArbiterConnection">Setup/Test Connection</button>
+      <span id="successIndicator">
+        <span id="connection-successful">
+          <i class="fa fa-check successColor">Connection Successful</i>
+        </span>
+        <span id="connection-failed">
+          <i class="fa fa-times failureColor">Connection Problems</i>
+        </span>
+      </span>
+      <div id="connectionIndicator">
+        <i class="fa fa-refresh fa-spin"></i>
+        <span class="sr-only">Initializing connection in separate window...</span>
+      </div>
+    </div>
+  </div>
 </section>

@@ -1,7 +1,7 @@
 import { PreferenceSingleton, TimeType } from '../arbitrator/PreferenceStore';
 import { expect } from 'chai';
 
-describe("PreferenceStore", function () {
+describe("Preference Storage and Retrieval", function () {
   it ("is able to retrieve an instance of the PreferenceStore", function() {
     var prefStore = PreferenceSingleton.instance;
     expect(prefStore).to.be.ok;

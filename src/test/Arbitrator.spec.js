@@ -2,7 +2,7 @@ import { Role, Game } from '../arbitrator/Game';
 import { expect, assert } from 'chai';
 import { env } from '../env';
 import { Arbitrator } from '../arbitrator/Arbitrator';
-import { DONTCARE, checkGame } from './checkGame';
+import { DONTCARE, checkGame } from './CheckGame';
 import * as moment from 'moment';
 import { PreferenceSingleton, TimeType } from '../arbitrator/PreferenceStore'
 import jetpack from 'fs-jetpack';
@@ -11,7 +11,7 @@ var singleGame = jetpack.read('src/test/fixtures/singleGame.txt');
 var basicSchedule = jetpack.read('src/test/fixtures/basicSchedule.txt');
 var complexSchedule = jetpack.read('src/test/fixtures/complexSchedule.txt');
 
-describe("Arbitrator", function () {
+describe("Arbitrator Translation Functionality", function () {
   it ("parses a basic string with two games", function() {
     var arbitrator = new Arbitrator(basicSchedule);
 

@@ -126,6 +126,26 @@ section {
   }
 }
 
+button#setupArbiterConnection {
+  margin-left: 1em;
+}
+
+#connectionIndicator {
+    display: none;
+}
+
+#connection-successful, #connection-failed {
+  display: none;
+}
+
+.successColor {
+  color: green;
+}
+
+.failureColor {
+  color: red;
+}
+
 input[type='number'] {
   display: inline-block;
   width: 5%;
