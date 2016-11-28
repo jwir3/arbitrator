@@ -56,6 +56,9 @@ UIManager.prototype = {
    */
   refreshPreferences: function() {
     var prefStore = PreferenceSingleton.instance;
+
+    this._hidePreferencesBasedOnFeatureFlags();
+
     this.refreshTimePreferences();
     this.refreshAliasPreferences();
     this.refreshLocationPreferences();
@@ -272,6 +275,18 @@ UIManager.prototype = {
   //   prefStore.removeUserId();
   //   location.reload();
   // },
+
+  _hidePreferencesBasedOnFeatureFlags: function() {
+    if (!ArbitratorConfig.hasOwnProperty('feature_arbiter_sports_login')) {
+      console.warn("Could not find feature flag feature_arbiter_sports_login. Assuming it's set to false.");
+    }
+
+    if (ArbitratorConfig.feature_arbiter_sports_login) {
+      $('#feature_arbiter_sports_login').show();
+    } else {
+      $('#feature_arbiter_sports_login').hide();
+    }
+  },
 
   /**
    * Set all onClick() handlers for preference UI elements.

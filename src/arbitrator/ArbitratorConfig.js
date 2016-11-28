@@ -12,4 +12,7 @@ export var ArbitratorConfig = {
   'google_client_id': env.google_client_id,
   'google_client_secret': env.google_client_secret,
   'google_api_key': env.google_api_key,
+
+  // Feature flags below this line.
+  'feature_arbiter_sports_login': false,
 };
