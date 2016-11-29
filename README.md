@@ -7,7 +7,10 @@ to be added to Google Calendar with a minimum of effort.
 
 _arbitrator_, the developers of _arbitrator_, and Glass Tower Studios are in no way related to ArbiterSports, ArbiterOne, or ArbiterPay. Use of this software is conditional on agreement with the license(s) described in LICENSE.md.
 
-## Setup
+## Binary Distributions
+- **Linux (Debian Variants)**: [Arbitrator-2.1.0.deb](http://arbitrator.glasstowerstudios.com/Arbitrator-2.1.0.deb)
+
+## Build from Source
 
 _arbitrator_ is now a desktop application. You can build the binary for your
 platform by following these steps:
