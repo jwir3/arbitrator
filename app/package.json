@@ -1,0 +1,30 @@
+{
+  "name": "Arbitrator",
+  "productName": "Arbitrator",
+  "description": "A utility to help synchronize your referee schedule with your Google Calendar",
+  "version": "2.1.0",
+  "author": "Scott Johnson <jaywir3@gmail.com>",
+  "copyright": "© 2016, Glass Tower Studios, LLC",
+  "homepage": "http://github.com/jwir3/arbitrator",
+  "license": "GPL-3.0",
+  "main": "background.js",
+  "dependencies": {
+    "domready": "^1.0.8",
+    "fs-jetpack": "^0.9.0",
+    "jquery": "^3.1.1",
+    "crypto-js": "^3.1.8",
+    "googleapis": "^14.1.0",
+    "moment": "^2.15.2",
+    "yargs": "^6.3.0"
+  },
+  "deploy_config": {
+    "host": "endor.glasstowerstudios.com",
+    "port": 22,
+    "remote_directory": "/var/www/arbitrator.glasstowerstudios.com",
+    "username": "scottj",
+    "private_key_file": "~/.ssh/id_rsa",
+    "releases_to_keep": 3,
+    "group": "www-glasstower",
+    "permissions": "ugo+rX"
+  }
+}

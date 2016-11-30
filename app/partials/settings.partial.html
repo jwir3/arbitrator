@@ -1,0 +1,37 @@
+<section id="settingsContent">
+  <h3>Time Preferences</h3>
+  <div class="labelSet">
+    <label for="timePref-priorToStart">Minutes before start</label>
+    <input type="number" id="timePref-priorToStart" value="30" />
+    <button id="setPriorToStart">Set</button>
+  </div>
+  <div class="labelSet">
+    <label for="timePref-gameLength">Length of game (minutes)</label>
+    <input type="number" id="timePref-gameLength" value="60" />
+    <button id="setGameLength">Set</button>
+  </div>
+  <div class="labelSet">
+    <label for="timePref-consecutiveGames">Consecutive Game Threshold (Hours)</label>
+    <input type="number" id="timePref-consecutiveGames" value="4" />
+    <button id="setConsecutiveGames">Set</button>
+  </div>
+  <br>
+  <div id="feature_arbiter_sports_login">
+    <h3>ArbiterSports Connection</h3>
+    <div class="labelSet">
+      <button id="setupArbiterConnection">Setup/Test Connection</button>
+      <span id="successIndicator">
+        <span id="connection-successful">
+          <i class="fa fa-check successColor">Connection Successful</i>
+        </span>
+        <span id="connection-failed">
+          <i class="fa fa-times failureColor">Connection Problems</i>
+        </span>
+      </span>
+      <div id="connectionIndicator">
+        <i class="fa fa-refresh fa-spin"></i>
+        <span class="sr-only">Initializing connection in separate window...</span>
+      </div>
+    </div>
+  </div>
+</section>
