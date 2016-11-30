@@ -3,21 +3,23 @@ import GulpSSH from 'gulp-ssh';
 import gulpUtil from 'gulp-util';
 import jetpack from 'fs-jetpack';
 import fs from 'fs';
+import os from 'os';
 
 var currentDate = new Date().toISOString();
 var packageJson = jetpack.read('app/package.json', 'json');
 
 // Retrieve the configuration information for the deployment
 var releaseConfig = packageJson.deploy_config;
+var privateKeyFile = releaseConfig.private_key_file.replace('~', os.homedir)
 if (!releaseConfig) {
   gulpUtil.log(gulpUtil.colors.yellow('Warning:'),
                "deploy_config in package.json not properly configured. You will not be able to deploy.");
-} else if (!fs.existsSync(releaseConfig.private_key_file)) {
+} else if (!fs.existsSync(privateKeyFile)) {
   gulpUtil.log(gulpUtil.colors.yellow('Warning:'), "Unable to find private key:",
-               gulpUtil.colors.cyan(releaseConfig.private_key_file),
+               gulpUtil.colors.cyan(privateKeyFile),
                "You will not be able to deploy");
 } else {
-  releaseConfig.privateKey = fs.readFileSync(releaseConfig.private_key_file);
+  releaseConfig.privateKey = fs.readFileSync(privateKeyFile);
 
   var gulpSSH = new GulpSSH({
     ignoreErrors: false,

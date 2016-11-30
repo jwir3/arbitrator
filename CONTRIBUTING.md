@@ -32,7 +32,26 @@ Creating a Binary Package
 Creating a binary package of Arbitrator for use on your system is easy. Simply download the source code and run the following command:
 `npm install && npm run package`.
 
-If you have access rights on `endor.glasstowerstudios.com`, you can also push release builds to our distribution servers with the command `npm run release`. If you do not have access rights, but would like them, please contact [@jwir3](mailto:jaywir3@gmail.com).
+If you have access rights on `endor.glasstowerstudios.com`, you can also push release builds to our distribution servers with the command `npm run release`. In order to do this, you will need to input your SSH key file path into `app/package.json`. Currently, `app/package.json` looks like:
+```
+{
+  ...
+  "deploy_config": {
+    "host": "endor.glasstowerstudios.com",
+    "port": 22,
+    "remote_directory": "/var/www/arbitrator.glasstowerstudios.com",
+    "username": "scottj",
+    "private_key_file": "~/.ssh/id_rsa",
+    "releases_to_keep": 3,
+    "group": "www-glasstower",
+    "permissions": "ugo+rX"
+  }
+}
+```
+
+You will need to change `~/.ssh/id_rsa` to point to the SSH key which grants you access to `endor.glasstowerstudios.com`.
+
+If you do not have access rights, but would like them, please contact [@jwir3](mailto:jaywir3@gmail.com).
 
 Competency-Based Tasks
 ----------------------

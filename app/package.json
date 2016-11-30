@@ -22,7 +22,7 @@
     "port": 22,
     "remote_directory": "/var/www/arbitrator.glasstowerstudios.com",
     "username": "scottj",
-    "private_key_file": "/home/scottj/.ssh/id_rsa",
+    "private_key_file": "~/.ssh/id_rsa",
     "releases_to_keep": 3,
     "group": "www-glasstower",
     "permissions": "ugo+rX"
