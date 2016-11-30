@@ -27,6 +27,32 @@ The following is what you should do to start working on a ticket:
 4. Submit a pull request from your branch to the `develop` branch of `jwir3/arbitrator`. Please fill in the relevant information to the best of your ability. If you aren't including something in the checklist (e.g. you didn't include tests for your new feature), explain why in the pull request body. Prior to submitting your pull request, please rebase your branch to the tip of `develop` branch of `jwir3/arbitrator` and resolve any merge conflicts.
 5. The pull request will be assigned to one of our core developers, who will review it. Typically, there are minor changes that are requested, which can be addressed with follow-up commits. Once the review is passed, the developer reviewing your code will automatically merge your commit into `develop`.
 
+Creating a Binary Package
+-------------------------
+Creating a binary package of Arbitrator for use on your system is easy. Simply download the source code and run the following command:
+`npm install && npm run package`.
+
+If you have access rights on `endor.glasstowerstudios.com`, you can also push release builds to our distribution servers with the command `npm run release`. In order to do this, you will need to input your SSH key file path into `app/package.json`. Currently, `app/package.json` looks like:
+```
+{
+  ...
+  "deploy_config": {
+    "host": "endor.glasstowerstudios.com",
+    "port": 22,
+    "remote_directory": "/var/www/arbitrator.glasstowerstudios.com",
+    "username": "scottj",
+    "private_key_file": "~/.ssh/id_rsa",
+    "releases_to_keep": 3,
+    "group": "www-glasstower",
+    "permissions": "ugo+rX"
+  }
+}
+```
+
+You will need to change `~/.ssh/id_rsa` to point to the SSH key which grants you access to `endor.glasstowerstudios.com`.
+
+If you do not have access rights, but would like them, please contact [@jwir3](mailto:jaywir3@gmail.com).
+
 Competency-Based Tasks
 ----------------------
 The following is a list of tasks that can be performed by anyone with competency in specific areas. Please note that the flag `help-wanted` typically indicates a great starting point for those of you who may be new to the Arbitrator project.
