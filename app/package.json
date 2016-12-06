@@ -16,15 +16,5 @@
     "googleapis": "^14.1.0",
     "moment": "^2.15.2",
     "yargs": "^6.3.0"
-  },
-  "deploy_config": {
-    "host": "endor.glasstowerstudios.com",
-    "port": 22,
-    "remote_directory": "/var/www/arbitrator.glasstowerstudios.com",
-    "username": "scottj",
-    "private_key_file": "~/.ssh/id_rsa",
-    "releases_to_keep": 3,
-    "group": "www-glasstower",
-    "permissions": "ugo+rX"
   }
 }
