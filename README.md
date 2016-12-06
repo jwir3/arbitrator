@@ -62,3 +62,12 @@ The `Group` entry is, by default, whatever was entered into the ArbiterSports gr
 
 #### Location Preferences
 In a similar manner to _Group Aliases_, _arbitrator_ will keep track of location fields from ArbiterSports. Unfortunately, since ArbiterSports doesn't have an open API, we can't gather this data directly. Instead, when a new location is seen, you can enter an address for future occurrences of that location. If an address exists for a given location, _arbitrator_ will add that address to the calendar event. If an address does not exist, then the name of the site (taken directly from ArbiterSports) will be added as the location of the calendar event.
+
+Support
+--------
+We don't offer phone support (there simply aren't enough of us to do that). However, we can offer support via the following methods:
+  * [Slack Channel](slack://channel?id=C3B2WN5MK&team=T33DNEFHN) (Preferred)
+  * [Github Issues](https://github.com/jwir3/arbitrator/issues/new)
+  * [Email](mailto:jaywir3@gmail.com)
+
+If you need immediate assistance, chances are the best method of contact is our Slack developer channel (usually pretty slow, so you'll get a response fairly quickly, unless it's the middle of the night).
