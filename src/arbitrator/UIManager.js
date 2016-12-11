@@ -180,9 +180,35 @@ UIManager.prototype = {
       this.showSnackbar("Alias '" + aAliasName + "' set");
   },
 
+  /**
+   * Set a location preference after doing some basic validation of the data.
+   *
+   * Create a new {Place} and submit this to the preference system to be stored.
+   *
+   * @param {string} aLocationPrefKey  The preference system key for the
+   *        preference. If it exists, the preference system will replace the
+   *        key with the newly created {Place}.
+   * @param {string} aLocationPrefName The human-readable name of the place to
+   *        be created.
+   */
   setLocationPreference: function(aLocationPrefKey, aLocationPrefName) {
-    var address = $('#locationAddressPref-' + aLocationPrefKey).val();
-    var subLocationName = $('#locationSubLocationPref-' + aLocationPrefKey).val();
+    var self = this;
+    var addressElement = $('#locationAddressPref-' + aLocationPrefKey);
+    var address = addressElement.val();
+    var subLocationElement = $('#locationSubLocationPref-' + aLocationPrefKey);
+    var subLocationName = subLocationElement.val();
+
+    // If either the address or sublocation name is empty, and the other is a
+    // non-default placeholder, use the placeholder in lieu of the value.
+    if (subLocationName && !addressElement.val()
+        && !self._isLocationAddressPlaceholderDefault(addressElement)) {
+      address = addressElement.attr('placeholder');
+    }
+
+    if (address && !subLocationElement.val()
+        && !self._isLocationSublocationPlaceholderDefault(subLocationElement)) {
+      subLocationName = subLocationElement.attr('placeholder');
+    }
 
     var prefName = '';
     var prefStore = PreferenceSingleton.instance;
@@ -420,7 +446,10 @@ UIManager.prototype = {
     var self = this;
     $('.locationSetButton').each(function() {
       $(this).click(function() {
-        self.setLocationPreference($(this).data('locationshortname'), $(this).data('locationname'));
+        var locationShortName = $(this).data('locationshortname');
+        var locationName = $(this).data('locationname');
+
+        self.setLocationPreference(locationShortName, locationName);
       });
     });
 
@@ -741,5 +770,14 @@ UIManager.prototype = {
    */
   _getBackStackSize: function() {
     return this.mBackStack.length;
+  },
+
+  _isLocationAddressPlaceholderDefault: function(aJQueryObject) {
+    var defaultPlaceholderPrefix = Strings.enter_address_for.slice(0, 17);
+    return aJQueryObject.attr('placeholder').startsWith(defaultPlaceholderPrefix);
+  },
+
+  _isLocationSublocationPlaceholderDefault: function(aJQueryObject) {
+    return aJQueryObject.attr('placeholder') == '';
   }
 };
