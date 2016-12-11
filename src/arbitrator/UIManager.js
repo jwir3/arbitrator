@@ -536,34 +536,35 @@ UIManager.prototype = {
    *        load operation has completed.
    */
   loadContent: function(aContentFileName, aTitle, aOnComplete) {
-    var that = this;
+    var self = this;
 
     // Set the text of the nav drawer header
-    that.closeNavDrawer();
+    self.closeNavDrawer();
 
     $('main#content').load('partials/' + aContentFileName + '.partial.html', null,
                            function() {
-                             that._addToBackStack({
+                             self._addToBackStack({
                                'id': aContentFileName,
                                'name': aTitle
                              });
 
-                             if (!that._isBackStackEmpty()) {
-                               that._showBackArrow();
+                             if (!self._isBackStackEmpty()) {
+                               self._showBackArrow();
                              } else {
-                               that._showHamburgerIcon();
+                               self._showHamburgerIcon();
                              }
 
                              // Add the title to the app bar.
                              $('#pageTitle').text(aTitle);
 
                              // Add the version number to the app bar
-                             $('#versionNumber').text('v' + that.getVersion());
+                             $('#versionNumber').text('v' + self.getVersion());
 
                              if (aContentFileName == 'main') {
-                               that.refreshGoogleClient(function(aGoogleClient) {
-                                 that.populateCalendarList(aGoogleClient);
-                                 that.populateUserId(aGoogleClient);
+                               self.refreshGoogleClient(function(aGoogleClient) {
+                                 self.populateCalendarList(aGoogleClient);
+                                 self.populateUserId(aGoogleClient);
+                                 self._setArbitrateOnClickHandler();
                                });
                              }
 
