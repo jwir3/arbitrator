@@ -136,7 +136,7 @@ UIManager.prototype = {
    * @param aGroupAlias The name of the alias to use for this group.
    */
   addAliasUIFor: function(aGroupName, aGroupAlias) {
-    var that = this;
+    var self = this;
     $.get('partials/alias-preference.partial.html', function(data) {
       var dataElement = $(data);
       dataElement.find('.originalName')
@@ -152,7 +152,7 @@ UIManager.prototype = {
       }
 
       $('#aliasInputs').append(dataElement);
-      that._setAliasPreferenceOnClickHandlers();
+      self._setAliasPreferenceOnClickHandlers();
     });
   },
 
@@ -180,9 +180,35 @@ UIManager.prototype = {
       this.showSnackbar("Alias '" + aAliasName + "' set");
   },
 
+  /**
+   * Set a location preference after doing some basic validation of the data.
+   *
+   * Create a new {Place} and submit this to the preference system to be stored.
+   *
+   * @param {string} aLocationPrefKey  The preference system key for the
+   *        preference. If it exists, the preference system will replace the
+   *        key with the newly created {Place}.
+   * @param {string} aLocationPrefName The human-readable name of the place to
+   *        be created.
+   */
   setLocationPreference: function(aLocationPrefKey, aLocationPrefName) {
-    var address = $('#locationAddressPref-' + aLocationPrefKey).val();
-    var subLocationName = $('#locationSubLocationPref-' + aLocationPrefKey).val();
+    var self = this;
+    var addressElement = $('#locationAddressPref-' + aLocationPrefKey);
+    var address = addressElement.val();
+    var subLocationElement = $('#locationSubLocationPref-' + aLocationPrefKey);
+    var subLocationName = subLocationElement.val();
+
+    // If either the address or sublocation name is empty, and the other is a
+    // non-default placeholder, use the placeholder in lieu of the value.
+    if (subLocationName && !addressElement.val()
+        && !self._isLocationAddressPlaceholderDefault(addressElement)) {
+      address = addressElement.attr('placeholder');
+    }
+
+    if (address && !subLocationElement.val()
+        && !self._isLocationSublocationPlaceholderDefault(subLocationElement)) {
+      subLocationName = subLocationElement.attr('placeholder');
+    }
 
     var prefName = '';
     var prefStore = PreferenceSingleton.instance;
@@ -204,7 +230,7 @@ UIManager.prototype = {
   },
 
   addLocationPreference: function(aPlace) {
-    var that = this;
+    var self = this;
     $.get('partials/location-preference.partial.html', function(data) {
       var dataElement = $(data);
       var addressTextInputId = 'locationAddressPref-' + aPlace.getShortName();
@@ -251,7 +277,7 @@ UIManager.prototype = {
           }
         });
 
-        that._setLocationPreferenceOnClickHandlers();
+        self._setLocationPreferenceOnClickHandlers();
       }
     });
   },
@@ -350,29 +376,29 @@ UIManager.prototype = {
    * Set the onClick() handlers for time preferences.
    */
   _setTimePreferenceOnClickHandlers: function() {
-    var that = this;
+    var self = this;
     $('#setPriorToStart').click(function() {
       var minutes = $('#timePref-priorToStart').val();
-      that.setTimePreferenceFromUI('priorToStart');
+      self.setTimePreferenceFromUI('priorToStart');
       var priorToStartAcknowledge = util.format(Strings.calendar_events_will_start,
                                                 minutes);
-      that.showSnackbar(priorToStartAcknowledge);
+      self.showSnackbar(priorToStartAcknowledge);
     });
 
     $('#setGameLength').click(function() {
       var length = $('#timePref-gameLength').val();
-      that.setTimePreferenceFromUI('gameLength');
+      self.setTimePreferenceFromUI('gameLength');
       var gameLengthAcknowledge = util.format(Strings.calendar_events_length,
                                               length);
-      that.showSnackbar(gameLengthAcknowledge);
+      self.showSnackbar(gameLengthAcknowledge);
     });
 
     $('#setConsecutiveGames').click(function() {
       var consecutiveThresh = $('#timePref-consecutiveGames').val();
-      that.setTimePreferenceFromUI('consecutiveGames');
+      self.setTimePreferenceFromUI('consecutiveGames');
       var consecutiveAcknowledge = util.format(Strings.consecutive_games_acknowledgement,
                                                consecutiveThresh);
-      that.showSnackbar(consecutiveAcknowledge);
+      self.showSnackbar(consecutiveAcknowledge);
     });
   },
 
@@ -380,7 +406,7 @@ UIManager.prototype = {
    * Set the onClick() handlers for alias/group preferences.
    */
   _setAliasPreferenceOnClickHandlers: function() {
-    var that = this;
+    var self = this;
     var prefStore = PreferenceSingleton.instance;
 
     $('button.setAlias').each(function() {
@@ -388,14 +414,14 @@ UIManager.prototype = {
       $(this).click(function() {
         var actualName = $(this).parent().find('.originalName').data('actualname');
         var aliasName = $(this).parent().find('.aliasName').val();
-        that.addAliasToPrefStore(actualName, aliasName);
+        self.addAliasToPrefStore(actualName, aliasName);
       });
     });
 
     $('.aliasRemoveButton').each(function() {
       $(this).off('click');
       $(this).click(function() {
-        that.deleteAliasPreference($(this).data('actualname'));
+        self.deleteAliasPreference($(this).data('actualname'));
         $(this).parent().fadeOut(300, function () {
           $(this).remove();
         });
@@ -407,26 +433,29 @@ UIManager.prototype = {
       var actualName = $('#aliasAddName').text();
       var aliasName = $('#aliasAddAlias').text();
 
-      that.addAliasToPrefStore(actualName, aliasName);
+      self.addAliasToPrefStore(actualName, aliasName);
 
       $('#aliasAddName').text('');
       $('#aliasAddAlias').text('');
 
-      that.refreshAliasPreferences();
+      self.refreshAliasPreferences();
     });
   },
 
   _setLocationPreferenceOnClickHandlers: function() {
-    var that = this;
+    var self = this;
     $('.locationSetButton').each(function() {
       $(this).click(function() {
-        that.setLocationPreference($(this).data('locationshortname'), $(this).data('locationname'));
+        var locationShortName = $(this).data('locationshortname');
+        var locationName = $(this).data('locationname');
+
+        self.setLocationPreference(locationShortName, locationName);
       });
     });
 
     $('.locationRemoveButton').each(function() {
       $(this).click(function() {
-        that.deleteLocationPreference($(this).data('locationshortname'));
+        self.deleteLocationPreference($(this).data('locationshortname'));
         $(this).parent().fadeOut(300, function () {
           $(this).remove();
         });
@@ -455,9 +484,9 @@ UIManager.prototype = {
    * Set the onClick() handler for the main "arbitrate" button.
    */
   _setArbitrateOnClickHandler: function() {
-    var that = this;
+    var self = this;
     $('#arbitrate-button').click(function () {
-      that.onArbitrate();
+      self.onArbitrate();
     });
   },
 
@@ -483,7 +512,7 @@ UIManager.prototype = {
    * handlers.
    */
   _setNavDrawerOnClickHandlers: function() {
-    var that = this;
+    var self = this;
 
     $('.nav-drawer-header').click(function() {
       $('#nav-drawer').css({
@@ -495,8 +524,8 @@ UIManager.prototype = {
       var data = $(this).data('item');
 
       $(this).click(function() {
-        that.loadContent(data, StringUtils.capitalize(data), function() {
-          that.refreshPreferences();
+        self.loadContent(data, StringUtils.capitalize(data), function() {
+          self.refreshPreferences();
         });
       });
     });
@@ -640,13 +669,13 @@ UIManager.prototype = {
    * stack.
    */
   _showBackArrow: function() {
-    var that = this;
+    var self = this;
 
     $('#hamburger').css({
       'background': 'no-repeat url("images/back.svg")'
     });
 
-    that._bindEventHandlerForNavMenu(true);
+    self._bindEventHandlerForNavMenu(true);
   },
 
   /**
@@ -655,13 +684,13 @@ UIManager.prototype = {
    * drawer.
    */
   _showHamburgerIcon: function() {
-    var that = this;
+    var self = this;
 
     $('#hamburger').css({
       'background': 'no-repeat url("images/hamburger.svg")'
     });
 
-    that._bindEventHandlerForNavMenu(false);
+    self._bindEventHandlerForNavMenu(false);
   },
 
   /**
@@ -669,16 +698,16 @@ UIManager.prototype = {
    * the app bar and re-add the appropriate onClick() handler.
    */
   _bindEventHandlerForNavMenu: function(aIsBack) {
-    var that = this;
+    var self = this;
     $('#hamburger').unbind('click');
 
     if (aIsBack) {
       $('#hamburger').click(function() {
-        that._popBackStack();
+        self._popBackStack();
       });
     } else {
       $('#hamburger').click(function() {
-        that.openNavDrawer();
+        self.openNavDrawer();
       });
     }
   },
@@ -741,5 +770,14 @@ UIManager.prototype = {
    */
   _getBackStackSize: function() {
     return this.mBackStack.length;
+  },
+
+  _isLocationAddressPlaceholderDefault: function(aJQueryObject) {
+    var defaultPlaceholderPrefix = Strings.enter_address_for.slice(0, 17);
+    return aJQueryObject.attr('placeholder').startsWith(defaultPlaceholderPrefix);
+  },
+
+  _isLocationSublocationPlaceholderDefault: function(aJQueryObject) {
+    return aJQueryObject.attr('placeholder') == '';
   }
 };
