@@ -5,7 +5,7 @@ var options = {
   "host": "endor.glasstowerstudios.com",
   "port": 22,
   "remote_directory": "/var/www/arbitrator.glasstowerstudios.com",
-  "source_files": ["dist/*.deb", "dist/*.dmg"],
+  "source_files": ["dist/*.deb", "dist/mac/*.dmg"],
   "username": "scottj",
   "ssh_key_file": "~/.ssh/id_rsa",
   "releases_to_keep": 3,
