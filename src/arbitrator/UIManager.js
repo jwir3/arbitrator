@@ -664,6 +664,13 @@ UIManager.prototype = {
   },
 
   /**
+   * Clear the main text input to the Arbitrator tool.
+   */
+  clearArbitratorInput: () => {
+    $('#schedule').val('');
+  },
+
+  /**
    * Show the back arrow icon in place of the navigation drawer icon and adjust
    * the onClick() functionality for this icon so that it pops from the back
    * stack.

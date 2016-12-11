@@ -168,6 +168,7 @@ Arbitrator.prototype = {
                   gamesProcessed++;
                   if (gamesProcessed == numGames) {
                     self.mUiManager.showSnackbar(Strings.games_added_message);
+                    self.mUiManager.clearArbitratorInput();
                   }
               });
             // } else {
