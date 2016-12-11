@@ -485,6 +485,9 @@ UIManager.prototype = {
    */
   _setArbitrateOnClickHandler: function() {
     var self = this;
+    // First, remote all handlers that were previousl associated with this
+    // button.
+    $('#arbitrate-button').off();
     $('#arbitrate-button').click(function () {
       self.onArbitrate();
     });
