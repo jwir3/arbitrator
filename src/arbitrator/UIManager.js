@@ -524,10 +524,11 @@ UIManager.prototype = {
     });
 
     $('.nav-drawer-item').each(function() {
-      var data = $(this).data('item');
+      var rawData = $(this).data('item');
+      var unspacedData = rawData.replace(/\s/, '-');
 
       $(this).click(function() {
-        self.loadContent(data, StringUtils.capitalize(data), function() {
+        self.loadContent(unspacedData, StringUtils.capitalize(rawData), function() {
           self.refreshPreferences();
         });
       });
