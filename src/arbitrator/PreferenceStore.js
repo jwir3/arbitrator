@@ -61,6 +61,15 @@ PreferenceStore.prototype = {
     this._putPreferences();
   },
 
+  addGameAgeProfile: function(aGameAgeProfile) {
+    if (!this.gameAgeProfiles) {
+      this.gameAgeProfiles = [];
+    }
+
+    this.gameAgeProfiles.push(aGameAgeProfile);
+    this._putPreferences();
+  },
+
   /**
    * Add a time preference to the preference store.
    *
@@ -137,6 +146,18 @@ PreferenceStore.prototype = {
     }
 
     return aDefault;
+  },
+
+  getGameAgeProfile: function(aProfileId) {
+    if (this.gameAgeProfiles) {
+      for (var idx in this.gameAgeProfiles) {
+        if (this.gameAgeProfiles[idx].getProfileId() == aProfileId) {
+          return this.gameAgeProfiles[idx]
+        }
+      }
+    }
+
+    return null;
   },
 
   getLocationPreference: function(aLocationKey) {
@@ -331,6 +352,16 @@ PreferenceStore.prototype = {
                                .dir(".arbitrator")
                                .write("userConfig.json", this);
      }
+  },
+
+  /**
+   * Export this {PreferenceStore} to a string. This is useful for debugging the
+   * storage methods.
+   *
+   * @return {string} The JSON of this object, in string form.
+   */
+  toString: function() {
+    return JSON.stringify(this);
   },
 
   /**
