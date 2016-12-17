@@ -53,6 +53,10 @@ UIManager.prototype = {
   /**
    * Refresh the preference UI from local storage and populate the UI
    * accordingly.
+   *
+   * XXX_jwir3: It would be nice if we could somehow specify which refresh
+   *            method should be performed, so we don't refresh all preferences
+   *            after every screen load.
    */
   refreshPreferences: function() {
     var prefStore = PreferenceSingleton.instance;
@@ -62,8 +66,24 @@ UIManager.prototype = {
     this.refreshTimePreferences();
     this.refreshAliasPreferences();
     this.refreshLocationPreferences();
+    this.refreshProfilePreferences();
 
     this._setPreferenceOnClickHandlers();
+  },
+
+  /**
+   * Refresh the data for the GameAgeProfile view.
+   */
+  refreshProfilePreferences: function() {
+    // We need all of the group data to populate the profile names.
+    var prefStore = PreferenceSingleton.instance;
+    var aliases = prefStore.getAllGroupAliases();
+    for (var prop in aliases) {
+      if (aliases.hasOwnProperty(prop)) {
+        var name = aliases[prop];
+        this._addGameAgeProfileSubMenu(name);
+      }
+    }
   },
 
   /**
@@ -137,23 +157,28 @@ UIManager.prototype = {
    */
   addAliasUIFor: function(aGroupName, aGroupAlias) {
     var self = this;
-    $.get('partials/alias-preference.partial.html', function(data) {
-      var dataElement = $(data);
-      dataElement.find('.originalName')
-                 .data('actualname', aGroupName)
-                 .attr('value', aGroupName);
-      dataElement.find('.aliasRemoveButton')
-                 .data('actualname', aGroupName);
+    self.loadPartialContent('partials/alias-preference.partial.html')
+      .then((data) => {
+        var dataElement = $(data);
+        dataElement.find('.originalName')
+                   .data('actualname', aGroupName)
+                   .attr('value', aGroupName);
+        dataElement.find('.aliasRemoveButton')
+                   .data('actualname', aGroupName);
 
-      // If the group name is the same as the alias name, just assume we don't
-      // have an alias set.
-      if (aGroupAlias != aGroupName) {
-        dataElement.find('.aliasName').attr('value', aGroupAlias);
-      }
+        // If the group name is the same as the alias name, just assume we don't
+        // have an alias set.
+        if (aGroupAlias != aGroupName) {
+          dataElement.find('.aliasName').attr('value', aGroupAlias);
+        }
 
-      $('#aliasInputs').append(dataElement);
-      self._setAliasPreferenceOnClickHandlers();
-    });
+        $('#aliasInputs').append(dataElement);
+        self._setAliasPreferenceOnClickHandlers();
+      })
+      .catch((error) => {
+        console.error("Unable to load 'partials/alias-preference.partial.html': "
+                      + error);
+      });
   },
 
   showSnackbar: function(aMessage) {
@@ -554,6 +579,19 @@ UIManager.prototype = {
   },
 
   /**
+   * Load partial content using an AJAX request.
+   *
+   * @param  {string} aPartialContentPath The path to the file that should be
+   *                                      loaded as the partial content.
+   *
+   * @return {Promise} A Promise that can be used to access the partial content
+   *                   view structure (e.g. the partial DOM), once it's loaded.
+   */
+  loadPartialContent: function(aPartialContentPath) {
+    return $.get(aPartialContentPath);
+  },
+
+  /**
    * Load content into the main content pane.
    *
    * This asynchronously loads a file prefixed with an appropriate file id into
@@ -790,5 +828,44 @@ UIManager.prototype = {
 
   _isLocationSublocationPlaceholderDefault: function(aJQueryObject) {
     return aJQueryObject.attr('placeholder') == '';
+  },
+
+  _addGameAgeProfileSubMenu: function(aName) {
+    var self = this;
+    self.loadPartialContent('partials/level-profile-preference.partial.html')
+      .then((partialContent) => {
+        var partialContentDOM = $(partialContent);
+        partialContentDOM.find('.level-profile-label').append(aName);
+        partialContentDOM.click(function() {
+          self.loadContent('settings', aName + " Game Profile", function() {
+            self.refreshPreferences();
+          });
+        });
+        $('#levelsContent').append(partialContentDOM);
+      })
+      .catch((error) => {
+        console.error("Unable to load 'partials/level-profile-preference.partial.html': "
+                      + error);
+      });
+    // this.loadPartialContent('partials/alias-preference.partial.html')
+    //   .then((partialContent) => {
+    //
+    //       var dataElement = $(data);
+    //       dataElement.find('.originalName')
+    //                  .data('actualname', aGroupName)
+    //                  .attr('value', aGroupName);
+    //       dataElement.find('.aliasRemoveButton')
+    //                  .data('actualname', aGroupName);
+    //
+    //       // If the group name is the same as the alias name, just assume we don't
+    //       // have an alias set.
+    //       if (aGroupAlias != aGroupName) {
+    //         dataElement.find('.aliasName').attr('value', aGroupAlias);
+    //       }
+    //
+    //       $('#aliasInputs').append(dataElement);
+    //       self._setAliasPreferenceOnClickHandlers();
+    //     });
+    //   });
   }
 };
