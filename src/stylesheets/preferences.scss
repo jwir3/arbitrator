@@ -81,12 +81,11 @@
   }
 }
 
-.label-set:first-child {
-  padding-top: 0;
-  padding-bottom: 0;
+.alternatingColors:nth-child(2n+1) {
+  background-color: white;
 }
 
-.labelSet:nth-child(2n) {
+.alternatingColors:nth-child(2n) {
   background-color: $hawkes-blue;
 }
 
@@ -150,4 +149,29 @@ input[type='number'] {
   display: inline-block;
   width: 5%;
   font-size: 14pt;
+}
+
+.preference-sub-menu {
+  display: inline-block;
+  position: relative;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  margin-left: 1em;
+  margin-right: 2em;
+  width: 100%;
+  font-size: 14pt;
+
+  &:hover {
+    background-color: $whiteLilac;
+    cursor: pointer;
+  }
+
+  label {
+    padding-left: 1em;
+  }
+
+  .level-profile-button {
+    position: absolute;
+    right: 3em;
+  }
 }
