@@ -3,7 +3,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 import jetpack from 'fs-jetpack';
 import env from '../env';
-import { QuickCrypto } from './QuickCrypto';
 
 const PREFERENCE_STORE_KEY = Symbol("PreferenceStore");
 
@@ -377,7 +376,6 @@ PreferenceStore.prototype = {
       this.locations = storedPrefs.locations;
       this.userId = storedPrefs.userId;
       this.authTokens = storedPrefs.authTokens;
-      this.arbiterAuthenticationInfo = storedPrefs.arbiterAuthenticationInfo;
     }
   },
 
