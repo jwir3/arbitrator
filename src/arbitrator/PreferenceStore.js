@@ -147,12 +147,19 @@ PreferenceStore.prototype = {
     return aDefault;
   },
 
+  getAllGameAgeProfiles: function() {
+    if (!this.gameAgeProfiles) {
+      this.gameAgeProfiles = [];
+    }
+
+    return this.gameAgeProfiles;
+  },
+
   getGameAgeProfile: function(aProfileId) {
-    if (this.gameAgeProfiles) {
-      for (var idx in this.gameAgeProfiles) {
-        if (this.gameAgeProfiles[idx].getProfileId() == aProfileId) {
-          return this.gameAgeProfiles[idx]
-        }
+    var gameAgeProfiles = this.getAllGameAgeProfiles();
+    for (var idx in gameAgeProfiles) {
+      if (gameAgeProfiles[idx].getProfileId() == aProfileId) {
+        return gameAgeProfiles[idx]
       }
     }
 
