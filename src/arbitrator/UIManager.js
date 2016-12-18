@@ -86,6 +86,28 @@ UIManager.prototype = {
     }
   },
 
+  refreshGameAgeLevelPreferences: function(aGroupName) {
+    var self = this;
+    var prefStore = PreferenceSingleton.instance;
+
+    self.loadPartialContent('partials/game-age-profile-preference.partial.html')
+      .then((data) => {
+        // For each game age level for this profile, put the UI for it.
+        var prefStore = PreferenceSingleton.instance;
+        var gameAgeSettings = prefStore.getGameAgeProfile(aGroupName);
+        for (var gameAgeIdx in gameAgeSettings) {
+          var gameAgePref = gameAgeSettings[gameAgeIdx];
+          var settingUI = $(data);
+          settingUI.find('#removeButton').id('removeButton-' + aGroupName);
+          settingUI.find('#modifyButton').id('modifyButton-' + aGroupName);
+          $('#gameAgeProfileContent').append(settingUI);
+        }
+      })
+      .catch((error) => {
+        console.log("Unable to load game age profile preference template");
+      });
+  },
+
   /**
    * Refresh the preference UI from local storage for all time preferences.
    */
@@ -837,8 +859,9 @@ UIManager.prototype = {
         var partialContentDOM = $(partialContent);
         partialContentDOM.find('.level-profile-label').append(aName);
         partialContentDOM.click(function() {
-          self.loadContent('settings', aName + " Game Profile", function() {
-            self.refreshPreferences();
+          self.loadContent('game-age-profile', aName + " Game Age Profile", function() {
+            $('#gameAgeProfileContent').data('profilename', aName);
+            self.refreshGameAgeLevelPreferences(aName);
           });
         });
         $('#levelsContent').append(partialContentDOM);
@@ -847,25 +870,5 @@ UIManager.prototype = {
         console.error("Unable to load 'partials/level-profile-preference.partial.html': "
                       + error);
       });
-    // this.loadPartialContent('partials/alias-preference.partial.html')
-    //   .then((partialContent) => {
-    //
-    //       var dataElement = $(data);
-    //       dataElement.find('.originalName')
-    //                  .data('actualname', aGroupName)
-    //                  .attr('value', aGroupName);
-    //       dataElement.find('.aliasRemoveButton')
-    //                  .data('actualname', aGroupName);
-    //
-    //       // If the group name is the same as the alias name, just assume we don't
-    //       // have an alias set.
-    //       if (aGroupAlias != aGroupName) {
-    //         dataElement.find('.aliasName').attr('value', aGroupAlias);
-    //       }
-    //
-    //       $('#aliasInputs').append(dataElement);
-    //       self._setAliasPreferenceOnClickHandlers();
-    //     });
-    //   });
   }
 };

@@ -95,10 +95,16 @@ input[type='text'] {
   font-size: 14pt;
 }
 
+input[type='text'].large {
+  width: 40%;
+}
+
+input[type='text'].medium {
+  width: 25%;
+}
+
 input[type='text'].small {
-  display: inline-block;
   width: 5%;
-  font-size: 14pt;
 }
 
 section {
@@ -162,7 +168,7 @@ input[type='number'] {
   font-size: 14pt;
 
   &:hover {
-    background-color: $whiteLilac;
+    background-color: $white-lilac;
     cursor: pointer;
   }
 
@@ -174,4 +180,16 @@ input[type='number'] {
     position: absolute;
     right: 3em;
   }
+}
+
+a.buttonLink {
+  color: $storm-dust;
+}
+
+a.buttonLink:hover {
+  color: $kashmir-blue;
+}
+
+a.buttonLink:active {
+  color: $perano;
 }
