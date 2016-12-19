@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import jetpack from 'fs-jetpack';
 import env from '../env';
+import { GameAgeProfile, GameAgeLevel } from './GameAgeProfile';
 
 const PREFERENCE_STORE_KEY = Symbol("PreferenceStore");
 
@@ -65,8 +66,34 @@ PreferenceStore.prototype = {
       this.gameAgeProfiles = [];
     }
 
-    this.gameAgeProfiles.push(aGameAgeProfile);
+    // this.gameAgeProfiles.push(aGameAgeProfile);
     this._putPreferences();
+  },
+
+  setGameAgeProfile: function(aGameAgeProfile) {
+    // for (var idx in this.gameAgeProfiles) {
+    //   var nextProfile = this.gameAgeProfiles[idx];
+    //   if (nextProfile.getProfileId() == aGameAgeProfile.getProfileId()) {
+    //     delete this.gameAgeProfiles[idx];
+    //     break;
+    //   }
+    // }
+
+    this.addGameAgeProfile(aGameAgeProfile);
+  },
+
+  addGameAgeLevelSetting: function(aProfileName, aRegex, aAge, aLevel) {
+    var self = this;
+
+    var setting = new GameAgeLevel(aRegex, aAge, aLevel);
+    var gameAgeProfile = self.getGameAgeProfile(aProfileName);
+    if (!gameAgeProfile) {
+      gameAgeProfile = new GameAgeProfile(aProfileName);
+    }
+
+    self._verifyExtensibility(gameAgeProfile);
+    gameAgeProfile.addGameAgeLevel(setting);
+    self.setGameAgeProfile(gameAgeProfile);
   },
 
   /**
