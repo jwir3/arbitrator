@@ -182,14 +182,15 @@ input[type='number'] {
   }
 }
 
-a.buttonLink {
+.buttonLink {
   color: $storm-dust;
+  cursor: pointer;
 }
 
-a.buttonLink:hover {
+.buttonLink:hover {
   color: $kashmir-blue;
 }
 
-a.buttonLink:active {
+.buttonLink:active {
   color: $perano;
 }

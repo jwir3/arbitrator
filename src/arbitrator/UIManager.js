@@ -90,17 +90,34 @@ UIManager.prototype = {
     var self = this;
     var prefStore = PreferenceSingleton.instance;
 
+    // Hook up the UI for adding a new game age preference.
+    $('#addNewGameAgeLevel').click(function() {
+      self._createNewGameAgeLevelSetting();
+    });
+
+    // Load the existing preferences.
     self.loadPartialContent('partials/game-age-profile-preference.partial.html')
       .then((data) => {
         // For each game age level for this profile, put the UI for it.
         var prefStore = PreferenceSingleton.instance;
         var gameAgeSettings = prefStore.getGameAgeProfile(aGroupName);
-        for (var gameAgeIdx in gameAgeSettings) {
-          var gameAgePref = gameAgeSettings[gameAgeIdx];
-          var settingUI = $(data);
-          settingUI.find('#removeButton').id('removeButton-' + aGroupName);
-          settingUI.find('#modifyButton').id('modifyButton-' + aGroupName);
-          $('#gameAgeProfileContent').append(settingUI);
+        if (gameAgeSettings) {
+          var levels = gameAgeSettings.getLevels();
+          for (var gameAgeIdx in levels) {
+            var gameAgePref = levels[gameAgeIdx];
+            var settingUI = $(data);
+            settingUI.find('#gameAgeInputRegex').val(gameAgePref.getRegEx());
+            settingUI.find('#gameAgeInputAge').val(gameAgePref.getAge());
+            settingUI.find('#gameAgeInputLevel').val(gameAgePref.getLevel());
+
+            settingUI.find('#gameAgeInputRegex').attr('id', 'gameAgeInputRegex-' + gameAgePref.getId());
+            settingUI.find('#gameAgeInputAge').attr('id', 'gameAgeInputAge-' + gameAgePref.getId());
+            settingUI.find('#gameAgeInputLevel').attr('id', 'gameAgeInputLevel-' + gameAgePref.getId());
+
+            settingUI.find('#removeButton').attr('id', 'removeButton-' + gameAgePref.getId());
+            settingUI.find('#modifyButton').attr('id', 'modifyButton-' + gameAgePref.getId());
+            $('#gameAgeProfileContent').append(settingUI);
+          }
         }
       })
       .catch((error) => {
@@ -850,6 +867,21 @@ UIManager.prototype = {
 
   _isLocationSublocationPlaceholderDefault: function(aJQueryObject) {
     return aJQueryObject.attr('placeholder') == '';
+  },
+
+  _createNewGameAgeLevelSetting: function() {
+    var prefStore = PreferenceSingleton.instance;
+
+    // Grab the values
+    var regex = $('#gameAgeInputRegex').val();
+    var age = $('#gameAgeInputAge').val();
+    var level = $('#gameAgeInputLevel').val();
+
+    // Push to the preference store
+    var profileName = $('#gameAgeProfileContent').data('profilename');
+    prefStore.addGameAgeLevelSetting(profileName, regex, age, level);
+
+    // Refresh the prefs.
   },
 
   _addGameAgeProfileSubMenu: function(aName) {

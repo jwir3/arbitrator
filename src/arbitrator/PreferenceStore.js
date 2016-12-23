@@ -214,8 +214,9 @@ PreferenceStore.prototype = {
   getGameAgeProfile: function(aProfileId) {
     var gameAgeProfiles = this.getAllGameAgeProfiles();
     for (var idx in gameAgeProfiles) {
-      if (gameAgeProfiles[idx].getProfileId() == aProfileId) {
-        return gameAgeProfiles[idx]
+      let nextProfile = gameAgeProfiles[idx];
+      if (nextProfile.getProfileId() == aProfileId) {
+        return nextProfile;
       }
     }
 
@@ -440,8 +441,31 @@ PreferenceStore.prototype = {
       this.locations = storedPrefs.locations;
       this.userId = storedPrefs.userId;
       this.authTokens = storedPrefs.authTokens;
-      this.gameAgeProfiles = storedPrefs.gameAgeProfiles;
+      this.gameAgeProfiles =
+        this._deserializeGameProfiles(storedPrefs.gameAgeProfiles);
     }
+  },
+
+  // TODO: We should separate this into a module that allows for more general
+  //       deserialization.
+  _deserializeGameProfiles: function(aBaseObject) {
+    var profiles = [];
+    for (var idx in aBaseObject) {
+      profiles.push(this._deserializeSingleGameProfile(aBaseObject[idx]));
+    }
+
+    return profiles;
+  },
+
+  _deserializeSingleGameProfile: function(aBaseObject) {
+    var profile = new GameAgeProfile(aBaseObject.mProfileId);
+    for (var idx in aBaseObject.mGameAgeLevels) {
+      var nextGameAgeLevel = aBaseObject.mGameAgeLevels[idx];
+      profile.addGameAgeLevel(new GameAgeLevel(nextGameAgeLevel.mRegEx,
+                                               nextGameAgeLevel.mAge,
+                                               nextGameAgeLevel.mLevel));
+    }
+    return profile;
   },
 
   _getUserHome: function() {
