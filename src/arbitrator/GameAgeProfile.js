@@ -12,6 +12,7 @@ GameAgeProfile.prototype = {
   mGameAgeLevels: [],
 
   addGameAgeLevel: function(aGameAgeLevel) {
+    aGameAgeLevel.setId(this.mGameAgeLevels.length);
     this.mGameAgeLevels.push(aGameAgeLevel);
   },
 
@@ -21,6 +22,10 @@ GameAgeProfile.prototype = {
 
   getNumLevels: function() {
     return this.mGameAgeLevels.length;
+  },
+
+  getLevels: function() {
+    return this.mGameAgeLevels;
   },
 
   findGameAgeLevelMatching: function(aSearchString) {
@@ -61,6 +66,15 @@ GameAgeLevel.prototype = {
   mAge: null,
   mLevel: null,
   mRegEx: null,
+  mId: null,
+
+  setId: function(aId) {
+    this.mId = aId;
+  },
+
+  getId: function() {
+    return this.mId;
+  },
 
   getAge: function() {
     return this.mAge;
@@ -68,6 +82,10 @@ GameAgeLevel.prototype = {
 
   getLevel: function() {
     return this.mLevel;
+  },
+
+  getRegEx: function() {
+    return this.mRegEx;
   },
 
   matches: function(aSportLevelInput) {
