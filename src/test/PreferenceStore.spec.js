@@ -32,4 +32,20 @@ describe("Preference Storage and Retrieval", function () {
     expect(gameAgeLevelMatching.getAge()).to.eq('Bantam');
     expect(gameAgeLevelMatching.getLevel()).to.eq('B2');
   });
+
+  it ("is able to update an existing GameAgeProfile to add new values", function() {
+    var prefStore = PreferenceSingleton.instance;
+
+    var profile = new GameAgeProfile('D6');
+    profile.addGameAgeLevel(new GameAgeLevel('[Bantam|B](.*)[B2]', 'Bantam', 'B2'));
+
+    prefStore.addGameAgeProfile(profile);
+
+    profile.addGameAgeLevel(new GameAgeLevel('.*', 'Squirt', 'A'));
+    prefStore.setGameAgeProfile(profile);
+
+    var retrieved = prefStore.getGameAgeProfile('D6');
+    expect(retrieved).to.not.be.null;
+    expect(retrieved.getNumLevels()).to.eq(2);
+  });
 });

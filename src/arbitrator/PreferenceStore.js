@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import jetpack from 'fs-jetpack';
 import env from '../env';
+import { GameAgeProfile, GameAgeLevel } from './GameAgeProfile';
 
 const PREFERENCE_STORE_KEY = Symbol("PreferenceStore");
 
@@ -60,6 +61,12 @@ PreferenceStore.prototype = {
     this._putPreferences();
   },
 
+  /**
+   * Add a new {GameAgeProfile} to the preference store.
+   *
+   * @param {GameAgeProfile} aGameAgeProfile The profile to add to the
+   *        preference store.
+   */
   addGameAgeProfile: function(aGameAgeProfile) {
     if (!this.gameAgeProfiles) {
       this.gameAgeProfiles = [];
@@ -67,6 +74,55 @@ PreferenceStore.prototype = {
 
     this.gameAgeProfiles.push(aGameAgeProfile);
     this._putPreferences();
+  },
+
+  /**
+   * Set an existing {GameAgeProfile} to a new value.
+   *
+   * This will search, by profileId, for an existing {GameAgeProfile} within
+   * the preference store. If one is found, it will be removed and replaced with
+   * the given parameter. If one is not found, then the given parameter will be
+   * added to the preference store as if addGameAgeProfile() was called.
+   *
+   * @param {GameAgeProfile} aGameAgeProfile The new profile to place into the
+   *        preference store.
+   */
+  setGameAgeProfile: function(aGameAgeProfile) {
+    for (var idx in this.gameAgeProfiles) {
+      var nextProfile = this.gameAgeProfiles[idx];
+      if (nextProfile.getProfileId() == aGameAgeProfile.getProfileId()) {
+        delete this.gameAgeProfiles[idx];
+        break;
+      }
+    }
+
+    this.addGameAgeProfile(aGameAgeProfile);
+  },
+
+  /**
+   * Add a {GameAgeLevelSetting} to a {GameAgeProfile} and store it in the
+   * preference store.
+   *
+   * @param {string} aProfileName The profileId of the {GameAgeProfile} to add
+   *                              the new setting to.
+   * @param {string} aRegex       The regular expression defining the new
+   *                              {GameAgeLevelSetting}.
+   * @param {string} aAge         The age descriptor of the new
+   *                              {GameAgeLevelSetting}.
+   * @param {string} aLevel       The level descriptor of the new
+   *                              {GameAgeLevelSetting}.
+   */
+  addGameAgeLevelSetting: function(aProfileName, aRegex, aAge, aLevel) {
+    var self = this;
+
+    var setting = new GameAgeLevel(aRegex, aAge, aLevel);
+    var gameAgeProfile = self.getGameAgeProfile(aProfileName);
+    if (!gameAgeProfile) {
+      gameAgeProfile = new GameAgeProfile(aProfileName);
+    }
+
+    gameAgeProfile.addGameAgeLevel(setting);
+    self.setGameAgeProfile(gameAgeProfile);
   },
 
   /**
@@ -350,7 +406,8 @@ PreferenceStore.prototype = {
   },
 
   /**
-   * Put all preferences into local storage to be saved for a later date.
+   * Store preferences to a configuration file in the user's home directory so
+   * they can be read back in at a later date.
    */
   _putPreferences: function() {
     if (this.shouldStore) {
@@ -383,6 +440,7 @@ PreferenceStore.prototype = {
       this.locations = storedPrefs.locations;
       this.userId = storedPrefs.userId;
       this.authTokens = storedPrefs.authTokens;
+      this.gameAgeProfiles = storedPrefs.gameAgeProfiles;
     }
   },
 

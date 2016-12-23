@@ -24,13 +24,18 @@ GameAgeProfile.prototype = {
   },
 
   findGameAgeLevelMatching: function(aSearchString) {
+    var firstFound = null;
     for (var idx in this.mGameAgeLevels) {
       if (this.mGameAgeLevels[idx].matches(aSearchString)) {
-        return this.mGameAgeLevels[idx];
+        if (!firstFound) {
+          firstFound = this.mGameAgeLevels[idx];
+        } else {
+          console.warn(`There are multiple game age levels that match the search string '${aSearchString}'. You may have overlapping regular expressions.`);
+        }
       }
     }
 
-    return null;
+    return firstFound;
   }
 }
 
