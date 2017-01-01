@@ -1,0 +1,55 @@
+{
+  "gameAgeProfiles": [
+    {
+      "mProfileId": "106016",
+      "mGameAgeLevels": [
+        {
+          "mRegEx": "SC",
+          "mAge": "Squirt",
+          "mLevel": "C",
+          "mId": 0
+        },
+        {
+          "mRegEx": "15B",
+          "mAge": "U15",
+          "mLevel": "B",
+          "mId": 1
+        },
+        {
+          "mRegEx": "10B",
+          "mAge": "U10",
+          "mLevel": "B",
+          "mId": 2
+        },
+        {
+          "mRegEx": "12B",
+          "mAge": "U12",
+          "mLevel": "B",
+          "mId": 3
+        }
+      ]
+    },
+    {
+      "mProfileId": "Showcase",
+      "mGameAgeLevels": [
+        {
+          "mRegEx": "16U AAA",
+          "mAge": "U16",
+          "mLevel": "AAA",
+          "mId": 3
+        }
+      ]
+    },
+    {
+      "mProfileId": "MinneapHO",
+      "mGameAgeLevels": [
+        {
+          "mRegEx": "Hockey Boys, Varsity",
+          "mAge": "High School Boys",
+          "mLevel": "Varsity",
+          "mId": 3
+        }
+      ]
+    }
+  ]
+}

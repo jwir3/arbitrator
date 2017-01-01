@@ -483,7 +483,24 @@ PreferenceStore.prototype = {
 
       this[aProperty] = newObj;
     }
+  },
 
+  /**
+   * Set all game age profiles within this {PreferenceStore}.
+   *
+   * This is mostly used for testing convenience.
+   *
+   * @param {Array} gameProfiles An array of {GameAgeProfile}s.
+   */
+  _setGameAgeProfiles(gameProfiles) {
+    this.gameAgeProfiles = this._deserializeGameProfiles(gameProfiles);
+  },
+
+  /**
+   * Clear this {PreferenceStore} of {GameAgeProfile} objects.
+   */
+  _clearGameAgeProfiles() {
+    this.gameAgeProfiles = [];
   }
 };
 
