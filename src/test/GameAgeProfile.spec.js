@@ -1,4 +1,4 @@
-import { GameAgeLevel } from '../arbitrator/GameAgeProfile';
+import { GameAgeLevel, GameAgeProfile } from '../arbitrator/GameAgeProfile';
 import { expect, assert } from 'chai';
 
 describe('Game Age and Level Parsing Functionality', () => {
@@ -24,5 +24,19 @@ describe('Game Age and Level Parsing Functionality', () => {
     expect(gal.getAge()).to.eq('Bantam');
     expect(gal.getLevel()).to.eq('B2');
     expect(gal.matches("Hockey, Bantam A / AA")).to.eq(false);
+  });
+
+  it ('should be able to remove GameAgeLevel objects from a GameAgeProfile', function() {
+    var gal1 = new GameAgeLevel('.*', 'Bantam', 'A');
+    var gal2 = new GameAgeLevel('[Bantam|B](.*)[B2]', 'Bantam', 'B2');
+    var gameProfile = new GameAgeProfile('dontcare');
+    gameProfile.addGameAgeLevel(gal1);
+    gameProfile.addGameAgeLevel(gal2);
+
+    expect(gameProfile.getLevels()).to.have.lengthOf(2);
+
+    gameProfile.removeGameAgeLevel(gal2);
+
+    expect(gameProfile.getLevels()).to.have.lengthOf(1);
   });
 });

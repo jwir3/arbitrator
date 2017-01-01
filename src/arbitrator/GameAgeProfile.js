@@ -16,6 +16,14 @@ GameAgeProfile.prototype = {
     this.mGameAgeLevels.push(aGameAgeLevel);
   },
 
+  removeGameAgeLevel: function(aGameAgeLevel) {
+    for (var idx in this.mGameAgeLevels) {
+      if (this.mGameAgeLevels[idx].equals(aGameAgeLevel)) {
+        this.mGameAgeLevels.splice(idx, 1);
+      }
+    }
+  },
+
   getProfileId: function() {
     return this.mProfileId;
   },
@@ -100,6 +108,12 @@ GameAgeLevel.prototype = {
 
   getRegEx: function() {
     return this.mRegEx;
+  },
+
+  equals: function(aOther) {
+    return this.mAge == aOther.mAge
+      && this.mLevel == aOther.mLevel
+      && this.mRegEx == aOther.mRegEx;
   },
 
   matches: function(aSportLevelInput) {
