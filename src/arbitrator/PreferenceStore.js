@@ -91,7 +91,7 @@ PreferenceStore.prototype = {
     for (var idx in this.gameAgeProfiles) {
       var nextProfile = this.gameAgeProfiles[idx];
       if (nextProfile.getProfileId() == aGameAgeProfile.getProfileId()) {
-        delete this.gameAgeProfiles[idx];
+        this.gameAgeProfiles.splice(idx, 1);
         break;
       }
     }
