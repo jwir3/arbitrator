@@ -95,6 +95,32 @@ input[type='text'] {
   font-size: 14pt;
 }
 
+div.fieldHeaders {
+  display: block;
+
+  * {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 14pt;
+    vertical-align: top;
+    margin-left: 1em;
+    border: 2px solid white;
+    padding: 1px 1px 1px 1px;
+  }
+
+  .large {
+    width: 40%;
+  }
+
+  .medium {
+    width: 25%;
+  }
+
+  .small {
+    width: 10%;
+  }
+}
+
 input[type='text'].large {
   width: 40%;
 }
@@ -104,7 +130,7 @@ input[type='text'].medium {
 }
 
 input[type='text'].small {
-  width: 8%;
+  width: 10%;
 }
 
 section {

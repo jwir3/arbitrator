@@ -42,6 +42,7 @@ header {
   }
 }
 
-section {
+section:nth-child(1),
+section.with-margin-top {
   margin-top: 75px;
 }
