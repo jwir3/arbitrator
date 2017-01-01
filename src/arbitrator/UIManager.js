@@ -124,6 +124,17 @@ UIManager.prototype = {
             });
 
             settingUI.find('#modifyButton').attr('id', 'modifyButton-' + gameAgePref.getId());
+            settingUI.find('#modifyButton-' + gameAgePref.getId()).click(function() {
+              gameAgePref.setAge(settingUI.find('#gameAgeInputAge-' + gameAgePref.getId()).val());
+              gameAgePref.setLevel(settingUI.find('#gameAgeInputLevel-' + gameAgePref.getId()).val());
+              gameAgePref.setRegEx(settingUI.find('#gameAgeInputRegex-' + gameAgePref.getId()).val());
+
+              prefStore._putPreferences();
+
+              self.showSnackbar(util.format(Strings.game_age_preference_updated,
+                                            gameAgePref.getAge(),
+                                            gameAgePref.getLevel()));
+            });
             $('#gameAgeProfileContent').append(settingUI);
           }
         }

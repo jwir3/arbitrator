@@ -98,12 +98,24 @@ GameAgeLevel.prototype = {
     return this.mId;
   },
 
+  setAge: function(aAge) {
+    this.mAge = aAge;
+  },
+
   getAge: function() {
     return this.mAge;
   },
 
+  setLevel: function(aLevel) {
+    this.mLevel = aLevel;
+  },
+
   getLevel: function() {
     return this.mLevel;
+  },
+
+  setRegEx: function(aRegEx) {
+    this.mRegEx = aRegEx;
   },
 
   getRegEx: function() {
