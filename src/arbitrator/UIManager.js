@@ -98,7 +98,6 @@ UIManager.prototype = {
     // Load the existing preferences.
     self.loadPartialContent('partials/game-age-profile-preference.partial.html')
       .then((data) => {
-        // For each game age level for this profile, put the UI for it.
         var prefStore = PreferenceSingleton.instance;
         var gameAgeSettings = prefStore.getGameAgeProfile(aGroupName);
         if (gameAgeSettings) {
@@ -833,12 +832,16 @@ UIManager.prototype = {
    * @return The back stack entry in the back stack that was last added.
    */
   _popBackStack: function() {
+    var self = this;
+
     // Remove the current entry from the back stack first
     this.mBackStack.pop();
 
     var lastEntry = this.mBackStack.pop();
 
-    this.loadContent(lastEntry.id, lastEntry.name, null);
+    this.loadContent(lastEntry.id, lastEntry.name, function() {
+      self.refreshPreferences();
+    });
   },
 
   /**
