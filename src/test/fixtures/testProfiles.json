@@ -26,6 +26,12 @@
           "mAge": "U12",
           "mLevel": "B",
           "mId": 3
+        },
+        {
+          "mRegEx": "SB",
+          "mAge": "Squirt",
+          "mLevel": "B",
+          "mId": 4
         }
       ]
     },

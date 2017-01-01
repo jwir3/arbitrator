@@ -25,7 +25,21 @@ GameAgeProfile.prototype = {
   },
 
   getLevels: function() {
-    return this.mGameAgeLevels;
+    return this.mGameAgeLevels.sort(function(a, b) {
+      if (a.getAge() == b.getAge()) {
+        if (a.getLevel() < b.getLevel()) {
+          return -1;
+        } else if (a.getLevel() == b.getLevel()) {
+          return 0;
+        } else {
+          return 1;
+        }
+      } else if (a.getAge() < b.getAge()) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
   },
 
   findGameAgeLevelMatching: function(aSearchString) {
