@@ -95,6 +95,9 @@ UIManager.prototype = {
       self._createNewGameAgeLevelSetting();
     });
 
+    // Remove all children first.
+    $('#gameAgeProfileContent').children().remove();
+
     // Load the existing preferences.
     self.loadPartialContent('partials/game-age-profile-preference.partial.html')
       .then((data) => {
@@ -873,6 +876,7 @@ UIManager.prototype = {
   },
 
   _createNewGameAgeLevelSetting: function() {
+    var self = this;
     var prefStore = PreferenceSingleton.instance;
 
     // Grab the values
@@ -885,6 +889,11 @@ UIManager.prototype = {
     prefStore.addGameAgeLevelSetting(profileName, regex, age, level);
 
     // Refresh the prefs.
+    self.refreshGameAgeLevelPreferences(profileName);
+
+    $('#gameAgeInputRegex').val('');
+    $('#gameAgeInputAge').val('');
+    $('#gameAgeInputLevel').val('');
   },
 
   _addGameAgeProfileSubMenu: function(aName) {
