@@ -189,13 +189,13 @@ Arbitrator.prototype = {
     return this.mGames;
   },
 
-//   /**
-//    * Search through all games to find those that are consecutive.
-//    *
-//    * Note that this does not currently search through calendar history. That is,
-//    * only games that are entered together in the same Arbitrator object are
-//    * under consideration for being linked in a consecutive manner.
-//    */
+  /**
+   * Search through all games to find those that are consecutive.
+   *
+   * Note that this does not currently search through calendar history. That is,
+   * only games that are entered together in the same Arbitrator object are
+   * under consideration for being linked in a consecutive manner.
+   */
   findConsecutiveGames: function() {
     var prefStore = PreferenceSingleton.instance;
     var gameLengthMins = prefStore.getTimePreference(TimeType.LENGTH_OF_GAME, 60);

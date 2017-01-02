@@ -10,8 +10,24 @@ import jetpack from 'fs-jetpack';
 var singleGame = jetpack.read('src/test/fixtures/singleGame.txt');
 var basicSchedule = jetpack.read('src/test/fixtures/basicSchedule.txt');
 var complexSchedule = jetpack.read('src/test/fixtures/complexSchedule.txt');
+var testProfiles = jetpack.read('src/test/fixtures/testProfiles.json', 'json');
 
 describe("Arbitrator Translation Functionality", function () {
+  beforeEach(function() {
+    var prefStore = PreferenceSingleton.instance;
+    prefStore._setLeagueProfiles(testProfiles.LeagueProfiles);
+  });
+
+  afterEach(function() {
+      var prefStore = PreferenceSingleton.instance;
+      prefStore._clearLeagueProfiles();
+  });
+
+  it ("should have three LeagueProfiles in preferences", function() {
+    var prefStore = PreferenceSingleton.instance;
+    expect(prefStore.getAllLeagueProfiles()).to.have.lengthOf(3);
+  });
+
   it ("parses a basic string with two games", function() {
     var arbitrator = new Arbitrator(basicSchedule);
 
@@ -25,10 +41,10 @@ describe("Arbitrator Translation Functionality", function () {
     // could instead do something like:
     // expect(firstGame).to.be.a('game').withId(1111).withGroup('106016').withRole(Role.REFEREE)...
     checkGame(arbitrator, 1111, '106016', Role.REFEREE, 11, 9, 2013, 12, 30,
-              '12U Girls B', 'Bloomington Ice Garden 1', 'Bloomington',
+              'U12 B', 'Bloomington Ice Garden 1', 'Bloomington',
               'Minnetonka Black', false, false);
     checkGame(arbitrator, 598, 'Showcase', Role.LINESMAN, 4, 26, 2014, 20, 15,
-              '16U Girls', 'Saint Louis Park, East', 'TBA', 'TBA', false, false);
+              'U16 AAA', 'Saint Louis Park, East', 'TBA', 'TBA', false, false);
   });
 
   it ("parses tournaments and scrimmages correctly", function() {
@@ -50,7 +66,7 @@ describe("Arbitrator Translation Functionality", function () {
     expect(game1.getSummaryString()).to.equal(expectedSS1);
 
     var game2 = arbitrator.getGameById(203);
-    var expectedSS2 = "[106016] Referee Scrimmage New Prague v Farmington (10U Girls B)";
+    var expectedSS2 = "[106016] Referee Scrimmage New Prague v Farmington (U10 B)";
     expect(game2.getSummaryString()).to.equal(expectedSS2);
   });
 
@@ -63,18 +79,19 @@ describe("Arbitrator Translation Functionality", function () {
     checkGame(arbitrator, 330);
 
     // Check the characteristics of the first game.
+    var prefStore = PreferenceSingleton.instance;
     checkGame(arbitrator, 330, '106016', Role.REFEREE, 11, 8, 2014, 9, 50,
               "Squirt C", "New Prague Community Center", "New Prague",
               "Dodge County Black");
 
     // Check the characteristics of the second game.
     checkGame(arbitrator, 339, '106016', Role.REFEREE, 11, 8, 2014, 18, 45,
-              "10U Girls B", "Eden Prairie 3", "Eden Prairie Red",
+              "U10 B", "Eden Prairie 3", "Eden Prairie Red",
               "Minnetonka Black");
 
     // Check the characteristics of the third game.
     checkGame(arbitrator, 3839, 'MinneapHO', Role.LINESMAN, 11, 14, 2014, 20, 10,
-              "Varsity Boys", "St. Louis Park Recreation Center",
+              "High School Boys Varsity", "St. Louis Park Recreation Center",
               "St Thomas Academy", "Minnetonka");
   });
 

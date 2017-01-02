@@ -4,39 +4,6 @@ import { PreferenceSingleton, TimeType } from './PreferenceStore'
 import * as moment from 'moment';
 import { Strings } from './Strings'
 
-var gameLevels = {
-  'Mite'            : 'Mite',
-  'Squirt'          : 'Squirt',
-  'Peewee'          : 'Peewee',
-  'Bantam'          : 'Bantam',
-  'Junior Gold'     : 'Junior Gold',
-  'Junior'          : 'Junior',
-  'SC'              : 'Squirt C',
-  'SB'              : 'Squirt B',
-  'SA'              : 'Squirt A/AA/AAA',
-  'PC'              : 'Peewee C',
-  'PB'              : 'Peewee B',
-  'PA'              : 'Peewee A/AA/AAA',
-  'BC'              : 'Bantam C',
-  'BB'              : 'Bantam B',
-  'BA'              : 'Bantam A/AA/AAA',
-  'JGB'             : 'Junior Gold B',
-  'JGA'             : 'Junior Gold A/AA/AAA',
-  '10U'             : '10U Girls',
-  '10A'             : '10U Girls A',
-  '10B'             : '10U Girls B',
-  '12U'             : '12U Girls',
-  '12A'             : '12U Girls A',
-  '12B'             : '12U Girls B',
-  '14U'             : '14U Girls',
-  '16U'             : '16U Girls',
-  '19U'             : '19U Girls',
-  'Boys, Varsity'   : 'Varsity Boys',
-  'Girls, Varsity'  : 'Varsity Girls',
-  'Boys, JV'        : 'Junior Varsity Boys',
-  'Girls, JV'       : 'Junior Varsity Girls'
-};
-
 /**
  * Enumeration for Roles. Currently, an official (for hockey) can be one of the
  * following:
@@ -207,45 +174,25 @@ Game.prototype = {
   },
 
   getLevel: function() {
-    // See hashmap of levels at the top of the file.
-    // TODO: Add a better algorithm for this.
-
     var levelString = this.getSportLevel();
-    var levelKeys = Object.keys(gameLevels);
-    for (var level in levelKeys) {
-      if (levelString.indexOf(levelKeys[level]) > 0) {
-        return gameLevels[levelKeys[level]];
-      }
+    var prefStore = PreferenceSingleton.instance;
+
+    // Load all game level preferences for the given group.
+    var gameProfile = prefStore.getLeagueProfile(this.getGroup());
+
+    if (!gameProfile) {
+      console.warn(`No game age profile was found for group '${this.getGroup()}'. Unable to resolve game age level '${levelString}'`);
+      return 'UNKNOWN';
     }
 
-    // Check for a year
-    var yearStringIdx = levelString.search(/([0-9]{4})/g);
-    var yearString = levelString.slice(yearStringIdx, yearStringIdx+4);
-
-    if (yearString) {
-        var currentYear = (new Date()).getFullYear();
-        var age = parseInt(currentYear,10) - yearString;
-        if (age <= 8) {
-          return 'Mite';
-        } else if (age > 8 && age <= 10) {
-          return 'Squirt';
-        } else if (age > 10 && age <= 12) {
-          return 'Peewee';
-        } else if (age > 12 && age <= 14) {
-          return 'Bantam';
-        } else if (age > 14 && age <= 16) {
-          return '16U Boys/Girls';
-        } else if (age > 16 && age <= 18) {
-          return 'Junior Gold';
-        } else if (age > 18 && age <= 20) {
-          return 'Junior';
-        } else if (age > 20){
-          return 'Senior Mens/Womens';
-        }
+    // Find one where the regex matches.
+    var matchingGameClassificationLevel = gameProfile.findGameClassificationLevelMatching(levelString);
+    if (!matchingGameClassificationLevel) {
+      console.warn(`Unable to find game age/level matching ${levelString} in profile for '${this.getGroup()}'`);
+      return 'UNKNOWN';
     }
 
-    // TODO: Add analytics so that we can determine what the unknown was.
-    return "UNKNOWN";
+    return matchingGameClassificationLevel.getClassification() + " " + matchingGameClassificationLevel.getLevel();
   },
 
   areTeamsValid: function() {

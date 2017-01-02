@@ -11,6 +11,7 @@ logs/**
 /app/background.js
 /app/env.json
 /app/**/*.map
+/app/strings.json
 
 # Our app.html is generated from within the src/ directory
 app/app.html

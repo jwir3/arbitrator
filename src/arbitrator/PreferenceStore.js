@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import jetpack from 'fs-jetpack';
 import env from '../env';
-import { QuickCrypto } from './QuickCrypto';
+import { LeagueProfile, GameClassificationLevel } from './LeagueProfile';
 
 const PREFERENCE_STORE_KEY = Symbol("PreferenceStore");
 
@@ -59,6 +59,70 @@ PreferenceStore.prototype = {
 
     this.groupAliases[aGroupId] = aGroupAlias;
     this._putPreferences();
+  },
+
+  /**
+   * Add a new {LeagueProfile} to the preference store.
+   *
+   * @param {LeagueProfile} aLeagueProfile The profile to add to the
+   *        preference store.
+   */
+  addLeagueProfile: function(aLeagueProfile) {
+    if (!this.leagueProfiles) {
+      this.leagueProfiles = [];
+    }
+
+    this.leagueProfiles.push(aLeagueProfile);
+    this._putPreferences();
+  },
+
+  /**
+   * Set an existing {LeagueProfile} to a new value.
+   *
+   * This will search, by profileId, for an existing {LeagueProfile} within
+   * the preference store. If one is found, it will be removed and replaced with
+   * the given parameter. If one is not found, then the given parameter will be
+   * added to the preference store as if addLeagueProfile() was called.
+   *
+   * @param {LeagueProfile} aLeagueProfile The new profile to place into the
+   *        preference store.
+   */
+  setLeagueProfile: function(aLeagueProfile) {
+    for (var idx in this.leagueProfiles) {
+      var nextProfile = this.leagueProfiles[idx];
+      if (nextProfile.getProfileId() == aLeagueProfile.getProfileId()) {
+        this.leagueProfiles.splice(idx, 1);
+        break;
+      }
+    }
+
+    this.addLeagueProfile(aLeagueProfile);
+  },
+
+  /**
+   * Add a {GameClassificationLevelSetting} to a {LeagueProfile} and store it in the
+   * preference store.
+   *
+   * @param {string} aProfileName The profileId of the {LeagueProfile} to add
+   *                              the new setting to.
+   * @param {string} aClassification         The age descriptor of the new
+   *                              {GameClassificationLevelSetting}.
+   * @param {string} aLevel       The level descriptor of the new
+   *                              {GameClassificationLevelSetting}.
+   * @param {string} aRegex       The regular expression defining the new
+   *                              {GameClassificationLevelSetting}.
+   */
+  addGameClassificationLevelSetting: function(aProfileName, aClassification, aLevel, aRegex) {
+    var self = this;
+
+    var setting = new GameClassificationLevel(aClassification, aLevel, aRegex);
+    var leagueProfile = self.getLeagueProfile(aProfileName);
+    if (!leagueProfile) {
+      leagueProfile = new LeagueProfile(aProfileName);
+    }
+
+    leagueProfile.addGameClassificationLevel(setting);
+    self.setLeagueProfile(leagueProfile);
   },
 
   /**
@@ -139,6 +203,40 @@ PreferenceStore.prototype = {
     return aDefault;
   },
 
+  /**
+   * Retrieve all {LeagueProfile}s in the {PreferenceStore}.
+   *
+   * @return {Array} An array of {LeagueProfile} objects corresponding to all
+   *                 the {LeagueProfile}s that exist in this {PreferenceStore}.
+   */
+  getAllLeagueProfiles: function() {
+    if (!this.leagueProfiles) {
+      this.leagueProfiles = [];
+    }
+
+    return this.leagueProfiles;
+  },
+
+  /**
+   * Retrieve a specific {LeagueProfile} by its profile id.
+   *
+   * @param  {String} aProfileId A string identifier to search for.
+   *
+   * @return {LeagueProfile}     The {LeagueProfile} with id == aProfileId, if
+   *                             it exists; null, otherwise.
+   */
+  getLeagueProfile: function(aProfileId) {
+    var leagueProfiles = this.getAllLeagueProfiles();
+    for (var idx in leagueProfiles) {
+      let nextProfile = leagueProfiles[idx];
+      if (nextProfile.getProfileId() == aProfileId) {
+        return nextProfile;
+      }
+    }
+
+    return null;
+  },
+
   getLocationPreference: function(aLocationKey) {
       if (this.locations && this.locations[aLocationKey]) {
         var genericLoc = this.locations[aLocationKey];
@@ -185,6 +283,27 @@ PreferenceStore.prototype = {
       }
 
       return new Object();
+  },
+
+  /**
+   * Retrieve all of the group alias names in an array sorted in alphabetical
+   * order.
+   *
+   * @return {array} An array of {string} values, where each entry is an alias
+   *         for a group entered into the group alias preferences (i.e. the
+   *         resolved value, not the original value). This is array is returned
+   *         sorted in alphabetical order.
+   */
+  getAllGroupAliasNamesAsSortedArray: function() {
+    var sortedArray = [];
+    var groupAliases = this.getAllGroupAliases();
+    for (var prop in groupAliases) {
+      if (groupAliases.hasOwnProperty(prop)) {
+        sortedArray.push(groupAliases[prop]);
+      }
+    }
+
+    return sortedArray.sort();
   },
 
   /**
@@ -313,6 +432,44 @@ PreferenceStore.prototype = {
     this._putPreferences();
   },
 
+  /**
+   * Adjust an existing {GameClassificationLevel} within a {LeagueProfile} to have new
+   * values for age, level, and regular expression.
+   *
+   * @param {string} aGroupName The string identifier of the profile in which
+   *        the {GameClassificationLevel} exists.
+   * @param {string} aSettingId The unique identifier for the {GameClassificationLevel}
+   *        within its respective {LeagueProfile}.
+   * @param {string} aNewClassification The value to set for the Classification field of the setting.
+   * @param {string} aNewLevel The value to set for the Level field of the
+   *        setting.
+   * @param {string} aNewRegEx The value to set for the Regular Expression field
+   *        of the setting.
+   */
+  adjustGameClassificationLevel: function(aGroupName, aSettingId, aNewClassification,
+                               aNewLevel, aNewRegEx) {
+    var profile = this.getLeagueProfile(aGroupName);
+    var setting = profile.getGameClassificationLevelById(aSettingId);
+    setting.setClassification(aNewClassification);
+    setting.setLevel(aNewLevel);
+    setting.setRegEx(aNewRegEx);
+    this._putPreferences();
+  },
+
+  /**
+   * Remove an existing {GameClassificationLevel} from a {LeagueProfile}.
+   *
+   * @param {string} aGroupName The string identifier of the {LeagueProfile}
+   *        under which the {GameClassificationLevel} to remove resides.
+   * @param {string} aSettingId The string identifier of the {GameClassificationLevel}
+   *        within its parent {LeagueProfile}.
+   */
+  removeGameClassificationLevelFromProfile: function(aGroupName, aSettingId) {
+    var self = this;
+    self.getLeagueProfile(aGroupName).removeGameClassificationLevelById(aSettingId);
+    self._putPreferences();
+  },
+
   setAuthTokens: function(aAuthTokens) {
     this.authTokens = aAuthTokens;
     this._putPreferences();
@@ -323,7 +480,18 @@ PreferenceStore.prototype = {
   },
 
   /**
-   * Put all preferences into local storage to be saved for a later date.
+   * Export this {PreferenceStore} to a string. This is useful for debugging the
+   * storage methods.
+   *
+   * @return {string} The JSON of this object, in string form.
+   */
+  toString: function() {
+    return JSON.stringify(this);
+  },
+
+  /**
+   * Store preferences to a configuration file in the user's home directory so
+   * they can be read back in at a later date.
    */
   _putPreferences: function() {
     if (this.shouldStore) {
@@ -346,8 +514,31 @@ PreferenceStore.prototype = {
       this.locations = storedPrefs.locations;
       this.userId = storedPrefs.userId;
       this.authTokens = storedPrefs.authTokens;
-      this.arbiterAuthenticationInfo = storedPrefs.arbiterAuthenticationInfo;
+      this.leagueProfiles =
+        this._deserializeGameProfiles(storedPrefs.leagueProfiles);
     }
+  },
+
+  // TODO: We should separate this into a module that allows for more general
+  //       deserialization.
+  _deserializeGameProfiles: function(aBaseObject) {
+    var profiles = [];
+    for (var idx in aBaseObject) {
+      profiles.push(this._deserializeSingleGameProfile(aBaseObject[idx]));
+    }
+
+    return profiles;
+  },
+
+  _deserializeSingleGameProfile: function(aBaseObject) {
+    var profile = new LeagueProfile(aBaseObject.profileId);
+    for (var idx in aBaseObject.classificationLevels) {
+      var nextGameClassificationLevel = aBaseObject.classificationLevels[idx];
+      profile.addGameClassificationLevel(new GameClassificationLevel(nextGameClassificationLevel.classification,
+                                               nextGameClassificationLevel.level,
+                                               nextGameClassificationLevel.regularExpression));
+    }
+    return profile;
   },
 
   _getUserHome: function() {
@@ -365,7 +556,24 @@ PreferenceStore.prototype = {
 
       this[aProperty] = newObj;
     }
+  },
 
+  /**
+   * Set all game age profiles within this {PreferenceStore}.
+   *
+   * This is mostly used for testing convenience.
+   *
+   * @param {Array} gameProfiles An array of {LeagueProfile}s.
+   */
+  _setLeagueProfiles(gameProfiles) {
+    this.leagueProfiles = this._deserializeGameProfiles(gameProfiles);
+  },
+
+  /**
+   * Clear this {PreferenceStore} of {LeagueProfile} objects.
+   */
+  _clearLeagueProfiles() {
+    this.leagueProfiles = [];
   }
 };
 
