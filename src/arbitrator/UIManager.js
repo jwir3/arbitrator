@@ -77,12 +77,11 @@ UIManager.prototype = {
   refreshProfilePreferences: function() {
     // We need all of the group data to populate the profile names.
     var prefStore = PreferenceSingleton.instance;
-    var aliases = prefStore.getAllGroupAliases();
-    for (var prop in aliases) {
-      if (aliases.hasOwnProperty(prop)) {
-        var name = aliases[prop];
-        this._addLeagueProfileSubMenu(name);
-      }
+    var aliases = prefStore.getAllGroupAliasNamesAsSortedArray();
+
+    for (var idx in aliases) {
+      var name = aliases[idx];
+      this._addLeagueProfileSubMenu(name);
     }
   },
 

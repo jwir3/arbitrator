@@ -272,6 +272,27 @@ PreferenceStore.prototype = {
   },
 
   /**
+   * Retrieve all of the group alias names in an array sorted in alphabetical
+   * order.
+   *
+   * @return {array} An array of {string} values, where each entry is an alias
+   *         for a group entered into the group alias preferences (i.e. the
+   *         resolved value, not the original value). This is array is returned
+   *         sorted in alphabetical order.
+   */
+  getAllGroupAliasNamesAsSortedArray: function() {
+    var sortedArray = [];
+    var groupAliases = this.getAllGroupAliases();
+    for (var prop in groupAliases) {
+      if (groupAliases.hasOwnProperty(prop)) {
+        sortedArray.push(groupAliases[prop]);
+      }
+    }
+
+    return sortedArray.sort();
+  },
+
+  /**
    * Retrieve an alias for a group, based on an ID submitted.
    */
   getAliasForGroupId: function(aGroupId) {

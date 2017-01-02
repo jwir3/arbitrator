@@ -72,4 +72,18 @@ describe("Preference Storage and Retrieval", function () {
     expect(retrieved).to.not.be.null;
     expect(retrieved.getNulevels()).to.eq(2);
   });
+
+  it ('is able to add a series of group aliases and get their names in alpha order', function() {
+    var prefStore = PreferenceSingleton.instance;
+
+    prefStore.addGroupAlias('106016', 'District 6');
+    prefStore.addGroupAlias('MinneapHO', 'MHOA');
+
+    var aliasNames = prefStore.getAllGroupAliasNamesAsSortedArray();
+    expect(aliasNames).to.have.lengthOf(4);
+    expect(aliasNames[0]).to.eq('District 6');
+    expect(aliasNames[1]).to.eq('MHOA');
+    expect(aliasNames[2]).to.eq('OSL');
+    expect(aliasNames[3]).to.eq('Showcase');
+  });
 });
