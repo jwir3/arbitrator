@@ -91,6 +91,7 @@ UIManager.prototype = {
     var prefStore = PreferenceSingleton.instance;
 
     // Hook up the UI for adding a new game age preference.
+    $('#addNewGameAgeLevel').off();
     $('#addNewGameAgeLevel').click(function() {
       self._createNewGameAgeLevelSetting();
     });
