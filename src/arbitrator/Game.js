@@ -1,4 +1,4 @@
-import * as CryptoJS from 'crypto-js'
+import  crypto from 'crypto';
 import { Place } from './Place'
 import { PreferenceSingleton, TimeType } from './PreferenceStore'
 import * as moment from 'moment';
@@ -26,7 +26,8 @@ export var Game = function (aId, aGroup, aRole, aTimestamp, aSportLevel, aSite,
                             aHomeTeam, aAwayTeam, aFees) {
   var prefStore = PreferenceSingleton.instance;
   this.mId = aId;
-  this.mGroup = prefStore.getAliasForGroupId(aGroup);
+  this.mGroupId = aGroup;
+  this.mGroup = prefStore.getAliasForGroupId(this.mGroupId);
   this.setRole(aRole);
   this.mTimestamp = aTimestamp;
   this.mSportLevel = aSportLevel;
@@ -37,9 +38,55 @@ export var Game = function (aId, aGroup, aRole, aTimestamp, aSportLevel, aSite,
   this.mIsConsecutiveGame = false;
 }
 
+// Static methods on Game class
+
+/**
+ * Retrieve a data structure containing the game id and group id, given an
+ * encrypted form of them.
+ *
+ * @param  {String} aEncrypted Encrypted form of game information.
+ *
+ * @return {Promise}            A {Promise} object which, when fully complete,
+ *                              will give an object with two keys, 'groupId',
+ *                              which contains the original (non-resolved)
+ *                              identifier of the group from which the game was
+ *                              assigned, and 'gameId', a unique identifier for
+ *                              the game within the group.
+ */
+Game.getGameInfoFromCipher = function(aEncrypted) {
+  return new Promise((resolve, reject) => {
+    const decipher = crypto.createDecipher('aes192', 'gameHash');
+
+    var decrypted = '';
+    decipher.on('readable', () => {
+      var data = decipher.read();
+      if (data) {
+        decrypted += data.toString('utf8');
+      }
+    });
+
+    decipher.on('end', () => {
+      var splitString = decrypted.split('-##-');
+      resolve({
+        groupId: splitString[0],
+        gameId: splitString[1]
+      });
+    });
+
+    decipher.write(aEncrypted, 'hex');
+    decipher.end();
+  });
+}
+
+// Game class member methods
+
 Game.prototype = {
   getId: function() {
     return this.mId;
+  },
+
+  getGroupId: function() {
+    return this.mGroupId;
   },
 
   getGroup: function() {
@@ -247,7 +294,8 @@ Game.prototype = {
       "location": siteData,
       "description": "Game starts at " + String(this.getTime12Hr())
                      + subLocationString
-                     + "\n\n{ArbitratorHash: " + String(this.getHash()) + "}",
+                     + "\n\n{ArbitratorHash: "
+                     + String(this.getGameInfoCipher()) + "}",
       "summary": this.getSummaryString()
     };
   },
@@ -268,22 +316,41 @@ Game.prototype = {
    *         not change, even if the game dates/times change.
    */
    getIdentificationString: function() {
-      // var level = this.getLevel() === "UNKNOWN" ? "" : this.getLevel();
-      // var teams = this.areTeamsValid() ? this.getHomeTeam() + "v" + this.getAwayTeam() : "";
-      var idString = String(this.getId());
-      // idString = idString + this.getGroup() + level + teams;
+      var idString = String(this.getGroupId() + "-##-" + this.getId());
 
       return idString.replace(/\s+/gm, "");
    },
 
   /**
-   * Retrieve a hash of the unique identifying information of this game. This
-   * serves to identify the game if the date/time changes.
+   * Retrieve an encrypted version of the unique identifying information of this
+   * game. This serves to identify the game if the date/time changes.
    *
-   * @return A string of a SHA-1 hash of the game id.
+   * @return {Promise} A promise object, that when complete, will return an
+   *                   encrypted form of this {Game} object's game id and
+   *                   original (non-resolved) group id for the group from which
+   *                   this {Game} was assigned.
    */
-  getHash: function() {
-    return CryptoJS.SHA1(this.getIdentificationString()).toString(CryptoJS.enc.Hex);
+  getGameInfoCipher: function() {
+    var self = this;
+
+    return new Promise((resolve, reject) => {
+      const cipher = crypto.createCipher('aes192', 'gameHash');
+
+      var encrypted = '';
+      cipher.on('readable', () => {
+        var data = cipher.read();
+        if (data) {
+          encrypted += data.toString('hex');
+        }
+      });
+
+      cipher.on('end', () => {
+        resolve(encrypted);
+      });
+
+      cipher.write(self.getIdentificationString());
+      cipher.end();
+    });
   },
 
 

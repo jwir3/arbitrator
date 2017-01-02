@@ -196,7 +196,7 @@ ArbitratorGoogleClient.prototype = {
           auth: oAuthClient
         });
 
-        var searchString = "{ArbitratorHash: " + aGame.getHash() + "}";
+        var searchString = "{ArbitratorHash: " + aGame.getGameInfoCipher() + "}";
         var req = cal.events.list({
           'calendarId' : aCalendarId
         }, {}, function (err, result) {
