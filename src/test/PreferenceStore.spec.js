@@ -29,7 +29,7 @@ describe("Preference Storage and Retrieval", function () {
     prefStore.addLeagueProfile(profile);
 
     expect(prefStore.getLeagueProfile('D6')).to.not.be.null;
-    expect(prefStore.getLeagueProfile('D6').getNulevels()).to.eq(1);
+    expect(prefStore.getLeagueProfile('D6').getNumLevels()).to.eq(1);
     var GameClassificationLevelMatching = prefStore.getLeagueProfile('D6').findGameClassificationLevelMatching('D6, BB214 Tournament');
     expect(GameClassificationLevelMatching).to.not.be.null;
     expect(GameClassificationLevelMatching.getClassification()).to.eq('Bantam');
@@ -70,7 +70,7 @@ describe("Preference Storage and Retrieval", function () {
 
     var retrieved = prefStore.getLeagueProfile('D6');
     expect(retrieved).to.not.be.null;
-    expect(retrieved.getNulevels()).to.eq(2);
+    expect(retrieved.getNumLevels()).to.eq(2);
   });
 
   it ('is able to add a series of group aliases and get their names in alpha order', function() {

@@ -1,3 +1,9 @@
+/**
+ * Create a new {LeagueProfile} object.
+ *
+ * @param {string} aProfileIdentifier The identifier to use for the new profile.
+ *        It should be unique.
+ */
 export var LeagueProfile = function(aProfileIdentifier) {
   this.profileId = aProfileIdentifier;
   this.classificationLevels = [];
@@ -12,11 +18,21 @@ LeagueProfile.prototype = {
   profileId: null,
   classificationLevels: [],
 
+  /**
+   * Add a new {GameClassificationLevel} to this {LeagueProfile}.
+   *
+   * @param {GameClassificationLevel} aGameClassificationLevel The new {GameClassificationLevel} to add.
+   */
   addGameClassificationLevel: function(aGameClassificationLevel) {
     this.classificationLevels.push(aGameClassificationLevel);
     this._regenerateGameClassificationLevelIds();
   },
 
+  /**
+   * Remove an existing {GameClassificationLevel} from this {LeagueProfile}.
+   *
+   * @param  {GameClassificationLevel} aGameClassificationLevel The {GameClassificationLevel} object to remove from this {LeagueProfile}.
+   */
   removeGameClassificationLevel: function(aGameClassificationLevel) {
     for (var idx in this.classificationLevels) {
       if (this.classificationLevels[idx].equals(aGameClassificationLevel)) {
@@ -30,10 +46,17 @@ LeagueProfile.prototype = {
     return this.profileId;
   },
 
-  getNulevels: function() {
+  getNumLevels: function() {
     return this.classificationLevels.length;
   },
 
+  /**
+   * Retrieve the {GameClassificationLevel} objects held in this
+   * {LeagueProfile}, sorted first by classification, then by level.
+   *
+   * @return {Array} An array of {GameClassificationLevel}s, sorted in
+   *                 alphabetical order.
+   */
   getLevels: function() {
     return this.classificationLevels.sort(function(a, b) {
       if (a.getClassification() == b.getClassification()) {
@@ -120,6 +143,21 @@ LeagueProfile.prototype = {
   }
 }
 
+/**
+ * Create a new GameClassificationLevel.
+ *
+ * @param {String} classification    The classification of this new
+ *                                   {GameClassificationLevel}. This can be an
+ *                                   age group (e.g. "Bantam" or "Squirt"), or
+ *                                   a gender classification (e.g. "Boys").
+ * @param {String} level             The level of play for the new object. This
+ *                                   can be a recreational level (e.g. A, B, C),
+ *                                   or some other level descriptor (e.g.
+ *                                   Varsity).
+ * @param {String} regularExpression The regular expression which will be used
+ *                                   to match sport levels of input strings
+ *                                   with the new object.
+ */
 export var GameClassificationLevel = function (classification, level, regularExpression) {
   this.classification = classification;
   this.level = level;
@@ -183,6 +221,15 @@ GameClassificationLevel.prototype = {
       && this.regularExpression == aOther.regularExpression;
   },
 
+  /**
+   * Determine if this {GameClassificationLevel} matches an input string.
+   *
+   * @param  {String} aSportLevelInput An input string to match against.
+   *
+   * @return {boolean}                  true, if this object's regular
+   *                                    expression matches the given input
+   *                                    string; false, otherwise.
+   */
   matches: function(aSportLevelInput) {
     var regularExpression = new RegExp(this.regularExpression);
     return regularExpression.test(aSportLevelInput);

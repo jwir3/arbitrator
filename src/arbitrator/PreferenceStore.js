@@ -203,6 +203,12 @@ PreferenceStore.prototype = {
     return aDefault;
   },
 
+  /**
+   * Retrieve all {LeagueProfile}s in the {PreferenceStore}.
+   *
+   * @return {Array} An array of {LeagueProfile} objects corresponding to all
+   *                 the {LeagueProfile}s that exist in this {PreferenceStore}.
+   */
   getAllLeagueProfiles: function() {
     if (!this.leagueProfiles) {
       this.leagueProfiles = [];
@@ -211,6 +217,14 @@ PreferenceStore.prototype = {
     return this.leagueProfiles;
   },
 
+  /**
+   * Retrieve a specific {LeagueProfile} by its profile id.
+   *
+   * @param  {String} aProfileId A string identifier to search for.
+   *
+   * @return {LeagueProfile}     The {LeagueProfile} with id == aProfileId, if
+   *                             it exists; null, otherwise.
+   */
   getLeagueProfile: function(aProfileId) {
     var leagueProfiles = this.getAllLeagueProfiles();
     for (var idx in leagueProfiles) {
@@ -466,6 +480,16 @@ PreferenceStore.prototype = {
   },
 
   /**
+   * Export this {PreferenceStore} to a string. This is useful for debugging the
+   * storage methods.
+   *
+   * @return {string} The JSON of this object, in string form.
+   */
+  toString: function() {
+    return JSON.stringify(this);
+  },
+
+  /**
    * Store preferences to a configuration file in the user's home directory so
    * they can be read back in at a later date.
    */
@@ -475,16 +499,6 @@ PreferenceStore.prototype = {
                                .dir(".arbitrator")
                                .write("userConfig.json", this);
      }
-  },
-
-  /**
-   * Export this {PreferenceStore} to a string. This is useful for debugging the
-   * storage methods.
-   *
-   * @return {string} The JSON of this object, in string form.
-   */
-  toString: function() {
-    return JSON.stringify(this);
   },
 
   /**

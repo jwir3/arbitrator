@@ -85,6 +85,12 @@ UIManager.prototype = {
     }
   },
 
+  /**
+   * Refresh the {GameClassificationLevel} listing view.
+   *
+   * @param  {String} aGroupName The identifier of the {LeagueProfile} for which
+   *                             {GameClassificationLevel}s are being shown.
+   */
   refreshGameClassificationLevelPreferences: function(aGroupName) {
     var self = this;
     var prefStore = PreferenceSingleton.instance;
@@ -379,6 +385,158 @@ UIManager.prototype = {
     });
   },
 
+  /**
+   * Open the navigation drawer using a transition animation.
+   */
+  openNavDrawer: function() {
+    $('#nav-drawer').css({
+      'transform': 'translate(0px, 0px)'
+    });
+  },
+
+  /**
+   * Close the navigation drawer using a transition animation.
+   */
+  closeNavDrawer: function() {
+    $('#nav-drawer').css({
+      'transform': 'translate(-256px, 0px)'
+    });
+  },
+
+  /**
+   * Load partial content using an AJAX request.
+   *
+   * @param  {string} aPartialContentPath The path to the file that should be
+   *                                      loaded as the partial content.
+   *
+   * @return {Promise} A Promise that can be used to access the partial content
+   *                   view structure (e.g. the partial DOM), once it's loaded.
+   */
+  loadPartialContent: function(aPartialContentPath) {
+    return $.get(aPartialContentPath);
+  },
+
+  /**
+   * Load content into the main content pane.
+   *
+   * This asynchronously loads a file prefixed with an appropriate file id into
+   * the main content pane, adjusts the title and back stack, and calls an
+   * optional onComplete() handler when finished.
+   *
+   * @param aContentFileId The id of the content file to load. This must
+   *        correspond to a file in the partials/ subdirectory called
+   *        <aContentFileId>.partial.html.
+   * @param aTitle The title of the page to load. Will be presented in the app
+   *        bar.
+   * @param aOnComplete (optional) If included, this will be called when the
+   *        load operation has completed.
+   */
+  loadContent: function(aContentFileName, aTitle, aOnComplete) {
+    var self = this;
+
+    // Set the text of the nav drawer header
+    self.closeNavDrawer();
+
+    $('main#content').load('partials/' + aContentFileName + '.partial.html', null,
+                           function() {
+                             self._addToBackStack({
+                               'id': aContentFileName,
+                               'name': aTitle
+                             });
+
+                             if (!self._isBackStackEmpty()) {
+                               self._showBackArrow();
+                             } else {
+                               self._showHamburgerIcon();
+                             }
+
+                             // Add the title to the app bar.
+                             $('#pageTitle').text(aTitle);
+
+                             // Add the version number to the app bar
+                             $('#versionNumber').text('v' + self.getVersion());
+
+                             if (aContentFileName == 'main') {
+                               self.refreshGoogleClient(function(aGoogleClient) {
+                                 self.populateCalendarList(aGoogleClient);
+                                 self.populateUserId(aGoogleClient);
+                                 self._setArbitrateOnClickHandler();
+                               });
+                             }
+
+                             if (aOnComplete) {
+                               aOnComplete();
+                             }
+                           });
+  },
+
+  /**
+   * Refresh the ArbitratorGoogleClient object held internally.
+   *
+   * If necessary, this will create a new ArbitratorGoogleClient object.
+   *
+   * @param aOnComplete A function to execute after the ArbitratorGoogleClient
+   *        is initialized. If the ArbitratorGoogleClient is already set up, it
+   *        will execute immediately; otherwise, it will execute once the
+   *        ArbitratorGoogleClient is completely initialized. This function
+   *        should take a single argument: the ArbitratorGoogleClient instance
+   *        (in the event you want to work with it in the callback).
+   */
+  refreshGoogleClient: function(aOnComplete) {
+    if (this.mGoogleClient == null) {
+      this.mGoogleClient = new ArbitratorGoogleClient();
+    }
+
+    this.mGoogleClient.getClient().then((client) => {
+      aOnComplete(this.mGoogleClient);
+    });
+  },
+
+  /**
+   * Populate the list of calendars in the main user interface.
+   *
+   * @param  {[ArbitratorGoogleClient]} aGoogleClient The client with which the
+   *                                    api calls should be run with.
+   */
+  populateCalendarList: function(aGoogleClient) {
+    var calendarSelector = $('#calendarList');
+    var noCalendarSelectedOption = $('<option id="noCalendarSelectedOption">' + Strings.select_calendar + '</option>');
+    calendarSelector.append(noCalendarSelectedOption);
+
+    aGoogleClient.getCalendarList()
+      .then((items) => {
+        var selectEle = $('#calendarList');
+        for (var calendarIdx in items) {
+            var calendarItem = items[calendarIdx];
+            var listItem = $('<option></option>');
+            listItem.attr('id', calendarItem.id);
+            listItem.text(calendarItem.summary);
+            selectEle.append(listItem);
+        }
+        selectEle.css('display', 'block');
+      });
+  },
+
+  /**
+   * Populate the Google+ user id of the user in the preference store.
+   *
+   * @param  {[ArbitratorGoogleClient]} aGoogleClient The client with which the
+   *                                    api calls should be run with.
+   */
+  populateUserId: function(aGoogleClient) {
+    aGoogleClient.getUserId().then((id) => {
+      var prefStore = PreferenceSingleton.instance;
+      prefStore.setUserId(id);
+    });
+  },
+
+  /**
+   * Clear the main text input to the Arbitrator tool.
+   */
+  clearArbitratorInput: () => {
+    $('#schedule').val('');
+  },
+
   // logout: function() {
   //   var prefStore = PreferenceSingleton.instance;
   //   prefStore.removeUserId();
@@ -633,158 +791,6 @@ UIManager.prototype = {
   },
 
   /**
-   * Open the navigation drawer using a transition animation.
-   */
-  openNavDrawer: function() {
-    $('#nav-drawer').css({
-      'transform': 'translate(0px, 0px)'
-    });
-  },
-
-  /**
-   * Close the navigation drawer using a transition animation.
-   */
-  closeNavDrawer: function() {
-    $('#nav-drawer').css({
-      'transform': 'translate(-256px, 0px)'
-    });
-  },
-
-  /**
-   * Load partial content using an AJAX request.
-   *
-   * @param  {string} aPartialContentPath The path to the file that should be
-   *                                      loaded as the partial content.
-   *
-   * @return {Promise} A Promise that can be used to access the partial content
-   *                   view structure (e.g. the partial DOM), once it's loaded.
-   */
-  loadPartialContent: function(aPartialContentPath) {
-    return $.get(aPartialContentPath);
-  },
-
-  /**
-   * Load content into the main content pane.
-   *
-   * This asynchronously loads a file prefixed with an appropriate file id into
-   * the main content pane, adjusts the title and back stack, and calls an
-   * optional onComplete() handler when finished.
-   *
-   * @param aContentFileId The id of the content file to load. This must
-   *        correspond to a file in the partials/ subdirectory called
-   *        <aContentFileId>.partial.html.
-   * @param aTitle The title of the page to load. Will be presented in the app
-   *        bar.
-   * @param aOnComplete (optional) If included, this will be called when the
-   *        load operation has completed.
-   */
-  loadContent: function(aContentFileName, aTitle, aOnComplete) {
-    var self = this;
-
-    // Set the text of the nav drawer header
-    self.closeNavDrawer();
-
-    $('main#content').load('partials/' + aContentFileName + '.partial.html', null,
-                           function() {
-                             self._addToBackStack({
-                               'id': aContentFileName,
-                               'name': aTitle
-                             });
-
-                             if (!self._isBackStackEmpty()) {
-                               self._showBackArrow();
-                             } else {
-                               self._showHamburgerIcon();
-                             }
-
-                             // Add the title to the app bar.
-                             $('#pageTitle').text(aTitle);
-
-                             // Add the version number to the app bar
-                             $('#versionNumber').text('v' + self.getVersion());
-
-                             if (aContentFileName == 'main') {
-                               self.refreshGoogleClient(function(aGoogleClient) {
-                                 self.populateCalendarList(aGoogleClient);
-                                 self.populateUserId(aGoogleClient);
-                                 self._setArbitrateOnClickHandler();
-                               });
-                             }
-
-                             if (aOnComplete) {
-                               aOnComplete();
-                             }
-                           });
-  },
-
-  /**
-   * Refresh the ArbitratorGoogleClient object held internally.
-   *
-   * If necessary, this will create a new ArbitratorGoogleClient object.
-   *
-   * @param aOnComplete A function to execute after the ArbitratorGoogleClient
-   *        is initialized. If the ArbitratorGoogleClient is already set up, it
-   *        will execute immediately; otherwise, it will execute once the
-   *        ArbitratorGoogleClient is completely initialized. This function
-   *        should take a single argument: the ArbitratorGoogleClient instance
-   *        (in the event you want to work with it in the callback).
-   */
-  refreshGoogleClient: function(aOnComplete) {
-    if (this.mGoogleClient == null) {
-      this.mGoogleClient = new ArbitratorGoogleClient();
-    }
-
-    this.mGoogleClient.getClient().then((client) => {
-      aOnComplete(this.mGoogleClient);
-    });
-  },
-
-  /**
-   * Populate the list of calendars in the main user interface.
-   *
-   * @param  {[ArbitratorGoogleClient]} aGoogleClient The client with which the
-   *                                    api calls should be run with.
-   */
-  populateCalendarList: function(aGoogleClient) {
-    var calendarSelector = $('#calendarList');
-    var noCalendarSelectedOption = $('<option id="noCalendarSelectedOption">' + Strings.select_calendar + '</option>');
-    calendarSelector.append(noCalendarSelectedOption);
-
-    aGoogleClient.getCalendarList()
-      .then((items) => {
-        var selectEle = $('#calendarList');
-        for (var calendarIdx in items) {
-            var calendarItem = items[calendarIdx];
-            var listItem = $('<option></option>');
-            listItem.attr('id', calendarItem.id);
-            listItem.text(calendarItem.summary);
-            selectEle.append(listItem);
-        }
-        selectEle.css('display', 'block');
-      });
-  },
-
-/**
- * Populate the Google+ user id of the user in the preference store.
- *
- * @param  {[ArbitratorGoogleClient]} aGoogleClient The client with which the
- *                                    api calls should be run with.
- */
-  populateUserId: function(aGoogleClient) {
-    aGoogleClient.getUserId().then((id) => {
-      var prefStore = PreferenceSingleton.instance;
-      prefStore.setUserId(id);
-    });
-  },
-
-  /**
-   * Clear the main text input to the Arbitrator tool.
-   */
-  clearArbitratorInput: () => {
-    $('#schedule').val('');
-  },
-
-  /**
    * Show the back arrow icon in place of the navigation drawer icon and adjust
    * the onClick() functionality for this icon so that it pops from the back
    * stack.
@@ -906,6 +912,10 @@ UIManager.prototype = {
     return aJQueryObject.attr('placeholder') == '';
   },
 
+  /**
+   * Create a new {GameClassificationLevel} from inputs entered by the user
+   * within the current view.
+   */
   _createNewGameClassificationLevelSetting: function() {
     var self = this;
     var prefStore = PreferenceSingleton.instance;
@@ -927,6 +937,16 @@ UIManager.prototype = {
     $('#gameClassificationInputRegex').val('');
   },
 
+  /**
+   * Add a new sub-menu option to the {LeagueProfile} listing corresponding to
+   * a given group alias.
+   *
+   * Note that this also sets up the click handler for the given sub-menu so
+   * that it transitions it to the league profile detail view.
+   *
+   * @param {String} aName The name of a {LeagueProfile} to display in the
+   *                       listing.
+   */
   _addLeagueProfileSubMenu: function(aName) {
     var self = this;
     self.loadPartialContent('partials/league-profile-preference.partial.html')
