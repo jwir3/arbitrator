@@ -1,58 +1,58 @@
 {
-  "gameAgeProfiles": [
+  "LeagueProfiles": [
     {
-      "mProfileId": "106016",
-      "mGameAgeLevels": [
+      "profileId": "106016",
+      "classificationLevels": [
         {
-          "mRegEx": "SC",
-          "mAge": "Squirt",
-          "mLevel": "C",
+          "regularExpression": "SC",
+          "classification": "Squirt",
+          "level": "C",
           "mId": 0
         },
         {
-          "mRegEx": "15B",
-          "mAge": "U15",
-          "mLevel": "B",
+          "regularExpression": "15B",
+          "classification": "U15",
+          "level": "B",
           "mId": 1
         },
         {
-          "mRegEx": "10B",
-          "mAge": "U10",
-          "mLevel": "B",
+          "regularExpression": "10B",
+          "classification": "U10",
+          "level": "B",
           "mId": 2
         },
         {
-          "mRegEx": "12B",
-          "mAge": "U12",
-          "mLevel": "B",
+          "regularExpression": "12B",
+          "classification": "U12",
+          "level": "B",
           "mId": 3
         },
         {
-          "mRegEx": "SB",
-          "mAge": "Squirt",
-          "mLevel": "B",
+          "regularExpression": "SB",
+          "classification": "Squirt",
+          "level": "B",
           "mId": 4
         }
       ]
     },
     {
-      "mProfileId": "Showcase",
-      "mGameAgeLevels": [
+      "profileId": "Showcase",
+      "classificationLevels": [
         {
-          "mRegEx": "16U AAA",
-          "mAge": "U16",
-          "mLevel": "AAA",
+          "regularExpression": "16U AAA",
+          "classification": "U16",
+          "level": "AAA",
           "mId": 3
         }
       ]
     },
     {
-      "mProfileId": "MinneapHO",
-      "mGameAgeLevels": [
+      "profileId": "MinneapHO",
+      "classificationLevels": [
         {
-          "mRegEx": "Hockey Boys, Varsity",
-          "mAge": "High School Boys",
-          "mLevel": "Varsity",
+          "regularExpression": "Hockey Boys, Varsity",
+          "classification": "High School Boys",
+          "level": "Varsity",
           "mId": 3
         }
       ]

@@ -178,7 +178,7 @@ Game.prototype = {
     var prefStore = PreferenceSingleton.instance;
 
     // Load all game level preferences for the given group.
-    var gameProfile = prefStore.getGameAgeProfile(this.getGroup());
+    var gameProfile = prefStore.getLeagueProfile(this.getGroup());
 
     if (!gameProfile) {
       console.warn(`No game age profile was found for group '${this.getGroup()}'. Unable to resolve game age level '${levelString}'`);
@@ -186,13 +186,13 @@ Game.prototype = {
     }
 
     // Find one where the regex matches.
-    var matchingGameAgeLevel = gameProfile.findGameAgeLevelMatching(levelString);
-    if (!matchingGameAgeLevel) {
+    var matchingGameClassificationLevel = gameProfile.findGameClassificationLevelMatching(levelString);
+    if (!matchingGameClassificationLevel) {
       console.warn(`Unable to find game age/level matching ${levelString} in profile for '${this.getGroup()}'`);
       return 'UNKNOWN';
     }
 
-    return matchingGameAgeLevel.getAge() + " " + matchingGameAgeLevel.getLevel();
+    return matchingGameClassificationLevel.getClassification() + " " + matchingGameClassificationLevel.getLevel();
   },
 
   areTeamsValid: function() {

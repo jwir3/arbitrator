@@ -15,17 +15,17 @@ var testProfiles = jetpack.read('src/test/fixtures/testProfiles.json', 'json');
 describe("Arbitrator Translation Functionality", function () {
   beforeEach(function() {
     var prefStore = PreferenceSingleton.instance;
-    prefStore._setGameAgeProfiles(testProfiles.gameAgeProfiles);
+    prefStore._setLeagueProfiles(testProfiles.LeagueProfiles);
   });
 
   afterEach(function() {
       var prefStore = PreferenceSingleton.instance;
-      prefStore._clearGameAgeProfiles();
+      prefStore._clearLeagueProfiles();
   });
 
-  it ("should have three GameAgeProfiles in preferences", function() {
+  it ("should have three LeagueProfiles in preferences", function() {
     var prefStore = PreferenceSingleton.instance;
-    expect(prefStore.getAllGameAgeProfiles()).to.have.lengthOf(3);
+    expect(prefStore.getAllLeagueProfiles()).to.have.lengthOf(3);
   });
 
   it ("parses a basic string with two games", function() {

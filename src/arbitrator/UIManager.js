@@ -72,7 +72,7 @@ UIManager.prototype = {
   },
 
   /**
-   * Refresh the data for the GameAgeProfile view.
+   * Refresh the data for the LeagueProfile view.
    */
   refreshProfilePreferences: function() {
     // We need all of the group data to populate the profile names.
@@ -81,76 +81,76 @@ UIManager.prototype = {
     for (var prop in aliases) {
       if (aliases.hasOwnProperty(prop)) {
         var name = aliases[prop];
-        this._addGameAgeProfileSubMenu(name);
+        this._addLeagueProfileSubMenu(name);
       }
     }
   },
 
-  refreshGameAgeLevelPreferences: function(aGroupName) {
+  refreshGameClassificationLevelPreferences: function(aGroupName) {
     var self = this;
     var prefStore = PreferenceSingleton.instance;
 
     // Hook up the UI for adding a new game age preference.
-    $('#addNewGameAgeLevel').off();
-    $('#addNewGameAgeLevel').click(function() {
-      self._createNewGameAgeLevelSetting();
+    $('#addNewGameClassificationLevel').off();
+    $('#addNewGameClassificationLevel').click(function() {
+      self._createNewGameClassificationLevelSetting();
     });
 
     // Remove all children first.
-    $('#gameAgeProfileContent').children().remove();
+    $('#leagueProfileContent').children().remove();
 
     // Load the existing preferences.
-    self.loadPartialContent('partials/game-age-profile-preference.partial.html')
+    self.loadPartialContent('partials/game-classification-preference.partial.html')
       .then((data) => {
         var prefStore = PreferenceSingleton.instance;
-        var gameAgeSettings = prefStore.getGameAgeProfile(aGroupName);
-        if (gameAgeSettings) {
-          var levels = gameAgeSettings.getLevels();
-          for (var gameAgeIdx in levels) {
-            var gameAgePref = levels[gameAgeIdx];
+        var gameClassificationSettings = prefStore.getLeagueProfile(aGroupName);
+        if (gameClassificationSettings) {
+          var levels = gameClassificationSettings.getLevels();
+          for (var gameClassificationIdx in levels) {
+            var gameClassificationPref = levels[gameClassificationIdx];
             var settingUI = $(data);
-            var dataSettingId = settingUI.data('settingId', gameAgePref.getId());
-            var inputAge = settingUI.find('#gameAgeInputAge');
-            var inputLevel = settingUI.find('#gameAgeInputLevel');
-            var inputRegex = settingUI.find('#gameAgeInputRegex');
+            var dataSettingId = settingUI.data('settingId', gameClassificationPref.getId());
+            var inputClassification = settingUI.find('#gameClassificationInputClassification');
+            var inputLevel = settingUI.find('#gameClassificationInputLevel');
+            var inputRegex = settingUI.find('#gameClassificationInputRegex');
             var removeButton = settingUI.find('#removeButton');
             var modifyButton = settingUI.find('#modifyButton');
 
-            inputAge.val(gameAgePref.getAge());
-            inputLevel.val(gameAgePref.getLevel());
-            inputRegex.val(gameAgePref.getRegEx());
+            inputClassification.val(gameClassificationPref.getClassification());
+            inputLevel.val(gameClassificationPref.getLevel());
+            inputRegex.val(gameClassificationPref.getRegEx());
 
-            inputAge.attr('id', 'gameAgeInputAge-' + gameAgePref.getId());
-            inputLevel.attr('id', 'gameAgeInputLevel-' + gameAgePref.getId());
-            inputRegex.attr('id', 'gameAgeInputRegex-' + gameAgePref.getId());
+            inputClassification.attr('id', 'gameClassificationInputClassification-' + gameClassificationPref.getId());
+            inputLevel.attr('id', 'gameClassificationInputLevel-' + gameClassificationPref.getId());
+            inputRegex.attr('id', 'gameClassificationInputRegex-' + gameClassificationPref.getId());
 
-            removeButton.attr('id', 'removeButton-' + gameAgePref.getId());
+            removeButton.attr('id', 'removeButton-' + gameClassificationPref.getId());
             removeButton.click(function() {
               var parentElement = $(this).parent();
               var id = parentElement.data('settingId');
-              prefStore.removeGameAgeLevelFromProfile(aGroupName, id);
-              self.refreshGameAgeLevelPreferences(aGroupName);
+              prefStore.removeGameClassificationLevelFromProfile(aGroupName, id);
+              self.refreshGameClassificationLevelPreferences(aGroupName);
             });
 
-            modifyButton.attr('id', 'modifyButton-' + gameAgePref.getId());
+            modifyButton.attr('id', 'modifyButton-' + gameClassificationPref.getId());
             modifyButton.click(function() {
               var parentElement = $(this).parent();
               var id = parentElement.data('settingId');
-              var inputAgeWithId = $('#gameAgeInputAge-' + id);
-              var inputLevelWithId = $('#gameAgeInputLevel-' + id);
-              var inputRegexWithId = $('#gameAgeInputRegex-' + id);
+              var inputClassificationWithId = $('#gameClassificationInputClassification-' + id);
+              var inputLevelWithId = $('#gameClassificationInputLevel-' + id);
+              var inputRegexWithId = $('#gameClassificationInputRegex-' + id);
 
-              prefStore.adjustGameAgeLevel(aGroupName, id,
-                                           inputAgeWithId.val(),
+              prefStore.adjustGameClassificationLevel(aGroupName, id,
+                                           inputClassificationWithId.val(),
                                            inputLevelWithId.val(),
                                            inputRegexWithId.val());
 
               self.showSnackbar(util.format(Strings.game_age_preference_updated,
-                                            inputAgeWithId.val(),
+                                            inputClassificationWithId.val(),
                                             inputLevelWithId.val()));
-              self.refreshGameAgeLevelPreferences(aGroupName);
+              self.refreshGameClassificationLevelPreferences(aGroupName);
             });
-            $('#gameAgeProfileContent').append(settingUI);
+            $('#leagueProfileContent').append(settingUI);
           }
         }
       })
@@ -907,43 +907,43 @@ UIManager.prototype = {
     return aJQueryObject.attr('placeholder') == '';
   },
 
-  _createNewGameAgeLevelSetting: function() {
+  _createNewGameClassificationLevelSetting: function() {
     var self = this;
     var prefStore = PreferenceSingleton.instance;
 
     // Grab the values
-    var regex = $('#gameAgeInputRegex').val();
-    var age = $('#gameAgeInputAge').val();
-    var level = $('#gameAgeInputLevel').val();
+    var regex = $('#gameClassificationInputRegex').val();
+    var age = $('#gameClassificationInputClassification').val();
+    var level = $('#gameClassificationInputLevel').val();
 
     // Push to the preference store
-    var profileName = $('#gameAgeProfileContent').data('profilename');
-    prefStore.addGameAgeLevelSetting(profileName, age, level, regex);
+    var profileName = $('#leagueProfileContent').data('profilename');
+    prefStore.addGameClassificationLevelSetting(profileName, age, level, regex);
 
     // Refresh the prefs.
-    self.refreshGameAgeLevelPreferences(profileName);
+    self.refreshGameClassificationLevelPreferences(profileName);
 
-    $('#gameAgeInputAge').val('');
-    $('#gameAgeInputLevel').val('');
-    $('#gameAgeInputRegex').val('');
+    $('#gameClassificationInputClassification').val('');
+    $('#gameClassificationInputLevel').val('');
+    $('#gameClassificationInputRegex').val('');
   },
 
-  _addGameAgeProfileSubMenu: function(aName) {
+  _addLeagueProfileSubMenu: function(aName) {
     var self = this;
-    self.loadPartialContent('partials/level-profile-preference.partial.html')
+    self.loadPartialContent('partials/league-profile-preference.partial.html')
       .then((partialContent) => {
         var partialContentDOM = $(partialContent);
-        partialContentDOM.find('.level-profile-label').append(aName);
+        partialContentDOM.find('.league-profile-label').append(aName);
         partialContentDOM.click(function() {
-          self.loadContent('game-age-profile', aName + " Game Age Profile", function() {
-            $('#gameAgeProfileContent').data('profilename', aName);
-            self.refreshGameAgeLevelPreferences(aName);
+          self.loadContent('league-profile', aName + " Game Classification Profile", function() {
+            $('#leagueProfileContent').data('profilename', aName);
+            self.refreshGameClassificationLevelPreferences(aName);
           });
         });
         $('#levelsContent').append(partialContentDOM);
       })
       .catch((error) => {
-        console.error("Unable to load 'partials/level-profile-preference.partial.html': "
+        console.error("Unable to load 'partials/league-profile-preference.partial.html': "
                       + error);
       });
   }

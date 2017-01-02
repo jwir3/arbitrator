@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import jetpack from 'fs-jetpack';
 import env from '../env';
-import { GameAgeProfile, GameAgeLevel } from './GameAgeProfile';
+import { LeagueProfile, GameClassificationLevel } from './LeagueProfile';
 
 const PREFERENCE_STORE_KEY = Symbol("PreferenceStore");
 
@@ -62,67 +62,67 @@ PreferenceStore.prototype = {
   },
 
   /**
-   * Add a new {GameAgeProfile} to the preference store.
+   * Add a new {LeagueProfile} to the preference store.
    *
-   * @param {GameAgeProfile} aGameAgeProfile The profile to add to the
+   * @param {LeagueProfile} aLeagueProfile The profile to add to the
    *        preference store.
    */
-  addGameAgeProfile: function(aGameAgeProfile) {
-    if (!this.gameAgeProfiles) {
-      this.gameAgeProfiles = [];
+  addLeagueProfile: function(aLeagueProfile) {
+    if (!this.leagueProfiles) {
+      this.leagueProfiles = [];
     }
 
-    this.gameAgeProfiles.push(aGameAgeProfile);
+    this.leagueProfiles.push(aLeagueProfile);
     this._putPreferences();
   },
 
   /**
-   * Set an existing {GameAgeProfile} to a new value.
+   * Set an existing {LeagueProfile} to a new value.
    *
-   * This will search, by profileId, for an existing {GameAgeProfile} within
+   * This will search, by profileId, for an existing {LeagueProfile} within
    * the preference store. If one is found, it will be removed and replaced with
    * the given parameter. If one is not found, then the given parameter will be
-   * added to the preference store as if addGameAgeProfile() was called.
+   * added to the preference store as if addLeagueProfile() was called.
    *
-   * @param {GameAgeProfile} aGameAgeProfile The new profile to place into the
+   * @param {LeagueProfile} aLeagueProfile The new profile to place into the
    *        preference store.
    */
-  setGameAgeProfile: function(aGameAgeProfile) {
-    for (var idx in this.gameAgeProfiles) {
-      var nextProfile = this.gameAgeProfiles[idx];
-      if (nextProfile.getProfileId() == aGameAgeProfile.getProfileId()) {
-        this.gameAgeProfiles.splice(idx, 1);
+  setLeagueProfile: function(aLeagueProfile) {
+    for (var idx in this.leagueProfiles) {
+      var nextProfile = this.leagueProfiles[idx];
+      if (nextProfile.getProfileId() == aLeagueProfile.getProfileId()) {
+        this.leagueProfiles.splice(idx, 1);
         break;
       }
     }
 
-    this.addGameAgeProfile(aGameAgeProfile);
+    this.addLeagueProfile(aLeagueProfile);
   },
 
   /**
-   * Add a {GameAgeLevelSetting} to a {GameAgeProfile} and store it in the
+   * Add a {GameClassificationLevelSetting} to a {LeagueProfile} and store it in the
    * preference store.
    *
-   * @param {string} aProfileName The profileId of the {GameAgeProfile} to add
+   * @param {string} aProfileName The profileId of the {LeagueProfile} to add
    *                              the new setting to.
-   * @param {string} aAge         The age descriptor of the new
-   *                              {GameAgeLevelSetting}.
+   * @param {string} aClassification         The age descriptor of the new
+   *                              {GameClassificationLevelSetting}.
    * @param {string} aLevel       The level descriptor of the new
-   *                              {GameAgeLevelSetting}.
+   *                              {GameClassificationLevelSetting}.
    * @param {string} aRegex       The regular expression defining the new
-   *                              {GameAgeLevelSetting}.
+   *                              {GameClassificationLevelSetting}.
    */
-  addGameAgeLevelSetting: function(aProfileName, aAge, aLevel, aRegex) {
+  addGameClassificationLevelSetting: function(aProfileName, aClassification, aLevel, aRegex) {
     var self = this;
 
-    var setting = new GameAgeLevel(aAge, aLevel, aRegex);
-    var gameAgeProfile = self.getGameAgeProfile(aProfileName);
-    if (!gameAgeProfile) {
-      gameAgeProfile = new GameAgeProfile(aProfileName);
+    var setting = new GameClassificationLevel(aClassification, aLevel, aRegex);
+    var leagueProfile = self.getLeagueProfile(aProfileName);
+    if (!leagueProfile) {
+      leagueProfile = new LeagueProfile(aProfileName);
     }
 
-    gameAgeProfile.addGameAgeLevel(setting);
-    self.setGameAgeProfile(gameAgeProfile);
+    leagueProfile.addGameClassificationLevel(setting);
+    self.setLeagueProfile(leagueProfile);
   },
 
   /**
@@ -203,18 +203,18 @@ PreferenceStore.prototype = {
     return aDefault;
   },
 
-  getAllGameAgeProfiles: function() {
-    if (!this.gameAgeProfiles) {
-      this.gameAgeProfiles = [];
+  getAllLeagueProfiles: function() {
+    if (!this.leagueProfiles) {
+      this.leagueProfiles = [];
     }
 
-    return this.gameAgeProfiles;
+    return this.leagueProfiles;
   },
 
-  getGameAgeProfile: function(aProfileId) {
-    var gameAgeProfiles = this.getAllGameAgeProfiles();
-    for (var idx in gameAgeProfiles) {
-      let nextProfile = gameAgeProfiles[idx];
+  getLeagueProfile: function(aProfileId) {
+    var leagueProfiles = this.getAllLeagueProfiles();
+    for (var idx in leagueProfiles) {
+      let nextProfile = leagueProfiles[idx];
       if (nextProfile.getProfileId() == aProfileId) {
         return nextProfile;
       }
@@ -398,40 +398,40 @@ PreferenceStore.prototype = {
   },
 
   /**
-   * Adjust an existing {GameAgeLevel} within a {GameAgeProfile} to have new
+   * Adjust an existing {GameClassificationLevel} within a {LeagueProfile} to have new
    * values for age, level, and regular expression.
    *
    * @param {string} aGroupName The string identifier of the profile in which
-   *        the {GameAgeLevel} exists.
-   * @param {string} aSettingId The unique identifier for the {GameAgeLevel}
-   *        within its respective {GameAgeProfile}.
-   * @param {string} aNewAge The value to set for the Age field of the setting.
+   *        the {GameClassificationLevel} exists.
+   * @param {string} aSettingId The unique identifier for the {GameClassificationLevel}
+   *        within its respective {LeagueProfile}.
+   * @param {string} aNewClassification The value to set for the Classification field of the setting.
    * @param {string} aNewLevel The value to set for the Level field of the
    *        setting.
    * @param {string} aNewRegEx The value to set for the Regular Expression field
    *        of the setting.
    */
-  adjustGameAgeLevel: function(aGroupName, aSettingId, aNewAge,
+  adjustGameClassificationLevel: function(aGroupName, aSettingId, aNewClassification,
                                aNewLevel, aNewRegEx) {
-    var profile = this.getGameAgeProfile(aGroupName);
-    var setting = profile.getGameAgeLevelById(aSettingId);
-    setting.setAge(aNewAge);
+    var profile = this.getLeagueProfile(aGroupName);
+    var setting = profile.getGameClassificationLevelById(aSettingId);
+    setting.setClassification(aNewClassification);
     setting.setLevel(aNewLevel);
     setting.setRegEx(aNewRegEx);
     this._putPreferences();
   },
 
   /**
-   * Remove an existing {GameAgeLevel} from a {GameAgeProfile}.
+   * Remove an existing {GameClassificationLevel} from a {LeagueProfile}.
    *
-   * @param {string} aGroupName The string identifier of the {GameAgeProfile}
-   *        under which the {GameAgeLevel} to remove resides.
-   * @param {string} aSettingId The string identifier of the {GameAgeLevel}
-   *        within its parent {GameAgeProfile}.
+   * @param {string} aGroupName The string identifier of the {LeagueProfile}
+   *        under which the {GameClassificationLevel} to remove resides.
+   * @param {string} aSettingId The string identifier of the {GameClassificationLevel}
+   *        within its parent {LeagueProfile}.
    */
-  removeGameAgeLevelFromProfile: function(aGroupName, aSettingId) {
+  removeGameClassificationLevelFromProfile: function(aGroupName, aSettingId) {
     var self = this;
-    self.getGameAgeProfile(aGroupName).removeGameAgeLevelById(aSettingId);
+    self.getLeagueProfile(aGroupName).removeGameClassificationLevelById(aSettingId);
     self._putPreferences();
   },
 
@@ -479,8 +479,8 @@ PreferenceStore.prototype = {
       this.locations = storedPrefs.locations;
       this.userId = storedPrefs.userId;
       this.authTokens = storedPrefs.authTokens;
-      this.gameAgeProfiles =
-        this._deserializeGameProfiles(storedPrefs.gameAgeProfiles);
+      this.leagueProfiles =
+        this._deserializeGameProfiles(storedPrefs.leagueProfiles);
     }
   },
 
@@ -496,12 +496,12 @@ PreferenceStore.prototype = {
   },
 
   _deserializeSingleGameProfile: function(aBaseObject) {
-    var profile = new GameAgeProfile(aBaseObject.mProfileId);
-    for (var idx in aBaseObject.mGameAgeLevels) {
-      var nextGameAgeLevel = aBaseObject.mGameAgeLevels[idx];
-      profile.addGameAgeLevel(new GameAgeLevel(nextGameAgeLevel.mAge,
-                                               nextGameAgeLevel.mLevel,
-                                               nextGameAgeLevel.mRegEx));
+    var profile = new LeagueProfile(aBaseObject.profileId);
+    for (var idx in aBaseObject.classificationLevels) {
+      var nextGameClassificationLevel = aBaseObject.classificationLevels[idx];
+      profile.addGameClassificationLevel(new GameClassificationLevel(nextGameClassificationLevel.classification,
+                                               nextGameClassificationLevel.level,
+                                               nextGameClassificationLevel.regularExpression));
     }
     return profile;
   },
@@ -528,17 +528,17 @@ PreferenceStore.prototype = {
    *
    * This is mostly used for testing convenience.
    *
-   * @param {Array} gameProfiles An array of {GameAgeProfile}s.
+   * @param {Array} gameProfiles An array of {LeagueProfile}s.
    */
-  _setGameAgeProfiles(gameProfiles) {
-    this.gameAgeProfiles = this._deserializeGameProfiles(gameProfiles);
+  _setLeagueProfiles(gameProfiles) {
+    this.leagueProfiles = this._deserializeGameProfiles(gameProfiles);
   },
 
   /**
-   * Clear this {PreferenceStore} of {GameAgeProfile} objects.
+   * Clear this {PreferenceStore} of {LeagueProfile} objects.
    */
-  _clearGameAgeProfiles() {
-    this.gameAgeProfiles = [];
+  _clearLeagueProfiles() {
+    this.leagueProfiles = [];
   }
 };
 
