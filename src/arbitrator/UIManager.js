@@ -109,32 +109,46 @@ UIManager.prototype = {
           for (var gameAgeIdx in levels) {
             var gameAgePref = levels[gameAgeIdx];
             var settingUI = $(data);
-            settingUI.find('#gameAgeInputAge').val(gameAgePref.getAge());
-            settingUI.find('#gameAgeInputLevel').val(gameAgePref.getLevel());
-            settingUI.find('#gameAgeInputRegex').val(gameAgePref.getRegEx());
+            var dataSettingId = settingUI.data('settingId', gameAgePref.getId());
+            var inputAge = settingUI.find('#gameAgeInputAge');
+            var inputLevel = settingUI.find('#gameAgeInputLevel');
+            var inputRegex = settingUI.find('#gameAgeInputRegex');
+            var removeButton = settingUI.find('#removeButton');
+            var modifyButton = settingUI.find('#modifyButton');
 
-            settingUI.find('#gameAgeInputAge').attr('id', 'gameAgeInputAge-' + gameAgePref.getId());
-            settingUI.find('#gameAgeInputLevel').attr('id', 'gameAgeInputLevel-' + gameAgePref.getId());
-            settingUI.find('#gameAgeInputRegex').attr('id', 'gameAgeInputRegex-' + gameAgePref.getId());
+            inputAge.val(gameAgePref.getAge());
+            inputLevel.val(gameAgePref.getLevel());
+            inputRegex.val(gameAgePref.getRegEx());
 
-            settingUI.find('#removeButton').attr('id', 'removeButton-' + gameAgePref.getId());
-            settingUI.find('#removeButton-' + gameAgePref.getId()).click(function() {
-              gameAgeSettings.removeGameAgeLevel(gameAgePref);
-              prefStore._putPreferences();
-              settingUI.remove();
+            inputAge.attr('id', 'gameAgeInputAge-' + gameAgePref.getId());
+            inputLevel.attr('id', 'gameAgeInputLevel-' + gameAgePref.getId());
+            inputRegex.attr('id', 'gameAgeInputRegex-' + gameAgePref.getId());
+
+            removeButton.attr('id', 'removeButton-' + gameAgePref.getId());
+            removeButton.click(function() {
+              var parentElement = $(this).parent();
+              var id = parentElement.data('settingId');
+              prefStore.removeGameAgeLevelFromProfile(aGroupName, id);
+              self.refreshGameAgeLevelPreferences(aGroupName);
             });
 
-            settingUI.find('#modifyButton').attr('id', 'modifyButton-' + gameAgePref.getId());
-            settingUI.find('#modifyButton-' + gameAgePref.getId()).click(function() {
-              gameAgePref.setAge(settingUI.find('#gameAgeInputAge-' + gameAgePref.getId()).val());
-              gameAgePref.setLevel(settingUI.find('#gameAgeInputLevel-' + gameAgePref.getId()).val());
-              gameAgePref.setRegEx(settingUI.find('#gameAgeInputRegex-' + gameAgePref.getId()).val());
+            modifyButton.attr('id', 'modifyButton-' + gameAgePref.getId());
+            modifyButton.click(function() {
+              var parentElement = $(this).parent();
+              var id = parentElement.data('settingId');
+              var inputAgeWithId = $('#gameAgeInputAge-' + id);
+              var inputLevelWithId = $('#gameAgeInputLevel-' + id);
+              var inputRegexWithId = $('#gameAgeInputRegex-' + id);
 
-              prefStore._putPreferences();
+              prefStore.adjustGameAgeLevel(aGroupName, id,
+                                           inputAgeWithId.val(),
+                                           inputLevelWithId.val(),
+                                           inputRegexWithId.val());
 
               self.showSnackbar(util.format(Strings.game_age_preference_updated,
-                                            gameAgePref.getAge(),
-                                            gameAgePref.getLevel()));
+                                            inputAgeWithId.val(),
+                                            inputLevelWithId.val()));
+              self.refreshGameAgeLevelPreferences(aGroupName);
             });
             $('#gameAgeProfileContent').append(settingUI);
           }
@@ -904,14 +918,14 @@ UIManager.prototype = {
 
     // Push to the preference store
     var profileName = $('#gameAgeProfileContent').data('profilename');
-    prefStore.addGameAgeLevelSetting(profileName, regex, age, level);
+    prefStore.addGameAgeLevelSetting(profileName, age, level, regex);
 
     // Refresh the prefs.
     self.refreshGameAgeLevelPreferences(profileName);
 
-    $('#gameAgeInputRegex').val('');
     $('#gameAgeInputAge').val('');
     $('#gameAgeInputLevel').val('');
+    $('#gameAgeInputRegex').val('');
   },
 
   _addGameAgeProfileSubMenu: function(aName) {

@@ -24,7 +24,7 @@ describe("Preference Storage and Retrieval", function () {
     var prefStore = PreferenceSingleton.instance;
 
     var profile = new GameAgeProfile('D6');
-    profile.addGameAgeLevel(new GameAgeLevel('[Bantam|B](.*)[B2]', 'Bantam', 'B2'));
+    profile.addGameAgeLevel(new GameAgeLevel('Bantam', 'B2', '[Bantam|B](.*)[B2]'));
 
     prefStore.addGameAgeProfile(profile);
 
@@ -61,11 +61,11 @@ describe("Preference Storage and Retrieval", function () {
     var prefStore = PreferenceSingleton.instance;
 
     var profile = new GameAgeProfile('D6');
-    profile.addGameAgeLevel(new GameAgeLevel('[Bantam|B](.*)[B2]', 'Bantam', 'B2'));
+    profile.addGameAgeLevel(new GameAgeLevel('Bantam', 'B2', '[Bantam|B](.*)[B2]'));
 
     prefStore.addGameAgeProfile(profile);
 
-    profile.addGameAgeLevel(new GameAgeLevel('.*', 'Squirt', 'A'));
+    profile.addGameAgeLevel(new GameAgeLevel('Squirt', 'A', '.*'));
     prefStore.setGameAgeProfile(profile);
 
     var retrieved = prefStore.getGameAgeProfile('D6');

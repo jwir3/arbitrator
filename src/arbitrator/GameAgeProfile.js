@@ -12,14 +12,15 @@ GameAgeProfile.prototype = {
   mGameAgeLevels: [],
 
   addGameAgeLevel: function(aGameAgeLevel) {
-    aGameAgeLevel.setId(this.mGameAgeLevels.length);
     this.mGameAgeLevels.push(aGameAgeLevel);
+    this._regenerateGameAgeLevelIds();
   },
 
   removeGameAgeLevel: function(aGameAgeLevel) {
     for (var idx in this.mGameAgeLevels) {
       if (this.mGameAgeLevels[idx].equals(aGameAgeLevel)) {
         this.mGameAgeLevels.splice(idx, 1);
+        this._regenerateGameAgeLevelIds();
       }
     }
   },
@@ -50,6 +51,48 @@ GameAgeProfile.prototype = {
     });
   },
 
+  /**
+   * Remove a {GameAgeLevel} by its id.
+   *
+   * @param {string} aId An identifier string to match against.
+   */
+  removeGameAgeLevelById: function(aId) {
+    for (var idx in this.mGameAgeLevels) {
+      if (this.mGameAgeLevels[idx].getId() == aId) {
+        this.mGameAgeLevels.splice(idx, 1);
+        this._regenerateGameAgeLevelIds();
+        return;
+      }
+    }
+  },
+
+  /**
+   * Retrieve a {GameAgeLevel} by its id.
+   *
+   * @param {string} aId An identifier string to match against.
+   *
+   * @return A {GameAgeLevel}, if one exists that has id == aId; null,
+   *         otherwise.
+   */
+  getGameAgeLevelById: function(aId) {
+    for (var i = 0; i < this.mGameAgeLevels.length; i++) {
+      if (this.mGameAgeLevels[i].getId() == aId) {
+        return this.mGameAgeLevels[i];
+      }
+    }
+
+    return null;
+  },
+
+  /**
+   * Find a {GameAgeLevel} matching the given search string, if one exists.
+   *
+   * @param {string} aSearchString The string to compare against regular
+   *        expressions in each of the {GameAgeLevel}s contained in this
+   *        {GameAgeProfile}.
+   * @return {Object} The first {GameAgeLevel} whose regular expression matches
+   *         the search string, if one exists; null, otherwise.
+   */
   findGameAgeLevelMatching: function(aSearchString) {
     var firstFound = null;
     for (var idx in this.mGameAgeLevels) {
@@ -63,13 +106,23 @@ GameAgeProfile.prototype = {
     }
 
     return firstFound;
+  },
+
+  /**
+   * Regenerate all ids for {GameAgeLevel} settings within this
+   * {GameAgeProfile}.
+   */
+  _regenerateGameAgeLevelIds: function() {
+    for (var idx in this.mGameAgeLevels) {
+      this.mGameAgeLevels[idx].setId(idx);
+    }
   }
 }
 
-export var GameAgeLevel = function (regularExpression, age, level) {
-  this.mRegEx = regularExpression;
+export var GameAgeLevel = function (age, level, regularExpression) {
   this.mAge = age;
   this.mLevel = level;
+  this.mRegEx = regularExpression;
 }
 
 /**

@@ -105,17 +105,17 @@ PreferenceStore.prototype = {
    *
    * @param {string} aProfileName The profileId of the {GameAgeProfile} to add
    *                              the new setting to.
-   * @param {string} aRegex       The regular expression defining the new
-   *                              {GameAgeLevelSetting}.
    * @param {string} aAge         The age descriptor of the new
    *                              {GameAgeLevelSetting}.
    * @param {string} aLevel       The level descriptor of the new
    *                              {GameAgeLevelSetting}.
+   * @param {string} aRegex       The regular expression defining the new
+   *                              {GameAgeLevelSetting}.
    */
-  addGameAgeLevelSetting: function(aProfileName, aRegex, aAge, aLevel) {
+  addGameAgeLevelSetting: function(aProfileName, aAge, aLevel, aRegex) {
     var self = this;
 
-    var setting = new GameAgeLevel(aRegex, aAge, aLevel);
+    var setting = new GameAgeLevel(aAge, aLevel, aRegex);
     var gameAgeProfile = self.getGameAgeProfile(aProfileName);
     if (!gameAgeProfile) {
       gameAgeProfile = new GameAgeProfile(aProfileName);
@@ -397,6 +397,44 @@ PreferenceStore.prototype = {
     this._putPreferences();
   },
 
+  /**
+   * Adjust an existing {GameAgeLevel} within a {GameAgeProfile} to have new
+   * values for age, level, and regular expression.
+   *
+   * @param {string} aGroupName The string identifier of the profile in which
+   *        the {GameAgeLevel} exists.
+   * @param {string} aSettingId The unique identifier for the {GameAgeLevel}
+   *        within its respective {GameAgeProfile}.
+   * @param {string} aNewAge The value to set for the Age field of the setting.
+   * @param {string} aNewLevel The value to set for the Level field of the
+   *        setting.
+   * @param {string} aNewRegEx The value to set for the Regular Expression field
+   *        of the setting.
+   */
+  adjustGameAgeLevel: function(aGroupName, aSettingId, aNewAge,
+                               aNewLevel, aNewRegEx) {
+    var profile = this.getGameAgeProfile(aGroupName);
+    var setting = profile.getGameAgeLevelById(aSettingId);
+    setting.setAge(aNewAge);
+    setting.setLevel(aNewLevel);
+    setting.setRegEx(aNewRegEx);
+    this._putPreferences();
+  },
+
+  /**
+   * Remove an existing {GameAgeLevel} from a {GameAgeProfile}.
+   *
+   * @param {string} aGroupName The string identifier of the {GameAgeProfile}
+   *        under which the {GameAgeLevel} to remove resides.
+   * @param {string} aSettingId The string identifier of the {GameAgeLevel}
+   *        within its parent {GameAgeProfile}.
+   */
+  removeGameAgeLevelFromProfile: function(aGroupName, aSettingId) {
+    var self = this;
+    self.getGameAgeProfile(aGroupName).removeGameAgeLevelById(aSettingId);
+    self._putPreferences();
+  },
+
   setAuthTokens: function(aAuthTokens) {
     this.authTokens = aAuthTokens;
     this._putPreferences();
@@ -461,9 +499,9 @@ PreferenceStore.prototype = {
     var profile = new GameAgeProfile(aBaseObject.mProfileId);
     for (var idx in aBaseObject.mGameAgeLevels) {
       var nextGameAgeLevel = aBaseObject.mGameAgeLevels[idx];
-      profile.addGameAgeLevel(new GameAgeLevel(nextGameAgeLevel.mRegEx,
-                                               nextGameAgeLevel.mAge,
-                                               nextGameAgeLevel.mLevel));
+      profile.addGameAgeLevel(new GameAgeLevel(nextGameAgeLevel.mAge,
+                                               nextGameAgeLevel.mLevel,
+                                               nextGameAgeLevel.mRegEx));
     }
     return profile;
   },
