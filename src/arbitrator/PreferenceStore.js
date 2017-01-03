@@ -10,6 +10,35 @@ const PREFERENCE_STORE_KEY = Symbol("PreferenceStore");
 /**
  * An object connected to local storage for persistent storage of setting
  * data.
+ *
+ * Preference objects are broken into the following sub-objects:
+ *  |-- groupAliases: Contains a set of key-value pairs matching ArbiterSports
+ *  |                 group identifiers (key) to human-readable aliases to be
+ *  |                 used in Google calendar (value).
+ *  |-- time:         Contains three possible key-value pairs to control time
+ *  |  |              settings.
+ *  |  |-- priorToStart:     How many minutes prior to the start of a game Google
+ *  |  |                     calendar events should be set to start at. Allows for
+ *  |  |                     preparation time prior to games.
+ *  |  |-- gameLength:       How many minutes games should occupy on the schedule
+ *  |  |                     (i.e. the duration of calendar events).
+ *  |  |-- consecutiveGames: The threshold (in hours) for determining whether two
+ *  |                        games are consecutive, assuming they take place at
+ *  |                        the same location.
+ *  |-- locations:    Contains a set of key-value pairs where each key is an
+ *  |                 identifer (from ArbiterSports) for a location, and each
+ *  |                 value is the serialization of a {Place} object
+ *  |                 representing that location in Arbitrator.
+ *  |-- user:           Contains three possible key-value pairs to control
+ *  |  |                user-specific settings:
+ *  |  |-- id:           The value of this preference is the unique identifier of
+ *  |  |                 the user, as obtained from Google.
+ *  |  |-- googleAuth:   The value of this preference is an object with key-value
+ *  |  |                 pairs that hold the authentication information for the
+ *  |  |                 Google OAuth2 client.
+ *  |  |-- lastCalendar: The value of this preference is the identifier of the
+ *  |                    last calendar the user selected.
+ *  |-- leagueProfiles: Contains an array of {LeagueProfile} objects.
  */
 var PreferenceStore = function() {
   if (env.name == 'test') {
@@ -19,7 +48,25 @@ var PreferenceStore = function() {
   this._retrievePreferences();
 }
 
-export var TimeType = {
+export var UserPreferenceKeys = {
+    /**
+     * Key for accessing Google user id data within the PreferenceStore.
+     */
+    USER_ID: 'userId',
+
+    /**
+     * Key for accessing Google OAuth2 data within the PreferenceStore.
+     */
+    GOOGLE_AUTH_DATA: 'googleAuth',
+
+    /**
+     * Key for accessing the last calendar id used from within the
+     * PreferenceStore.
+     */
+    LAST_CALENDAR_ID: 'lastCalendar'
+};
+
+export var TimePreferenceKeys = {
   /**
    * Flag for indicating the time type is prior to the game start.
    */
@@ -40,7 +87,6 @@ export var TimeType = {
 };
 
 PreferenceStore.prototype = {
-  authTokens: null,
   shouldStore: true,
 
   /**
@@ -128,7 +174,7 @@ PreferenceStore.prototype = {
   /**
    * Add a time preference to the preference store.
    *
-   * @param aType The type to add. Must be one of TimeType available options.
+   * @param aType The type to add. Must be one of TimePreferenceKeys available options.
    * @param aTimePeriod The time value to add to the preference store. If not
    *        >= 0, then will be set to 0.
    */
@@ -142,20 +188,20 @@ PreferenceStore.prototype = {
       aTimePeriod = 0;
     }
 
-    var priorStart = this.time[TimeType.PRIOR_TO_START];
-    var gameLength = this.time[TimeType.LENGTH_OF_GAME];
-    var consecThreshold = this.time[TimeType.CONSECUTIVE_GAME_THRESHOLD];
+    var priorStart = this.time[TimePreferenceKeys.PRIOR_TO_START];
+    var gameLength = this.time[TimePreferenceKeys.LENGTH_OF_GAME];
+    var consecThreshold = this.time[TimePreferenceKeys.CONSECUTIVE_GAME_THRESHOLD];
 
     switch(aType) {
-      case TimeType.PRIOR_TO_START:
+      case TimePreferenceKeys.PRIOR_TO_START:
         priorStart = aTimePeriod;
         break;
 
-      case TimeType.LENGTH_OF_GAME:
+      case TimePreferenceKeys.LENGTH_OF_GAME:
         gameLength = aTimePeriod;
         break;
 
-      case TimeType.CONSECUTIVE_GAME_THRESHOLD:
+      case TimePreferenceKeys.CONSECUTIVE_GAME_THRESHOLD:
         consecThreshold = aTimePeriod;
         break;
 
@@ -164,9 +210,9 @@ PreferenceStore.prototype = {
     }
 
     this.time = {
-      [TimeType.PRIOR_TO_START]: priorStart,
-      [TimeType.LENGTH_OF_GAME]: gameLength,
-      [TimeType.CONSECUTIVE_GAME_THRESHOLD]: consecThreshold
+      [TimePreferenceKeys.PRIOR_TO_START]: priorStart,
+      [TimePreferenceKeys.LENGTH_OF_GAME]: gameLength,
+      [TimePreferenceKeys.CONSECUTIVE_GAME_THRESHOLD]: consecThreshold
     };
 
     this._putPreferences();
@@ -187,17 +233,17 @@ PreferenceStore.prototype = {
   /**
    * Retrieve the value of a single time preference.
    *
-   * @param aTimeType The time of time preference to retrieve. Must be one of the
-   *        types specified in TimeType.
+   * @param aTimePreferenceKeys The time of time preference to retrieve. Must be one of the
+   *        types specified in TimePreferenceKeys.
    * @param aDefault The default time (in minutes) to specify if one has not been
    *        added to the preference store.
    *
    * @return A numeric value indicating the number of minutes specified for the
    *         given time preference.
    */
-  getTimePreference: function(aTimeType, aDefault) {
-    if (this.time && this.time[aTimeType]) {
-      return parseInt(this.time[aTimeType], 10);
+  getTimePreference: function(aTimePreferenceKeys, aDefault) {
+    if (this.time && this.time[aTimePreferenceKeys]) {
+      return parseInt(this.time[aTimePreferenceKeys], 10);
     }
 
     return aDefault;
@@ -251,7 +297,7 @@ PreferenceStore.prototype = {
    * Retrieve all preferences related to time currently in the preference store.
    *
    * @return An object with members corresponding to time preferences as defined
-   *         in TimeType, if they exist in the local storage; an empty object,
+   *         in TimePreferenceKeys, if they exist in the local storage; an empty object,
    *         otherwise.
    */
   getAllTimePreferences: function() {
@@ -372,12 +418,12 @@ PreferenceStore.prototype = {
   /**
    * Remove the instance of a single time preference from the preference store.
    *
-   * @param aTimeType The type of time preference to remove. Must be one of the
-   *        values specified in TimeType.
+   * @param aTimePreferenceKeys The type of time preference to remove. Must be one of the
+   *        values specified in TimePreferenceKeys.
    */
-  removeTimePreference: function(aTimeType) {
+  removeTimePreference: function(aTimePreferenceKeys) {
     if (this.time) {
-      delete this.time[aTimeType];
+      delete this.time[aTimePreferenceKeys];
     }
 
     this._putPreferences();
@@ -409,19 +455,44 @@ PreferenceStore.prototype = {
     this._putPreferences();
   },
 
+  setLastCalendarId: function(aLastCalendarId) {
+    if (!this.user) {
+      this.user = {};
+    }
+
+    this.user[UserPreferenceKeys.LAST_CALENDAR_ID] = aLastCalendarId;
+    this._putPreferences();
+  },
+
+  getLastCalendarId: function() {
+    if (!this.user) {
+      return null;
+    }
+
+    return this.user[UserPreferenceKeys.LAST_CALENDAR_ID];
+  },
+
   setUserId: function(aUserId) {
-    this.userId = aUserId;
+    if (!this.user) {
+      this.user = {};
+    }
+
+    this.user[UserPreferenceKeys.USER_ID] = aUserId;
 
     this._putPreferences();
   },
 
   removeUserId: function() {
-    delete this.userId;
+    if (!this.user) {
+      return null;
+    }
+
+    delete this.user[UserPreferenceKeys.USER_ID]
     this._putPreferences();
   },
 
   getUserId: function() {
-    return this.userId;
+    return this.user[UserPreferenceKeys.USER_ID];
   },
 
   /**
@@ -471,12 +542,20 @@ PreferenceStore.prototype = {
   },
 
   setAuthTokens: function(aAuthTokens) {
-    this.authTokens = aAuthTokens;
+    if (!this.user) {
+      this.user = {};
+    }
+
+    this.user[UserPreferenceKeys.GOOGLE_AUTH_DATA] = aAuthTokens;
     this._putPreferences();
   },
 
   getAuthTokens: function() {
-    return this.authTokens;
+    if (!this.user) {
+      return null;
+    }
+
+    return this.user[UserPreferenceKeys.GOOGLE_AUTH_DATA];
   },
 
   /**
@@ -512,8 +591,7 @@ PreferenceStore.prototype = {
       this.groupAliases = storedPrefs.groupAliases;
       this.time = storedPrefs.time;
       this.locations = storedPrefs.locations;
-      this.userId = storedPrefs.userId;
-      this.authTokens = storedPrefs.authTokens;
+      this.user = storedPrefs.user;
       this.leagueProfiles =
         this._deserializeGameProfiles(storedPrefs.leagueProfiles);
     }

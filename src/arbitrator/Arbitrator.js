@@ -1,6 +1,6 @@
 import { Game } from './Game.js';
 import { UIManager } from './UIManager';
-import { PreferenceSingleton, TimeType } from './PreferenceStore';
+import { PreferenceSingleton, TimePreferenceKeys } from './PreferenceStore';
 import { ArbitratorGoogleClient } from './ArbitratorGoogleClient';
 import { Strings } from './Strings';
 
@@ -198,7 +198,7 @@ Arbitrator.prototype = {
    */
   findConsecutiveGames: function() {
     var prefStore = PreferenceSingleton.instance;
-    var gameLengthMins = prefStore.getTimePreference(TimeType.LENGTH_OF_GAME, 60);
+    var gameLengthMins = prefStore.getTimePreference(TimePreferenceKeys.LENGTH_OF_GAME, 60);
     var prevGame;
     for (var index in this.mGames) {
       var curGame = this.mGames[index];

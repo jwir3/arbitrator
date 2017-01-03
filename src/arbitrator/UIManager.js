@@ -4,7 +4,7 @@ import { Place } from './Place'
 import { ArbitratorGoogleClient } from './ArbitratorGoogleClient'
 import { ArbitratorConfig } from './ArbitratorConfig'
 import { StringUtils } from './StringUtils'
-import { PreferenceSingleton, TimeType } from './PreferenceStore'
+import { PreferenceSingleton, TimePreferenceKeys } from './PreferenceStore'
 import { Arbitrator } from './Arbitrator'
 import { Strings } from './Strings'
 import util from 'util'
@@ -499,6 +499,9 @@ UIManager.prototype = {
    *                                    api calls should be run with.
    */
   populateCalendarList: function(aGoogleClient) {
+    var prefStore = PreferenceSingleton.instance;
+    var lastCalendarId = prefStore.getLastCalendarId();
+
     var calendarSelector = $('#calendarList');
     var noCalendarSelectedOption = $('<option id="noCalendarSelectedOption">' + Strings.select_calendar + '</option>');
     calendarSelector.append(noCalendarSelectedOption);
@@ -513,7 +516,26 @@ UIManager.prototype = {
             listItem.text(calendarItem.summary);
             selectEle.append(listItem);
         }
+
+        // Select last calendar
+        if (lastCalendarId) {
+          var calChildren = calendarSelector.children();
+          calChildren.each(function(childNumber) {
+            var currentChild = $(calChildren[childNumber]);
+            if (currentChild.attr('id') == lastCalendarId) {
+              currentChild.prop('selected', 'selected');
+            }
+          });
+          // calendarSelector.find('option#' + lastCalendarId).prop('selected', 'selected');
+        }
+
         selectEle.css('display', 'block');
+      });
+
+      // Setup on change event
+      calendarSelector.off();
+      calendarSelector.change(function(event) {
+        prefStore.setLastCalendarId(event.target.selectedOptions[0].id);
       });
   },
 
