@@ -4,7 +4,7 @@ import { env } from '../env';
 import { Arbitrator } from '../arbitrator/Arbitrator';
 import { DONTCARE, checkGame } from './CheckGame';
 import * as moment from 'moment';
-import { PreferenceSingleton, TimeType } from '../arbitrator/PreferenceStore'
+import { PreferenceSingleton, TimePreferenceKeys } from '../arbitrator/PreferenceStore'
 import jetpack from 'fs-jetpack';
 
 var singleGame = jetpack.read('src/test/fixtures/singleGame.txt');
@@ -148,22 +148,22 @@ describe("Arbitrator Translation Functionality", function () {
   it ("recognizes time preferences set prior to parsing strings", function() {
     var prefStore = PreferenceSingleton.instance;
 
-    prefStore.addTimePreference(TimeType.PRIOR_TO_START, 61);
-    prefStore.addTimePreference(TimeType.LENGTH_OF_GAME, 90);
+    prefStore.addTimePreference(TimePreferenceKeys.PRIOR_TO_START, 61);
+    prefStore.addTimePreference(TimePreferenceKeys.LENGTH_OF_GAME, 90);
     prefStore.addGroupAlias('106016', 'D6');
 
     var arbitrator = new Arbitrator(basicSchedule);
 
     expect(arbitrator.getNumGames()).to.equal(2);
-    expect(prefStore.getTimePreference(TimeType.PRIOR_TO_START)).to.equal(61);
+    expect(prefStore.getTimePreference(TimePreferenceKeys.PRIOR_TO_START)).to.equal(61);
 
     var game = arbitrator.getGameById(1111);
     expect(game.getISOStartDate()).to.equal(moment("11/9/2013 12:30 PM").subtract(61, 'minutes').toISOString());
     expect(game.getISOEndDate()).to.equal(moment("11/9/2013 12:30 PM").add(90, 'minutes').toISOString());
     assert(game.getEventJSON().description.indexOf("Game starts at 12:30pm") > -1, 'the game should start at 12:30pm and this should be in the calendar event description');
 
-    prefStore.removeTimePreference(TimeType.PRIOR_TO_START);
-    prefStore.removeTimePreference(TimeType.LENGTH_OF_GAME);
+    prefStore.removeTimePreference(TimePreferenceKeys.PRIOR_TO_START);
+    prefStore.removeTimePreference(TimePreferenceKeys.LENGTH_OF_GAME);
 
     expect(game.getISOEndDate()).to.equal("2013-11-09T19:30:00.000Z");
     expect(game.getISOStartDate()).to.equal("2013-11-09T18:00:00.000Z");
@@ -176,8 +176,8 @@ describe("Arbitrator Translation Functionality", function () {
 
     expect(game).to.be.ok;
 
-    prefStore.addTimePreference(TimeType.PRIOR_TO_START, 60);
-    prefStore.addTimePreference(TimeType.LENGTH_OF_GAME, 120);
+    prefStore.addTimePreference(TimePreferenceKeys.PRIOR_TO_START, 60);
+    prefStore.addTimePreference(TimePreferenceKeys.LENGTH_OF_GAME, 120);
 
     // Basic game checking
     checkGame(arbitrator, 5422, DONTCARE, DONTCARE, 11, 22, 2014, 20, 40);

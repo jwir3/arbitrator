@@ -1,6 +1,6 @@
 import  crypto from 'crypto';
 import { Place } from './Place'
-import { PreferenceSingleton, TimeType } from './PreferenceStore'
+import { PreferenceSingleton, TimePreferenceKeys } from './PreferenceStore'
 import * as moment from 'moment';
 import { Strings } from './Strings'
 
@@ -137,7 +137,7 @@ Game.prototype = {
   getISOStartDate: function() {
     var prefStore = PreferenceSingleton.instance;
     var startDate = this.getTimestamp();
-    var priorToStart = prefStore.getTimePreference(TimeType.PRIOR_TO_START, 30);
+    var priorToStart = prefStore.getTimePreference(TimePreferenceKeys.PRIOR_TO_START, 30);
     if (this.isConsecutiveGame()) {
       priorToStart = 0;
     }
@@ -150,7 +150,7 @@ Game.prototype = {
     var endDate = this.getTimestamp();
 
     // Default to 1 hour if no time preference is specified.
-    var gameLengthMins = prefStore.getTimePreference(TimeType.LENGTH_OF_GAME, 60);
+    var gameLengthMins = prefStore.getTimePreference(TimePreferenceKeys.LENGTH_OF_GAME, 60);
     return endDate.add(gameLengthMins, 'minutes').toISOString();
   },
 
@@ -189,7 +189,7 @@ Game.prototype = {
    */
   isWithinConsecutiveTimeRangeOf: function(aGame) {
     var prefStore = PreferenceSingleton.instance;
-    var consecutiveGameThreshold = prefStore.getTimePreference(TimeType.CONSECUTIVE_GAME_THRESHOLD, 2);
+    var consecutiveGameThreshold = prefStore.getTimePreference(TimePreferenceKeys.CONSECUTIVE_GAME_THRESHOLD, 2);
     var aOtherTimestamp = aGame.getTimestamp();
     var timeStamp = this.getTimestamp();
     return aOtherTimestamp.date() == timeStamp.date()

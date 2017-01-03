@@ -1,4 +1,4 @@
-import { PreferenceSingleton, TimeType } from '../arbitrator/PreferenceStore';
+import { PreferenceSingleton, TimePreferenceKeys } from '../arbitrator/PreferenceStore';
 import { expect } from 'chai';
 import { LeagueProfile, GameClassificationLevel } from '../arbitrator/LeagueProfile';
 import jetpack from 'fs-jetpack';
@@ -15,9 +15,9 @@ describe("Preference Storage and Retrieval", function () {
     var prefStore1 = PreferenceSingleton.instance;
     var prefStore2 = PreferenceSingleton.instance;
 
-    prefStore1.addTimePreference(TimeType.PRIOR_TO_START, 61);
+    prefStore1.addTimePreference(TimePreferenceKeys.PRIOR_TO_START, 61);
 
-    expect(prefStore2.getTimePreference(TimeType.PRIOR_TO_START)).to.equal(61);
+    expect(prefStore2.getTimePreference(TimePreferenceKeys.PRIOR_TO_START)).to.equal(61);
   });
 
   it ("is able to add a new game age profile and subsequently retrieve it", function() {

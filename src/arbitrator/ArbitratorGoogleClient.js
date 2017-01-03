@@ -1,7 +1,7 @@
 import { ArbitratorConfig } from './ArbitratorConfig'
 import * as google from 'googleapis'
 import createWindow from '../helpers/window';
-import { PreferenceSingleton, TimeType } from './PreferenceStore';
+import { PreferenceSingleton, TimePreferenceKeys } from './PreferenceStore';
 import { Game } from './Game';
 
 // Specify default options to be used with all requests.
