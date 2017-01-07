@@ -46,36 +46,18 @@ export var Game = function (aId, aGroup, aRole, aTimestamp, aSportLevel, aSite,
  *
  * @param  {String} aEncrypted Encrypted form of game information.
  *
- * @return {Promise}            A {Promise} object which, when fully complete,
- *                              will give an object with two keys, 'groupId',
- *                              which contains the original (non-resolved)
- *                              identifier of the group from which the game was
- *                              assigned, and 'gameId', a unique identifier for
- *                              the game within the group.
+ * @return {String} The unencrypted version of the identifying game information.
  */
 Game.getGameInfoFromCipher = function(aEncrypted) {
-  return new Promise((resolve, reject) => {
     const decipher = crypto.createDecipher('aes192', 'gameHash');
+    var decrypted = decipher.update(aEncrypted, 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
 
-    var decrypted = '';
-    decipher.on('readable', () => {
-      var data = decipher.read();
-      if (data) {
-        decrypted += data.toString('utf8');
-      }
-    });
-
-    decipher.on('end', () => {
-      var splitString = decrypted.split('-##-');
-      resolve({
-        groupId: splitString[0],
-        gameId: splitString[1]
-      });
-    });
-
-    decipher.write(aEncrypted, 'hex');
-    decipher.end();
-  });
+    var gameInfoArray = decrypted.split('-##-');
+    return {
+      'groupId': gameInfoArray[0],
+      'gameId': gameInfoArray[1]
+    }
 }
 
 // Game class member methods
@@ -294,10 +276,15 @@ Game.prototype = {
       "location": siteData,
       "description": "Game starts at " + String(this.getTime12Hr())
                      + subLocationString
-                     + "\n\n{ArbitratorHash: "
-                     + String(this.getGameInfoCipher()) + "}",
+                     + "\n\n"
+                     + this.getEncipheredGameInfoString(),
       "summary": this.getSummaryString()
     };
+  },
+
+  getEncipheredGameInfoString: function() {
+    var arbitratorIdString = Strings.arbitrator_identifier_description;
+    return "{" + arbitratorIdString + ": " + String(this.getGameInfoCipher()) + "}";
   },
 
   isScrimmage: function() {
@@ -325,32 +312,15 @@ Game.prototype = {
    * Retrieve an encrypted version of the unique identifying information of this
    * game. This serves to identify the game if the date/time changes.
    *
-   * @return {Promise} A promise object, that when complete, will return an
-   *                   encrypted form of this {Game} object's game id and
-   *                   original (non-resolved) group id for the group from which
-   *                   this {Game} was assigned.
+   * @return {String} An encrypted version of the game identification string.
    */
   getGameInfoCipher: function() {
     var self = this;
+    const cipher = crypto.createCipher('aes192', 'gameHash');
+    var encrypted = cipher.update(self.getIdentificationString(), 'utf8', 'hex');
+    encrypted += cipher.final('hex');
 
-    return new Promise((resolve, reject) => {
-      const cipher = crypto.createCipher('aes192', 'gameHash');
-
-      var encrypted = '';
-      cipher.on('readable', () => {
-        var data = cipher.read();
-        if (data) {
-          encrypted += data.toString('hex');
-        }
-      });
-
-      cipher.on('end', () => {
-        resolve(encrypted);
-      });
-
-      cipher.write(self.getIdentificationString());
-      cipher.end();
-    });
+    return encrypted;
   },
 
 
