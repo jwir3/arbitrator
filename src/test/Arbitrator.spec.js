@@ -118,8 +118,9 @@ describe("Arbitrator Translation Functionality", function () {
     expect(game.getSite().getName()).to.equal(gameJson.location);
     expect(game.getSummaryString()).to.equal(gameJson.summary);
 
-    var notes = "Game starts at " + String(game.getTime12Hr()) + "\n\n"
-      + "{ArbitratorHash: " + String(game.getGameInfoCipher()) + "}"
+    var notes = "Game starts at " + String(game.getTime12Hr())
+      + "\n\n"
+      + game.getEncipheredGameInfoString();
     expect(notes).to.equal(gameJson.description);
   });
 
@@ -200,7 +201,7 @@ describe("Arbitrator Translation Functionality", function () {
     prefStore.removeGroupAlias('D6');
   });
 
-  it ("should correctly compute an identification string and hash for valid games", function(done) {
+  it ("should correctly compute an identification string and hash for valid games", function() {
     var arbitrator = new Arbitrator(basicSchedule);
 
     expect(arbitrator).to.not.be.null;
@@ -211,26 +212,14 @@ describe("Arbitrator Translation Functionality", function () {
     expect(firstGame).to.not.be.null;
     expect(firstGame.getIdentificationString()).to.eq("106016-##-1111");
 
-    firstGame.getGameInfoCipher().then((cipher) => {
-      expect(cipher).to.eq('8af3229d1d0962c5b91ca85ceded9812');
-      done();
-    })
-    .catch((error) => {
-      done(error);
-    });
+    expect(firstGame.getGameInfoCipher()).to.eq('8af3229d1d0962c5b91ca85ceded9812');
   });
 
-  it ("should be able to resolve a game cipher back to a game id and group", function(done) {
-    Game.getGameInfoFromCipher('8af3229d1d0962c5b91ca85ceded9812')
-      .then((gameInfo) => {
-        var groupId = gameInfo.groupId;
-        var gameId = gameInfo.gameId;
-        expect(groupId).to.eq('106016');
-        expect(gameId).to.eq('1111');
-        done();
-      })
-      .catch((error) => {
-        done(error);
-      });
+  it ("should be able to resolve a game cipher back to a game id and group", function() {
+    var gameInfo = Game.getGameInfoFromCipher('8af3229d1d0962c5b91ca85ceded9812');
+    var groupId = gameInfo.groupId;
+    var gameId = gameInfo.gameId;
+    expect(groupId).to.eq('106016');
+    expect(gameId).to.eq('1111');
   });
 });
