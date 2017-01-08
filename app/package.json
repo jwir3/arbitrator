@@ -2,7 +2,7 @@
   "name": "Arbitrator",
   "productName": "Arbitrator",
   "description": "A utility to help synchronize your referee schedule with your Google Calendar",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "author": "Scott Johnson <jaywir3@gmail.com>",
   "copyright": "© 2016, Glass Tower Studios, LLC",
   "homepage": "http://github.com/jwir3/arbitrator",
