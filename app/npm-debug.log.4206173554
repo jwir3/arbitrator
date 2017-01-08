@@ -1,0 +1,2670 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/Cellar/node/7.2.1/bin/node',
+1 verbose cli   '/usr/local/lib/node_modules/npm/bin/npm-cli.js',
+1 verbose cli   'rebuild',
+1 verbose cli   '--production',
+1 verbose cli   '--build-from-source',
+1 verbose cli   '--cache-min',
+1 verbose cli   '999999999' ]
+2 info using npm@4.0.5
+3 info using node@v7.2.1
+4 info readInstalled object
+5 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app', 'Arbitrator@2.1.0' ]
+6 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/domready',
+6 verbose rebuild   'domready@1.0.8' ]
+7 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/fs-jetpack',
+7 verbose rebuild   'fs-jetpack@0.9.2' ]
+8 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/minimatch',
+8 verbose rebuild   'minimatch@3.0.3' ]
+9 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/brace-expansion',
+9 verbose rebuild   'brace-expansion@1.1.6' ]
+10 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/balanced-match',
+10 verbose rebuild   'balanced-match@0.4.2' ]
+11 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/concat-map',
+11 verbose rebuild   'concat-map@0.0.1' ]
+12 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/mkdirp',
+12 verbose rebuild   'mkdirp@0.5.1' ]
+13 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/minimist',
+13 verbose rebuild   'minimist@0.0.8' ]
+14 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/q',
+14 verbose rebuild   'q@1.4.1' ]
+15 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/rimraf',
+15 verbose rebuild   'rimraf@2.5.4' ]
+16 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/glob',
+16 verbose rebuild   'glob@7.1.1' ]
+17 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/fs.realpath',
+17 verbose rebuild   'fs.realpath@1.0.0' ]
+18 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/inflight',
+18 verbose rebuild   'inflight@1.0.6' ]
+19 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/once',
+19 verbose rebuild   'once@1.4.0' ]
+20 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/wrappy',
+20 verbose rebuild   'wrappy@1.0.2' ]
+21 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/inherits',
+21 verbose rebuild   'inherits@2.0.3' ]
+22 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/path-is-absolute',
+22 verbose rebuild   'path-is-absolute@1.0.1' ]
+23 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/jquery',
+23 verbose rebuild   'jquery@3.1.1' ]
+24 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/crypto-js',
+24 verbose rebuild   'crypto-js@3.1.8' ]
+25 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/googleapis',
+25 verbose rebuild   'googleapis@14.2.0' ]
+26 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/async',
+26 verbose rebuild   'async@2.1.4' ]
+27 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/lodash',
+27 verbose rebuild   'lodash@4.17.2' ]
+28 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/google-auth-library',
+28 verbose rebuild   'google-auth-library@0.9.10' ]
+29 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/async',
+29 verbose rebuild   'async@1.4.2' ]
+30 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/gtoken',
+30 verbose rebuild   'gtoken@1.2.1' ]
+31 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/google-p12-pem',
+31 verbose rebuild   'google-p12-pem@0.1.0' ]
+32 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/node-forge',
+32 verbose rebuild   'node-forge@0.6.45' ]
+33 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/jws',
+33 verbose rebuild   'jws@3.0.0' ]
+34 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/base64url',
+34 verbose rebuild   'base64url@1.0.6' ]
+35 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/concat-stream',
+35 verbose rebuild   'concat-stream@1.4.10' ]
+36 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/readable-stream',
+36 verbose rebuild   'readable-stream@1.1.14' ]
+37 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/core-util-is',
+37 verbose rebuild   'core-util-is@1.0.2' ]
+38 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/isarray',
+38 verbose rebuild   'isarray@0.0.1' ]
+39 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/string_decoder',
+39 verbose rebuild   'string_decoder@0.10.31' ]
+40 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/typedarray',
+40 verbose rebuild   'typedarray@0.0.6' ]
+41 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/meow',
+41 verbose rebuild   'meow@2.0.0' ]
+42 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/camelcase-keys',
+42 verbose rebuild   'camelcase-keys@1.0.0' ]
+43 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/camelcase',
+43 verbose rebuild   'camelcase@1.2.1' ]
+44 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/map-obj',
+44 verbose rebuild   'map-obj@1.0.1' ]
+45 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/indent-string',
+45 verbose rebuild   'indent-string@1.2.2' ]
+46 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/get-stdin',
+46 verbose rebuild   'get-stdin@4.0.1' ]
+47 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/indent-string/node_modules/minimist',
+47 verbose rebuild   'minimist@1.2.0' ]
+48 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/repeating',
+48 verbose rebuild   'repeating@1.1.3' ]
+49 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/is-finite',
+49 verbose rebuild   'is-finite@1.0.2' ]
+50 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/number-is-nan',
+50 verbose rebuild   'number-is-nan@1.0.1' ]
+51 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/meow/node_modules/minimist',
+51 verbose rebuild   'minimist@1.2.0' ]
+52 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/object-assign',
+52 verbose rebuild   'object-assign@1.0.0' ]
+53 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/jwa',
+53 verbose rebuild   'jwa@1.0.2' ]
+54 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/jwa/node_modules/base64url',
+54 verbose rebuild   'base64url@0.0.6' ]
+55 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/buffer-equal-constant-time',
+55 verbose rebuild   'buffer-equal-constant-time@1.0.1' ]
+56 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/ecdsa-sig-formatter',
+56 verbose rebuild   'ecdsa-sig-formatter@1.0.9' ]
+57 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/ecdsa-sig-formatter/node_modules/base64url',
+57 verbose rebuild   'base64url@2.0.0' ]
+58 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/safe-buffer',
+58 verbose rebuild   'safe-buffer@5.0.1' ]
+59 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/mime',
+59 verbose rebuild   'mime@1.3.4' ]
+60 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/request',
+60 verbose rebuild   'request@2.79.0' ]
+61 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/aws-sign2',
+61 verbose rebuild   'aws-sign2@0.6.0' ]
+62 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/aws4',
+62 verbose rebuild   'aws4@1.5.0' ]
+63 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/caseless',
+63 verbose rebuild   'caseless@0.11.0' ]
+64 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/combined-stream',
+64 verbose rebuild   'combined-stream@1.0.5' ]
+65 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/delayed-stream',
+65 verbose rebuild   'delayed-stream@1.0.0' ]
+66 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/extend',
+66 verbose rebuild   'extend@3.0.0' ]
+67 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/forever-agent',
+67 verbose rebuild   'forever-agent@0.6.1' ]
+68 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/form-data',
+68 verbose rebuild   'form-data@2.1.2' ]
+69 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/asynckit',
+69 verbose rebuild   'asynckit@0.4.0' ]
+70 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/mime-types',
+70 verbose rebuild   'mime-types@2.1.13' ]
+71 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/mime-db',
+71 verbose rebuild   'mime-db@1.25.0' ]
+72 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/har-validator',
+72 verbose rebuild   'har-validator@2.0.6' ]
+73 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/chalk',
+73 verbose rebuild   'chalk@1.1.3' ]
+74 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/ansi-styles',
+74 verbose rebuild   'ansi-styles@2.2.1' ]
+75 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/escape-string-regexp',
+75 verbose rebuild   'escape-string-regexp@1.0.5' ]
+76 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/has-ansi',
+76 verbose rebuild   'has-ansi@2.0.0' ]
+77 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/ansi-regex',
+77 verbose rebuild   'ansi-regex@2.0.0' ]
+78 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/strip-ansi',
+78 verbose rebuild   'strip-ansi@3.0.1' ]
+79 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/supports-color',
+79 verbose rebuild   'supports-color@2.0.0' ]
+80 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/commander',
+80 verbose rebuild   'commander@2.9.0' ]
+81 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/graceful-readlink',
+81 verbose rebuild   'graceful-readlink@1.0.1' ]
+82 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/is-my-json-valid',
+82 verbose rebuild   'is-my-json-valid@2.15.0' ]
+83 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/generate-function',
+83 verbose rebuild   'generate-function@2.0.0' ]
+84 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/generate-object-property',
+84 verbose rebuild   'generate-object-property@1.2.0' ]
+85 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/is-property',
+85 verbose rebuild   'is-property@1.0.2' ]
+86 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/jsonpointer',
+86 verbose rebuild   'jsonpointer@4.0.0' ]
+87 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/xtend',
+87 verbose rebuild   'xtend@4.0.1' ]
+88 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/pinkie-promise',
+88 verbose rebuild   'pinkie-promise@2.0.1' ]
+89 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/pinkie',
+89 verbose rebuild   'pinkie@2.0.4' ]
+90 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/hawk',
+90 verbose rebuild   'hawk@3.1.3' ]
+91 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/boom',
+91 verbose rebuild   'boom@2.10.1' ]
+92 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/hoek',
+92 verbose rebuild   'hoek@2.16.3' ]
+93 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/cryptiles',
+93 verbose rebuild   'cryptiles@2.0.5' ]
+94 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/sntp',
+94 verbose rebuild   'sntp@1.0.9' ]
+95 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/http-signature',
+95 verbose rebuild   'http-signature@1.1.1' ]
+96 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/assert-plus',
+96 verbose rebuild   'assert-plus@0.2.0' ]
+97 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/jsprim',
+97 verbose rebuild   'jsprim@1.3.1' ]
+98 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/extsprintf',
+98 verbose rebuild   'extsprintf@1.0.2' ]
+99 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/json-schema',
+99 verbose rebuild   'json-schema@0.2.3' ]
+100 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/verror',
+100 verbose rebuild   'verror@1.3.6' ]
+101 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/sshpk',
+101 verbose rebuild   'sshpk@1.10.1' ]
+102 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/asn1',
+102 verbose rebuild   'asn1@0.2.3' ]
+103 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/sshpk/node_modules/assert-plus',
+103 verbose rebuild   'assert-plus@1.0.0' ]
+104 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/dashdash',
+104 verbose rebuild   'dashdash@1.14.1' ]
+105 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/dashdash/node_modules/assert-plus',
+105 verbose rebuild   'assert-plus@1.0.0' ]
+106 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/getpass',
+106 verbose rebuild   'getpass@0.1.6' ]
+107 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/getpass/node_modules/assert-plus',
+107 verbose rebuild   'assert-plus@1.0.0' ]
+108 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/is-typedarray',
+108 verbose rebuild   'is-typedarray@1.0.0' ]
+109 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/isstream',
+109 verbose rebuild   'isstream@0.1.2' ]
+110 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/json-stringify-safe',
+110 verbose rebuild   'json-stringify-safe@5.0.1' ]
+111 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/oauth-sign',
+111 verbose rebuild   'oauth-sign@0.8.2' ]
+112 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/qs',
+112 verbose rebuild   'qs@6.3.0' ]
+113 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/stringstream',
+113 verbose rebuild   'stringstream@0.0.5' ]
+114 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/tough-cookie',
+114 verbose rebuild   'tough-cookie@2.3.2' ]
+115 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/punycode',
+115 verbose rebuild   'punycode@1.4.1' ]
+116 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/tunnel-agent',
+116 verbose rebuild   'tunnel-agent@0.4.3' ]
+117 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/uuid',
+117 verbose rebuild   'uuid@3.0.1' ]
+118 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/lodash.noop',
+118 verbose rebuild   'lodash.noop@3.0.1' ]
+119 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/request',
+119 verbose rebuild   'request@2.74.0' ]
+120 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/bl',
+120 verbose rebuild   'bl@1.1.2' ]
+121 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/bl/node_modules/readable-stream',
+121 verbose rebuild   'readable-stream@2.0.6' ]
+122 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/bl/node_modules/isarray',
+122 verbose rebuild   'isarray@1.0.0' ]
+123 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/process-nextick-args',
+123 verbose rebuild   'process-nextick-args@1.0.7' ]
+124 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/util-deprecate',
+124 verbose rebuild   'util-deprecate@1.0.2' ]
+125 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/form-data',
+125 verbose rebuild   'form-data@1.0.1' ]
+126 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/form-data/node_modules/async',
+126 verbose rebuild   'async@2.1.4' ]
+127 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/node-uuid',
+127 verbose rebuild   'node-uuid@1.4.7' ]
+128 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/qs',
+128 verbose rebuild   'qs@6.2.1' ]
+129 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/string-template',
+129 verbose rebuild   'string-template@0.2.1' ]
+130 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/string-template',
+130 verbose rebuild   'string-template@1.0.0' ]
+131 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/moment',
+131 verbose rebuild   'moment@2.17.1' ]
+132 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/yargs',
+132 verbose rebuild   'yargs@6.5.0' ]
+133 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/yargs/node_modules/camelcase',
+133 verbose rebuild   'camelcase@3.0.0' ]
+134 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/cliui',
+134 verbose rebuild   'cliui@3.2.0' ]
+135 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/string-width',
+135 verbose rebuild   'string-width@1.0.2' ]
+136 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/code-point-at',
+136 verbose rebuild   'code-point-at@1.1.0' ]
+137 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/is-fullwidth-code-point',
+137 verbose rebuild   'is-fullwidth-code-point@1.0.0' ]
+138 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/wrap-ansi',
+138 verbose rebuild   'wrap-ansi@2.1.0' ]
+139 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/decamelize',
+139 verbose rebuild   'decamelize@1.2.0' ]
+140 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/get-caller-file',
+140 verbose rebuild   'get-caller-file@1.0.2' ]
+141 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/os-locale',
+141 verbose rebuild   'os-locale@1.4.0' ]
+142 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/lcid',
+142 verbose rebuild   'lcid@1.0.0' ]
+143 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/invert-kv',
+143 verbose rebuild   'invert-kv@1.0.0' ]
+144 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/read-pkg-up',
+144 verbose rebuild   'read-pkg-up@1.0.1' ]
+145 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/find-up',
+145 verbose rebuild   'find-up@1.1.2' ]
+146 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/path-exists',
+146 verbose rebuild   'path-exists@2.1.0' ]
+147 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/read-pkg',
+147 verbose rebuild   'read-pkg@1.1.0' ]
+148 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/load-json-file',
+148 verbose rebuild   'load-json-file@1.1.0' ]
+149 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/graceful-fs',
+149 verbose rebuild   'graceful-fs@4.1.11' ]
+150 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/parse-json',
+150 verbose rebuild   'parse-json@2.2.0' ]
+151 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/error-ex',
+151 verbose rebuild   'error-ex@1.3.0' ]
+152 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/is-arrayish',
+152 verbose rebuild   'is-arrayish@0.2.1' ]
+153 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/pify',
+153 verbose rebuild   'pify@2.3.0' ]
+154 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/strip-bom',
+154 verbose rebuild   'strip-bom@2.0.0' ]
+155 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/is-utf8',
+155 verbose rebuild   'is-utf8@0.2.1' ]
+156 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/normalize-package-data',
+156 verbose rebuild   'normalize-package-data@2.3.5' ]
+157 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/hosted-git-info',
+157 verbose rebuild   'hosted-git-info@2.1.5' ]
+158 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/is-builtin-module',
+158 verbose rebuild   'is-builtin-module@1.0.0' ]
+159 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/builtin-modules',
+159 verbose rebuild   'builtin-modules@1.1.1' ]
+160 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/semver',
+160 verbose rebuild   'semver@5.3.0' ]
+161 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/validate-npm-package-license',
+161 verbose rebuild   'validate-npm-package-license@3.0.1' ]
+162 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/spdx-correct',
+162 verbose rebuild   'spdx-correct@1.0.2' ]
+163 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/spdx-license-ids',
+163 verbose rebuild   'spdx-license-ids@1.2.2' ]
+164 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/spdx-expression-parse',
+164 verbose rebuild   'spdx-expression-parse@1.0.4' ]
+165 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/path-type',
+165 verbose rebuild   'path-type@1.1.0' ]
+166 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/require-directory',
+166 verbose rebuild   'require-directory@2.1.1' ]
+167 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/require-main-filename',
+167 verbose rebuild   'require-main-filename@1.0.1' ]
+168 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/set-blocking',
+168 verbose rebuild   'set-blocking@2.0.0' ]
+169 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/which-module',
+169 verbose rebuild   'which-module@1.0.0' ]
+170 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/window-size',
+170 verbose rebuild   'window-size@0.2.0' ]
+171 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/y18n',
+171 verbose rebuild   'y18n@3.2.1' ]
+172 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/yargs-parser',
+172 verbose rebuild   'yargs-parser@4.2.0' ]
+173 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/yargs-parser/node_modules/camelcase',
+173 verbose rebuild   'camelcase@3.0.0' ]
+174 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/bcrypt-pbkdf',
+174 verbose rebuild   'bcrypt-pbkdf@1.0.0' ]
+175 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/tweetnacl',
+175 verbose rebuild   'tweetnacl@0.14.4' ]
+176 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/ecc-jsbn',
+176 verbose rebuild   'ecc-jsbn@0.1.1' ]
+177 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/jsbn',
+177 verbose rebuild   'jsbn@0.1.0' ]
+178 verbose rebuild path, id [ '/Users/scottj/Source/arbitrator/app/node_modules/jodid25519',
+178 verbose rebuild   'jodid25519@1.0.2' ]
+179 silly rebuild set [ '/Users/scottj/Source/arbitrator/app/node_modules/domready',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/fs-jetpack',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/minimatch',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/brace-expansion',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/balanced-match',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/concat-map',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/mkdirp',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/minimist',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/q',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/rimraf',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/glob',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/fs.realpath',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/inflight',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/once',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/wrappy',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/inherits',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/path-is-absolute',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/jquery',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/crypto-js',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/googleapis',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/async',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/lodash',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/google-auth-library',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/async',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/gtoken',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/google-p12-pem',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/node-forge',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/jws',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/base64url',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/concat-stream',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/readable-stream',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/core-util-is',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/isarray',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/string_decoder',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/typedarray',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/meow',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/camelcase-keys',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/camelcase',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/map-obj',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/indent-string',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/get-stdin',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/indent-string/node_modules/minimist',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/repeating',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/is-finite',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/number-is-nan',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/meow/node_modules/minimist',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/object-assign',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/jwa',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/jwa/node_modules/base64url',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/buffer-equal-constant-time',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/ecdsa-sig-formatter',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/ecdsa-sig-formatter/node_modules/base64url',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/safe-buffer',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/mime',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/request',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/aws-sign2',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/aws4',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/caseless',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/combined-stream',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/delayed-stream',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/extend',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/forever-agent',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/form-data',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/asynckit',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/mime-types',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/mime-db',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/har-validator',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/chalk',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/ansi-styles',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/escape-string-regexp',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/has-ansi',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/ansi-regex',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/strip-ansi',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/supports-color',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/commander',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/graceful-readlink',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/is-my-json-valid',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/generate-function',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/generate-object-property',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/is-property',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/jsonpointer',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/xtend',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/pinkie-promise',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/pinkie',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/hawk',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/boom',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/hoek',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/cryptiles',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/sntp',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/http-signature',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/assert-plus',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/jsprim',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/extsprintf',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/json-schema',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/verror',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/sshpk',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/asn1',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/sshpk/node_modules/assert-plus',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/dashdash',
+179 silly rebuild set   '/Users/scottj/Source/arbitrator/app/node_modules/dashdash/node_modules/assert-plus',
+179 silly rebuild set   ... 73 more items ]
+180 info build /Users/scottj/Source/arbitrator/app/node_modules/domready
+181 info lifecycle domready@1.0.8~preinstall: domready@1.0.8
+182 silly lifecycle domready@1.0.8~preinstall: no script for preinstall, continuing
+183 info linkStuff domready@1.0.8
+184 silly linkStuff domready@1.0.8 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+185 verbose linkBins domready@1.0.8
+186 verbose linkMans domready@1.0.8
+187 verbose rebuildBundles domready@1.0.8
+188 info lifecycle domready@1.0.8~install: domready@1.0.8
+189 silly lifecycle domready@1.0.8~install: no script for install, continuing
+190 info lifecycle domready@1.0.8~postinstall: domready@1.0.8
+191 silly lifecycle domready@1.0.8~postinstall: no script for postinstall, continuing
+192 info build /Users/scottj/Source/arbitrator/app/node_modules/fs-jetpack
+193 info lifecycle fs-jetpack@0.9.2~preinstall: fs-jetpack@0.9.2
+194 silly lifecycle fs-jetpack@0.9.2~preinstall: no script for preinstall, continuing
+195 info linkStuff fs-jetpack@0.9.2
+196 silly linkStuff fs-jetpack@0.9.2 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+197 verbose linkBins fs-jetpack@0.9.2
+198 verbose linkMans fs-jetpack@0.9.2
+199 verbose rebuildBundles fs-jetpack@0.9.2
+200 info lifecycle fs-jetpack@0.9.2~install: fs-jetpack@0.9.2
+201 silly lifecycle fs-jetpack@0.9.2~install: no script for install, continuing
+202 info lifecycle fs-jetpack@0.9.2~postinstall: fs-jetpack@0.9.2
+203 silly lifecycle fs-jetpack@0.9.2~postinstall: no script for postinstall, continuing
+204 info build /Users/scottj/Source/arbitrator/app/node_modules/minimatch
+205 info lifecycle minimatch@3.0.3~preinstall: minimatch@3.0.3
+206 silly lifecycle minimatch@3.0.3~preinstall: no script for preinstall, continuing
+207 info linkStuff minimatch@3.0.3
+208 silly linkStuff minimatch@3.0.3 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+209 verbose linkBins minimatch@3.0.3
+210 verbose linkMans minimatch@3.0.3
+211 verbose rebuildBundles minimatch@3.0.3
+212 info lifecycle minimatch@3.0.3~install: minimatch@3.0.3
+213 silly lifecycle minimatch@3.0.3~install: no script for install, continuing
+214 info lifecycle minimatch@3.0.3~postinstall: minimatch@3.0.3
+215 silly lifecycle minimatch@3.0.3~postinstall: no script for postinstall, continuing
+216 info build /Users/scottj/Source/arbitrator/app/node_modules/brace-expansion
+217 info lifecycle brace-expansion@1.1.6~preinstall: brace-expansion@1.1.6
+218 silly lifecycle brace-expansion@1.1.6~preinstall: no script for preinstall, continuing
+219 info linkStuff brace-expansion@1.1.6
+220 silly linkStuff brace-expansion@1.1.6 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+221 verbose linkBins brace-expansion@1.1.6
+222 verbose linkMans brace-expansion@1.1.6
+223 verbose rebuildBundles brace-expansion@1.1.6
+224 info lifecycle brace-expansion@1.1.6~install: brace-expansion@1.1.6
+225 silly lifecycle brace-expansion@1.1.6~install: no script for install, continuing
+226 info lifecycle brace-expansion@1.1.6~postinstall: brace-expansion@1.1.6
+227 silly lifecycle brace-expansion@1.1.6~postinstall: no script for postinstall, continuing
+228 info build /Users/scottj/Source/arbitrator/app/node_modules/balanced-match
+229 info lifecycle balanced-match@0.4.2~preinstall: balanced-match@0.4.2
+230 silly lifecycle balanced-match@0.4.2~preinstall: no script for preinstall, continuing
+231 info linkStuff balanced-match@0.4.2
+232 silly linkStuff balanced-match@0.4.2 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+233 verbose linkBins balanced-match@0.4.2
+234 verbose linkMans balanced-match@0.4.2
+235 verbose rebuildBundles balanced-match@0.4.2
+236 info lifecycle balanced-match@0.4.2~install: balanced-match@0.4.2
+237 silly lifecycle balanced-match@0.4.2~install: no script for install, continuing
+238 info lifecycle balanced-match@0.4.2~postinstall: balanced-match@0.4.2
+239 silly lifecycle balanced-match@0.4.2~postinstall: no script for postinstall, continuing
+240 info build /Users/scottj/Source/arbitrator/app/node_modules/concat-map
+241 info lifecycle concat-map@0.0.1~preinstall: concat-map@0.0.1
+242 silly lifecycle concat-map@0.0.1~preinstall: no script for preinstall, continuing
+243 info linkStuff concat-map@0.0.1
+244 silly linkStuff concat-map@0.0.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+245 verbose linkBins concat-map@0.0.1
+246 verbose linkMans concat-map@0.0.1
+247 verbose rebuildBundles concat-map@0.0.1
+248 info lifecycle concat-map@0.0.1~install: concat-map@0.0.1
+249 silly lifecycle concat-map@0.0.1~install: no script for install, continuing
+250 info lifecycle concat-map@0.0.1~postinstall: concat-map@0.0.1
+251 silly lifecycle concat-map@0.0.1~postinstall: no script for postinstall, continuing
+252 info build /Users/scottj/Source/arbitrator/app/node_modules/mkdirp
+253 info lifecycle mkdirp@0.5.1~preinstall: mkdirp@0.5.1
+254 silly lifecycle mkdirp@0.5.1~preinstall: no script for preinstall, continuing
+255 info linkStuff mkdirp@0.5.1
+256 silly linkStuff mkdirp@0.5.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+257 verbose linkBins mkdirp@0.5.1
+258 verbose linkBins [ { mkdirp: 'bin/cmd.js' },
+258 verbose linkBins   '/Users/scottj/Source/arbitrator/app/node_modules/.bin',
+258 verbose linkBins   false ]
+259 verbose linkMans mkdirp@0.5.1
+260 verbose rebuildBundles mkdirp@0.5.1
+261 info lifecycle mkdirp@0.5.1~install: mkdirp@0.5.1
+262 silly lifecycle mkdirp@0.5.1~install: no script for install, continuing
+263 info lifecycle mkdirp@0.5.1~postinstall: mkdirp@0.5.1
+264 silly lifecycle mkdirp@0.5.1~postinstall: no script for postinstall, continuing
+265 info build /Users/scottj/Source/arbitrator/app/node_modules/minimist
+266 info lifecycle minimist@0.0.8~preinstall: minimist@0.0.8
+267 silly lifecycle minimist@0.0.8~preinstall: no script for preinstall, continuing
+268 info linkStuff minimist@0.0.8
+269 silly linkStuff minimist@0.0.8 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+270 verbose linkBins minimist@0.0.8
+271 verbose linkMans minimist@0.0.8
+272 verbose rebuildBundles minimist@0.0.8
+273 info lifecycle minimist@0.0.8~install: minimist@0.0.8
+274 silly lifecycle minimist@0.0.8~install: no script for install, continuing
+275 info lifecycle minimist@0.0.8~postinstall: minimist@0.0.8
+276 silly lifecycle minimist@0.0.8~postinstall: no script for postinstall, continuing
+277 info build /Users/scottj/Source/arbitrator/app/node_modules/q
+278 info lifecycle q@1.4.1~preinstall: q@1.4.1
+279 silly lifecycle q@1.4.1~preinstall: no script for preinstall, continuing
+280 info linkStuff q@1.4.1
+281 silly linkStuff q@1.4.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+282 verbose linkBins q@1.4.1
+283 verbose linkMans q@1.4.1
+284 verbose rebuildBundles q@1.4.1
+285 info lifecycle q@1.4.1~install: q@1.4.1
+286 silly lifecycle q@1.4.1~install: no script for install, continuing
+287 info lifecycle q@1.4.1~postinstall: q@1.4.1
+288 silly lifecycle q@1.4.1~postinstall: no script for postinstall, continuing
+289 info build /Users/scottj/Source/arbitrator/app/node_modules/rimraf
+290 info lifecycle rimraf@2.5.4~preinstall: rimraf@2.5.4
+291 silly lifecycle rimraf@2.5.4~preinstall: no script for preinstall, continuing
+292 info linkStuff rimraf@2.5.4
+293 silly linkStuff rimraf@2.5.4 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+294 verbose linkBins rimraf@2.5.4
+295 verbose linkBins [ { rimraf: './bin.js' },
+295 verbose linkBins   '/Users/scottj/Source/arbitrator/app/node_modules/.bin',
+295 verbose linkBins   false ]
+296 verbose linkMans rimraf@2.5.4
+297 verbose rebuildBundles rimraf@2.5.4
+298 info lifecycle rimraf@2.5.4~install: rimraf@2.5.4
+299 silly lifecycle rimraf@2.5.4~install: no script for install, continuing
+300 info lifecycle rimraf@2.5.4~postinstall: rimraf@2.5.4
+301 silly lifecycle rimraf@2.5.4~postinstall: no script for postinstall, continuing
+302 info build /Users/scottj/Source/arbitrator/app/node_modules/glob
+303 info lifecycle glob@7.1.1~preinstall: glob@7.1.1
+304 silly lifecycle glob@7.1.1~preinstall: no script for preinstall, continuing
+305 info linkStuff glob@7.1.1
+306 silly linkStuff glob@7.1.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+307 verbose linkBins glob@7.1.1
+308 verbose linkMans glob@7.1.1
+309 verbose rebuildBundles glob@7.1.1
+310 info lifecycle glob@7.1.1~install: glob@7.1.1
+311 silly lifecycle glob@7.1.1~install: no script for install, continuing
+312 info lifecycle glob@7.1.1~postinstall: glob@7.1.1
+313 silly lifecycle glob@7.1.1~postinstall: no script for postinstall, continuing
+314 info build /Users/scottj/Source/arbitrator/app/node_modules/fs.realpath
+315 info lifecycle fs.realpath@1.0.0~preinstall: fs.realpath@1.0.0
+316 silly lifecycle fs.realpath@1.0.0~preinstall: no script for preinstall, continuing
+317 info linkStuff fs.realpath@1.0.0
+318 silly linkStuff fs.realpath@1.0.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+319 verbose linkBins fs.realpath@1.0.0
+320 verbose linkMans fs.realpath@1.0.0
+321 verbose rebuildBundles fs.realpath@1.0.0
+322 info lifecycle fs.realpath@1.0.0~install: fs.realpath@1.0.0
+323 silly lifecycle fs.realpath@1.0.0~install: no script for install, continuing
+324 info lifecycle fs.realpath@1.0.0~postinstall: fs.realpath@1.0.0
+325 silly lifecycle fs.realpath@1.0.0~postinstall: no script for postinstall, continuing
+326 info build /Users/scottj/Source/arbitrator/app/node_modules/inflight
+327 info lifecycle inflight@1.0.6~preinstall: inflight@1.0.6
+328 silly lifecycle inflight@1.0.6~preinstall: no script for preinstall, continuing
+329 info linkStuff inflight@1.0.6
+330 silly linkStuff inflight@1.0.6 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+331 verbose linkBins inflight@1.0.6
+332 verbose linkMans inflight@1.0.6
+333 verbose rebuildBundles inflight@1.0.6
+334 info lifecycle inflight@1.0.6~install: inflight@1.0.6
+335 silly lifecycle inflight@1.0.6~install: no script for install, continuing
+336 info lifecycle inflight@1.0.6~postinstall: inflight@1.0.6
+337 silly lifecycle inflight@1.0.6~postinstall: no script for postinstall, continuing
+338 info build /Users/scottj/Source/arbitrator/app/node_modules/once
+339 info lifecycle once@1.4.0~preinstall: once@1.4.0
+340 silly lifecycle once@1.4.0~preinstall: no script for preinstall, continuing
+341 info linkStuff once@1.4.0
+342 silly linkStuff once@1.4.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+343 verbose linkBins once@1.4.0
+344 verbose linkMans once@1.4.0
+345 verbose rebuildBundles once@1.4.0
+346 info lifecycle once@1.4.0~install: once@1.4.0
+347 silly lifecycle once@1.4.0~install: no script for install, continuing
+348 info lifecycle once@1.4.0~postinstall: once@1.4.0
+349 silly lifecycle once@1.4.0~postinstall: no script for postinstall, continuing
+350 info build /Users/scottj/Source/arbitrator/app/node_modules/wrappy
+351 info lifecycle wrappy@1.0.2~preinstall: wrappy@1.0.2
+352 silly lifecycle wrappy@1.0.2~preinstall: no script for preinstall, continuing
+353 info linkStuff wrappy@1.0.2
+354 silly linkStuff wrappy@1.0.2 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+355 verbose linkBins wrappy@1.0.2
+356 verbose linkMans wrappy@1.0.2
+357 verbose rebuildBundles wrappy@1.0.2
+358 info lifecycle wrappy@1.0.2~install: wrappy@1.0.2
+359 silly lifecycle wrappy@1.0.2~install: no script for install, continuing
+360 info lifecycle wrappy@1.0.2~postinstall: wrappy@1.0.2
+361 silly lifecycle wrappy@1.0.2~postinstall: no script for postinstall, continuing
+362 info build /Users/scottj/Source/arbitrator/app/node_modules/inherits
+363 info lifecycle inherits@2.0.3~preinstall: inherits@2.0.3
+364 silly lifecycle inherits@2.0.3~preinstall: no script for preinstall, continuing
+365 info linkStuff inherits@2.0.3
+366 silly linkStuff inherits@2.0.3 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+367 verbose linkBins inherits@2.0.3
+368 verbose linkMans inherits@2.0.3
+369 verbose rebuildBundles inherits@2.0.3
+370 info lifecycle inherits@2.0.3~install: inherits@2.0.3
+371 silly lifecycle inherits@2.0.3~install: no script for install, continuing
+372 info lifecycle inherits@2.0.3~postinstall: inherits@2.0.3
+373 silly lifecycle inherits@2.0.3~postinstall: no script for postinstall, continuing
+374 info build /Users/scottj/Source/arbitrator/app/node_modules/path-is-absolute
+375 info lifecycle path-is-absolute@1.0.1~preinstall: path-is-absolute@1.0.1
+376 silly lifecycle path-is-absolute@1.0.1~preinstall: no script for preinstall, continuing
+377 info linkStuff path-is-absolute@1.0.1
+378 silly linkStuff path-is-absolute@1.0.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+379 verbose linkBins path-is-absolute@1.0.1
+380 verbose linkMans path-is-absolute@1.0.1
+381 verbose rebuildBundles path-is-absolute@1.0.1
+382 info lifecycle path-is-absolute@1.0.1~install: path-is-absolute@1.0.1
+383 silly lifecycle path-is-absolute@1.0.1~install: no script for install, continuing
+384 info lifecycle path-is-absolute@1.0.1~postinstall: path-is-absolute@1.0.1
+385 silly lifecycle path-is-absolute@1.0.1~postinstall: no script for postinstall, continuing
+386 info build /Users/scottj/Source/arbitrator/app/node_modules/jquery
+387 info lifecycle jquery@3.1.1~preinstall: jquery@3.1.1
+388 silly lifecycle jquery@3.1.1~preinstall: no script for preinstall, continuing
+389 info linkStuff jquery@3.1.1
+390 silly linkStuff jquery@3.1.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+391 verbose linkBins jquery@3.1.1
+392 verbose linkMans jquery@3.1.1
+393 verbose rebuildBundles jquery@3.1.1
+394 info lifecycle jquery@3.1.1~install: jquery@3.1.1
+395 silly lifecycle jquery@3.1.1~install: no script for install, continuing
+396 info lifecycle jquery@3.1.1~postinstall: jquery@3.1.1
+397 silly lifecycle jquery@3.1.1~postinstall: no script for postinstall, continuing
+398 info build /Users/scottj/Source/arbitrator/app/node_modules/crypto-js
+399 info lifecycle crypto-js@3.1.8~preinstall: crypto-js@3.1.8
+400 silly lifecycle crypto-js@3.1.8~preinstall: no script for preinstall, continuing
+401 info linkStuff crypto-js@3.1.8
+402 silly linkStuff crypto-js@3.1.8 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+403 verbose linkBins crypto-js@3.1.8
+404 verbose linkMans crypto-js@3.1.8
+405 verbose rebuildBundles crypto-js@3.1.8
+406 info lifecycle crypto-js@3.1.8~install: crypto-js@3.1.8
+407 silly lifecycle crypto-js@3.1.8~install: no script for install, continuing
+408 info lifecycle crypto-js@3.1.8~postinstall: crypto-js@3.1.8
+409 silly lifecycle crypto-js@3.1.8~postinstall: no script for postinstall, continuing
+410 info build /Users/scottj/Source/arbitrator/app/node_modules/googleapis
+411 info lifecycle googleapis@14.2.0~preinstall: googleapis@14.2.0
+412 silly lifecycle googleapis@14.2.0~preinstall: no script for preinstall, continuing
+413 info linkStuff googleapis@14.2.0
+414 silly linkStuff googleapis@14.2.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+415 verbose linkBins googleapis@14.2.0
+416 verbose linkMans googleapis@14.2.0
+417 verbose rebuildBundles googleapis@14.2.0
+418 info lifecycle googleapis@14.2.0~install: googleapis@14.2.0
+419 silly lifecycle googleapis@14.2.0~install: no script for install, continuing
+420 info lifecycle googleapis@14.2.0~postinstall: googleapis@14.2.0
+421 silly lifecycle googleapis@14.2.0~postinstall: no script for postinstall, continuing
+422 info build /Users/scottj/Source/arbitrator/app/node_modules/async
+423 info lifecycle async@2.1.4~preinstall: async@2.1.4
+424 silly lifecycle async@2.1.4~preinstall: no script for preinstall, continuing
+425 info linkStuff async@2.1.4
+426 silly linkStuff async@2.1.4 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+427 verbose linkBins async@2.1.4
+428 verbose linkMans async@2.1.4
+429 verbose rebuildBundles async@2.1.4
+430 info lifecycle async@2.1.4~install: async@2.1.4
+431 silly lifecycle async@2.1.4~install: no script for install, continuing
+432 info lifecycle async@2.1.4~postinstall: async@2.1.4
+433 silly lifecycle async@2.1.4~postinstall: no script for postinstall, continuing
+434 info build /Users/scottj/Source/arbitrator/app/node_modules/lodash
+435 info lifecycle lodash@4.17.2~preinstall: lodash@4.17.2
+436 silly lifecycle lodash@4.17.2~preinstall: no script for preinstall, continuing
+437 info linkStuff lodash@4.17.2
+438 silly linkStuff lodash@4.17.2 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+439 verbose linkBins lodash@4.17.2
+440 verbose linkMans lodash@4.17.2
+441 verbose rebuildBundles lodash@4.17.2
+442 info lifecycle lodash@4.17.2~install: lodash@4.17.2
+443 silly lifecycle lodash@4.17.2~install: no script for install, continuing
+444 info lifecycle lodash@4.17.2~postinstall: lodash@4.17.2
+445 silly lifecycle lodash@4.17.2~postinstall: no script for postinstall, continuing
+446 info build /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library
+447 info lifecycle google-auth-library@0.9.10~preinstall: google-auth-library@0.9.10
+448 silly lifecycle google-auth-library@0.9.10~preinstall: no script for preinstall, continuing
+449 info linkStuff google-auth-library@0.9.10
+450 silly linkStuff google-auth-library@0.9.10 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+451 verbose linkBins google-auth-library@0.9.10
+452 verbose linkMans google-auth-library@0.9.10
+453 verbose rebuildBundles google-auth-library@0.9.10
+454 verbose rebuildBundles [ '.bin',
+454 verbose rebuildBundles   'async',
+454 verbose rebuildBundles   'form-data',
+454 verbose rebuildBundles   'node-uuid',
+454 verbose rebuildBundles   'qs',
+454 verbose rebuildBundles   'request',
+454 verbose rebuildBundles   'string-template' ]
+455 verbose rebuild bundle /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/form-data
+456 info build /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/form-data
+457 info lifecycle form-data@1.0.1~preinstall: form-data@1.0.1
+458 silly lifecycle form-data@1.0.1~preinstall: no script for preinstall, continuing
+459 info linkStuff form-data@1.0.1
+460 silly linkStuff form-data@1.0.1 has /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules as its parent node_modules
+461 verbose linkBins form-data@1.0.1
+462 verbose linkMans form-data@1.0.1
+463 verbose rebuildBundles form-data@1.0.1
+464 verbose rebuildBundles [ 'async' ]
+465 info lifecycle form-data@1.0.1~install: form-data@1.0.1
+466 silly lifecycle form-data@1.0.1~install: no script for install, continuing
+467 info lifecycle form-data@1.0.1~postinstall: form-data@1.0.1
+468 silly lifecycle form-data@1.0.1~postinstall: no script for postinstall, continuing
+469 verbose rebuild bundle /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/node-uuid
+470 info build /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/node-uuid
+471 info lifecycle node-uuid@1.4.7~preinstall: node-uuid@1.4.7
+472 silly lifecycle node-uuid@1.4.7~preinstall: no script for preinstall, continuing
+473 info linkStuff node-uuid@1.4.7
+474 silly linkStuff node-uuid@1.4.7 has /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules as its parent node_modules
+475 verbose linkBins node-uuid@1.4.7
+476 verbose linkBins [ { uuid: './bin/uuid' },
+476 verbose linkBins   '/Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/.bin',
+476 verbose linkBins   false ]
+477 verbose linkMans node-uuid@1.4.7
+478 verbose rebuildBundles node-uuid@1.4.7
+479 info lifecycle node-uuid@1.4.7~install: node-uuid@1.4.7
+480 silly lifecycle node-uuid@1.4.7~install: no script for install, continuing
+481 info lifecycle node-uuid@1.4.7~postinstall: node-uuid@1.4.7
+482 silly lifecycle node-uuid@1.4.7~postinstall: no script for postinstall, continuing
+483 verbose rebuild bundle /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/qs
+484 info build /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/qs
+485 info lifecycle qs@6.2.1~preinstall: qs@6.2.1
+486 silly lifecycle qs@6.2.1~preinstall: no script for preinstall, continuing
+487 info linkStuff qs@6.2.1
+488 silly linkStuff qs@6.2.1 has /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules as its parent node_modules
+489 verbose linkBins qs@6.2.1
+490 verbose linkMans qs@6.2.1
+491 verbose rebuildBundles qs@6.2.1
+492 info lifecycle qs@6.2.1~install: qs@6.2.1
+493 silly lifecycle qs@6.2.1~install: no script for install, continuing
+494 info lifecycle qs@6.2.1~postinstall: qs@6.2.1
+495 silly lifecycle qs@6.2.1~postinstall: no script for postinstall, continuing
+496 info lifecycle google-auth-library@0.9.10~install: google-auth-library@0.9.10
+497 silly lifecycle google-auth-library@0.9.10~install: no script for install, continuing
+498 info lifecycle google-auth-library@0.9.10~postinstall: google-auth-library@0.9.10
+499 silly lifecycle google-auth-library@0.9.10~postinstall: no script for postinstall, continuing
+500 info build /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/async
+501 info lifecycle async@1.4.2~preinstall: async@1.4.2
+502 silly lifecycle async@1.4.2~preinstall: no script for preinstall, continuing
+503 info linkStuff async@1.4.2
+504 silly linkStuff async@1.4.2 has /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules as its parent node_modules
+505 verbose linkBins async@1.4.2
+506 verbose linkMans async@1.4.2
+507 verbose rebuildBundles async@1.4.2
+508 info lifecycle async@1.4.2~install: async@1.4.2
+509 silly lifecycle async@1.4.2~install: no script for install, continuing
+510 info lifecycle async@1.4.2~postinstall: async@1.4.2
+511 silly lifecycle async@1.4.2~postinstall: no script for postinstall, continuing
+512 info build /Users/scottj/Source/arbitrator/app/node_modules/gtoken
+513 info lifecycle gtoken@1.2.1~preinstall: gtoken@1.2.1
+514 silly lifecycle gtoken@1.2.1~preinstall: no script for preinstall, continuing
+515 info linkStuff gtoken@1.2.1
+516 silly linkStuff gtoken@1.2.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+517 verbose linkBins gtoken@1.2.1
+518 verbose linkMans gtoken@1.2.1
+519 verbose rebuildBundles gtoken@1.2.1
+520 info lifecycle gtoken@1.2.1~install: gtoken@1.2.1
+521 silly lifecycle gtoken@1.2.1~install: no script for install, continuing
+522 info lifecycle gtoken@1.2.1~postinstall: gtoken@1.2.1
+523 silly lifecycle gtoken@1.2.1~postinstall: no script for postinstall, continuing
+524 info build /Users/scottj/Source/arbitrator/app/node_modules/google-p12-pem
+525 info lifecycle google-p12-pem@0.1.0~preinstall: google-p12-pem@0.1.0
+526 silly lifecycle google-p12-pem@0.1.0~preinstall: no script for preinstall, continuing
+527 info linkStuff google-p12-pem@0.1.0
+528 silly linkStuff google-p12-pem@0.1.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+529 verbose linkBins google-p12-pem@0.1.0
+530 verbose linkBins [ { 'gp12-pem': 'bin/gp12-pem' },
+530 verbose linkBins   '/Users/scottj/Source/arbitrator/app/node_modules/.bin',
+530 verbose linkBins   false ]
+531 verbose linkMans google-p12-pem@0.1.0
+532 verbose rebuildBundles google-p12-pem@0.1.0
+533 info lifecycle google-p12-pem@0.1.0~install: google-p12-pem@0.1.0
+534 silly lifecycle google-p12-pem@0.1.0~install: no script for install, continuing
+535 info lifecycle google-p12-pem@0.1.0~postinstall: google-p12-pem@0.1.0
+536 silly lifecycle google-p12-pem@0.1.0~postinstall: no script for postinstall, continuing
+537 info build /Users/scottj/Source/arbitrator/app/node_modules/node-forge
+538 info lifecycle node-forge@0.6.45~preinstall: node-forge@0.6.45
+539 silly lifecycle node-forge@0.6.45~preinstall: no script for preinstall, continuing
+540 info linkStuff node-forge@0.6.45
+541 silly linkStuff node-forge@0.6.45 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+542 verbose linkBins node-forge@0.6.45
+543 verbose linkMans node-forge@0.6.45
+544 verbose rebuildBundles node-forge@0.6.45
+545 info lifecycle node-forge@0.6.45~install: node-forge@0.6.45
+546 silly lifecycle node-forge@0.6.45~install: no script for install, continuing
+547 info lifecycle node-forge@0.6.45~postinstall: node-forge@0.6.45
+548 silly lifecycle node-forge@0.6.45~postinstall: no script for postinstall, continuing
+549 info build /Users/scottj/Source/arbitrator/app/node_modules/jws
+550 info lifecycle jws@3.0.0~preinstall: jws@3.0.0
+551 silly lifecycle jws@3.0.0~preinstall: no script for preinstall, continuing
+552 info linkStuff jws@3.0.0
+553 silly linkStuff jws@3.0.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+554 verbose linkBins jws@3.0.0
+555 verbose linkMans jws@3.0.0
+556 verbose rebuildBundles jws@3.0.0
+557 info lifecycle jws@3.0.0~install: jws@3.0.0
+558 silly lifecycle jws@3.0.0~install: no script for install, continuing
+559 info lifecycle jws@3.0.0~postinstall: jws@3.0.0
+560 silly lifecycle jws@3.0.0~postinstall: no script for postinstall, continuing
+561 info build /Users/scottj/Source/arbitrator/app/node_modules/base64url
+562 info lifecycle base64url@1.0.6~preinstall: base64url@1.0.6
+563 silly lifecycle base64url@1.0.6~preinstall: no script for preinstall, continuing
+564 info linkStuff base64url@1.0.6
+565 silly linkStuff base64url@1.0.6 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+566 verbose linkBins base64url@1.0.6
+567 verbose linkBins [ { base64url: './bin/base64url' },
+567 verbose linkBins   '/Users/scottj/Source/arbitrator/app/node_modules/.bin',
+567 verbose linkBins   false ]
+568 verbose linkMans base64url@1.0.6
+569 verbose rebuildBundles base64url@1.0.6
+570 info lifecycle base64url@1.0.6~install: base64url@1.0.6
+571 silly lifecycle base64url@1.0.6~install: no script for install, continuing
+572 info lifecycle base64url@1.0.6~postinstall: base64url@1.0.6
+573 silly lifecycle base64url@1.0.6~postinstall: no script for postinstall, continuing
+574 info build /Users/scottj/Source/arbitrator/app/node_modules/concat-stream
+575 info lifecycle concat-stream@1.4.10~preinstall: concat-stream@1.4.10
+576 silly lifecycle concat-stream@1.4.10~preinstall: no script for preinstall, continuing
+577 info linkStuff concat-stream@1.4.10
+578 silly linkStuff concat-stream@1.4.10 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+579 verbose linkBins concat-stream@1.4.10
+580 verbose linkMans concat-stream@1.4.10
+581 verbose rebuildBundles concat-stream@1.4.10
+582 info lifecycle concat-stream@1.4.10~install: concat-stream@1.4.10
+583 silly lifecycle concat-stream@1.4.10~install: no script for install, continuing
+584 info lifecycle concat-stream@1.4.10~postinstall: concat-stream@1.4.10
+585 silly lifecycle concat-stream@1.4.10~postinstall: no script for postinstall, continuing
+586 info build /Users/scottj/Source/arbitrator/app/node_modules/readable-stream
+587 info lifecycle readable-stream@1.1.14~preinstall: readable-stream@1.1.14
+588 silly lifecycle readable-stream@1.1.14~preinstall: no script for preinstall, continuing
+589 info linkStuff readable-stream@1.1.14
+590 silly linkStuff readable-stream@1.1.14 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+591 verbose linkBins readable-stream@1.1.14
+592 verbose linkMans readable-stream@1.1.14
+593 verbose rebuildBundles readable-stream@1.1.14
+594 info lifecycle readable-stream@1.1.14~install: readable-stream@1.1.14
+595 silly lifecycle readable-stream@1.1.14~install: no script for install, continuing
+596 info lifecycle readable-stream@1.1.14~postinstall: readable-stream@1.1.14
+597 silly lifecycle readable-stream@1.1.14~postinstall: no script for postinstall, continuing
+598 info build /Users/scottj/Source/arbitrator/app/node_modules/core-util-is
+599 info lifecycle core-util-is@1.0.2~preinstall: core-util-is@1.0.2
+600 silly lifecycle core-util-is@1.0.2~preinstall: no script for preinstall, continuing
+601 info linkStuff core-util-is@1.0.2
+602 silly linkStuff core-util-is@1.0.2 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+603 verbose linkBins core-util-is@1.0.2
+604 verbose linkMans core-util-is@1.0.2
+605 verbose rebuildBundles core-util-is@1.0.2
+606 info lifecycle core-util-is@1.0.2~install: core-util-is@1.0.2
+607 silly lifecycle core-util-is@1.0.2~install: no script for install, continuing
+608 info lifecycle core-util-is@1.0.2~postinstall: core-util-is@1.0.2
+609 silly lifecycle core-util-is@1.0.2~postinstall: no script for postinstall, continuing
+610 info build /Users/scottj/Source/arbitrator/app/node_modules/isarray
+611 info lifecycle isarray@0.0.1~preinstall: isarray@0.0.1
+612 silly lifecycle isarray@0.0.1~preinstall: no script for preinstall, continuing
+613 info linkStuff isarray@0.0.1
+614 silly linkStuff isarray@0.0.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+615 verbose linkBins isarray@0.0.1
+616 verbose linkMans isarray@0.0.1
+617 verbose rebuildBundles isarray@0.0.1
+618 info lifecycle isarray@0.0.1~install: isarray@0.0.1
+619 silly lifecycle isarray@0.0.1~install: no script for install, continuing
+620 info lifecycle isarray@0.0.1~postinstall: isarray@0.0.1
+621 silly lifecycle isarray@0.0.1~postinstall: no script for postinstall, continuing
+622 info build /Users/scottj/Source/arbitrator/app/node_modules/string_decoder
+623 info lifecycle string_decoder@0.10.31~preinstall: string_decoder@0.10.31
+624 silly lifecycle string_decoder@0.10.31~preinstall: no script for preinstall, continuing
+625 info linkStuff string_decoder@0.10.31
+626 silly linkStuff string_decoder@0.10.31 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+627 verbose linkBins string_decoder@0.10.31
+628 verbose linkMans string_decoder@0.10.31
+629 verbose rebuildBundles string_decoder@0.10.31
+630 info lifecycle string_decoder@0.10.31~install: string_decoder@0.10.31
+631 silly lifecycle string_decoder@0.10.31~install: no script for install, continuing
+632 info lifecycle string_decoder@0.10.31~postinstall: string_decoder@0.10.31
+633 silly lifecycle string_decoder@0.10.31~postinstall: no script for postinstall, continuing
+634 info build /Users/scottj/Source/arbitrator/app/node_modules/typedarray
+635 info lifecycle typedarray@0.0.6~preinstall: typedarray@0.0.6
+636 silly lifecycle typedarray@0.0.6~preinstall: no script for preinstall, continuing
+637 info linkStuff typedarray@0.0.6
+638 silly linkStuff typedarray@0.0.6 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+639 verbose linkBins typedarray@0.0.6
+640 verbose linkMans typedarray@0.0.6
+641 verbose rebuildBundles typedarray@0.0.6
+642 info lifecycle typedarray@0.0.6~install: typedarray@0.0.6
+643 silly lifecycle typedarray@0.0.6~install: no script for install, continuing
+644 info lifecycle typedarray@0.0.6~postinstall: typedarray@0.0.6
+645 silly lifecycle typedarray@0.0.6~postinstall: no script for postinstall, continuing
+646 info build /Users/scottj/Source/arbitrator/app/node_modules/meow
+647 info lifecycle meow@2.0.0~preinstall: meow@2.0.0
+648 silly lifecycle meow@2.0.0~preinstall: no script for preinstall, continuing
+649 info linkStuff meow@2.0.0
+650 silly linkStuff meow@2.0.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+651 verbose linkBins meow@2.0.0
+652 verbose linkMans meow@2.0.0
+653 verbose rebuildBundles meow@2.0.0
+654 verbose rebuildBundles [ 'minimist' ]
+655 info lifecycle meow@2.0.0~install: meow@2.0.0
+656 silly lifecycle meow@2.0.0~install: no script for install, continuing
+657 info lifecycle meow@2.0.0~postinstall: meow@2.0.0
+658 silly lifecycle meow@2.0.0~postinstall: no script for postinstall, continuing
+659 info build /Users/scottj/Source/arbitrator/app/node_modules/camelcase-keys
+660 info lifecycle camelcase-keys@1.0.0~preinstall: camelcase-keys@1.0.0
+661 silly lifecycle camelcase-keys@1.0.0~preinstall: no script for preinstall, continuing
+662 info linkStuff camelcase-keys@1.0.0
+663 silly linkStuff camelcase-keys@1.0.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+664 verbose linkBins camelcase-keys@1.0.0
+665 verbose linkMans camelcase-keys@1.0.0
+666 verbose rebuildBundles camelcase-keys@1.0.0
+667 info lifecycle camelcase-keys@1.0.0~install: camelcase-keys@1.0.0
+668 silly lifecycle camelcase-keys@1.0.0~install: no script for install, continuing
+669 info lifecycle camelcase-keys@1.0.0~postinstall: camelcase-keys@1.0.0
+670 silly lifecycle camelcase-keys@1.0.0~postinstall: no script for postinstall, continuing
+671 info build /Users/scottj/Source/arbitrator/app/node_modules/camelcase
+672 info lifecycle camelcase@1.2.1~preinstall: camelcase@1.2.1
+673 silly lifecycle camelcase@1.2.1~preinstall: no script for preinstall, continuing
+674 info linkStuff camelcase@1.2.1
+675 silly linkStuff camelcase@1.2.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+676 verbose linkBins camelcase@1.2.1
+677 verbose linkMans camelcase@1.2.1
+678 verbose rebuildBundles camelcase@1.2.1
+679 info lifecycle camelcase@1.2.1~install: camelcase@1.2.1
+680 silly lifecycle camelcase@1.2.1~install: no script for install, continuing
+681 info lifecycle camelcase@1.2.1~postinstall: camelcase@1.2.1
+682 silly lifecycle camelcase@1.2.1~postinstall: no script for postinstall, continuing
+683 info build /Users/scottj/Source/arbitrator/app/node_modules/map-obj
+684 info lifecycle map-obj@1.0.1~preinstall: map-obj@1.0.1
+685 silly lifecycle map-obj@1.0.1~preinstall: no script for preinstall, continuing
+686 info linkStuff map-obj@1.0.1
+687 silly linkStuff map-obj@1.0.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+688 verbose linkBins map-obj@1.0.1
+689 verbose linkMans map-obj@1.0.1
+690 verbose rebuildBundles map-obj@1.0.1
+691 info lifecycle map-obj@1.0.1~install: map-obj@1.0.1
+692 silly lifecycle map-obj@1.0.1~install: no script for install, continuing
+693 info lifecycle map-obj@1.0.1~postinstall: map-obj@1.0.1
+694 silly lifecycle map-obj@1.0.1~postinstall: no script for postinstall, continuing
+695 info build /Users/scottj/Source/arbitrator/app/node_modules/indent-string
+696 info lifecycle indent-string@1.2.2~preinstall: indent-string@1.2.2
+697 silly lifecycle indent-string@1.2.2~preinstall: no script for preinstall, continuing
+698 info linkStuff indent-string@1.2.2
+699 silly linkStuff indent-string@1.2.2 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+700 verbose linkBins indent-string@1.2.2
+701 verbose linkBins [ { 'indent-string': 'cli.js' },
+701 verbose linkBins   '/Users/scottj/Source/arbitrator/app/node_modules/.bin',
+701 verbose linkBins   false ]
+702 verbose linkMans indent-string@1.2.2
+703 verbose rebuildBundles indent-string@1.2.2
+704 verbose rebuildBundles [ 'minimist' ]
+705 info lifecycle indent-string@1.2.2~install: indent-string@1.2.2
+706 silly lifecycle indent-string@1.2.2~install: no script for install, continuing
+707 info lifecycle indent-string@1.2.2~postinstall: indent-string@1.2.2
+708 silly lifecycle indent-string@1.2.2~postinstall: no script for postinstall, continuing
+709 info build /Users/scottj/Source/arbitrator/app/node_modules/get-stdin
+710 info lifecycle get-stdin@4.0.1~preinstall: get-stdin@4.0.1
+711 silly lifecycle get-stdin@4.0.1~preinstall: no script for preinstall, continuing
+712 info linkStuff get-stdin@4.0.1
+713 silly linkStuff get-stdin@4.0.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+714 verbose linkBins get-stdin@4.0.1
+715 verbose linkMans get-stdin@4.0.1
+716 verbose rebuildBundles get-stdin@4.0.1
+717 info lifecycle get-stdin@4.0.1~install: get-stdin@4.0.1
+718 silly lifecycle get-stdin@4.0.1~install: no script for install, continuing
+719 info lifecycle get-stdin@4.0.1~postinstall: get-stdin@4.0.1
+720 silly lifecycle get-stdin@4.0.1~postinstall: no script for postinstall, continuing
+721 info build /Users/scottj/Source/arbitrator/app/node_modules/indent-string/node_modules/minimist
+722 info lifecycle minimist@1.2.0~preinstall: minimist@1.2.0
+723 silly lifecycle minimist@1.2.0~preinstall: no script for preinstall, continuing
+724 info linkStuff minimist@1.2.0
+725 silly linkStuff minimist@1.2.0 has /Users/scottj/Source/arbitrator/app/node_modules/indent-string/node_modules as its parent node_modules
+726 verbose linkBins minimist@1.2.0
+727 verbose linkMans minimist@1.2.0
+728 verbose rebuildBundles minimist@1.2.0
+729 info lifecycle minimist@1.2.0~install: minimist@1.2.0
+730 silly lifecycle minimist@1.2.0~install: no script for install, continuing
+731 info lifecycle minimist@1.2.0~postinstall: minimist@1.2.0
+732 silly lifecycle minimist@1.2.0~postinstall: no script for postinstall, continuing
+733 info build /Users/scottj/Source/arbitrator/app/node_modules/repeating
+734 info lifecycle repeating@1.1.3~preinstall: repeating@1.1.3
+735 silly lifecycle repeating@1.1.3~preinstall: no script for preinstall, continuing
+736 info linkStuff repeating@1.1.3
+737 silly linkStuff repeating@1.1.3 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+738 verbose linkBins repeating@1.1.3
+739 verbose linkBins [ { repeating: 'cli.js' },
+739 verbose linkBins   '/Users/scottj/Source/arbitrator/app/node_modules/.bin',
+739 verbose linkBins   false ]
+740 verbose linkMans repeating@1.1.3
+741 verbose rebuildBundles repeating@1.1.3
+742 info lifecycle repeating@1.1.3~install: repeating@1.1.3
+743 silly lifecycle repeating@1.1.3~install: no script for install, continuing
+744 info lifecycle repeating@1.1.3~postinstall: repeating@1.1.3
+745 silly lifecycle repeating@1.1.3~postinstall: no script for postinstall, continuing
+746 info build /Users/scottj/Source/arbitrator/app/node_modules/is-finite
+747 info lifecycle is-finite@1.0.2~preinstall: is-finite@1.0.2
+748 silly lifecycle is-finite@1.0.2~preinstall: no script for preinstall, continuing
+749 info linkStuff is-finite@1.0.2
+750 silly linkStuff is-finite@1.0.2 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+751 verbose linkBins is-finite@1.0.2
+752 verbose linkMans is-finite@1.0.2
+753 verbose rebuildBundles is-finite@1.0.2
+754 info lifecycle is-finite@1.0.2~install: is-finite@1.0.2
+755 silly lifecycle is-finite@1.0.2~install: no script for install, continuing
+756 info lifecycle is-finite@1.0.2~postinstall: is-finite@1.0.2
+757 silly lifecycle is-finite@1.0.2~postinstall: no script for postinstall, continuing
+758 info build /Users/scottj/Source/arbitrator/app/node_modules/number-is-nan
+759 info lifecycle number-is-nan@1.0.1~preinstall: number-is-nan@1.0.1
+760 silly lifecycle number-is-nan@1.0.1~preinstall: no script for preinstall, continuing
+761 info linkStuff number-is-nan@1.0.1
+762 silly linkStuff number-is-nan@1.0.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+763 verbose linkBins number-is-nan@1.0.1
+764 verbose linkMans number-is-nan@1.0.1
+765 verbose rebuildBundles number-is-nan@1.0.1
+766 info lifecycle number-is-nan@1.0.1~install: number-is-nan@1.0.1
+767 silly lifecycle number-is-nan@1.0.1~install: no script for install, continuing
+768 info lifecycle number-is-nan@1.0.1~postinstall: number-is-nan@1.0.1
+769 silly lifecycle number-is-nan@1.0.1~postinstall: no script for postinstall, continuing
+770 info build /Users/scottj/Source/arbitrator/app/node_modules/meow/node_modules/minimist
+771 info lifecycle minimist@1.2.0~preinstall: minimist@1.2.0
+772 silly lifecycle minimist@1.2.0~preinstall: no script for preinstall, continuing
+773 info linkStuff minimist@1.2.0
+774 silly linkStuff minimist@1.2.0 has /Users/scottj/Source/arbitrator/app/node_modules/meow/node_modules as its parent node_modules
+775 verbose linkBins minimist@1.2.0
+776 verbose linkMans minimist@1.2.0
+777 verbose rebuildBundles minimist@1.2.0
+778 info lifecycle minimist@1.2.0~install: minimist@1.2.0
+779 silly lifecycle minimist@1.2.0~install: no script for install, continuing
+780 info lifecycle minimist@1.2.0~postinstall: minimist@1.2.0
+781 silly lifecycle minimist@1.2.0~postinstall: no script for postinstall, continuing
+782 info build /Users/scottj/Source/arbitrator/app/node_modules/object-assign
+783 info lifecycle object-assign@1.0.0~preinstall: object-assign@1.0.0
+784 silly lifecycle object-assign@1.0.0~preinstall: no script for preinstall, continuing
+785 info linkStuff object-assign@1.0.0
+786 silly linkStuff object-assign@1.0.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+787 verbose linkBins object-assign@1.0.0
+788 verbose linkMans object-assign@1.0.0
+789 verbose rebuildBundles object-assign@1.0.0
+790 info lifecycle object-assign@1.0.0~install: object-assign@1.0.0
+791 silly lifecycle object-assign@1.0.0~install: no script for install, continuing
+792 info lifecycle object-assign@1.0.0~postinstall: object-assign@1.0.0
+793 silly lifecycle object-assign@1.0.0~postinstall: no script for postinstall, continuing
+794 info build /Users/scottj/Source/arbitrator/app/node_modules/jwa
+795 info lifecycle jwa@1.0.2~preinstall: jwa@1.0.2
+796 silly lifecycle jwa@1.0.2~preinstall: no script for preinstall, continuing
+797 info linkStuff jwa@1.0.2
+798 silly linkStuff jwa@1.0.2 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+799 verbose linkBins jwa@1.0.2
+800 verbose linkMans jwa@1.0.2
+801 verbose rebuildBundles jwa@1.0.2
+802 verbose rebuildBundles [ 'base64url' ]
+803 info lifecycle jwa@1.0.2~install: jwa@1.0.2
+804 silly lifecycle jwa@1.0.2~install: no script for install, continuing
+805 info lifecycle jwa@1.0.2~postinstall: jwa@1.0.2
+806 silly lifecycle jwa@1.0.2~postinstall: no script for postinstall, continuing
+807 info build /Users/scottj/Source/arbitrator/app/node_modules/jwa/node_modules/base64url
+808 info lifecycle base64url@0.0.6~preinstall: base64url@0.0.6
+809 silly lifecycle base64url@0.0.6~preinstall: no script for preinstall, continuing
+810 info linkStuff base64url@0.0.6
+811 silly linkStuff base64url@0.0.6 has /Users/scottj/Source/arbitrator/app/node_modules/jwa/node_modules as its parent node_modules
+812 verbose linkBins base64url@0.0.6
+813 verbose linkMans base64url@0.0.6
+814 verbose rebuildBundles base64url@0.0.6
+815 info lifecycle base64url@0.0.6~install: base64url@0.0.6
+816 silly lifecycle base64url@0.0.6~install: no script for install, continuing
+817 info lifecycle base64url@0.0.6~postinstall: base64url@0.0.6
+818 silly lifecycle base64url@0.0.6~postinstall: no script for postinstall, continuing
+819 info build /Users/scottj/Source/arbitrator/app/node_modules/buffer-equal-constant-time
+820 info lifecycle buffer-equal-constant-time@1.0.1~preinstall: buffer-equal-constant-time@1.0.1
+821 silly lifecycle buffer-equal-constant-time@1.0.1~preinstall: no script for preinstall, continuing
+822 info linkStuff buffer-equal-constant-time@1.0.1
+823 silly linkStuff buffer-equal-constant-time@1.0.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+824 verbose linkBins buffer-equal-constant-time@1.0.1
+825 verbose linkMans buffer-equal-constant-time@1.0.1
+826 verbose rebuildBundles buffer-equal-constant-time@1.0.1
+827 info lifecycle buffer-equal-constant-time@1.0.1~install: buffer-equal-constant-time@1.0.1
+828 silly lifecycle buffer-equal-constant-time@1.0.1~install: no script for install, continuing
+829 info lifecycle buffer-equal-constant-time@1.0.1~postinstall: buffer-equal-constant-time@1.0.1
+830 silly lifecycle buffer-equal-constant-time@1.0.1~postinstall: no script for postinstall, continuing
+831 info build /Users/scottj/Source/arbitrator/app/node_modules/ecdsa-sig-formatter
+832 info lifecycle ecdsa-sig-formatter@1.0.9~preinstall: ecdsa-sig-formatter@1.0.9
+833 silly lifecycle ecdsa-sig-formatter@1.0.9~preinstall: no script for preinstall, continuing
+834 info linkStuff ecdsa-sig-formatter@1.0.9
+835 silly linkStuff ecdsa-sig-formatter@1.0.9 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+836 verbose linkBins ecdsa-sig-formatter@1.0.9
+837 verbose linkMans ecdsa-sig-formatter@1.0.9
+838 verbose rebuildBundles ecdsa-sig-formatter@1.0.9
+839 verbose rebuildBundles [ 'base64url' ]
+840 info lifecycle ecdsa-sig-formatter@1.0.9~install: ecdsa-sig-formatter@1.0.9
+841 silly lifecycle ecdsa-sig-formatter@1.0.9~install: no script for install, continuing
+842 info lifecycle ecdsa-sig-formatter@1.0.9~postinstall: ecdsa-sig-formatter@1.0.9
+843 silly lifecycle ecdsa-sig-formatter@1.0.9~postinstall: no script for postinstall, continuing
+844 info build /Users/scottj/Source/arbitrator/app/node_modules/ecdsa-sig-formatter/node_modules/base64url
+845 info lifecycle base64url@2.0.0~preinstall: base64url@2.0.0
+846 silly lifecycle base64url@2.0.0~preinstall: no script for preinstall, continuing
+847 info linkStuff base64url@2.0.0
+848 silly linkStuff base64url@2.0.0 has /Users/scottj/Source/arbitrator/app/node_modules/ecdsa-sig-formatter/node_modules as its parent node_modules
+849 verbose linkBins base64url@2.0.0
+850 verbose linkMans base64url@2.0.0
+851 verbose rebuildBundles base64url@2.0.0
+852 info lifecycle base64url@2.0.0~install: base64url@2.0.0
+853 silly lifecycle base64url@2.0.0~install: no script for install, continuing
+854 info lifecycle base64url@2.0.0~postinstall: base64url@2.0.0
+855 silly lifecycle base64url@2.0.0~postinstall: no script for postinstall, continuing
+856 info build /Users/scottj/Source/arbitrator/app/node_modules/safe-buffer
+857 info lifecycle safe-buffer@5.0.1~preinstall: safe-buffer@5.0.1
+858 silly lifecycle safe-buffer@5.0.1~preinstall: no script for preinstall, continuing
+859 info linkStuff safe-buffer@5.0.1
+860 silly linkStuff safe-buffer@5.0.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+861 verbose linkBins safe-buffer@5.0.1
+862 verbose linkMans safe-buffer@5.0.1
+863 verbose rebuildBundles safe-buffer@5.0.1
+864 info lifecycle safe-buffer@5.0.1~install: safe-buffer@5.0.1
+865 silly lifecycle safe-buffer@5.0.1~install: no script for install, continuing
+866 info lifecycle safe-buffer@5.0.1~postinstall: safe-buffer@5.0.1
+867 silly lifecycle safe-buffer@5.0.1~postinstall: no script for postinstall, continuing
+868 info build /Users/scottj/Source/arbitrator/app/node_modules/mime
+869 info lifecycle mime@1.3.4~preinstall: mime@1.3.4
+870 silly lifecycle mime@1.3.4~preinstall: no script for preinstall, continuing
+871 info linkStuff mime@1.3.4
+872 silly linkStuff mime@1.3.4 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+873 verbose linkBins mime@1.3.4
+874 verbose linkBins [ { mime: 'cli.js' },
+874 verbose linkBins   '/Users/scottj/Source/arbitrator/app/node_modules/.bin',
+874 verbose linkBins   false ]
+875 verbose linkMans mime@1.3.4
+876 verbose rebuildBundles mime@1.3.4
+877 info lifecycle mime@1.3.4~install: mime@1.3.4
+878 silly lifecycle mime@1.3.4~install: no script for install, continuing
+879 info lifecycle mime@1.3.4~postinstall: mime@1.3.4
+880 silly lifecycle mime@1.3.4~postinstall: no script for postinstall, continuing
+881 info build /Users/scottj/Source/arbitrator/app/node_modules/request
+882 info lifecycle request@2.79.0~preinstall: request@2.79.0
+883 silly lifecycle request@2.79.0~preinstall: no script for preinstall, continuing
+884 info linkStuff request@2.79.0
+885 silly linkStuff request@2.79.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+886 verbose linkBins request@2.79.0
+887 verbose linkMans request@2.79.0
+888 verbose rebuildBundles request@2.79.0
+889 info lifecycle request@2.79.0~install: request@2.79.0
+890 silly lifecycle request@2.79.0~install: no script for install, continuing
+891 info lifecycle request@2.79.0~postinstall: request@2.79.0
+892 silly lifecycle request@2.79.0~postinstall: no script for postinstall, continuing
+893 info build /Users/scottj/Source/arbitrator/app/node_modules/aws-sign2
+894 info lifecycle aws-sign2@0.6.0~preinstall: aws-sign2@0.6.0
+895 silly lifecycle aws-sign2@0.6.0~preinstall: no script for preinstall, continuing
+896 info linkStuff aws-sign2@0.6.0
+897 silly linkStuff aws-sign2@0.6.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+898 verbose linkBins aws-sign2@0.6.0
+899 verbose linkMans aws-sign2@0.6.0
+900 verbose rebuildBundles aws-sign2@0.6.0
+901 info lifecycle aws-sign2@0.6.0~install: aws-sign2@0.6.0
+902 silly lifecycle aws-sign2@0.6.0~install: no script for install, continuing
+903 info lifecycle aws-sign2@0.6.0~postinstall: aws-sign2@0.6.0
+904 silly lifecycle aws-sign2@0.6.0~postinstall: no script for postinstall, continuing
+905 info build /Users/scottj/Source/arbitrator/app/node_modules/aws4
+906 info lifecycle aws4@1.5.0~preinstall: aws4@1.5.0
+907 silly lifecycle aws4@1.5.0~preinstall: no script for preinstall, continuing
+908 info linkStuff aws4@1.5.0
+909 silly linkStuff aws4@1.5.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+910 verbose linkBins aws4@1.5.0
+911 verbose linkMans aws4@1.5.0
+912 verbose rebuildBundles aws4@1.5.0
+913 info lifecycle aws4@1.5.0~install: aws4@1.5.0
+914 silly lifecycle aws4@1.5.0~install: no script for install, continuing
+915 info lifecycle aws4@1.5.0~postinstall: aws4@1.5.0
+916 silly lifecycle aws4@1.5.0~postinstall: no script for postinstall, continuing
+917 info build /Users/scottj/Source/arbitrator/app/node_modules/caseless
+918 info lifecycle caseless@0.11.0~preinstall: caseless@0.11.0
+919 silly lifecycle caseless@0.11.0~preinstall: no script for preinstall, continuing
+920 info linkStuff caseless@0.11.0
+921 silly linkStuff caseless@0.11.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+922 verbose linkBins caseless@0.11.0
+923 verbose linkMans caseless@0.11.0
+924 verbose rebuildBundles caseless@0.11.0
+925 info lifecycle caseless@0.11.0~install: caseless@0.11.0
+926 silly lifecycle caseless@0.11.0~install: no script for install, continuing
+927 info lifecycle caseless@0.11.0~postinstall: caseless@0.11.0
+928 silly lifecycle caseless@0.11.0~postinstall: no script for postinstall, continuing
+929 info build /Users/scottj/Source/arbitrator/app/node_modules/combined-stream
+930 info lifecycle combined-stream@1.0.5~preinstall: combined-stream@1.0.5
+931 silly lifecycle combined-stream@1.0.5~preinstall: no script for preinstall, continuing
+932 info linkStuff combined-stream@1.0.5
+933 silly linkStuff combined-stream@1.0.5 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+934 verbose linkBins combined-stream@1.0.5
+935 verbose linkMans combined-stream@1.0.5
+936 verbose rebuildBundles combined-stream@1.0.5
+937 info lifecycle combined-stream@1.0.5~install: combined-stream@1.0.5
+938 silly lifecycle combined-stream@1.0.5~install: no script for install, continuing
+939 info lifecycle combined-stream@1.0.5~postinstall: combined-stream@1.0.5
+940 silly lifecycle combined-stream@1.0.5~postinstall: no script for postinstall, continuing
+941 info build /Users/scottj/Source/arbitrator/app/node_modules/delayed-stream
+942 info lifecycle delayed-stream@1.0.0~preinstall: delayed-stream@1.0.0
+943 silly lifecycle delayed-stream@1.0.0~preinstall: no script for preinstall, continuing
+944 info linkStuff delayed-stream@1.0.0
+945 silly linkStuff delayed-stream@1.0.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+946 verbose linkBins delayed-stream@1.0.0
+947 verbose linkMans delayed-stream@1.0.0
+948 verbose rebuildBundles delayed-stream@1.0.0
+949 info lifecycle delayed-stream@1.0.0~install: delayed-stream@1.0.0
+950 silly lifecycle delayed-stream@1.0.0~install: no script for install, continuing
+951 info lifecycle delayed-stream@1.0.0~postinstall: delayed-stream@1.0.0
+952 silly lifecycle delayed-stream@1.0.0~postinstall: no script for postinstall, continuing
+953 info build /Users/scottj/Source/arbitrator/app/node_modules/extend
+954 info lifecycle extend@3.0.0~preinstall: extend@3.0.0
+955 silly lifecycle extend@3.0.0~preinstall: no script for preinstall, continuing
+956 info linkStuff extend@3.0.0
+957 silly linkStuff extend@3.0.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+958 verbose linkBins extend@3.0.0
+959 verbose linkMans extend@3.0.0
+960 verbose rebuildBundles extend@3.0.0
+961 info lifecycle extend@3.0.0~install: extend@3.0.0
+962 silly lifecycle extend@3.0.0~install: no script for install, continuing
+963 info lifecycle extend@3.0.0~postinstall: extend@3.0.0
+964 silly lifecycle extend@3.0.0~postinstall: no script for postinstall, continuing
+965 info build /Users/scottj/Source/arbitrator/app/node_modules/forever-agent
+966 info lifecycle forever-agent@0.6.1~preinstall: forever-agent@0.6.1
+967 silly lifecycle forever-agent@0.6.1~preinstall: no script for preinstall, continuing
+968 info linkStuff forever-agent@0.6.1
+969 silly linkStuff forever-agent@0.6.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+970 verbose linkBins forever-agent@0.6.1
+971 verbose linkMans forever-agent@0.6.1
+972 verbose rebuildBundles forever-agent@0.6.1
+973 info lifecycle forever-agent@0.6.1~install: forever-agent@0.6.1
+974 silly lifecycle forever-agent@0.6.1~install: no script for install, continuing
+975 info lifecycle forever-agent@0.6.1~postinstall: forever-agent@0.6.1
+976 silly lifecycle forever-agent@0.6.1~postinstall: no script for postinstall, continuing
+977 info build /Users/scottj/Source/arbitrator/app/node_modules/form-data
+978 info lifecycle form-data@2.1.2~preinstall: form-data@2.1.2
+979 silly lifecycle form-data@2.1.2~preinstall: no script for preinstall, continuing
+980 info linkStuff form-data@2.1.2
+981 silly linkStuff form-data@2.1.2 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+982 verbose linkBins form-data@2.1.2
+983 verbose linkMans form-data@2.1.2
+984 verbose rebuildBundles form-data@2.1.2
+985 info lifecycle form-data@2.1.2~install: form-data@2.1.2
+986 silly lifecycle form-data@2.1.2~install: no script for install, continuing
+987 info lifecycle form-data@2.1.2~postinstall: form-data@2.1.2
+988 silly lifecycle form-data@2.1.2~postinstall: no script for postinstall, continuing
+989 info build /Users/scottj/Source/arbitrator/app/node_modules/asynckit
+990 info lifecycle asynckit@0.4.0~preinstall: asynckit@0.4.0
+991 silly lifecycle asynckit@0.4.0~preinstall: no script for preinstall, continuing
+992 info linkStuff asynckit@0.4.0
+993 silly linkStuff asynckit@0.4.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+994 verbose linkBins asynckit@0.4.0
+995 verbose linkMans asynckit@0.4.0
+996 verbose rebuildBundles asynckit@0.4.0
+997 info lifecycle asynckit@0.4.0~install: asynckit@0.4.0
+998 silly lifecycle asynckit@0.4.0~install: no script for install, continuing
+999 info lifecycle asynckit@0.4.0~postinstall: asynckit@0.4.0
+1000 silly lifecycle asynckit@0.4.0~postinstall: no script for postinstall, continuing
+1001 info build /Users/scottj/Source/arbitrator/app/node_modules/mime-types
+1002 info lifecycle mime-types@2.1.13~preinstall: mime-types@2.1.13
+1003 silly lifecycle mime-types@2.1.13~preinstall: no script for preinstall, continuing
+1004 info linkStuff mime-types@2.1.13
+1005 silly linkStuff mime-types@2.1.13 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1006 verbose linkBins mime-types@2.1.13
+1007 verbose linkMans mime-types@2.1.13
+1008 verbose rebuildBundles mime-types@2.1.13
+1009 info lifecycle mime-types@2.1.13~install: mime-types@2.1.13
+1010 silly lifecycle mime-types@2.1.13~install: no script for install, continuing
+1011 info lifecycle mime-types@2.1.13~postinstall: mime-types@2.1.13
+1012 silly lifecycle mime-types@2.1.13~postinstall: no script for postinstall, continuing
+1013 info build /Users/scottj/Source/arbitrator/app/node_modules/mime-db
+1014 info lifecycle mime-db@1.25.0~preinstall: mime-db@1.25.0
+1015 silly lifecycle mime-db@1.25.0~preinstall: no script for preinstall, continuing
+1016 info linkStuff mime-db@1.25.0
+1017 silly linkStuff mime-db@1.25.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1018 verbose linkBins mime-db@1.25.0
+1019 verbose linkMans mime-db@1.25.0
+1020 verbose rebuildBundles mime-db@1.25.0
+1021 info lifecycle mime-db@1.25.0~install: mime-db@1.25.0
+1022 silly lifecycle mime-db@1.25.0~install: no script for install, continuing
+1023 info lifecycle mime-db@1.25.0~postinstall: mime-db@1.25.0
+1024 silly lifecycle mime-db@1.25.0~postinstall: no script for postinstall, continuing
+1025 info build /Users/scottj/Source/arbitrator/app/node_modules/har-validator
+1026 info lifecycle har-validator@2.0.6~preinstall: har-validator@2.0.6
+1027 silly lifecycle har-validator@2.0.6~preinstall: no script for preinstall, continuing
+1028 info linkStuff har-validator@2.0.6
+1029 silly linkStuff har-validator@2.0.6 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1030 verbose linkBins har-validator@2.0.6
+1031 verbose linkBins [ { 'har-validator': 'bin/har-validator' },
+1031 verbose linkBins   '/Users/scottj/Source/arbitrator/app/node_modules/.bin',
+1031 verbose linkBins   false ]
+1032 verbose linkMans har-validator@2.0.6
+1033 verbose rebuildBundles har-validator@2.0.6
+1034 info lifecycle har-validator@2.0.6~install: har-validator@2.0.6
+1035 silly lifecycle har-validator@2.0.6~install: no script for install, continuing
+1036 info lifecycle har-validator@2.0.6~postinstall: har-validator@2.0.6
+1037 silly lifecycle har-validator@2.0.6~postinstall: no script for postinstall, continuing
+1038 info build /Users/scottj/Source/arbitrator/app/node_modules/chalk
+1039 info lifecycle chalk@1.1.3~preinstall: chalk@1.1.3
+1040 silly lifecycle chalk@1.1.3~preinstall: no script for preinstall, continuing
+1041 info linkStuff chalk@1.1.3
+1042 silly linkStuff chalk@1.1.3 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1043 verbose linkBins chalk@1.1.3
+1044 verbose linkMans chalk@1.1.3
+1045 verbose rebuildBundles chalk@1.1.3
+1046 info lifecycle chalk@1.1.3~install: chalk@1.1.3
+1047 silly lifecycle chalk@1.1.3~install: no script for install, continuing
+1048 info lifecycle chalk@1.1.3~postinstall: chalk@1.1.3
+1049 silly lifecycle chalk@1.1.3~postinstall: no script for postinstall, continuing
+1050 info build /Users/scottj/Source/arbitrator/app/node_modules/ansi-styles
+1051 info lifecycle ansi-styles@2.2.1~preinstall: ansi-styles@2.2.1
+1052 silly lifecycle ansi-styles@2.2.1~preinstall: no script for preinstall, continuing
+1053 info linkStuff ansi-styles@2.2.1
+1054 silly linkStuff ansi-styles@2.2.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1055 verbose linkBins ansi-styles@2.2.1
+1056 verbose linkMans ansi-styles@2.2.1
+1057 verbose rebuildBundles ansi-styles@2.2.1
+1058 info lifecycle ansi-styles@2.2.1~install: ansi-styles@2.2.1
+1059 silly lifecycle ansi-styles@2.2.1~install: no script for install, continuing
+1060 info lifecycle ansi-styles@2.2.1~postinstall: ansi-styles@2.2.1
+1061 silly lifecycle ansi-styles@2.2.1~postinstall: no script for postinstall, continuing
+1062 info build /Users/scottj/Source/arbitrator/app/node_modules/escape-string-regexp
+1063 info lifecycle escape-string-regexp@1.0.5~preinstall: escape-string-regexp@1.0.5
+1064 silly lifecycle escape-string-regexp@1.0.5~preinstall: no script for preinstall, continuing
+1065 info linkStuff escape-string-regexp@1.0.5
+1066 silly linkStuff escape-string-regexp@1.0.5 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1067 verbose linkBins escape-string-regexp@1.0.5
+1068 verbose linkMans escape-string-regexp@1.0.5
+1069 verbose rebuildBundles escape-string-regexp@1.0.5
+1070 info lifecycle escape-string-regexp@1.0.5~install: escape-string-regexp@1.0.5
+1071 silly lifecycle escape-string-regexp@1.0.5~install: no script for install, continuing
+1072 info lifecycle escape-string-regexp@1.0.5~postinstall: escape-string-regexp@1.0.5
+1073 silly lifecycle escape-string-regexp@1.0.5~postinstall: no script for postinstall, continuing
+1074 info build /Users/scottj/Source/arbitrator/app/node_modules/has-ansi
+1075 info lifecycle has-ansi@2.0.0~preinstall: has-ansi@2.0.0
+1076 silly lifecycle has-ansi@2.0.0~preinstall: no script for preinstall, continuing
+1077 info linkStuff has-ansi@2.0.0
+1078 silly linkStuff has-ansi@2.0.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1079 verbose linkBins has-ansi@2.0.0
+1080 verbose linkMans has-ansi@2.0.0
+1081 verbose rebuildBundles has-ansi@2.0.0
+1082 info lifecycle has-ansi@2.0.0~install: has-ansi@2.0.0
+1083 silly lifecycle has-ansi@2.0.0~install: no script for install, continuing
+1084 info lifecycle has-ansi@2.0.0~postinstall: has-ansi@2.0.0
+1085 silly lifecycle has-ansi@2.0.0~postinstall: no script for postinstall, continuing
+1086 info build /Users/scottj/Source/arbitrator/app/node_modules/ansi-regex
+1087 info lifecycle ansi-regex@2.0.0~preinstall: ansi-regex@2.0.0
+1088 silly lifecycle ansi-regex@2.0.0~preinstall: no script for preinstall, continuing
+1089 info linkStuff ansi-regex@2.0.0
+1090 silly linkStuff ansi-regex@2.0.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1091 verbose linkBins ansi-regex@2.0.0
+1092 verbose linkMans ansi-regex@2.0.0
+1093 verbose rebuildBundles ansi-regex@2.0.0
+1094 info lifecycle ansi-regex@2.0.0~install: ansi-regex@2.0.0
+1095 silly lifecycle ansi-regex@2.0.0~install: no script for install, continuing
+1096 info lifecycle ansi-regex@2.0.0~postinstall: ansi-regex@2.0.0
+1097 silly lifecycle ansi-regex@2.0.0~postinstall: no script for postinstall, continuing
+1098 info build /Users/scottj/Source/arbitrator/app/node_modules/strip-ansi
+1099 info lifecycle strip-ansi@3.0.1~preinstall: strip-ansi@3.0.1
+1100 silly lifecycle strip-ansi@3.0.1~preinstall: no script for preinstall, continuing
+1101 info linkStuff strip-ansi@3.0.1
+1102 silly linkStuff strip-ansi@3.0.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1103 verbose linkBins strip-ansi@3.0.1
+1104 verbose linkMans strip-ansi@3.0.1
+1105 verbose rebuildBundles strip-ansi@3.0.1
+1106 info lifecycle strip-ansi@3.0.1~install: strip-ansi@3.0.1
+1107 silly lifecycle strip-ansi@3.0.1~install: no script for install, continuing
+1108 info lifecycle strip-ansi@3.0.1~postinstall: strip-ansi@3.0.1
+1109 silly lifecycle strip-ansi@3.0.1~postinstall: no script for postinstall, continuing
+1110 info build /Users/scottj/Source/arbitrator/app/node_modules/supports-color
+1111 info lifecycle supports-color@2.0.0~preinstall: supports-color@2.0.0
+1112 silly lifecycle supports-color@2.0.0~preinstall: no script for preinstall, continuing
+1113 info linkStuff supports-color@2.0.0
+1114 silly linkStuff supports-color@2.0.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1115 verbose linkBins supports-color@2.0.0
+1116 verbose linkMans supports-color@2.0.0
+1117 verbose rebuildBundles supports-color@2.0.0
+1118 info lifecycle supports-color@2.0.0~install: supports-color@2.0.0
+1119 silly lifecycle supports-color@2.0.0~install: no script for install, continuing
+1120 info lifecycle supports-color@2.0.0~postinstall: supports-color@2.0.0
+1121 silly lifecycle supports-color@2.0.0~postinstall: no script for postinstall, continuing
+1122 info build /Users/scottj/Source/arbitrator/app/node_modules/commander
+1123 info lifecycle commander@2.9.0~preinstall: commander@2.9.0
+1124 silly lifecycle commander@2.9.0~preinstall: no script for preinstall, continuing
+1125 info linkStuff commander@2.9.0
+1126 silly linkStuff commander@2.9.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1127 verbose linkBins commander@2.9.0
+1128 verbose linkMans commander@2.9.0
+1129 verbose rebuildBundles commander@2.9.0
+1130 info lifecycle commander@2.9.0~install: commander@2.9.0
+1131 silly lifecycle commander@2.9.0~install: no script for install, continuing
+1132 info lifecycle commander@2.9.0~postinstall: commander@2.9.0
+1133 silly lifecycle commander@2.9.0~postinstall: no script for postinstall, continuing
+1134 info build /Users/scottj/Source/arbitrator/app/node_modules/graceful-readlink
+1135 info lifecycle graceful-readlink@1.0.1~preinstall: graceful-readlink@1.0.1
+1136 silly lifecycle graceful-readlink@1.0.1~preinstall: no script for preinstall, continuing
+1137 info linkStuff graceful-readlink@1.0.1
+1138 silly linkStuff graceful-readlink@1.0.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1139 verbose linkBins graceful-readlink@1.0.1
+1140 verbose linkMans graceful-readlink@1.0.1
+1141 verbose rebuildBundles graceful-readlink@1.0.1
+1142 info lifecycle graceful-readlink@1.0.1~install: graceful-readlink@1.0.1
+1143 silly lifecycle graceful-readlink@1.0.1~install: no script for install, continuing
+1144 info lifecycle graceful-readlink@1.0.1~postinstall: graceful-readlink@1.0.1
+1145 silly lifecycle graceful-readlink@1.0.1~postinstall: no script for postinstall, continuing
+1146 info build /Users/scottj/Source/arbitrator/app/node_modules/is-my-json-valid
+1147 info lifecycle is-my-json-valid@2.15.0~preinstall: is-my-json-valid@2.15.0
+1148 silly lifecycle is-my-json-valid@2.15.0~preinstall: no script for preinstall, continuing
+1149 info linkStuff is-my-json-valid@2.15.0
+1150 silly linkStuff is-my-json-valid@2.15.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1151 verbose linkBins is-my-json-valid@2.15.0
+1152 verbose linkMans is-my-json-valid@2.15.0
+1153 verbose rebuildBundles is-my-json-valid@2.15.0
+1154 info lifecycle is-my-json-valid@2.15.0~install: is-my-json-valid@2.15.0
+1155 silly lifecycle is-my-json-valid@2.15.0~install: no script for install, continuing
+1156 info lifecycle is-my-json-valid@2.15.0~postinstall: is-my-json-valid@2.15.0
+1157 silly lifecycle is-my-json-valid@2.15.0~postinstall: no script for postinstall, continuing
+1158 info build /Users/scottj/Source/arbitrator/app/node_modules/generate-function
+1159 info lifecycle generate-function@2.0.0~preinstall: generate-function@2.0.0
+1160 silly lifecycle generate-function@2.0.0~preinstall: no script for preinstall, continuing
+1161 info linkStuff generate-function@2.0.0
+1162 silly linkStuff generate-function@2.0.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1163 verbose linkBins generate-function@2.0.0
+1164 verbose linkMans generate-function@2.0.0
+1165 verbose rebuildBundles generate-function@2.0.0
+1166 info lifecycle generate-function@2.0.0~install: generate-function@2.0.0
+1167 silly lifecycle generate-function@2.0.0~install: no script for install, continuing
+1168 info lifecycle generate-function@2.0.0~postinstall: generate-function@2.0.0
+1169 silly lifecycle generate-function@2.0.0~postinstall: no script for postinstall, continuing
+1170 info build /Users/scottj/Source/arbitrator/app/node_modules/generate-object-property
+1171 info lifecycle generate-object-property@1.2.0~preinstall: generate-object-property@1.2.0
+1172 silly lifecycle generate-object-property@1.2.0~preinstall: no script for preinstall, continuing
+1173 info linkStuff generate-object-property@1.2.0
+1174 silly linkStuff generate-object-property@1.2.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1175 verbose linkBins generate-object-property@1.2.0
+1176 verbose linkMans generate-object-property@1.2.0
+1177 verbose rebuildBundles generate-object-property@1.2.0
+1178 info lifecycle generate-object-property@1.2.0~install: generate-object-property@1.2.0
+1179 silly lifecycle generate-object-property@1.2.0~install: no script for install, continuing
+1180 info lifecycle generate-object-property@1.2.0~postinstall: generate-object-property@1.2.0
+1181 silly lifecycle generate-object-property@1.2.0~postinstall: no script for postinstall, continuing
+1182 info build /Users/scottj/Source/arbitrator/app/node_modules/is-property
+1183 info lifecycle is-property@1.0.2~preinstall: is-property@1.0.2
+1184 silly lifecycle is-property@1.0.2~preinstall: no script for preinstall, continuing
+1185 info linkStuff is-property@1.0.2
+1186 silly linkStuff is-property@1.0.2 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1187 verbose linkBins is-property@1.0.2
+1188 verbose linkMans is-property@1.0.2
+1189 verbose rebuildBundles is-property@1.0.2
+1190 info lifecycle is-property@1.0.2~install: is-property@1.0.2
+1191 silly lifecycle is-property@1.0.2~install: no script for install, continuing
+1192 info lifecycle is-property@1.0.2~postinstall: is-property@1.0.2
+1193 silly lifecycle is-property@1.0.2~postinstall: no script for postinstall, continuing
+1194 info build /Users/scottj/Source/arbitrator/app/node_modules/jsonpointer
+1195 info lifecycle jsonpointer@4.0.0~preinstall: jsonpointer@4.0.0
+1196 silly lifecycle jsonpointer@4.0.0~preinstall: no script for preinstall, continuing
+1197 info linkStuff jsonpointer@4.0.0
+1198 silly linkStuff jsonpointer@4.0.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1199 verbose linkBins jsonpointer@4.0.0
+1200 verbose linkMans jsonpointer@4.0.0
+1201 verbose rebuildBundles jsonpointer@4.0.0
+1202 info lifecycle jsonpointer@4.0.0~install: jsonpointer@4.0.0
+1203 silly lifecycle jsonpointer@4.0.0~install: no script for install, continuing
+1204 info lifecycle jsonpointer@4.0.0~postinstall: jsonpointer@4.0.0
+1205 silly lifecycle jsonpointer@4.0.0~postinstall: no script for postinstall, continuing
+1206 info build /Users/scottj/Source/arbitrator/app/node_modules/xtend
+1207 info lifecycle xtend@4.0.1~preinstall: xtend@4.0.1
+1208 silly lifecycle xtend@4.0.1~preinstall: no script for preinstall, continuing
+1209 info linkStuff xtend@4.0.1
+1210 silly linkStuff xtend@4.0.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1211 verbose linkBins xtend@4.0.1
+1212 verbose linkMans xtend@4.0.1
+1213 verbose rebuildBundles xtend@4.0.1
+1214 info lifecycle xtend@4.0.1~install: xtend@4.0.1
+1215 silly lifecycle xtend@4.0.1~install: no script for install, continuing
+1216 info lifecycle xtend@4.0.1~postinstall: xtend@4.0.1
+1217 silly lifecycle xtend@4.0.1~postinstall: no script for postinstall, continuing
+1218 info build /Users/scottj/Source/arbitrator/app/node_modules/pinkie-promise
+1219 info lifecycle pinkie-promise@2.0.1~preinstall: pinkie-promise@2.0.1
+1220 silly lifecycle pinkie-promise@2.0.1~preinstall: no script for preinstall, continuing
+1221 info linkStuff pinkie-promise@2.0.1
+1222 silly linkStuff pinkie-promise@2.0.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1223 verbose linkBins pinkie-promise@2.0.1
+1224 verbose linkMans pinkie-promise@2.0.1
+1225 verbose rebuildBundles pinkie-promise@2.0.1
+1226 info lifecycle pinkie-promise@2.0.1~install: pinkie-promise@2.0.1
+1227 silly lifecycle pinkie-promise@2.0.1~install: no script for install, continuing
+1228 info lifecycle pinkie-promise@2.0.1~postinstall: pinkie-promise@2.0.1
+1229 silly lifecycle pinkie-promise@2.0.1~postinstall: no script for postinstall, continuing
+1230 info build /Users/scottj/Source/arbitrator/app/node_modules/pinkie
+1231 info lifecycle pinkie@2.0.4~preinstall: pinkie@2.0.4
+1232 silly lifecycle pinkie@2.0.4~preinstall: no script for preinstall, continuing
+1233 info linkStuff pinkie@2.0.4
+1234 silly linkStuff pinkie@2.0.4 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1235 verbose linkBins pinkie@2.0.4
+1236 verbose linkMans pinkie@2.0.4
+1237 verbose rebuildBundles pinkie@2.0.4
+1238 info lifecycle pinkie@2.0.4~install: pinkie@2.0.4
+1239 silly lifecycle pinkie@2.0.4~install: no script for install, continuing
+1240 info lifecycle pinkie@2.0.4~postinstall: pinkie@2.0.4
+1241 silly lifecycle pinkie@2.0.4~postinstall: no script for postinstall, continuing
+1242 info build /Users/scottj/Source/arbitrator/app/node_modules/hawk
+1243 info lifecycle hawk@3.1.3~preinstall: hawk@3.1.3
+1244 silly lifecycle hawk@3.1.3~preinstall: no script for preinstall, continuing
+1245 info linkStuff hawk@3.1.3
+1246 silly linkStuff hawk@3.1.3 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1247 verbose linkBins hawk@3.1.3
+1248 verbose linkMans hawk@3.1.3
+1249 verbose rebuildBundles hawk@3.1.3
+1250 info lifecycle hawk@3.1.3~install: hawk@3.1.3
+1251 silly lifecycle hawk@3.1.3~install: no script for install, continuing
+1252 info lifecycle hawk@3.1.3~postinstall: hawk@3.1.3
+1253 silly lifecycle hawk@3.1.3~postinstall: no script for postinstall, continuing
+1254 info build /Users/scottj/Source/arbitrator/app/node_modules/boom
+1255 info lifecycle boom@2.10.1~preinstall: boom@2.10.1
+1256 silly lifecycle boom@2.10.1~preinstall: no script for preinstall, continuing
+1257 info linkStuff boom@2.10.1
+1258 silly linkStuff boom@2.10.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1259 verbose linkBins boom@2.10.1
+1260 verbose linkMans boom@2.10.1
+1261 verbose rebuildBundles boom@2.10.1
+1262 info lifecycle boom@2.10.1~install: boom@2.10.1
+1263 silly lifecycle boom@2.10.1~install: no script for install, continuing
+1264 info lifecycle boom@2.10.1~postinstall: boom@2.10.1
+1265 silly lifecycle boom@2.10.1~postinstall: no script for postinstall, continuing
+1266 info build /Users/scottj/Source/arbitrator/app/node_modules/hoek
+1267 info lifecycle hoek@2.16.3~preinstall: hoek@2.16.3
+1268 silly lifecycle hoek@2.16.3~preinstall: no script for preinstall, continuing
+1269 info linkStuff hoek@2.16.3
+1270 silly linkStuff hoek@2.16.3 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1271 verbose linkBins hoek@2.16.3
+1272 verbose linkMans hoek@2.16.3
+1273 verbose rebuildBundles hoek@2.16.3
+1274 info lifecycle hoek@2.16.3~install: hoek@2.16.3
+1275 silly lifecycle hoek@2.16.3~install: no script for install, continuing
+1276 info lifecycle hoek@2.16.3~postinstall: hoek@2.16.3
+1277 silly lifecycle hoek@2.16.3~postinstall: no script for postinstall, continuing
+1278 info build /Users/scottj/Source/arbitrator/app/node_modules/cryptiles
+1279 info lifecycle cryptiles@2.0.5~preinstall: cryptiles@2.0.5
+1280 silly lifecycle cryptiles@2.0.5~preinstall: no script for preinstall, continuing
+1281 info linkStuff cryptiles@2.0.5
+1282 silly linkStuff cryptiles@2.0.5 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1283 verbose linkBins cryptiles@2.0.5
+1284 verbose linkMans cryptiles@2.0.5
+1285 verbose rebuildBundles cryptiles@2.0.5
+1286 info lifecycle cryptiles@2.0.5~install: cryptiles@2.0.5
+1287 silly lifecycle cryptiles@2.0.5~install: no script for install, continuing
+1288 info lifecycle cryptiles@2.0.5~postinstall: cryptiles@2.0.5
+1289 silly lifecycle cryptiles@2.0.5~postinstall: no script for postinstall, continuing
+1290 info build /Users/scottj/Source/arbitrator/app/node_modules/sntp
+1291 info lifecycle sntp@1.0.9~preinstall: sntp@1.0.9
+1292 silly lifecycle sntp@1.0.9~preinstall: no script for preinstall, continuing
+1293 info linkStuff sntp@1.0.9
+1294 silly linkStuff sntp@1.0.9 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1295 verbose linkBins sntp@1.0.9
+1296 verbose linkMans sntp@1.0.9
+1297 verbose rebuildBundles sntp@1.0.9
+1298 info lifecycle sntp@1.0.9~install: sntp@1.0.9
+1299 silly lifecycle sntp@1.0.9~install: no script for install, continuing
+1300 info lifecycle sntp@1.0.9~postinstall: sntp@1.0.9
+1301 silly lifecycle sntp@1.0.9~postinstall: no script for postinstall, continuing
+1302 info build /Users/scottj/Source/arbitrator/app/node_modules/http-signature
+1303 info lifecycle http-signature@1.1.1~preinstall: http-signature@1.1.1
+1304 silly lifecycle http-signature@1.1.1~preinstall: no script for preinstall, continuing
+1305 info linkStuff http-signature@1.1.1
+1306 silly linkStuff http-signature@1.1.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1307 verbose linkBins http-signature@1.1.1
+1308 verbose linkMans http-signature@1.1.1
+1309 verbose rebuildBundles http-signature@1.1.1
+1310 info lifecycle http-signature@1.1.1~install: http-signature@1.1.1
+1311 silly lifecycle http-signature@1.1.1~install: no script for install, continuing
+1312 info lifecycle http-signature@1.1.1~postinstall: http-signature@1.1.1
+1313 silly lifecycle http-signature@1.1.1~postinstall: no script for postinstall, continuing
+1314 info build /Users/scottj/Source/arbitrator/app/node_modules/assert-plus
+1315 info lifecycle assert-plus@0.2.0~preinstall: assert-plus@0.2.0
+1316 silly lifecycle assert-plus@0.2.0~preinstall: no script for preinstall, continuing
+1317 info linkStuff assert-plus@0.2.0
+1318 silly linkStuff assert-plus@0.2.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1319 verbose linkBins assert-plus@0.2.0
+1320 verbose linkMans assert-plus@0.2.0
+1321 verbose rebuildBundles assert-plus@0.2.0
+1322 info lifecycle assert-plus@0.2.0~install: assert-plus@0.2.0
+1323 silly lifecycle assert-plus@0.2.0~install: no script for install, continuing
+1324 info lifecycle assert-plus@0.2.0~postinstall: assert-plus@0.2.0
+1325 silly lifecycle assert-plus@0.2.0~postinstall: no script for postinstall, continuing
+1326 info build /Users/scottj/Source/arbitrator/app/node_modules/jsprim
+1327 info lifecycle jsprim@1.3.1~preinstall: jsprim@1.3.1
+1328 silly lifecycle jsprim@1.3.1~preinstall: no script for preinstall, continuing
+1329 info linkStuff jsprim@1.3.1
+1330 silly linkStuff jsprim@1.3.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1331 verbose linkBins jsprim@1.3.1
+1332 verbose linkMans jsprim@1.3.1
+1333 verbose rebuildBundles jsprim@1.3.1
+1334 info lifecycle jsprim@1.3.1~install: jsprim@1.3.1
+1335 silly lifecycle jsprim@1.3.1~install: no script for install, continuing
+1336 info lifecycle jsprim@1.3.1~postinstall: jsprim@1.3.1
+1337 silly lifecycle jsprim@1.3.1~postinstall: no script for postinstall, continuing
+1338 info build /Users/scottj/Source/arbitrator/app/node_modules/extsprintf
+1339 info lifecycle extsprintf@1.0.2~preinstall: extsprintf@1.0.2
+1340 silly lifecycle extsprintf@1.0.2~preinstall: no script for preinstall, continuing
+1341 info linkStuff extsprintf@1.0.2
+1342 silly linkStuff extsprintf@1.0.2 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1343 verbose linkBins extsprintf@1.0.2
+1344 verbose linkMans extsprintf@1.0.2
+1345 verbose rebuildBundles extsprintf@1.0.2
+1346 info lifecycle extsprintf@1.0.2~install: extsprintf@1.0.2
+1347 silly lifecycle extsprintf@1.0.2~install: no script for install, continuing
+1348 info lifecycle extsprintf@1.0.2~postinstall: extsprintf@1.0.2
+1349 silly lifecycle extsprintf@1.0.2~postinstall: no script for postinstall, continuing
+1350 info build /Users/scottj/Source/arbitrator/app/node_modules/json-schema
+1351 info lifecycle json-schema@0.2.3~preinstall: json-schema@0.2.3
+1352 silly lifecycle json-schema@0.2.3~preinstall: no script for preinstall, continuing
+1353 info linkStuff json-schema@0.2.3
+1354 silly linkStuff json-schema@0.2.3 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1355 verbose linkBins json-schema@0.2.3
+1356 verbose linkMans json-schema@0.2.3
+1357 verbose rebuildBundles json-schema@0.2.3
+1358 info lifecycle json-schema@0.2.3~install: json-schema@0.2.3
+1359 silly lifecycle json-schema@0.2.3~install: no script for install, continuing
+1360 info lifecycle json-schema@0.2.3~postinstall: json-schema@0.2.3
+1361 silly lifecycle json-schema@0.2.3~postinstall: no script for postinstall, continuing
+1362 info build /Users/scottj/Source/arbitrator/app/node_modules/verror
+1363 info lifecycle verror@1.3.6~preinstall: verror@1.3.6
+1364 silly lifecycle verror@1.3.6~preinstall: no script for preinstall, continuing
+1365 info linkStuff verror@1.3.6
+1366 silly linkStuff verror@1.3.6 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1367 verbose linkBins verror@1.3.6
+1368 verbose linkMans verror@1.3.6
+1369 verbose rebuildBundles verror@1.3.6
+1370 info lifecycle verror@1.3.6~install: verror@1.3.6
+1371 silly lifecycle verror@1.3.6~install: no script for install, continuing
+1372 info lifecycle verror@1.3.6~postinstall: verror@1.3.6
+1373 silly lifecycle verror@1.3.6~postinstall: no script for postinstall, continuing
+1374 info build /Users/scottj/Source/arbitrator/app/node_modules/sshpk
+1375 info lifecycle sshpk@1.10.1~preinstall: sshpk@1.10.1
+1376 silly lifecycle sshpk@1.10.1~preinstall: no script for preinstall, continuing
+1377 info linkStuff sshpk@1.10.1
+1378 silly linkStuff sshpk@1.10.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1379 verbose linkBins sshpk@1.10.1
+1380 verbose linkBins [ { 'sshpk-conv': 'bin/sshpk-conv',
+1380 verbose linkBins     'sshpk-sign': 'bin/sshpk-sign',
+1380 verbose linkBins     'sshpk-verify': 'bin/sshpk-verify' },
+1380 verbose linkBins   '/Users/scottj/Source/arbitrator/app/node_modules/.bin',
+1380 verbose linkBins   false ]
+1381 verbose linkMans sshpk@1.10.1
+1382 verbose rebuildBundles sshpk@1.10.1
+1383 verbose rebuildBundles [ 'assert-plus' ]
+1384 info lifecycle sshpk@1.10.1~install: sshpk@1.10.1
+1385 silly lifecycle sshpk@1.10.1~install: no script for install, continuing
+1386 info lifecycle sshpk@1.10.1~postinstall: sshpk@1.10.1
+1387 silly lifecycle sshpk@1.10.1~postinstall: no script for postinstall, continuing
+1388 info build /Users/scottj/Source/arbitrator/app/node_modules/asn1
+1389 info lifecycle asn1@0.2.3~preinstall: asn1@0.2.3
+1390 silly lifecycle asn1@0.2.3~preinstall: no script for preinstall, continuing
+1391 info linkStuff asn1@0.2.3
+1392 silly linkStuff asn1@0.2.3 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1393 verbose linkBins asn1@0.2.3
+1394 verbose linkMans asn1@0.2.3
+1395 verbose rebuildBundles asn1@0.2.3
+1396 info lifecycle asn1@0.2.3~install: asn1@0.2.3
+1397 silly lifecycle asn1@0.2.3~install: no script for install, continuing
+1398 info lifecycle asn1@0.2.3~postinstall: asn1@0.2.3
+1399 silly lifecycle asn1@0.2.3~postinstall: no script for postinstall, continuing
+1400 info build /Users/scottj/Source/arbitrator/app/node_modules/sshpk/node_modules/assert-plus
+1401 info lifecycle assert-plus@1.0.0~preinstall: assert-plus@1.0.0
+1402 silly lifecycle assert-plus@1.0.0~preinstall: no script for preinstall, continuing
+1403 info linkStuff assert-plus@1.0.0
+1404 silly linkStuff assert-plus@1.0.0 has /Users/scottj/Source/arbitrator/app/node_modules/sshpk/node_modules as its parent node_modules
+1405 verbose linkBins assert-plus@1.0.0
+1406 verbose linkMans assert-plus@1.0.0
+1407 verbose rebuildBundles assert-plus@1.0.0
+1408 info lifecycle assert-plus@1.0.0~install: assert-plus@1.0.0
+1409 silly lifecycle assert-plus@1.0.0~install: no script for install, continuing
+1410 info lifecycle assert-plus@1.0.0~postinstall: assert-plus@1.0.0
+1411 silly lifecycle assert-plus@1.0.0~postinstall: no script for postinstall, continuing
+1412 info build /Users/scottj/Source/arbitrator/app/node_modules/dashdash
+1413 info lifecycle dashdash@1.14.1~preinstall: dashdash@1.14.1
+1414 silly lifecycle dashdash@1.14.1~preinstall: no script for preinstall, continuing
+1415 info linkStuff dashdash@1.14.1
+1416 silly linkStuff dashdash@1.14.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1417 verbose linkBins dashdash@1.14.1
+1418 verbose linkMans dashdash@1.14.1
+1419 verbose rebuildBundles dashdash@1.14.1
+1420 verbose rebuildBundles [ 'assert-plus' ]
+1421 info lifecycle dashdash@1.14.1~install: dashdash@1.14.1
+1422 silly lifecycle dashdash@1.14.1~install: no script for install, continuing
+1423 info lifecycle dashdash@1.14.1~postinstall: dashdash@1.14.1
+1424 silly lifecycle dashdash@1.14.1~postinstall: no script for postinstall, continuing
+1425 info build /Users/scottj/Source/arbitrator/app/node_modules/dashdash/node_modules/assert-plus
+1426 info lifecycle assert-plus@1.0.0~preinstall: assert-plus@1.0.0
+1427 silly lifecycle assert-plus@1.0.0~preinstall: no script for preinstall, continuing
+1428 info linkStuff assert-plus@1.0.0
+1429 silly linkStuff assert-plus@1.0.0 has /Users/scottj/Source/arbitrator/app/node_modules/dashdash/node_modules as its parent node_modules
+1430 verbose linkBins assert-plus@1.0.0
+1431 verbose linkMans assert-plus@1.0.0
+1432 verbose rebuildBundles assert-plus@1.0.0
+1433 info lifecycle assert-plus@1.0.0~install: assert-plus@1.0.0
+1434 silly lifecycle assert-plus@1.0.0~install: no script for install, continuing
+1435 info lifecycle assert-plus@1.0.0~postinstall: assert-plus@1.0.0
+1436 silly lifecycle assert-plus@1.0.0~postinstall: no script for postinstall, continuing
+1437 info build /Users/scottj/Source/arbitrator/app/node_modules/getpass
+1438 info lifecycle getpass@0.1.6~preinstall: getpass@0.1.6
+1439 silly lifecycle getpass@0.1.6~preinstall: no script for preinstall, continuing
+1440 info linkStuff getpass@0.1.6
+1441 silly linkStuff getpass@0.1.6 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1442 verbose linkBins getpass@0.1.6
+1443 verbose linkMans getpass@0.1.6
+1444 verbose rebuildBundles getpass@0.1.6
+1445 verbose rebuildBundles [ 'assert-plus' ]
+1446 info lifecycle getpass@0.1.6~install: getpass@0.1.6
+1447 silly lifecycle getpass@0.1.6~install: no script for install, continuing
+1448 info lifecycle getpass@0.1.6~postinstall: getpass@0.1.6
+1449 silly lifecycle getpass@0.1.6~postinstall: no script for postinstall, continuing
+1450 info build /Users/scottj/Source/arbitrator/app/node_modules/getpass/node_modules/assert-plus
+1451 info lifecycle assert-plus@1.0.0~preinstall: assert-plus@1.0.0
+1452 silly lifecycle assert-plus@1.0.0~preinstall: no script for preinstall, continuing
+1453 info linkStuff assert-plus@1.0.0
+1454 silly linkStuff assert-plus@1.0.0 has /Users/scottj/Source/arbitrator/app/node_modules/getpass/node_modules as its parent node_modules
+1455 verbose linkBins assert-plus@1.0.0
+1456 verbose linkMans assert-plus@1.0.0
+1457 verbose rebuildBundles assert-plus@1.0.0
+1458 info lifecycle assert-plus@1.0.0~install: assert-plus@1.0.0
+1459 silly lifecycle assert-plus@1.0.0~install: no script for install, continuing
+1460 info lifecycle assert-plus@1.0.0~postinstall: assert-plus@1.0.0
+1461 silly lifecycle assert-plus@1.0.0~postinstall: no script for postinstall, continuing
+1462 info build /Users/scottj/Source/arbitrator/app/node_modules/is-typedarray
+1463 info lifecycle is-typedarray@1.0.0~preinstall: is-typedarray@1.0.0
+1464 silly lifecycle is-typedarray@1.0.0~preinstall: no script for preinstall, continuing
+1465 info linkStuff is-typedarray@1.0.0
+1466 silly linkStuff is-typedarray@1.0.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1467 verbose linkBins is-typedarray@1.0.0
+1468 verbose linkMans is-typedarray@1.0.0
+1469 verbose rebuildBundles is-typedarray@1.0.0
+1470 info lifecycle is-typedarray@1.0.0~install: is-typedarray@1.0.0
+1471 silly lifecycle is-typedarray@1.0.0~install: no script for install, continuing
+1472 info lifecycle is-typedarray@1.0.0~postinstall: is-typedarray@1.0.0
+1473 silly lifecycle is-typedarray@1.0.0~postinstall: no script for postinstall, continuing
+1474 info build /Users/scottj/Source/arbitrator/app/node_modules/isstream
+1475 info lifecycle isstream@0.1.2~preinstall: isstream@0.1.2
+1476 silly lifecycle isstream@0.1.2~preinstall: no script for preinstall, continuing
+1477 info linkStuff isstream@0.1.2
+1478 silly linkStuff isstream@0.1.2 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1479 verbose linkBins isstream@0.1.2
+1480 verbose linkMans isstream@0.1.2
+1481 verbose rebuildBundles isstream@0.1.2
+1482 info lifecycle isstream@0.1.2~install: isstream@0.1.2
+1483 silly lifecycle isstream@0.1.2~install: no script for install, continuing
+1484 info lifecycle isstream@0.1.2~postinstall: isstream@0.1.2
+1485 silly lifecycle isstream@0.1.2~postinstall: no script for postinstall, continuing
+1486 info build /Users/scottj/Source/arbitrator/app/node_modules/json-stringify-safe
+1487 info lifecycle json-stringify-safe@5.0.1~preinstall: json-stringify-safe@5.0.1
+1488 silly lifecycle json-stringify-safe@5.0.1~preinstall: no script for preinstall, continuing
+1489 info linkStuff json-stringify-safe@5.0.1
+1490 silly linkStuff json-stringify-safe@5.0.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1491 verbose linkBins json-stringify-safe@5.0.1
+1492 verbose linkMans json-stringify-safe@5.0.1
+1493 verbose rebuildBundles json-stringify-safe@5.0.1
+1494 info lifecycle json-stringify-safe@5.0.1~install: json-stringify-safe@5.0.1
+1495 silly lifecycle json-stringify-safe@5.0.1~install: no script for install, continuing
+1496 info lifecycle json-stringify-safe@5.0.1~postinstall: json-stringify-safe@5.0.1
+1497 silly lifecycle json-stringify-safe@5.0.1~postinstall: no script for postinstall, continuing
+1498 info build /Users/scottj/Source/arbitrator/app/node_modules/oauth-sign
+1499 info lifecycle oauth-sign@0.8.2~preinstall: oauth-sign@0.8.2
+1500 silly lifecycle oauth-sign@0.8.2~preinstall: no script for preinstall, continuing
+1501 info linkStuff oauth-sign@0.8.2
+1502 silly linkStuff oauth-sign@0.8.2 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1503 verbose linkBins oauth-sign@0.8.2
+1504 verbose linkMans oauth-sign@0.8.2
+1505 verbose rebuildBundles oauth-sign@0.8.2
+1506 info lifecycle oauth-sign@0.8.2~install: oauth-sign@0.8.2
+1507 silly lifecycle oauth-sign@0.8.2~install: no script for install, continuing
+1508 info lifecycle oauth-sign@0.8.2~postinstall: oauth-sign@0.8.2
+1509 silly lifecycle oauth-sign@0.8.2~postinstall: no script for postinstall, continuing
+1510 info build /Users/scottj/Source/arbitrator/app/node_modules/qs
+1511 info lifecycle qs@6.3.0~preinstall: qs@6.3.0
+1512 silly lifecycle qs@6.3.0~preinstall: no script for preinstall, continuing
+1513 info linkStuff qs@6.3.0
+1514 silly linkStuff qs@6.3.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1515 verbose linkBins qs@6.3.0
+1516 verbose linkMans qs@6.3.0
+1517 verbose rebuildBundles qs@6.3.0
+1518 info lifecycle qs@6.3.0~install: qs@6.3.0
+1519 silly lifecycle qs@6.3.0~install: no script for install, continuing
+1520 info lifecycle qs@6.3.0~postinstall: qs@6.3.0
+1521 silly lifecycle qs@6.3.0~postinstall: no script for postinstall, continuing
+1522 info build /Users/scottj/Source/arbitrator/app/node_modules/stringstream
+1523 info lifecycle stringstream@0.0.5~preinstall: stringstream@0.0.5
+1524 silly lifecycle stringstream@0.0.5~preinstall: no script for preinstall, continuing
+1525 info linkStuff stringstream@0.0.5
+1526 silly linkStuff stringstream@0.0.5 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1527 verbose linkBins stringstream@0.0.5
+1528 verbose linkMans stringstream@0.0.5
+1529 verbose rebuildBundles stringstream@0.0.5
+1530 info lifecycle stringstream@0.0.5~install: stringstream@0.0.5
+1531 silly lifecycle stringstream@0.0.5~install: no script for install, continuing
+1532 info lifecycle stringstream@0.0.5~postinstall: stringstream@0.0.5
+1533 silly lifecycle stringstream@0.0.5~postinstall: no script for postinstall, continuing
+1534 info build /Users/scottj/Source/arbitrator/app/node_modules/tough-cookie
+1535 info lifecycle tough-cookie@2.3.2~preinstall: tough-cookie@2.3.2
+1536 silly lifecycle tough-cookie@2.3.2~preinstall: no script for preinstall, continuing
+1537 info linkStuff tough-cookie@2.3.2
+1538 silly linkStuff tough-cookie@2.3.2 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1539 verbose linkBins tough-cookie@2.3.2
+1540 verbose linkMans tough-cookie@2.3.2
+1541 verbose rebuildBundles tough-cookie@2.3.2
+1542 info lifecycle tough-cookie@2.3.2~install: tough-cookie@2.3.2
+1543 silly lifecycle tough-cookie@2.3.2~install: no script for install, continuing
+1544 info lifecycle tough-cookie@2.3.2~postinstall: tough-cookie@2.3.2
+1545 silly lifecycle tough-cookie@2.3.2~postinstall: no script for postinstall, continuing
+1546 info build /Users/scottj/Source/arbitrator/app/node_modules/punycode
+1547 info lifecycle punycode@1.4.1~preinstall: punycode@1.4.1
+1548 silly lifecycle punycode@1.4.1~preinstall: no script for preinstall, continuing
+1549 info linkStuff punycode@1.4.1
+1550 silly linkStuff punycode@1.4.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1551 verbose linkBins punycode@1.4.1
+1552 verbose linkMans punycode@1.4.1
+1553 verbose rebuildBundles punycode@1.4.1
+1554 info lifecycle punycode@1.4.1~install: punycode@1.4.1
+1555 silly lifecycle punycode@1.4.1~install: no script for install, continuing
+1556 info lifecycle punycode@1.4.1~postinstall: punycode@1.4.1
+1557 silly lifecycle punycode@1.4.1~postinstall: no script for postinstall, continuing
+1558 info build /Users/scottj/Source/arbitrator/app/node_modules/tunnel-agent
+1559 info lifecycle tunnel-agent@0.4.3~preinstall: tunnel-agent@0.4.3
+1560 silly lifecycle tunnel-agent@0.4.3~preinstall: no script for preinstall, continuing
+1561 info linkStuff tunnel-agent@0.4.3
+1562 silly linkStuff tunnel-agent@0.4.3 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1563 verbose linkBins tunnel-agent@0.4.3
+1564 verbose linkMans tunnel-agent@0.4.3
+1565 verbose rebuildBundles tunnel-agent@0.4.3
+1566 info lifecycle tunnel-agent@0.4.3~install: tunnel-agent@0.4.3
+1567 silly lifecycle tunnel-agent@0.4.3~install: no script for install, continuing
+1568 info lifecycle tunnel-agent@0.4.3~postinstall: tunnel-agent@0.4.3
+1569 silly lifecycle tunnel-agent@0.4.3~postinstall: no script for postinstall, continuing
+1570 info build /Users/scottj/Source/arbitrator/app/node_modules/uuid
+1571 info lifecycle uuid@3.0.1~preinstall: uuid@3.0.1
+1572 silly lifecycle uuid@3.0.1~preinstall: no script for preinstall, continuing
+1573 info linkStuff uuid@3.0.1
+1574 silly linkStuff uuid@3.0.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1575 verbose linkBins uuid@3.0.1
+1576 verbose linkBins [ { uuid: './bin/uuid' },
+1576 verbose linkBins   '/Users/scottj/Source/arbitrator/app/node_modules/.bin',
+1576 verbose linkBins   false ]
+1577 verbose linkMans uuid@3.0.1
+1578 verbose rebuildBundles uuid@3.0.1
+1579 info lifecycle uuid@3.0.1~install: uuid@3.0.1
+1580 silly lifecycle uuid@3.0.1~install: no script for install, continuing
+1581 info lifecycle uuid@3.0.1~postinstall: uuid@3.0.1
+1582 silly lifecycle uuid@3.0.1~postinstall: no script for postinstall, continuing
+1583 info build /Users/scottj/Source/arbitrator/app/node_modules/lodash.noop
+1584 info lifecycle lodash.noop@3.0.1~preinstall: lodash.noop@3.0.1
+1585 silly lifecycle lodash.noop@3.0.1~preinstall: no script for preinstall, continuing
+1586 info linkStuff lodash.noop@3.0.1
+1587 silly linkStuff lodash.noop@3.0.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1588 verbose linkBins lodash.noop@3.0.1
+1589 verbose linkMans lodash.noop@3.0.1
+1590 verbose rebuildBundles lodash.noop@3.0.1
+1591 info lifecycle lodash.noop@3.0.1~install: lodash.noop@3.0.1
+1592 silly lifecycle lodash.noop@3.0.1~install: no script for install, continuing
+1593 info lifecycle lodash.noop@3.0.1~postinstall: lodash.noop@3.0.1
+1594 silly lifecycle lodash.noop@3.0.1~postinstall: no script for postinstall, continuing
+1595 info build /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/request
+1596 info lifecycle request@2.74.0~preinstall: request@2.74.0
+1597 silly lifecycle request@2.74.0~preinstall: no script for preinstall, continuing
+1598 info linkStuff request@2.74.0
+1599 silly linkStuff request@2.74.0 has /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules as its parent node_modules
+1600 verbose linkBins request@2.74.0
+1601 verbose linkMans request@2.74.0
+1602 verbose rebuildBundles request@2.74.0
+1603 info lifecycle request@2.74.0~install: request@2.74.0
+1604 silly lifecycle request@2.74.0~install: no script for install, continuing
+1605 info lifecycle request@2.74.0~postinstall: request@2.74.0
+1606 silly lifecycle request@2.74.0~postinstall: no script for postinstall, continuing
+1607 info build /Users/scottj/Source/arbitrator/app/node_modules/bl
+1608 info lifecycle bl@1.1.2~preinstall: bl@1.1.2
+1609 silly lifecycle bl@1.1.2~preinstall: no script for preinstall, continuing
+1610 info linkStuff bl@1.1.2
+1611 silly linkStuff bl@1.1.2 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1612 verbose linkBins bl@1.1.2
+1613 verbose linkMans bl@1.1.2
+1614 verbose rebuildBundles bl@1.1.2
+1615 verbose rebuildBundles [ 'isarray', 'readable-stream' ]
+1616 verbose rebuild bundle /Users/scottj/Source/arbitrator/app/node_modules/bl/node_modules/isarray
+1617 info build /Users/scottj/Source/arbitrator/app/node_modules/bl/node_modules/isarray
+1618 info lifecycle isarray@1.0.0~preinstall: isarray@1.0.0
+1619 silly lifecycle isarray@1.0.0~preinstall: no script for preinstall, continuing
+1620 info linkStuff isarray@1.0.0
+1621 silly linkStuff isarray@1.0.0 has /Users/scottj/Source/arbitrator/app/node_modules/bl/node_modules as its parent node_modules
+1622 verbose linkBins isarray@1.0.0
+1623 verbose linkMans isarray@1.0.0
+1624 verbose rebuildBundles isarray@1.0.0
+1625 info lifecycle isarray@1.0.0~install: isarray@1.0.0
+1626 silly lifecycle isarray@1.0.0~install: no script for install, continuing
+1627 info lifecycle isarray@1.0.0~postinstall: isarray@1.0.0
+1628 silly lifecycle isarray@1.0.0~postinstall: no script for postinstall, continuing
+1629 info lifecycle bl@1.1.2~install: bl@1.1.2
+1630 silly lifecycle bl@1.1.2~install: no script for install, continuing
+1631 info lifecycle bl@1.1.2~postinstall: bl@1.1.2
+1632 silly lifecycle bl@1.1.2~postinstall: no script for postinstall, continuing
+1633 info build /Users/scottj/Source/arbitrator/app/node_modules/bl/node_modules/readable-stream
+1634 info lifecycle readable-stream@2.0.6~preinstall: readable-stream@2.0.6
+1635 silly lifecycle readable-stream@2.0.6~preinstall: no script for preinstall, continuing
+1636 info linkStuff readable-stream@2.0.6
+1637 silly linkStuff readable-stream@2.0.6 has /Users/scottj/Source/arbitrator/app/node_modules/bl/node_modules as its parent node_modules
+1638 verbose linkBins readable-stream@2.0.6
+1639 verbose linkMans readable-stream@2.0.6
+1640 verbose rebuildBundles readable-stream@2.0.6
+1641 info lifecycle readable-stream@2.0.6~install: readable-stream@2.0.6
+1642 silly lifecycle readable-stream@2.0.6~install: no script for install, continuing
+1643 info lifecycle readable-stream@2.0.6~postinstall: readable-stream@2.0.6
+1644 silly lifecycle readable-stream@2.0.6~postinstall: no script for postinstall, continuing
+1645 info build already built /Users/scottj/Source/arbitrator/app/node_modules/bl/node_modules/isarray
+1646 info build /Users/scottj/Source/arbitrator/app/node_modules/bl/node_modules/isarray
+1647 info lifecycle isarray@1.0.0~preinstall: isarray@1.0.0
+1648 silly lifecycle isarray@1.0.0~preinstall: no script for preinstall, continuing
+1649 info linkStuff isarray@1.0.0
+1650 silly linkStuff isarray@1.0.0 has /Users/scottj/Source/arbitrator/app/node_modules/bl/node_modules as its parent node_modules
+1651 verbose linkBins isarray@1.0.0
+1652 verbose linkMans isarray@1.0.0
+1653 verbose rebuildBundles isarray@1.0.0
+1654 info lifecycle isarray@1.0.0~install: isarray@1.0.0
+1655 silly lifecycle isarray@1.0.0~install: no script for install, continuing
+1656 info lifecycle isarray@1.0.0~postinstall: isarray@1.0.0
+1657 silly lifecycle isarray@1.0.0~postinstall: no script for postinstall, continuing
+1658 info build /Users/scottj/Source/arbitrator/app/node_modules/process-nextick-args
+1659 info lifecycle process-nextick-args@1.0.7~preinstall: process-nextick-args@1.0.7
+1660 silly lifecycle process-nextick-args@1.0.7~preinstall: no script for preinstall, continuing
+1661 info linkStuff process-nextick-args@1.0.7
+1662 silly linkStuff process-nextick-args@1.0.7 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1663 verbose linkBins process-nextick-args@1.0.7
+1664 verbose linkMans process-nextick-args@1.0.7
+1665 verbose rebuildBundles process-nextick-args@1.0.7
+1666 info lifecycle process-nextick-args@1.0.7~install: process-nextick-args@1.0.7
+1667 silly lifecycle process-nextick-args@1.0.7~install: no script for install, continuing
+1668 info lifecycle process-nextick-args@1.0.7~postinstall: process-nextick-args@1.0.7
+1669 silly lifecycle process-nextick-args@1.0.7~postinstall: no script for postinstall, continuing
+1670 info build /Users/scottj/Source/arbitrator/app/node_modules/util-deprecate
+1671 info lifecycle util-deprecate@1.0.2~preinstall: util-deprecate@1.0.2
+1672 silly lifecycle util-deprecate@1.0.2~preinstall: no script for preinstall, continuing
+1673 info linkStuff util-deprecate@1.0.2
+1674 silly linkStuff util-deprecate@1.0.2 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1675 verbose linkBins util-deprecate@1.0.2
+1676 verbose linkMans util-deprecate@1.0.2
+1677 verbose rebuildBundles util-deprecate@1.0.2
+1678 info lifecycle util-deprecate@1.0.2~install: util-deprecate@1.0.2
+1679 silly lifecycle util-deprecate@1.0.2~install: no script for install, continuing
+1680 info lifecycle util-deprecate@1.0.2~postinstall: util-deprecate@1.0.2
+1681 silly lifecycle util-deprecate@1.0.2~postinstall: no script for postinstall, continuing
+1682 info build already built /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/form-data
+1683 info build /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/form-data
+1684 info lifecycle form-data@1.0.1~preinstall: form-data@1.0.1
+1685 silly lifecycle form-data@1.0.1~preinstall: no script for preinstall, continuing
+1686 info linkStuff form-data@1.0.1
+1687 silly linkStuff form-data@1.0.1 has /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules as its parent node_modules
+1688 verbose linkBins form-data@1.0.1
+1689 verbose linkMans form-data@1.0.1
+1690 verbose rebuildBundles form-data@1.0.1
+1691 verbose rebuildBundles [ 'async' ]
+1692 info lifecycle form-data@1.0.1~install: form-data@1.0.1
+1693 silly lifecycle form-data@1.0.1~install: no script for install, continuing
+1694 info lifecycle form-data@1.0.1~postinstall: form-data@1.0.1
+1695 silly lifecycle form-data@1.0.1~postinstall: no script for postinstall, continuing
+1696 info build /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/form-data/node_modules/async
+1697 info lifecycle async@2.1.4~preinstall: async@2.1.4
+1698 silly lifecycle async@2.1.4~preinstall: no script for preinstall, continuing
+1699 info linkStuff async@2.1.4
+1700 silly linkStuff async@2.1.4 has /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/form-data/node_modules as its parent node_modules
+1701 verbose linkBins async@2.1.4
+1702 verbose linkMans async@2.1.4
+1703 verbose rebuildBundles async@2.1.4
+1704 info lifecycle async@2.1.4~install: async@2.1.4
+1705 silly lifecycle async@2.1.4~install: no script for install, continuing
+1706 info lifecycle async@2.1.4~postinstall: async@2.1.4
+1707 silly lifecycle async@2.1.4~postinstall: no script for postinstall, continuing
+1708 info build already built /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/node-uuid
+1709 info build /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/node-uuid
+1710 info lifecycle node-uuid@1.4.7~preinstall: node-uuid@1.4.7
+1711 silly lifecycle node-uuid@1.4.7~preinstall: no script for preinstall, continuing
+1712 info linkStuff node-uuid@1.4.7
+1713 silly linkStuff node-uuid@1.4.7 has /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules as its parent node_modules
+1714 verbose linkBins node-uuid@1.4.7
+1715 verbose linkBins [ { uuid: './bin/uuid' },
+1715 verbose linkBins   '/Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/.bin',
+1715 verbose linkBins   false ]
+1716 verbose linkMans node-uuid@1.4.7
+1717 verbose rebuildBundles node-uuid@1.4.7
+1718 info lifecycle node-uuid@1.4.7~install: node-uuid@1.4.7
+1719 silly lifecycle node-uuid@1.4.7~install: no script for install, continuing
+1720 info lifecycle node-uuid@1.4.7~postinstall: node-uuid@1.4.7
+1721 silly lifecycle node-uuid@1.4.7~postinstall: no script for postinstall, continuing
+1722 info build already built /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/qs
+1723 info build /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/qs
+1724 info lifecycle qs@6.2.1~preinstall: qs@6.2.1
+1725 silly lifecycle qs@6.2.1~preinstall: no script for preinstall, continuing
+1726 info linkStuff qs@6.2.1
+1727 silly linkStuff qs@6.2.1 has /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules as its parent node_modules
+1728 verbose linkBins qs@6.2.1
+1729 verbose linkMans qs@6.2.1
+1730 verbose rebuildBundles qs@6.2.1
+1731 info lifecycle qs@6.2.1~install: qs@6.2.1
+1732 silly lifecycle qs@6.2.1~install: no script for install, continuing
+1733 info lifecycle qs@6.2.1~postinstall: qs@6.2.1
+1734 silly lifecycle qs@6.2.1~postinstall: no script for postinstall, continuing
+1735 info build /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules/string-template
+1736 info lifecycle string-template@0.2.1~preinstall: string-template@0.2.1
+1737 silly lifecycle string-template@0.2.1~preinstall: no script for preinstall, continuing
+1738 info linkStuff string-template@0.2.1
+1739 silly linkStuff string-template@0.2.1 has /Users/scottj/Source/arbitrator/app/node_modules/google-auth-library/node_modules as its parent node_modules
+1740 verbose linkBins string-template@0.2.1
+1741 verbose linkMans string-template@0.2.1
+1742 verbose rebuildBundles string-template@0.2.1
+1743 info lifecycle string-template@0.2.1~install: string-template@0.2.1
+1744 silly lifecycle string-template@0.2.1~install: no script for install, continuing
+1745 info lifecycle string-template@0.2.1~postinstall: string-template@0.2.1
+1746 silly lifecycle string-template@0.2.1~postinstall: no script for postinstall, continuing
+1747 info build /Users/scottj/Source/arbitrator/app/node_modules/string-template
+1748 info lifecycle string-template@1.0.0~preinstall: string-template@1.0.0
+1749 silly lifecycle string-template@1.0.0~preinstall: no script for preinstall, continuing
+1750 info linkStuff string-template@1.0.0
+1751 silly linkStuff string-template@1.0.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1752 verbose linkBins string-template@1.0.0
+1753 verbose linkMans string-template@1.0.0
+1754 verbose rebuildBundles string-template@1.0.0
+1755 info lifecycle string-template@1.0.0~install: string-template@1.0.0
+1756 silly lifecycle string-template@1.0.0~install: no script for install, continuing
+1757 info lifecycle string-template@1.0.0~postinstall: string-template@1.0.0
+1758 silly lifecycle string-template@1.0.0~postinstall: no script for postinstall, continuing
+1759 info build /Users/scottj/Source/arbitrator/app/node_modules/moment
+1760 info lifecycle moment@2.17.1~preinstall: moment@2.17.1
+1761 silly lifecycle moment@2.17.1~preinstall: no script for preinstall, continuing
+1762 info linkStuff moment@2.17.1
+1763 silly linkStuff moment@2.17.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1764 verbose linkBins moment@2.17.1
+1765 verbose linkMans moment@2.17.1
+1766 verbose rebuildBundles moment@2.17.1
+1767 info lifecycle moment@2.17.1~install: moment@2.17.1
+1768 silly lifecycle moment@2.17.1~install: no script for install, continuing
+1769 info lifecycle moment@2.17.1~postinstall: moment@2.17.1
+1770 silly lifecycle moment@2.17.1~postinstall: no script for postinstall, continuing
+1771 info build /Users/scottj/Source/arbitrator/app/node_modules/yargs
+1772 info lifecycle yargs@6.5.0~preinstall: yargs@6.5.0
+1773 silly lifecycle yargs@6.5.0~preinstall: no script for preinstall, continuing
+1774 info linkStuff yargs@6.5.0
+1775 silly linkStuff yargs@6.5.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1776 verbose linkBins yargs@6.5.0
+1777 verbose linkMans yargs@6.5.0
+1778 verbose rebuildBundles yargs@6.5.0
+1779 verbose rebuildBundles [ 'camelcase' ]
+1780 info lifecycle yargs@6.5.0~install: yargs@6.5.0
+1781 silly lifecycle yargs@6.5.0~install: no script for install, continuing
+1782 info lifecycle yargs@6.5.0~postinstall: yargs@6.5.0
+1783 silly lifecycle yargs@6.5.0~postinstall: no script for postinstall, continuing
+1784 info build /Users/scottj/Source/arbitrator/app/node_modules/yargs/node_modules/camelcase
+1785 info lifecycle camelcase@3.0.0~preinstall: camelcase@3.0.0
+1786 silly lifecycle camelcase@3.0.0~preinstall: no script for preinstall, continuing
+1787 info linkStuff camelcase@3.0.0
+1788 silly linkStuff camelcase@3.0.0 has /Users/scottj/Source/arbitrator/app/node_modules/yargs/node_modules as its parent node_modules
+1789 verbose linkBins camelcase@3.0.0
+1790 verbose linkMans camelcase@3.0.0
+1791 verbose rebuildBundles camelcase@3.0.0
+1792 info lifecycle camelcase@3.0.0~install: camelcase@3.0.0
+1793 silly lifecycle camelcase@3.0.0~install: no script for install, continuing
+1794 info lifecycle camelcase@3.0.0~postinstall: camelcase@3.0.0
+1795 silly lifecycle camelcase@3.0.0~postinstall: no script for postinstall, continuing
+1796 info build /Users/scottj/Source/arbitrator/app/node_modules/cliui
+1797 info lifecycle cliui@3.2.0~preinstall: cliui@3.2.0
+1798 silly lifecycle cliui@3.2.0~preinstall: no script for preinstall, continuing
+1799 info linkStuff cliui@3.2.0
+1800 silly linkStuff cliui@3.2.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1801 verbose linkBins cliui@3.2.0
+1802 verbose linkMans cliui@3.2.0
+1803 verbose rebuildBundles cliui@3.2.0
+1804 info lifecycle cliui@3.2.0~install: cliui@3.2.0
+1805 silly lifecycle cliui@3.2.0~install: no script for install, continuing
+1806 info lifecycle cliui@3.2.0~postinstall: cliui@3.2.0
+1807 silly lifecycle cliui@3.2.0~postinstall: no script for postinstall, continuing
+1808 info build /Users/scottj/Source/arbitrator/app/node_modules/string-width
+1809 info lifecycle string-width@1.0.2~preinstall: string-width@1.0.2
+1810 silly lifecycle string-width@1.0.2~preinstall: no script for preinstall, continuing
+1811 info linkStuff string-width@1.0.2
+1812 silly linkStuff string-width@1.0.2 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1813 verbose linkBins string-width@1.0.2
+1814 verbose linkMans string-width@1.0.2
+1815 verbose rebuildBundles string-width@1.0.2
+1816 info lifecycle string-width@1.0.2~install: string-width@1.0.2
+1817 silly lifecycle string-width@1.0.2~install: no script for install, continuing
+1818 info lifecycle string-width@1.0.2~postinstall: string-width@1.0.2
+1819 silly lifecycle string-width@1.0.2~postinstall: no script for postinstall, continuing
+1820 info build /Users/scottj/Source/arbitrator/app/node_modules/code-point-at
+1821 info lifecycle code-point-at@1.1.0~preinstall: code-point-at@1.1.0
+1822 silly lifecycle code-point-at@1.1.0~preinstall: no script for preinstall, continuing
+1823 info linkStuff code-point-at@1.1.0
+1824 silly linkStuff code-point-at@1.1.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1825 verbose linkBins code-point-at@1.1.0
+1826 verbose linkMans code-point-at@1.1.0
+1827 verbose rebuildBundles code-point-at@1.1.0
+1828 info lifecycle code-point-at@1.1.0~install: code-point-at@1.1.0
+1829 silly lifecycle code-point-at@1.1.0~install: no script for install, continuing
+1830 info lifecycle code-point-at@1.1.0~postinstall: code-point-at@1.1.0
+1831 silly lifecycle code-point-at@1.1.0~postinstall: no script for postinstall, continuing
+1832 info build /Users/scottj/Source/arbitrator/app/node_modules/is-fullwidth-code-point
+1833 info lifecycle is-fullwidth-code-point@1.0.0~preinstall: is-fullwidth-code-point@1.0.0
+1834 silly lifecycle is-fullwidth-code-point@1.0.0~preinstall: no script for preinstall, continuing
+1835 info linkStuff is-fullwidth-code-point@1.0.0
+1836 silly linkStuff is-fullwidth-code-point@1.0.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1837 verbose linkBins is-fullwidth-code-point@1.0.0
+1838 verbose linkMans is-fullwidth-code-point@1.0.0
+1839 verbose rebuildBundles is-fullwidth-code-point@1.0.0
+1840 info lifecycle is-fullwidth-code-point@1.0.0~install: is-fullwidth-code-point@1.0.0
+1841 silly lifecycle is-fullwidth-code-point@1.0.0~install: no script for install, continuing
+1842 info lifecycle is-fullwidth-code-point@1.0.0~postinstall: is-fullwidth-code-point@1.0.0
+1843 silly lifecycle is-fullwidth-code-point@1.0.0~postinstall: no script for postinstall, continuing
+1844 info build /Users/scottj/Source/arbitrator/app/node_modules/wrap-ansi
+1845 info lifecycle wrap-ansi@2.1.0~preinstall: wrap-ansi@2.1.0
+1846 silly lifecycle wrap-ansi@2.1.0~preinstall: no script for preinstall, continuing
+1847 info linkStuff wrap-ansi@2.1.0
+1848 silly linkStuff wrap-ansi@2.1.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1849 verbose linkBins wrap-ansi@2.1.0
+1850 verbose linkMans wrap-ansi@2.1.0
+1851 verbose rebuildBundles wrap-ansi@2.1.0
+1852 info lifecycle wrap-ansi@2.1.0~install: wrap-ansi@2.1.0
+1853 silly lifecycle wrap-ansi@2.1.0~install: no script for install, continuing
+1854 info lifecycle wrap-ansi@2.1.0~postinstall: wrap-ansi@2.1.0
+1855 silly lifecycle wrap-ansi@2.1.0~postinstall: no script for postinstall, continuing
+1856 info build /Users/scottj/Source/arbitrator/app/node_modules/decamelize
+1857 info lifecycle decamelize@1.2.0~preinstall: decamelize@1.2.0
+1858 silly lifecycle decamelize@1.2.0~preinstall: no script for preinstall, continuing
+1859 info linkStuff decamelize@1.2.0
+1860 silly linkStuff decamelize@1.2.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1861 verbose linkBins decamelize@1.2.0
+1862 verbose linkMans decamelize@1.2.0
+1863 verbose rebuildBundles decamelize@1.2.0
+1864 info lifecycle decamelize@1.2.0~install: decamelize@1.2.0
+1865 silly lifecycle decamelize@1.2.0~install: no script for install, continuing
+1866 info lifecycle decamelize@1.2.0~postinstall: decamelize@1.2.0
+1867 silly lifecycle decamelize@1.2.0~postinstall: no script for postinstall, continuing
+1868 info build /Users/scottj/Source/arbitrator/app/node_modules/get-caller-file
+1869 info lifecycle get-caller-file@1.0.2~preinstall: get-caller-file@1.0.2
+1870 silly lifecycle get-caller-file@1.0.2~preinstall: no script for preinstall, continuing
+1871 info linkStuff get-caller-file@1.0.2
+1872 silly linkStuff get-caller-file@1.0.2 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1873 verbose linkBins get-caller-file@1.0.2
+1874 verbose linkMans get-caller-file@1.0.2
+1875 verbose rebuildBundles get-caller-file@1.0.2
+1876 info lifecycle get-caller-file@1.0.2~install: get-caller-file@1.0.2
+1877 silly lifecycle get-caller-file@1.0.2~install: no script for install, continuing
+1878 info lifecycle get-caller-file@1.0.2~postinstall: get-caller-file@1.0.2
+1879 silly lifecycle get-caller-file@1.0.2~postinstall: no script for postinstall, continuing
+1880 info build /Users/scottj/Source/arbitrator/app/node_modules/os-locale
+1881 info lifecycle os-locale@1.4.0~preinstall: os-locale@1.4.0
+1882 silly lifecycle os-locale@1.4.0~preinstall: no script for preinstall, continuing
+1883 info linkStuff os-locale@1.4.0
+1884 silly linkStuff os-locale@1.4.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1885 verbose linkBins os-locale@1.4.0
+1886 verbose linkMans os-locale@1.4.0
+1887 verbose rebuildBundles os-locale@1.4.0
+1888 info lifecycle os-locale@1.4.0~install: os-locale@1.4.0
+1889 silly lifecycle os-locale@1.4.0~install: no script for install, continuing
+1890 info lifecycle os-locale@1.4.0~postinstall: os-locale@1.4.0
+1891 silly lifecycle os-locale@1.4.0~postinstall: no script for postinstall, continuing
+1892 info build /Users/scottj/Source/arbitrator/app/node_modules/lcid
+1893 info lifecycle lcid@1.0.0~preinstall: lcid@1.0.0
+1894 silly lifecycle lcid@1.0.0~preinstall: no script for preinstall, continuing
+1895 info linkStuff lcid@1.0.0
+1896 silly linkStuff lcid@1.0.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1897 verbose linkBins lcid@1.0.0
+1898 verbose linkMans lcid@1.0.0
+1899 verbose rebuildBundles lcid@1.0.0
+1900 info lifecycle lcid@1.0.0~install: lcid@1.0.0
+1901 silly lifecycle lcid@1.0.0~install: no script for install, continuing
+1902 info lifecycle lcid@1.0.0~postinstall: lcid@1.0.0
+1903 silly lifecycle lcid@1.0.0~postinstall: no script for postinstall, continuing
+1904 info build /Users/scottj/Source/arbitrator/app/node_modules/invert-kv
+1905 info lifecycle invert-kv@1.0.0~preinstall: invert-kv@1.0.0
+1906 silly lifecycle invert-kv@1.0.0~preinstall: no script for preinstall, continuing
+1907 info linkStuff invert-kv@1.0.0
+1908 silly linkStuff invert-kv@1.0.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1909 verbose linkBins invert-kv@1.0.0
+1910 verbose linkMans invert-kv@1.0.0
+1911 verbose rebuildBundles invert-kv@1.0.0
+1912 info lifecycle invert-kv@1.0.0~install: invert-kv@1.0.0
+1913 silly lifecycle invert-kv@1.0.0~install: no script for install, continuing
+1914 info lifecycle invert-kv@1.0.0~postinstall: invert-kv@1.0.0
+1915 silly lifecycle invert-kv@1.0.0~postinstall: no script for postinstall, continuing
+1916 info build /Users/scottj/Source/arbitrator/app/node_modules/read-pkg-up
+1917 info lifecycle read-pkg-up@1.0.1~preinstall: read-pkg-up@1.0.1
+1918 silly lifecycle read-pkg-up@1.0.1~preinstall: no script for preinstall, continuing
+1919 info linkStuff read-pkg-up@1.0.1
+1920 silly linkStuff read-pkg-up@1.0.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1921 verbose linkBins read-pkg-up@1.0.1
+1922 verbose linkMans read-pkg-up@1.0.1
+1923 verbose rebuildBundles read-pkg-up@1.0.1
+1924 info lifecycle read-pkg-up@1.0.1~install: read-pkg-up@1.0.1
+1925 silly lifecycle read-pkg-up@1.0.1~install: no script for install, continuing
+1926 info lifecycle read-pkg-up@1.0.1~postinstall: read-pkg-up@1.0.1
+1927 silly lifecycle read-pkg-up@1.0.1~postinstall: no script for postinstall, continuing
+1928 info build /Users/scottj/Source/arbitrator/app/node_modules/find-up
+1929 info lifecycle find-up@1.1.2~preinstall: find-up@1.1.2
+1930 silly lifecycle find-up@1.1.2~preinstall: no script for preinstall, continuing
+1931 info linkStuff find-up@1.1.2
+1932 silly linkStuff find-up@1.1.2 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1933 verbose linkBins find-up@1.1.2
+1934 verbose linkMans find-up@1.1.2
+1935 verbose rebuildBundles find-up@1.1.2
+1936 info lifecycle find-up@1.1.2~install: find-up@1.1.2
+1937 silly lifecycle find-up@1.1.2~install: no script for install, continuing
+1938 info lifecycle find-up@1.1.2~postinstall: find-up@1.1.2
+1939 silly lifecycle find-up@1.1.2~postinstall: no script for postinstall, continuing
+1940 info build /Users/scottj/Source/arbitrator/app/node_modules/path-exists
+1941 info lifecycle path-exists@2.1.0~preinstall: path-exists@2.1.0
+1942 silly lifecycle path-exists@2.1.0~preinstall: no script for preinstall, continuing
+1943 info linkStuff path-exists@2.1.0
+1944 silly linkStuff path-exists@2.1.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1945 verbose linkBins path-exists@2.1.0
+1946 verbose linkMans path-exists@2.1.0
+1947 verbose rebuildBundles path-exists@2.1.0
+1948 info lifecycle path-exists@2.1.0~install: path-exists@2.1.0
+1949 silly lifecycle path-exists@2.1.0~install: no script for install, continuing
+1950 info lifecycle path-exists@2.1.0~postinstall: path-exists@2.1.0
+1951 silly lifecycle path-exists@2.1.0~postinstall: no script for postinstall, continuing
+1952 info build /Users/scottj/Source/arbitrator/app/node_modules/read-pkg
+1953 info lifecycle read-pkg@1.1.0~preinstall: read-pkg@1.1.0
+1954 silly lifecycle read-pkg@1.1.0~preinstall: no script for preinstall, continuing
+1955 info linkStuff read-pkg@1.1.0
+1956 silly linkStuff read-pkg@1.1.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1957 verbose linkBins read-pkg@1.1.0
+1958 verbose linkMans read-pkg@1.1.0
+1959 verbose rebuildBundles read-pkg@1.1.0
+1960 info lifecycle read-pkg@1.1.0~install: read-pkg@1.1.0
+1961 silly lifecycle read-pkg@1.1.0~install: no script for install, continuing
+1962 info lifecycle read-pkg@1.1.0~postinstall: read-pkg@1.1.0
+1963 silly lifecycle read-pkg@1.1.0~postinstall: no script for postinstall, continuing
+1964 info build /Users/scottj/Source/arbitrator/app/node_modules/load-json-file
+1965 info lifecycle load-json-file@1.1.0~preinstall: load-json-file@1.1.0
+1966 silly lifecycle load-json-file@1.1.0~preinstall: no script for preinstall, continuing
+1967 info linkStuff load-json-file@1.1.0
+1968 silly linkStuff load-json-file@1.1.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1969 verbose linkBins load-json-file@1.1.0
+1970 verbose linkMans load-json-file@1.1.0
+1971 verbose rebuildBundles load-json-file@1.1.0
+1972 info lifecycle load-json-file@1.1.0~install: load-json-file@1.1.0
+1973 silly lifecycle load-json-file@1.1.0~install: no script for install, continuing
+1974 info lifecycle load-json-file@1.1.0~postinstall: load-json-file@1.1.0
+1975 silly lifecycle load-json-file@1.1.0~postinstall: no script for postinstall, continuing
+1976 info build /Users/scottj/Source/arbitrator/app/node_modules/graceful-fs
+1977 info lifecycle graceful-fs@4.1.11~preinstall: graceful-fs@4.1.11
+1978 silly lifecycle graceful-fs@4.1.11~preinstall: no script for preinstall, continuing
+1979 info linkStuff graceful-fs@4.1.11
+1980 silly linkStuff graceful-fs@4.1.11 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1981 verbose linkBins graceful-fs@4.1.11
+1982 verbose linkMans graceful-fs@4.1.11
+1983 verbose rebuildBundles graceful-fs@4.1.11
+1984 info lifecycle graceful-fs@4.1.11~install: graceful-fs@4.1.11
+1985 silly lifecycle graceful-fs@4.1.11~install: no script for install, continuing
+1986 info lifecycle graceful-fs@4.1.11~postinstall: graceful-fs@4.1.11
+1987 silly lifecycle graceful-fs@4.1.11~postinstall: no script for postinstall, continuing
+1988 info build /Users/scottj/Source/arbitrator/app/node_modules/parse-json
+1989 info lifecycle parse-json@2.2.0~preinstall: parse-json@2.2.0
+1990 silly lifecycle parse-json@2.2.0~preinstall: no script for preinstall, continuing
+1991 info linkStuff parse-json@2.2.0
+1992 silly linkStuff parse-json@2.2.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+1993 verbose linkBins parse-json@2.2.0
+1994 verbose linkMans parse-json@2.2.0
+1995 verbose rebuildBundles parse-json@2.2.0
+1996 info lifecycle parse-json@2.2.0~install: parse-json@2.2.0
+1997 silly lifecycle parse-json@2.2.0~install: no script for install, continuing
+1998 info lifecycle parse-json@2.2.0~postinstall: parse-json@2.2.0
+1999 silly lifecycle parse-json@2.2.0~postinstall: no script for postinstall, continuing
+2000 info build /Users/scottj/Source/arbitrator/app/node_modules/error-ex
+2001 info lifecycle error-ex@1.3.0~preinstall: error-ex@1.3.0
+2002 silly lifecycle error-ex@1.3.0~preinstall: no script for preinstall, continuing
+2003 info linkStuff error-ex@1.3.0
+2004 silly linkStuff error-ex@1.3.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2005 verbose linkBins error-ex@1.3.0
+2006 verbose linkMans error-ex@1.3.0
+2007 verbose rebuildBundles error-ex@1.3.0
+2008 info lifecycle error-ex@1.3.0~install: error-ex@1.3.0
+2009 silly lifecycle error-ex@1.3.0~install: no script for install, continuing
+2010 info lifecycle error-ex@1.3.0~postinstall: error-ex@1.3.0
+2011 silly lifecycle error-ex@1.3.0~postinstall: no script for postinstall, continuing
+2012 info build /Users/scottj/Source/arbitrator/app/node_modules/is-arrayish
+2013 info lifecycle is-arrayish@0.2.1~preinstall: is-arrayish@0.2.1
+2014 silly lifecycle is-arrayish@0.2.1~preinstall: no script for preinstall, continuing
+2015 info linkStuff is-arrayish@0.2.1
+2016 silly linkStuff is-arrayish@0.2.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2017 verbose linkBins is-arrayish@0.2.1
+2018 verbose linkMans is-arrayish@0.2.1
+2019 verbose rebuildBundles is-arrayish@0.2.1
+2020 info lifecycle is-arrayish@0.2.1~install: is-arrayish@0.2.1
+2021 silly lifecycle is-arrayish@0.2.1~install: no script for install, continuing
+2022 info lifecycle is-arrayish@0.2.1~postinstall: is-arrayish@0.2.1
+2023 silly lifecycle is-arrayish@0.2.1~postinstall: no script for postinstall, continuing
+2024 info build /Users/scottj/Source/arbitrator/app/node_modules/pify
+2025 info lifecycle pify@2.3.0~preinstall: pify@2.3.0
+2026 silly lifecycle pify@2.3.0~preinstall: no script for preinstall, continuing
+2027 info linkStuff pify@2.3.0
+2028 silly linkStuff pify@2.3.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2029 verbose linkBins pify@2.3.0
+2030 verbose linkMans pify@2.3.0
+2031 verbose rebuildBundles pify@2.3.0
+2032 info lifecycle pify@2.3.0~install: pify@2.3.0
+2033 silly lifecycle pify@2.3.0~install: no script for install, continuing
+2034 info lifecycle pify@2.3.0~postinstall: pify@2.3.0
+2035 silly lifecycle pify@2.3.0~postinstall: no script for postinstall, continuing
+2036 info build /Users/scottj/Source/arbitrator/app/node_modules/strip-bom
+2037 info lifecycle strip-bom@2.0.0~preinstall: strip-bom@2.0.0
+2038 silly lifecycle strip-bom@2.0.0~preinstall: no script for preinstall, continuing
+2039 info linkStuff strip-bom@2.0.0
+2040 silly linkStuff strip-bom@2.0.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2041 verbose linkBins strip-bom@2.0.0
+2042 verbose linkMans strip-bom@2.0.0
+2043 verbose rebuildBundles strip-bom@2.0.0
+2044 info lifecycle strip-bom@2.0.0~install: strip-bom@2.0.0
+2045 silly lifecycle strip-bom@2.0.0~install: no script for install, continuing
+2046 info lifecycle strip-bom@2.0.0~postinstall: strip-bom@2.0.0
+2047 silly lifecycle strip-bom@2.0.0~postinstall: no script for postinstall, continuing
+2048 info build /Users/scottj/Source/arbitrator/app/node_modules/is-utf8
+2049 info lifecycle is-utf8@0.2.1~preinstall: is-utf8@0.2.1
+2050 silly lifecycle is-utf8@0.2.1~preinstall: no script for preinstall, continuing
+2051 info linkStuff is-utf8@0.2.1
+2052 silly linkStuff is-utf8@0.2.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2053 verbose linkBins is-utf8@0.2.1
+2054 verbose linkMans is-utf8@0.2.1
+2055 verbose rebuildBundles is-utf8@0.2.1
+2056 info lifecycle is-utf8@0.2.1~install: is-utf8@0.2.1
+2057 silly lifecycle is-utf8@0.2.1~install: no script for install, continuing
+2058 info lifecycle is-utf8@0.2.1~postinstall: is-utf8@0.2.1
+2059 silly lifecycle is-utf8@0.2.1~postinstall: no script for postinstall, continuing
+2060 info build /Users/scottj/Source/arbitrator/app/node_modules/normalize-package-data
+2061 info lifecycle normalize-package-data@2.3.5~preinstall: normalize-package-data@2.3.5
+2062 silly lifecycle normalize-package-data@2.3.5~preinstall: no script for preinstall, continuing
+2063 info linkStuff normalize-package-data@2.3.5
+2064 silly linkStuff normalize-package-data@2.3.5 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2065 verbose linkBins normalize-package-data@2.3.5
+2066 verbose linkMans normalize-package-data@2.3.5
+2067 verbose rebuildBundles normalize-package-data@2.3.5
+2068 info lifecycle normalize-package-data@2.3.5~install: normalize-package-data@2.3.5
+2069 silly lifecycle normalize-package-data@2.3.5~install: no script for install, continuing
+2070 info lifecycle normalize-package-data@2.3.5~postinstall: normalize-package-data@2.3.5
+2071 silly lifecycle normalize-package-data@2.3.5~postinstall: no script for postinstall, continuing
+2072 info build /Users/scottj/Source/arbitrator/app/node_modules/hosted-git-info
+2073 info lifecycle hosted-git-info@2.1.5~preinstall: hosted-git-info@2.1.5
+2074 silly lifecycle hosted-git-info@2.1.5~preinstall: no script for preinstall, continuing
+2075 info linkStuff hosted-git-info@2.1.5
+2076 silly linkStuff hosted-git-info@2.1.5 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2077 verbose linkBins hosted-git-info@2.1.5
+2078 verbose linkMans hosted-git-info@2.1.5
+2079 verbose rebuildBundles hosted-git-info@2.1.5
+2080 info lifecycle hosted-git-info@2.1.5~install: hosted-git-info@2.1.5
+2081 silly lifecycle hosted-git-info@2.1.5~install: no script for install, continuing
+2082 info lifecycle hosted-git-info@2.1.5~postinstall: hosted-git-info@2.1.5
+2083 silly lifecycle hosted-git-info@2.1.5~postinstall: no script for postinstall, continuing
+2084 info build /Users/scottj/Source/arbitrator/app/node_modules/is-builtin-module
+2085 info lifecycle is-builtin-module@1.0.0~preinstall: is-builtin-module@1.0.0
+2086 silly lifecycle is-builtin-module@1.0.0~preinstall: no script for preinstall, continuing
+2087 info linkStuff is-builtin-module@1.0.0
+2088 silly linkStuff is-builtin-module@1.0.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2089 verbose linkBins is-builtin-module@1.0.0
+2090 verbose linkMans is-builtin-module@1.0.0
+2091 verbose rebuildBundles is-builtin-module@1.0.0
+2092 info lifecycle is-builtin-module@1.0.0~install: is-builtin-module@1.0.0
+2093 silly lifecycle is-builtin-module@1.0.0~install: no script for install, continuing
+2094 info lifecycle is-builtin-module@1.0.0~postinstall: is-builtin-module@1.0.0
+2095 silly lifecycle is-builtin-module@1.0.0~postinstall: no script for postinstall, continuing
+2096 info build /Users/scottj/Source/arbitrator/app/node_modules/builtin-modules
+2097 info lifecycle builtin-modules@1.1.1~preinstall: builtin-modules@1.1.1
+2098 silly lifecycle builtin-modules@1.1.1~preinstall: no script for preinstall, continuing
+2099 info linkStuff builtin-modules@1.1.1
+2100 silly linkStuff builtin-modules@1.1.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2101 verbose linkBins builtin-modules@1.1.1
+2102 verbose linkMans builtin-modules@1.1.1
+2103 verbose rebuildBundles builtin-modules@1.1.1
+2104 info lifecycle builtin-modules@1.1.1~install: builtin-modules@1.1.1
+2105 silly lifecycle builtin-modules@1.1.1~install: no script for install, continuing
+2106 info lifecycle builtin-modules@1.1.1~postinstall: builtin-modules@1.1.1
+2107 silly lifecycle builtin-modules@1.1.1~postinstall: no script for postinstall, continuing
+2108 info build /Users/scottj/Source/arbitrator/app/node_modules/semver
+2109 info lifecycle semver@5.3.0~preinstall: semver@5.3.0
+2110 silly lifecycle semver@5.3.0~preinstall: no script for preinstall, continuing
+2111 info linkStuff semver@5.3.0
+2112 silly linkStuff semver@5.3.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2113 verbose linkBins semver@5.3.0
+2114 verbose linkBins [ { semver: './bin/semver' },
+2114 verbose linkBins   '/Users/scottj/Source/arbitrator/app/node_modules/.bin',
+2114 verbose linkBins   false ]
+2115 verbose linkMans semver@5.3.0
+2116 verbose rebuildBundles semver@5.3.0
+2117 info lifecycle semver@5.3.0~install: semver@5.3.0
+2118 silly lifecycle semver@5.3.0~install: no script for install, continuing
+2119 info lifecycle semver@5.3.0~postinstall: semver@5.3.0
+2120 silly lifecycle semver@5.3.0~postinstall: no script for postinstall, continuing
+2121 info build /Users/scottj/Source/arbitrator/app/node_modules/validate-npm-package-license
+2122 info lifecycle validate-npm-package-license@3.0.1~preinstall: validate-npm-package-license@3.0.1
+2123 silly lifecycle validate-npm-package-license@3.0.1~preinstall: no script for preinstall, continuing
+2124 info linkStuff validate-npm-package-license@3.0.1
+2125 silly linkStuff validate-npm-package-license@3.0.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2126 verbose linkBins validate-npm-package-license@3.0.1
+2127 verbose linkMans validate-npm-package-license@3.0.1
+2128 verbose rebuildBundles validate-npm-package-license@3.0.1
+2129 info lifecycle validate-npm-package-license@3.0.1~install: validate-npm-package-license@3.0.1
+2130 silly lifecycle validate-npm-package-license@3.0.1~install: no script for install, continuing
+2131 info lifecycle validate-npm-package-license@3.0.1~postinstall: validate-npm-package-license@3.0.1
+2132 silly lifecycle validate-npm-package-license@3.0.1~postinstall: no script for postinstall, continuing
+2133 info build /Users/scottj/Source/arbitrator/app/node_modules/spdx-correct
+2134 info lifecycle spdx-correct@1.0.2~preinstall: spdx-correct@1.0.2
+2135 silly lifecycle spdx-correct@1.0.2~preinstall: no script for preinstall, continuing
+2136 info linkStuff spdx-correct@1.0.2
+2137 silly linkStuff spdx-correct@1.0.2 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2138 verbose linkBins spdx-correct@1.0.2
+2139 verbose linkMans spdx-correct@1.0.2
+2140 verbose rebuildBundles spdx-correct@1.0.2
+2141 info lifecycle spdx-correct@1.0.2~install: spdx-correct@1.0.2
+2142 silly lifecycle spdx-correct@1.0.2~install: no script for install, continuing
+2143 info lifecycle spdx-correct@1.0.2~postinstall: spdx-correct@1.0.2
+2144 silly lifecycle spdx-correct@1.0.2~postinstall: no script for postinstall, continuing
+2145 info build /Users/scottj/Source/arbitrator/app/node_modules/spdx-license-ids
+2146 info lifecycle spdx-license-ids@1.2.2~preinstall: spdx-license-ids@1.2.2
+2147 silly lifecycle spdx-license-ids@1.2.2~preinstall: no script for preinstall, continuing
+2148 info linkStuff spdx-license-ids@1.2.2
+2149 silly linkStuff spdx-license-ids@1.2.2 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2150 verbose linkBins spdx-license-ids@1.2.2
+2151 verbose linkMans spdx-license-ids@1.2.2
+2152 verbose rebuildBundles spdx-license-ids@1.2.2
+2153 info lifecycle spdx-license-ids@1.2.2~install: spdx-license-ids@1.2.2
+2154 silly lifecycle spdx-license-ids@1.2.2~install: no script for install, continuing
+2155 info lifecycle spdx-license-ids@1.2.2~postinstall: spdx-license-ids@1.2.2
+2156 silly lifecycle spdx-license-ids@1.2.2~postinstall: no script for postinstall, continuing
+2157 info build /Users/scottj/Source/arbitrator/app/node_modules/spdx-expression-parse
+2158 info lifecycle spdx-expression-parse@1.0.4~preinstall: spdx-expression-parse@1.0.4
+2159 silly lifecycle spdx-expression-parse@1.0.4~preinstall: no script for preinstall, continuing
+2160 info linkStuff spdx-expression-parse@1.0.4
+2161 silly linkStuff spdx-expression-parse@1.0.4 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2162 verbose linkBins spdx-expression-parse@1.0.4
+2163 verbose linkMans spdx-expression-parse@1.0.4
+2164 verbose rebuildBundles spdx-expression-parse@1.0.4
+2165 info lifecycle spdx-expression-parse@1.0.4~install: spdx-expression-parse@1.0.4
+2166 silly lifecycle spdx-expression-parse@1.0.4~install: no script for install, continuing
+2167 info lifecycle spdx-expression-parse@1.0.4~postinstall: spdx-expression-parse@1.0.4
+2168 silly lifecycle spdx-expression-parse@1.0.4~postinstall: no script for postinstall, continuing
+2169 info build /Users/scottj/Source/arbitrator/app/node_modules/path-type
+2170 info lifecycle path-type@1.1.0~preinstall: path-type@1.1.0
+2171 silly lifecycle path-type@1.1.0~preinstall: no script for preinstall, continuing
+2172 info linkStuff path-type@1.1.0
+2173 silly linkStuff path-type@1.1.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2174 verbose linkBins path-type@1.1.0
+2175 verbose linkMans path-type@1.1.0
+2176 verbose rebuildBundles path-type@1.1.0
+2177 info lifecycle path-type@1.1.0~install: path-type@1.1.0
+2178 silly lifecycle path-type@1.1.0~install: no script for install, continuing
+2179 info lifecycle path-type@1.1.0~postinstall: path-type@1.1.0
+2180 silly lifecycle path-type@1.1.0~postinstall: no script for postinstall, continuing
+2181 info build /Users/scottj/Source/arbitrator/app/node_modules/require-directory
+2182 info lifecycle require-directory@2.1.1~preinstall: require-directory@2.1.1
+2183 silly lifecycle require-directory@2.1.1~preinstall: no script for preinstall, continuing
+2184 info linkStuff require-directory@2.1.1
+2185 silly linkStuff require-directory@2.1.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2186 verbose linkBins require-directory@2.1.1
+2187 verbose linkMans require-directory@2.1.1
+2188 verbose rebuildBundles require-directory@2.1.1
+2189 info lifecycle require-directory@2.1.1~install: require-directory@2.1.1
+2190 silly lifecycle require-directory@2.1.1~install: no script for install, continuing
+2191 info lifecycle require-directory@2.1.1~postinstall: require-directory@2.1.1
+2192 silly lifecycle require-directory@2.1.1~postinstall: no script for postinstall, continuing
+2193 info build /Users/scottj/Source/arbitrator/app/node_modules/require-main-filename
+2194 info lifecycle require-main-filename@1.0.1~preinstall: require-main-filename@1.0.1
+2195 silly lifecycle require-main-filename@1.0.1~preinstall: no script for preinstall, continuing
+2196 info linkStuff require-main-filename@1.0.1
+2197 silly linkStuff require-main-filename@1.0.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2198 verbose linkBins require-main-filename@1.0.1
+2199 verbose linkMans require-main-filename@1.0.1
+2200 verbose rebuildBundles require-main-filename@1.0.1
+2201 info lifecycle require-main-filename@1.0.1~install: require-main-filename@1.0.1
+2202 silly lifecycle require-main-filename@1.0.1~install: no script for install, continuing
+2203 info lifecycle require-main-filename@1.0.1~postinstall: require-main-filename@1.0.1
+2204 silly lifecycle require-main-filename@1.0.1~postinstall: no script for postinstall, continuing
+2205 info build /Users/scottj/Source/arbitrator/app/node_modules/set-blocking
+2206 info lifecycle set-blocking@2.0.0~preinstall: set-blocking@2.0.0
+2207 silly lifecycle set-blocking@2.0.0~preinstall: no script for preinstall, continuing
+2208 info linkStuff set-blocking@2.0.0
+2209 silly linkStuff set-blocking@2.0.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2210 verbose linkBins set-blocking@2.0.0
+2211 verbose linkMans set-blocking@2.0.0
+2212 verbose rebuildBundles set-blocking@2.0.0
+2213 info lifecycle set-blocking@2.0.0~install: set-blocking@2.0.0
+2214 silly lifecycle set-blocking@2.0.0~install: no script for install, continuing
+2215 info lifecycle set-blocking@2.0.0~postinstall: set-blocking@2.0.0
+2216 silly lifecycle set-blocking@2.0.0~postinstall: no script for postinstall, continuing
+2217 info build /Users/scottj/Source/arbitrator/app/node_modules/which-module
+2218 info lifecycle which-module@1.0.0~preinstall: which-module@1.0.0
+2219 silly lifecycle which-module@1.0.0~preinstall: no script for preinstall, continuing
+2220 info linkStuff which-module@1.0.0
+2221 silly linkStuff which-module@1.0.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2222 verbose linkBins which-module@1.0.0
+2223 verbose linkMans which-module@1.0.0
+2224 verbose rebuildBundles which-module@1.0.0
+2225 info lifecycle which-module@1.0.0~install: which-module@1.0.0
+2226 silly lifecycle which-module@1.0.0~install: no script for install, continuing
+2227 info lifecycle which-module@1.0.0~postinstall: which-module@1.0.0
+2228 silly lifecycle which-module@1.0.0~postinstall: no script for postinstall, continuing
+2229 info build /Users/scottj/Source/arbitrator/app/node_modules/window-size
+2230 info lifecycle window-size@0.2.0~preinstall: window-size@0.2.0
+2231 silly lifecycle window-size@0.2.0~preinstall: no script for preinstall, continuing
+2232 info linkStuff window-size@0.2.0
+2233 silly linkStuff window-size@0.2.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2234 verbose linkBins window-size@0.2.0
+2235 verbose linkBins [ { 'window-size': 'cli.js' },
+2235 verbose linkBins   '/Users/scottj/Source/arbitrator/app/node_modules/.bin',
+2235 verbose linkBins   false ]
+2236 verbose linkMans window-size@0.2.0
+2237 verbose rebuildBundles window-size@0.2.0
+2238 info lifecycle window-size@0.2.0~install: window-size@0.2.0
+2239 silly lifecycle window-size@0.2.0~install: no script for install, continuing
+2240 info lifecycle window-size@0.2.0~postinstall: window-size@0.2.0
+2241 silly lifecycle window-size@0.2.0~postinstall: no script for postinstall, continuing
+2242 info build /Users/scottj/Source/arbitrator/app/node_modules/y18n
+2243 info lifecycle y18n@3.2.1~preinstall: y18n@3.2.1
+2244 silly lifecycle y18n@3.2.1~preinstall: no script for preinstall, continuing
+2245 info linkStuff y18n@3.2.1
+2246 silly linkStuff y18n@3.2.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2247 verbose linkBins y18n@3.2.1
+2248 verbose linkMans y18n@3.2.1
+2249 verbose rebuildBundles y18n@3.2.1
+2250 info lifecycle y18n@3.2.1~install: y18n@3.2.1
+2251 silly lifecycle y18n@3.2.1~install: no script for install, continuing
+2252 info lifecycle y18n@3.2.1~postinstall: y18n@3.2.1
+2253 silly lifecycle y18n@3.2.1~postinstall: no script for postinstall, continuing
+2254 info build /Users/scottj/Source/arbitrator/app/node_modules/yargs-parser
+2255 info lifecycle yargs-parser@4.2.0~preinstall: yargs-parser@4.2.0
+2256 silly lifecycle yargs-parser@4.2.0~preinstall: no script for preinstall, continuing
+2257 info linkStuff yargs-parser@4.2.0
+2258 silly linkStuff yargs-parser@4.2.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2259 verbose linkBins yargs-parser@4.2.0
+2260 verbose linkMans yargs-parser@4.2.0
+2261 verbose rebuildBundles yargs-parser@4.2.0
+2262 verbose rebuildBundles [ 'camelcase' ]
+2263 info lifecycle yargs-parser@4.2.0~install: yargs-parser@4.2.0
+2264 silly lifecycle yargs-parser@4.2.0~install: no script for install, continuing
+2265 info lifecycle yargs-parser@4.2.0~postinstall: yargs-parser@4.2.0
+2266 silly lifecycle yargs-parser@4.2.0~postinstall: no script for postinstall, continuing
+2267 info build /Users/scottj/Source/arbitrator/app/node_modules/yargs-parser/node_modules/camelcase
+2268 info lifecycle camelcase@3.0.0~preinstall: camelcase@3.0.0
+2269 silly lifecycle camelcase@3.0.0~preinstall: no script for preinstall, continuing
+2270 info linkStuff camelcase@3.0.0
+2271 silly linkStuff camelcase@3.0.0 has /Users/scottj/Source/arbitrator/app/node_modules/yargs-parser/node_modules as its parent node_modules
+2272 verbose linkBins camelcase@3.0.0
+2273 verbose linkMans camelcase@3.0.0
+2274 verbose rebuildBundles camelcase@3.0.0
+2275 info lifecycle camelcase@3.0.0~install: camelcase@3.0.0
+2276 silly lifecycle camelcase@3.0.0~install: no script for install, continuing
+2277 info lifecycle camelcase@3.0.0~postinstall: camelcase@3.0.0
+2278 silly lifecycle camelcase@3.0.0~postinstall: no script for postinstall, continuing
+2279 info build /Users/scottj/Source/arbitrator/app/node_modules/bcrypt-pbkdf
+2280 info lifecycle bcrypt-pbkdf@1.0.0~preinstall: bcrypt-pbkdf@1.0.0
+2281 silly lifecycle bcrypt-pbkdf@1.0.0~preinstall: no script for preinstall, continuing
+2282 info linkStuff bcrypt-pbkdf@1.0.0
+2283 silly linkStuff bcrypt-pbkdf@1.0.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2284 verbose linkBins bcrypt-pbkdf@1.0.0
+2285 verbose linkMans bcrypt-pbkdf@1.0.0
+2286 verbose rebuildBundles bcrypt-pbkdf@1.0.0
+2287 info lifecycle bcrypt-pbkdf@1.0.0~install: bcrypt-pbkdf@1.0.0
+2288 silly lifecycle bcrypt-pbkdf@1.0.0~install: no script for install, continuing
+2289 info lifecycle bcrypt-pbkdf@1.0.0~postinstall: bcrypt-pbkdf@1.0.0
+2290 silly lifecycle bcrypt-pbkdf@1.0.0~postinstall: no script for postinstall, continuing
+2291 info build /Users/scottj/Source/arbitrator/app/node_modules/tweetnacl
+2292 info lifecycle tweetnacl@0.14.4~preinstall: tweetnacl@0.14.4
+2293 silly lifecycle tweetnacl@0.14.4~preinstall: no script for preinstall, continuing
+2294 info linkStuff tweetnacl@0.14.4
+2295 silly linkStuff tweetnacl@0.14.4 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2296 verbose linkBins tweetnacl@0.14.4
+2297 verbose linkMans tweetnacl@0.14.4
+2298 verbose rebuildBundles tweetnacl@0.14.4
+2299 info lifecycle tweetnacl@0.14.4~install: tweetnacl@0.14.4
+2300 silly lifecycle tweetnacl@0.14.4~install: no script for install, continuing
+2301 info lifecycle tweetnacl@0.14.4~postinstall: tweetnacl@0.14.4
+2302 silly lifecycle tweetnacl@0.14.4~postinstall: no script for postinstall, continuing
+2303 info build /Users/scottj/Source/arbitrator/app/node_modules/ecc-jsbn
+2304 info lifecycle ecc-jsbn@0.1.1~preinstall: ecc-jsbn@0.1.1
+2305 silly lifecycle ecc-jsbn@0.1.1~preinstall: no script for preinstall, continuing
+2306 info linkStuff ecc-jsbn@0.1.1
+2307 silly linkStuff ecc-jsbn@0.1.1 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2308 verbose linkBins ecc-jsbn@0.1.1
+2309 verbose linkMans ecc-jsbn@0.1.1
+2310 verbose rebuildBundles ecc-jsbn@0.1.1
+2311 info lifecycle ecc-jsbn@0.1.1~install: ecc-jsbn@0.1.1
+2312 silly lifecycle ecc-jsbn@0.1.1~install: no script for install, continuing
+2313 info lifecycle ecc-jsbn@0.1.1~postinstall: ecc-jsbn@0.1.1
+2314 silly lifecycle ecc-jsbn@0.1.1~postinstall: no script for postinstall, continuing
+2315 info build /Users/scottj/Source/arbitrator/app/node_modules/jsbn
+2316 info lifecycle jsbn@0.1.0~preinstall: jsbn@0.1.0
+2317 silly lifecycle jsbn@0.1.0~preinstall: no script for preinstall, continuing
+2318 info linkStuff jsbn@0.1.0
+2319 silly linkStuff jsbn@0.1.0 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2320 verbose linkBins jsbn@0.1.0
+2321 verbose linkMans jsbn@0.1.0
+2322 verbose rebuildBundles jsbn@0.1.0
+2323 info lifecycle jsbn@0.1.0~install: jsbn@0.1.0
+2324 silly lifecycle jsbn@0.1.0~install: no script for install, continuing
+2325 info lifecycle jsbn@0.1.0~postinstall: jsbn@0.1.0
+2326 silly lifecycle jsbn@0.1.0~postinstall: no script for postinstall, continuing
+2327 info build /Users/scottj/Source/arbitrator/app/node_modules/jodid25519
+2328 info lifecycle jodid25519@1.0.2~preinstall: jodid25519@1.0.2
+2329 silly lifecycle jodid25519@1.0.2~preinstall: no script for preinstall, continuing
+2330 info linkStuff jodid25519@1.0.2
+2331 silly linkStuff jodid25519@1.0.2 has /Users/scottj/Source/arbitrator/app/node_modules as its parent node_modules
+2332 verbose linkBins jodid25519@1.0.2
+2333 verbose linkMans jodid25519@1.0.2
+2334 verbose rebuildBundles jodid25519@1.0.2
+2335 info lifecycle jodid25519@1.0.2~install: jodid25519@1.0.2
+2336 silly lifecycle jodid25519@1.0.2~install: no script for install, continuing
+2337 info lifecycle jodid25519@1.0.2~postinstall: jodid25519@1.0.2
+2338 silly lifecycle jodid25519@1.0.2~postinstall: no script for postinstall, continuing
+2339 verbose exit [ 0, true ]
+2340 verbose stack Error: write EPIPE
+2340 verbose stack     at exports._errnoException (util.js:1022:11)
+2340 verbose stack     at WriteWrap.afterWrite [as oncomplete] (net.js:804:14)
+2341 verbose cwd /Users/scottj/Source/arbitrator/app
+2342 error Darwin 16.1.0
+2343 error argv "/usr/local/Cellar/node/7.2.1/bin/node" "/usr/local/lib/node_modules/npm/bin/npm-cli.js" "rebuild" "--production" "--build-from-source" "--cache-min" "999999999"
+2344 error node v7.2.1
+2345 error npm  v4.0.5
+2346 error code EPIPE
+2347 error errno EPIPE
+2348 error syscall write
+2349 error write EPIPE
+2350 error If you need help, you may report this error at:
+2350 error     <https://github.com/npm/npm/issues>
+2351 verbose exit [ 1, true ]

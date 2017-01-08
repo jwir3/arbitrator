@@ -81,12 +81,11 @@
   }
 }
 
-.label-set:first-child {
-  padding-top: 0;
-  padding-bottom: 0;
+.alternatingColors:nth-child(2n+1) {
+  background-color: white;
 }
 
-.labelSet:nth-child(2n) {
+.alternatingColors:nth-child(2n) {
   background-color: $hawkes-blue;
 }
 
@@ -96,10 +95,42 @@ input[type='text'] {
   font-size: 14pt;
 }
 
+div.fieldHeaders {
+  display: block;
+
+  * {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 14pt;
+    vertical-align: top;
+    margin-left: 1em;
+    border: 2px solid white;
+    padding: 1px 1px 1px 1px;
+  }
+
+  .large {
+    width: 40%;
+  }
+
+  .medium {
+    width: 25%;
+  }
+
+  .small {
+    width: 10%;
+  }
+}
+
+input[type='text'].large {
+  width: 40%;
+}
+
+input[type='text'].medium {
+  width: 25%;
+}
+
 input[type='text'].small {
-  display: inline-block;
-  width: 5%;
-  font-size: 14pt;
+  width: 10%;
 }
 
 section {
@@ -150,4 +181,42 @@ input[type='number'] {
   display: inline-block;
   width: 5%;
   font-size: 14pt;
+}
+
+.preference-sub-menu {
+  display: inline-block;
+  position: relative;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  margin-left: 1em;
+  margin-right: 2em;
+  width: 100%;
+  font-size: 14pt;
+
+  &:hover {
+    background-color: $white-lilac;
+    cursor: pointer;
+  }
+
+  label {
+    padding-left: 1em;
+  }
+
+  .league-profile-button {
+    position: absolute;
+    right: 3em;
+  }
+}
+
+.buttonLink {
+  color: $storm-dust;
+  cursor: pointer;
+}
+
+.buttonLink:hover {
+  color: $kashmir-blue;
+}
+
+.buttonLink:active {
+  color: $perano;
 }

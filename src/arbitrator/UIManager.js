@@ -4,7 +4,7 @@ import { Place } from './Place'
 import { ArbitratorGoogleClient } from './ArbitratorGoogleClient'
 import { ArbitratorConfig } from './ArbitratorConfig'
 import { StringUtils } from './StringUtils'
-import { PreferenceSingleton, TimeType } from './PreferenceStore'
+import { PreferenceSingleton, TimePreferenceKeys } from './PreferenceStore'
 import { Arbitrator } from './Arbitrator'
 import { Strings } from './Strings'
 import util from 'util'
@@ -53,6 +53,10 @@ UIManager.prototype = {
   /**
    * Refresh the preference UI from local storage and populate the UI
    * accordingly.
+   *
+   * XXX_jwir3: It would be nice if we could somehow specify which refresh
+   *            method should be performed, so we don't refresh all preferences
+   *            after every screen load.
    */
   refreshPreferences: function() {
     var prefStore = PreferenceSingleton.instance;
@@ -62,8 +66,102 @@ UIManager.prototype = {
     this.refreshTimePreferences();
     this.refreshAliasPreferences();
     this.refreshLocationPreferences();
+    this.refreshProfilePreferences();
 
     this._setPreferenceOnClickHandlers();
+  },
+
+  /**
+   * Refresh the data for the LeagueProfile view.
+   */
+  refreshProfilePreferences: function() {
+    // We need all of the group data to populate the profile names.
+    var prefStore = PreferenceSingleton.instance;
+    var aliases = prefStore.getAllGroupAliasNamesAsSortedArray();
+
+    for (var idx in aliases) {
+      var name = aliases[idx];
+      this._addLeagueProfileSubMenu(name);
+    }
+  },
+
+  /**
+   * Refresh the {GameClassificationLevel} listing view.
+   *
+   * @param  {String} aGroupName The identifier of the {LeagueProfile} for which
+   *                             {GameClassificationLevel}s are being shown.
+   */
+  refreshGameClassificationLevelPreferences: function(aGroupName) {
+    var self = this;
+    var prefStore = PreferenceSingleton.instance;
+
+    // Hook up the UI for adding a new game age preference.
+    $('#addNewGameClassificationLevel').off();
+    $('#addNewGameClassificationLevel').click(function() {
+      self._createNewGameClassificationLevelSetting();
+    });
+
+    // Remove all children first.
+    $('#leagueProfileContent').children().remove();
+
+    // Load the existing preferences.
+    self.loadPartialContent('partials/game-classification-preference.partial.html')
+      .then((data) => {
+        var prefStore = PreferenceSingleton.instance;
+        var gameClassificationSettings = prefStore.getLeagueProfile(aGroupName);
+        if (gameClassificationSettings) {
+          var levels = gameClassificationSettings.getLevels();
+          for (var gameClassificationIdx in levels) {
+            var gameClassificationPref = levels[gameClassificationIdx];
+            var settingUI = $(data);
+            var dataSettingId = settingUI.data('settingId', gameClassificationPref.getId());
+            var inputClassification = settingUI.find('#gameClassificationInputClassification');
+            var inputLevel = settingUI.find('#gameClassificationInputLevel');
+            var inputRegex = settingUI.find('#gameClassificationInputRegex');
+            var removeButton = settingUI.find('#removeButton');
+            var modifyButton = settingUI.find('#modifyButton');
+
+            inputClassification.val(gameClassificationPref.getClassification());
+            inputLevel.val(gameClassificationPref.getLevel());
+            inputRegex.val(gameClassificationPref.getRegEx());
+
+            inputClassification.attr('id', 'gameClassificationInputClassification-' + gameClassificationPref.getId());
+            inputLevel.attr('id', 'gameClassificationInputLevel-' + gameClassificationPref.getId());
+            inputRegex.attr('id', 'gameClassificationInputRegex-' + gameClassificationPref.getId());
+
+            removeButton.attr('id', 'removeButton-' + gameClassificationPref.getId());
+            removeButton.click(function() {
+              var parentElement = $(this).parent();
+              var id = parentElement.data('settingId');
+              prefStore.removeGameClassificationLevelFromProfile(aGroupName, id);
+              self.refreshGameClassificationLevelPreferences(aGroupName);
+            });
+
+            modifyButton.attr('id', 'modifyButton-' + gameClassificationPref.getId());
+            modifyButton.click(function() {
+              var parentElement = $(this).parent();
+              var id = parentElement.data('settingId');
+              var inputClassificationWithId = $('#gameClassificationInputClassification-' + id);
+              var inputLevelWithId = $('#gameClassificationInputLevel-' + id);
+              var inputRegexWithId = $('#gameClassificationInputRegex-' + id);
+
+              prefStore.adjustGameClassificationLevel(aGroupName, id,
+                                           inputClassificationWithId.val(),
+                                           inputLevelWithId.val(),
+                                           inputRegexWithId.val());
+
+              self.showSnackbar(util.format(Strings.game_age_preference_updated,
+                                            inputClassificationWithId.val(),
+                                            inputLevelWithId.val()));
+              self.refreshGameClassificationLevelPreferences(aGroupName);
+            });
+            $('#leagueProfileContent').append(settingUI);
+          }
+        }
+      })
+      .catch((error) => {
+        console.log("Unable to load game age profile preference template");
+      });
   },
 
   /**
@@ -136,24 +234,29 @@ UIManager.prototype = {
    * @param aGroupAlias The name of the alias to use for this group.
    */
   addAliasUIFor: function(aGroupName, aGroupAlias) {
-    var that = this;
-    $.get('partials/alias-preference.partial.html', function(data) {
-      var dataElement = $(data);
-      dataElement.find('.originalName')
-                 .data('actualname', aGroupName)
-                 .attr('value', aGroupName);
-      dataElement.find('.aliasRemoveButton')
-                 .data('actualname', aGroupName);
+    var self = this;
+    self.loadPartialContent('partials/alias-preference.partial.html')
+      .then((data) => {
+        var dataElement = $(data);
+        dataElement.find('.originalName')
+                   .data('actualname', aGroupName)
+                   .attr('value', aGroupName);
+        dataElement.find('.aliasRemoveButton')
+                   .data('actualname', aGroupName);
 
-      // If the group name is the same as the alias name, just assume we don't
-      // have an alias set.
-      if (aGroupAlias != aGroupName) {
-        dataElement.find('.aliasName').attr('value', aGroupAlias);
-      }
+        // If the group name is the same as the alias name, just assume we don't
+        // have an alias set.
+        if (aGroupAlias != aGroupName) {
+          dataElement.find('.aliasName').attr('value', aGroupAlias);
+        }
 
-      $('#aliasInputs').append(dataElement);
-      that._setAliasPreferenceOnClickHandlers();
-    });
+        $('#aliasInputs').append(dataElement);
+        self._setAliasPreferenceOnClickHandlers();
+      })
+      .catch((error) => {
+        console.error("Unable to load 'partials/alias-preference.partial.html': "
+                      + error);
+      });
   },
 
   showSnackbar: function(aMessage) {
@@ -180,9 +283,35 @@ UIManager.prototype = {
       this.showSnackbar("Alias '" + aAliasName + "' set");
   },
 
+  /**
+   * Set a location preference after doing some basic validation of the data.
+   *
+   * Create a new {Place} and submit this to the preference system to be stored.
+   *
+   * @param {string} aLocationPrefKey  The preference system key for the
+   *        preference. If it exists, the preference system will replace the
+   *        key with the newly created {Place}.
+   * @param {string} aLocationPrefName The human-readable name of the place to
+   *        be created.
+   */
   setLocationPreference: function(aLocationPrefKey, aLocationPrefName) {
-    var address = $('#locationAddressPref-' + aLocationPrefKey).val();
-    var subLocationName = $('#locationSubLocationPref-' + aLocationPrefKey).val();
+    var self = this;
+    var addressElement = $('#locationAddressPref-' + aLocationPrefKey);
+    var address = addressElement.val();
+    var subLocationElement = $('#locationSubLocationPref-' + aLocationPrefKey);
+    var subLocationName = subLocationElement.val();
+
+    // If either the address or sublocation name is empty, and the other is a
+    // non-default placeholder, use the placeholder in lieu of the value.
+    if (subLocationName && !addressElement.val()
+        && !self._isLocationAddressPlaceholderDefault(addressElement)) {
+      address = addressElement.attr('placeholder');
+    }
+
+    if (address && !subLocationElement.val()
+        && !self._isLocationSublocationPlaceholderDefault(subLocationElement)) {
+      subLocationName = subLocationElement.attr('placeholder');
+    }
 
     var prefName = '';
     var prefStore = PreferenceSingleton.instance;
@@ -204,7 +333,7 @@ UIManager.prototype = {
   },
 
   addLocationPreference: function(aPlace) {
-    var that = this;
+    var self = this;
     $.get('partials/location-preference.partial.html', function(data) {
       var dataElement = $(data);
       var addressTextInputId = 'locationAddressPref-' + aPlace.getShortName();
@@ -251,9 +380,183 @@ UIManager.prototype = {
           }
         });
 
-        that._setLocationPreferenceOnClickHandlers();
+        self._setLocationPreferenceOnClickHandlers();
       }
     });
+  },
+
+  /**
+   * Open the navigation drawer using a transition animation.
+   */
+  openNavDrawer: function() {
+    $('#nav-drawer').css({
+      'transform': 'translate(0px, 0px)'
+    });
+  },
+
+  /**
+   * Close the navigation drawer using a transition animation.
+   */
+  closeNavDrawer: function() {
+    $('#nav-drawer').css({
+      'transform': 'translate(-256px, 0px)'
+    });
+  },
+
+  /**
+   * Load partial content using an AJAX request.
+   *
+   * @param  {string} aPartialContentPath The path to the file that should be
+   *                                      loaded as the partial content.
+   *
+   * @return {Promise} A Promise that can be used to access the partial content
+   *                   view structure (e.g. the partial DOM), once it's loaded.
+   */
+  loadPartialContent: function(aPartialContentPath) {
+    return $.get(aPartialContentPath);
+  },
+
+  /**
+   * Load content into the main content pane.
+   *
+   * This asynchronously loads a file prefixed with an appropriate file id into
+   * the main content pane, adjusts the title and back stack, and calls an
+   * optional onComplete() handler when finished.
+   *
+   * @param aContentFileId The id of the content file to load. This must
+   *        correspond to a file in the partials/ subdirectory called
+   *        <aContentFileId>.partial.html.
+   * @param aTitle The title of the page to load. Will be presented in the app
+   *        bar.
+   * @param aOnComplete (optional) If included, this will be called when the
+   *        load operation has completed.
+   */
+  loadContent: function(aContentFileName, aTitle, aOnComplete) {
+    var self = this;
+
+    // Set the text of the nav drawer header
+    self.closeNavDrawer();
+
+    $('main#content').load('partials/' + aContentFileName + '.partial.html', null,
+                           function() {
+                             self._addToBackStack({
+                               'id': aContentFileName,
+                               'name': aTitle
+                             });
+
+                             if (!self._isBackStackEmpty()) {
+                               self._showBackArrow();
+                             } else {
+                               self._showHamburgerIcon();
+                             }
+
+                             // Add the title to the app bar.
+                             $('#pageTitle').text(aTitle);
+
+                             // Add the version number to the app bar
+                             $('#versionNumber').text('v' + self.getVersion());
+
+                             if (aContentFileName == 'main') {
+                               self.refreshGoogleClient(function(aGoogleClient) {
+                                 self.populateCalendarList(aGoogleClient);
+                                 self.populateUserId(aGoogleClient);
+                                 self._setArbitrateOnClickHandler();
+                               });
+                             }
+
+                             if (aOnComplete) {
+                               aOnComplete();
+                             }
+                           });
+  },
+
+  /**
+   * Refresh the ArbitratorGoogleClient object held internally.
+   *
+   * If necessary, this will create a new ArbitratorGoogleClient object.
+   *
+   * @param aOnComplete A function to execute after the ArbitratorGoogleClient
+   *        is initialized. If the ArbitratorGoogleClient is already set up, it
+   *        will execute immediately; otherwise, it will execute once the
+   *        ArbitratorGoogleClient is completely initialized. This function
+   *        should take a single argument: the ArbitratorGoogleClient instance
+   *        (in the event you want to work with it in the callback).
+   */
+  refreshGoogleClient: function(aOnComplete) {
+    if (this.mGoogleClient == null) {
+      this.mGoogleClient = new ArbitratorGoogleClient();
+    }
+
+    this.mGoogleClient.getClient().then((client) => {
+      aOnComplete(this.mGoogleClient);
+    });
+  },
+
+  /**
+   * Populate the list of calendars in the main user interface.
+   *
+   * @param  {[ArbitratorGoogleClient]} aGoogleClient The client with which the
+   *                                    api calls should be run with.
+   */
+  populateCalendarList: function(aGoogleClient) {
+    var prefStore = PreferenceSingleton.instance;
+    var lastCalendarId = prefStore.getLastCalendarId();
+
+    var calendarSelector = $('#calendarList');
+    var noCalendarSelectedOption = $('<option id="noCalendarSelectedOption">' + Strings.select_calendar + '</option>');
+    calendarSelector.append(noCalendarSelectedOption);
+
+    aGoogleClient.getCalendarList()
+      .then((items) => {
+        var selectEle = $('#calendarList');
+        for (var calendarIdx in items) {
+            var calendarItem = items[calendarIdx];
+            var listItem = $('<option></option>');
+            listItem.attr('id', calendarItem.id);
+            listItem.text(calendarItem.summary);
+            selectEle.append(listItem);
+        }
+
+        // Select last calendar
+        if (lastCalendarId) {
+          var calChildren = calendarSelector.children();
+          calChildren.each(function(childNumber) {
+            var currentChild = $(calChildren[childNumber]);
+            if (currentChild.attr('id') == lastCalendarId) {
+              currentChild.prop('selected', 'selected');
+            }
+          });
+          // calendarSelector.find('option#' + lastCalendarId).prop('selected', 'selected');
+        }
+
+        selectEle.css('display', 'block');
+      });
+
+      // Setup on change event
+      calendarSelector.off();
+      calendarSelector.change(function(event) {
+        prefStore.setLastCalendarId(event.target.selectedOptions[0].id);
+      });
+  },
+
+  /**
+   * Populate the Google+ user id of the user in the preference store.
+   *
+   * @param  {[ArbitratorGoogleClient]} aGoogleClient The client with which the
+   *                                    api calls should be run with.
+   */
+  populateUserId: function(aGoogleClient) {
+    aGoogleClient.getUserId().then((id) => {
+      var prefStore = PreferenceSingleton.instance;
+      prefStore.setUserId(id);
+    });
+  },
+
+  /**
+   * Clear the main text input to the Arbitrator tool.
+   */
+  clearArbitratorInput: () => {
+    $('#schedule').val('');
   },
 
   // logout: function() {
@@ -350,29 +653,29 @@ UIManager.prototype = {
    * Set the onClick() handlers for time preferences.
    */
   _setTimePreferenceOnClickHandlers: function() {
-    var that = this;
+    var self = this;
     $('#setPriorToStart').click(function() {
       var minutes = $('#timePref-priorToStart').val();
-      that.setTimePreferenceFromUI('priorToStart');
+      self.setTimePreferenceFromUI('priorToStart');
       var priorToStartAcknowledge = util.format(Strings.calendar_events_will_start,
                                                 minutes);
-      that.showSnackbar(priorToStartAcknowledge);
+      self.showSnackbar(priorToStartAcknowledge);
     });
 
     $('#setGameLength').click(function() {
       var length = $('#timePref-gameLength').val();
-      that.setTimePreferenceFromUI('gameLength');
+      self.setTimePreferenceFromUI('gameLength');
       var gameLengthAcknowledge = util.format(Strings.calendar_events_length,
                                               length);
-      that.showSnackbar(gameLengthAcknowledge);
+      self.showSnackbar(gameLengthAcknowledge);
     });
 
     $('#setConsecutiveGames').click(function() {
       var consecutiveThresh = $('#timePref-consecutiveGames').val();
-      that.setTimePreferenceFromUI('consecutiveGames');
+      self.setTimePreferenceFromUI('consecutiveGames');
       var consecutiveAcknowledge = util.format(Strings.consecutive_games_acknowledgement,
                                                consecutiveThresh);
-      that.showSnackbar(consecutiveAcknowledge);
+      self.showSnackbar(consecutiveAcknowledge);
     });
   },
 
@@ -380,7 +683,7 @@ UIManager.prototype = {
    * Set the onClick() handlers for alias/group preferences.
    */
   _setAliasPreferenceOnClickHandlers: function() {
-    var that = this;
+    var self = this;
     var prefStore = PreferenceSingleton.instance;
 
     $('button.setAlias').each(function() {
@@ -388,14 +691,14 @@ UIManager.prototype = {
       $(this).click(function() {
         var actualName = $(this).parent().find('.originalName').data('actualname');
         var aliasName = $(this).parent().find('.aliasName').val();
-        that.addAliasToPrefStore(actualName, aliasName);
+        self.addAliasToPrefStore(actualName, aliasName);
       });
     });
 
     $('.aliasRemoveButton').each(function() {
       $(this).off('click');
       $(this).click(function() {
-        that.deleteAliasPreference($(this).data('actualname'));
+        self.deleteAliasPreference($(this).data('actualname'));
         $(this).parent().fadeOut(300, function () {
           $(this).remove();
         });
@@ -407,26 +710,29 @@ UIManager.prototype = {
       var actualName = $('#aliasAddName').text();
       var aliasName = $('#aliasAddAlias').text();
 
-      that.addAliasToPrefStore(actualName, aliasName);
+      self.addAliasToPrefStore(actualName, aliasName);
 
       $('#aliasAddName').text('');
       $('#aliasAddAlias').text('');
 
-      that.refreshAliasPreferences();
+      self.refreshAliasPreferences();
     });
   },
 
   _setLocationPreferenceOnClickHandlers: function() {
-    var that = this;
+    var self = this;
     $('.locationSetButton').each(function() {
       $(this).click(function() {
-        that.setLocationPreference($(this).data('locationshortname'), $(this).data('locationname'));
+        var locationShortName = $(this).data('locationshortname');
+        var locationName = $(this).data('locationname');
+
+        self.setLocationPreference(locationShortName, locationName);
       });
     });
 
     $('.locationRemoveButton').each(function() {
       $(this).click(function() {
-        that.deleteLocationPreference($(this).data('locationshortname'));
+        self.deleteLocationPreference($(this).data('locationshortname'));
         $(this).parent().fadeOut(300, function () {
           $(this).remove();
         });
@@ -455,9 +761,12 @@ UIManager.prototype = {
    * Set the onClick() handler for the main "arbitrate" button.
    */
   _setArbitrateOnClickHandler: function() {
-    var that = this;
+    var self = this;
+    // First, remote all handlers that were previousl associated with this
+    // button.
+    $('#arbitrate-button').off();
     $('#arbitrate-button').click(function () {
-      that.onArbitrate();
+      self.onArbitrate();
     });
   },
 
@@ -483,7 +792,7 @@ UIManager.prototype = {
    * handlers.
    */
   _setNavDrawerOnClickHandlers: function() {
-    var that = this;
+    var self = this;
 
     $('.nav-drawer-header').click(function() {
       $('#nav-drawer').css({
@@ -492,144 +801,14 @@ UIManager.prototype = {
     });
 
     $('.nav-drawer-item').each(function() {
-      var data = $(this).data('item');
+      var rawData = $(this).data('item');
+      var unspacedData = rawData.replace(/\s/, '-');
 
       $(this).click(function() {
-        that.loadContent(data, StringUtils.capitalize(data), function() {
-          that.refreshPreferences();
+        self.loadContent(unspacedData, StringUtils.capitalize(rawData), function() {
+          self.refreshPreferences();
         });
       });
-    });
-  },
-
-  /**
-   * Open the navigation drawer using a transition animation.
-   */
-  openNavDrawer: function() {
-    $('#nav-drawer').css({
-      'transform': 'translate(0px, 0px)'
-    });
-  },
-
-  /**
-   * Close the navigation drawer using a transition animation.
-   */
-  closeNavDrawer: function() {
-    $('#nav-drawer').css({
-      'transform': 'translate(-256px, 0px)'
-    });
-  },
-
-  /**
-   * Load content into the main content pane.
-   *
-   * This asynchronously loads a file prefixed with an appropriate file id into
-   * the main content pane, adjusts the title and back stack, and calls an
-   * optional onComplete() handler when finished.
-   *
-   * @param aContentFileId The id of the content file to load. This must
-   *        correspond to a file in the partials/ subdirectory called
-   *        <aContentFileId>.partial.html.
-   * @param aTitle The title of the page to load. Will be presented in the app
-   *        bar.
-   * @param aOnComplete (optional) If included, this will be called when the
-   *        load operation has completed.
-   */
-  loadContent: function(aContentFileName, aTitle, aOnComplete) {
-    var that = this;
-
-    // Set the text of the nav drawer header
-    that.closeNavDrawer();
-
-    $('main#content').load('partials/' + aContentFileName + '.partial.html', null,
-                           function() {
-                             that._addToBackStack({
-                               'id': aContentFileName,
-                               'name': aTitle
-                             });
-
-                             if (!that._isBackStackEmpty()) {
-                               that._showBackArrow();
-                             } else {
-                               that._showHamburgerIcon();
-                             }
-
-                             // Add the title to the app bar.
-                             $('#pageTitle').text(aTitle);
-
-                             // Add the version number to the app bar
-                             $('#versionNumber').text('v' + that.getVersion());
-
-                             if (aContentFileName == 'main') {
-                               that.refreshGoogleClient(function(aGoogleClient) {
-                                 that.populateCalendarList(aGoogleClient);
-                                 that.populateUserId(aGoogleClient);
-                               });
-                             }
-
-                             if (aOnComplete) {
-                               aOnComplete();
-                             }
-                           });
-  },
-
-  /**
-   * Refresh the ArbitratorGoogleClient object held internally.
-   *
-   * If necessary, this will create a new ArbitratorGoogleClient object.
-   *
-   * @param aOnComplete A function to execute after the ArbitratorGoogleClient
-   *        is initialized. If the ArbitratorGoogleClient is already set up, it
-   *        will execute immediately; otherwise, it will execute once the
-   *        ArbitratorGoogleClient is completely initialized. This function
-   *        should take a single argument: the ArbitratorGoogleClient instance
-   *        (in the event you want to work with it in the callback).
-   */
-  refreshGoogleClient: function(aOnComplete) {
-    if (this.mGoogleClient == null) {
-      this.mGoogleClient = new ArbitratorGoogleClient();
-    }
-
-    this.mGoogleClient.getClient().then((client) => {
-      aOnComplete(this.mGoogleClient);
-    });
-  },
-
-  /**
-   * Populate the list of calendars in the main user interface.
-   *
-   * @param  {[ArbitratorGoogleClient]} aGoogleClient The client with which the
-   *                                    api calls should be run with.
-   */
-  populateCalendarList: function(aGoogleClient) {
-    var calendarSelector = $('#calendarList');
-    var noCalendarSelectedOption = $('<option id="noCalendarSelectedOption">' + Strings.select_calendar + '</option>');
-    calendarSelector.append(noCalendarSelectedOption);
-
-    aGoogleClient.getCalendarList()
-      .then((items) => {
-        var selectEle = $('#calendarList');
-        for (var calendarIdx in items) {
-            var calendarItem = items[calendarIdx];
-            var listItem = $('<option></option>');
-            listItem.attr('id', calendarItem.id);
-            listItem.text(calendarItem.summary);
-            selectEle.append(listItem);
-        }
-        selectEle.css('display', 'block');
-      });
-  },
-
-/**
- * Populate the Google+ user id of the user in the preference store.
- *
- * @param  {[ArbitratorGoogleClient]} aGoogleClient The client with which the
- *                                    api calls should be run with.
- */
-  populateUserId: function(aGoogleClient) {
-    aGoogleClient.getUserId().then((id) => {
-      var prefStore = PreferenceSingleton.instance;
-      prefStore.setUserId(id);
     });
   },
 
@@ -639,13 +818,13 @@ UIManager.prototype = {
    * stack.
    */
   _showBackArrow: function() {
-    var that = this;
+    var self = this;
 
     $('#hamburger').css({
       'background': 'no-repeat url("images/back.svg")'
     });
 
-    that._bindEventHandlerForNavMenu(true);
+    self._bindEventHandlerForNavMenu(true);
   },
 
   /**
@@ -654,13 +833,13 @@ UIManager.prototype = {
    * drawer.
    */
   _showHamburgerIcon: function() {
-    var that = this;
+    var self = this;
 
     $('#hamburger').css({
       'background': 'no-repeat url("images/hamburger.svg")'
     });
 
-    that._bindEventHandlerForNavMenu(false);
+    self._bindEventHandlerForNavMenu(false);
   },
 
   /**
@@ -668,16 +847,16 @@ UIManager.prototype = {
    * the app bar and re-add the appropriate onClick() handler.
    */
   _bindEventHandlerForNavMenu: function(aIsBack) {
-    var that = this;
+    var self = this;
     $('#hamburger').unbind('click');
 
     if (aIsBack) {
       $('#hamburger').click(function() {
-        that._popBackStack();
+        self._popBackStack();
       });
     } else {
       $('#hamburger').click(function() {
-        that.openNavDrawer();
+        self.openNavDrawer();
       });
     }
   },
@@ -715,12 +894,16 @@ UIManager.prototype = {
    * @return The back stack entry in the back stack that was last added.
    */
   _popBackStack: function() {
+    var self = this;
+
     // Remove the current entry from the back stack first
     this.mBackStack.pop();
 
     var lastEntry = this.mBackStack.pop();
 
-    this.loadContent(lastEntry.id, lastEntry.name, null);
+    this.loadContent(lastEntry.id, lastEntry.name, function() {
+      self.refreshPreferences();
+    });
   },
 
   /**
@@ -740,5 +923,69 @@ UIManager.prototype = {
    */
   _getBackStackSize: function() {
     return this.mBackStack.length;
+  },
+
+  _isLocationAddressPlaceholderDefault: function(aJQueryObject) {
+    var defaultPlaceholderPrefix = Strings.enter_address_for.slice(0, 17);
+    return aJQueryObject.attr('placeholder').startsWith(defaultPlaceholderPrefix);
+  },
+
+  _isLocationSublocationPlaceholderDefault: function(aJQueryObject) {
+    return aJQueryObject.attr('placeholder') == '';
+  },
+
+  /**
+   * Create a new {GameClassificationLevel} from inputs entered by the user
+   * within the current view.
+   */
+  _createNewGameClassificationLevelSetting: function() {
+    var self = this;
+    var prefStore = PreferenceSingleton.instance;
+
+    // Grab the values
+    var regex = $('#gameClassificationInputRegex').val();
+    var age = $('#gameClassificationInputClassification').val();
+    var level = $('#gameClassificationInputLevel').val();
+
+    // Push to the preference store
+    var profileName = $('#leagueProfileContent').data('profilename');
+    prefStore.addGameClassificationLevelSetting(profileName, age, level, regex);
+
+    // Refresh the prefs.
+    self.refreshGameClassificationLevelPreferences(profileName);
+
+    $('#gameClassificationInputClassification').val('');
+    $('#gameClassificationInputLevel').val('');
+    $('#gameClassificationInputRegex').val('');
+  },
+
+  /**
+   * Add a new sub-menu option to the {LeagueProfile} listing corresponding to
+   * a given group alias.
+   *
+   * Note that this also sets up the click handler for the given sub-menu so
+   * that it transitions it to the league profile detail view.
+   *
+   * @param {String} aName The name of a {LeagueProfile} to display in the
+   *                       listing.
+   */
+  _addLeagueProfileSubMenu: function(aName) {
+    var self = this;
+    self.loadPartialContent('partials/league-profile-preference.partial.html')
+      .then((partialContent) => {
+        var partialContentDOM = $(partialContent);
+        partialContentDOM.find('.league-profile-label').append(aName);
+        partialContentDOM.click(function() {
+          self.loadContent('league-profile', aName + " Game Classification Profile", function() {
+            $('#leagueProfileContent').data('profilename', aName);
+            self.refreshGameClassificationLevelPreferences(aName);
+          });
+        });
+        $('#levelsContent').append(partialContentDOM);
+      })
+      .catch((error) => {
+        console.error("Unable to load 'partials/league-profile-preference.partial.html': "
+                      + error);
+      });
   }
 };

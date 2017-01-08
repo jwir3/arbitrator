@@ -1,8 +1,9 @@
 import { ArbitratorConfig } from './ArbitratorConfig'
 import * as google from 'googleapis'
 import createWindow from '../helpers/window';
-import { PreferenceSingleton, TimeType } from './PreferenceStore';
+import { PreferenceSingleton, TimePreferenceKeys } from './PreferenceStore';
 import { Game } from './Game';
+import { Strings } from './Strings';
 
 // Specify default options to be used with all requests.
 // google.options({ proxy: 'http://localhost:5555' });
@@ -196,7 +197,7 @@ ArbitratorGoogleClient.prototype = {
           auth: oAuthClient
         });
 
-        var searchString = "{ArbitratorHash: " + aGame.getHash() + "}";
+        var searchString = aGame.getEncipheredGameInfoString();
         var req = cal.events.list({
           'calendarId' : aCalendarId
         }, {}, function (err, result) {

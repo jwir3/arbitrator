@@ -8,7 +8,20 @@ to be added to Google Calendar with a minimum of effort.
 _arbitrator_, the developers of _arbitrator_, and Glass Tower Studios are in no way related to ArbiterSports, ArbiterOne, or ArbiterPay. Use of this software is conditional on agreement with the license(s) described in LICENSE.md.
 
 ## Binary Distributions
-- **Linux (Debian Variants)**: [Arbitrator-2.1.0.deb](http://arbitrator.glasstowerstudios.com/Arbitrator-2.1.0.deb)
+- **MacOS**: [Arbitrator-2.2.0.dmg](http://arbitrator.glasstowerstudios.com/Arbitrator-2.2.0.dmg) (See [Installation Instructions for MacOS](#installation-instructions-for-macos))
+- **Linux (Debian Variants)**: [Arbitrator-2.2.0.deb](http://arbitrator.glasstowerstudios.com/Arbitrator-2.2.0.deb)
+
+### Installation Instructions for MacOS
+We don't have a registered developer key with Apple, since this application doesn't make any revenue, and purchasing of a developer license with Apple is a $100 annual fee. As such, the DMG file will warn you that you can't install the application, because it's not signed by a verified developer.
+
+To overcome this, you must have administrative privileges on your machine. Then, do the following:
+  1. Click the Apple icon in the top left of your screen.
+  2. Select 'System Preferences'.
+  3. Click on 'Security and Privacy'.
+  4. Click the lock in the bottom left corner of this window and enter your administrative password.
+  5. Under 'Allow Apps Downloaded From', choose 'Anywhere'.
+    - If under MacOS Sierra, you will need to open a terminal and run `sudo spctl --master-disable`, since there is no option for 'Anywhere'.
+  6. Re-open the Arbitrator DMG file and install.
 
 ## Build from Source
 
@@ -18,7 +31,7 @@ platform by following these steps:
 1. Install the node package manager.
 2. Download the most current release.
 3. Run: `npm install && npm run release`.
-4. Install the appropriate package from within `dist/`. For OS X, it will be `dist/mac/Arbitrator-2.0.0.dmg`, for linux it will be `dist/linux/Arbitrator-2.0.0.deb`, and for windows it will be `dist/windows/Arbitrator-2.0.0.msi`.
+4. Install the appropriate package from within `dist/`. For OS X, it will be `dist/mac/Arbitrator-X.Y.Z.dmg`, for linux it will be `dist/linux/Arbitrator-X.Y.Z.deb`, and for Windows it will be `dist/windows/Arbitrator-X.Y.Z.msi`.
 
 ### Using an existing instance
 
@@ -28,9 +41,9 @@ There are currently two separate instances set up on glasstowerstudios.com. The 
 
 To access an instance, navigate your browser to the location described below for that instance. Note that most of the code was tested in Firefox. This doesn't mean it won't work in, say, Chrome, but just keep in mind that there may be unknown bugs in other browsers.
 
-| Version | Web Address |
-| -------- | ------------ |
-| Beta    | http://arbitrator.glasstowerstudios.com |
+| Version | Web Address                                   |
+|:--------|:----------------------------------------------|
+| Beta    | http://arbitrator.glasstowerstudios.com       |
 | Alpha   | http://alpha.arbitrator.glasstowerstudios.com |
 
 From there, you can follow the instructions for usage below.
@@ -62,3 +75,12 @@ The `Group` entry is, by default, whatever was entered into the ArbiterSports gr
 
 #### Location Preferences
 In a similar manner to _Group Aliases_, _arbitrator_ will keep track of location fields from ArbiterSports. Unfortunately, since ArbiterSports doesn't have an open API, we can't gather this data directly. Instead, when a new location is seen, you can enter an address for future occurrences of that location. If an address exists for a given location, _arbitrator_ will add that address to the calendar event. If an address does not exist, then the name of the site (taken directly from ArbiterSports) will be added as the location of the calendar event.
+
+Support
+--------
+We don't offer phone support (there simply aren't enough of us to do that). However, we can offer support via the following methods:
+  * [Slack Channel](slack://channel?id=C3B2WN5MK&team=T33DNEFHN) (Preferred)
+  * [Github Issues](https://github.com/jwir3/arbitrator/issues/new)
+  * [Email](mailto:jaywir3@gmail.com)
+
+If you need immediate assistance, chances are the best method of contact is our Slack developer channel (usually pretty slow, so you'll get a response fairly quickly, unless it's the middle of the night).

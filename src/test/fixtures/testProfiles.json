@@ -1,0 +1,61 @@
+{
+  "LeagueProfiles": [
+    {
+      "profileId": "106016",
+      "classificationLevels": [
+        {
+          "regularExpression": "SC",
+          "classification": "Squirt",
+          "level": "C",
+          "mId": 0
+        },
+        {
+          "regularExpression": "15B",
+          "classification": "U15",
+          "level": "B",
+          "mId": 1
+        },
+        {
+          "regularExpression": "10B",
+          "classification": "U10",
+          "level": "B",
+          "mId": 2
+        },
+        {
+          "regularExpression": "12B",
+          "classification": "U12",
+          "level": "B",
+          "mId": 3
+        },
+        {
+          "regularExpression": "SB",
+          "classification": "Squirt",
+          "level": "B",
+          "mId": 4
+        }
+      ]
+    },
+    {
+      "profileId": "Showcase",
+      "classificationLevels": [
+        {
+          "regularExpression": "16U AAA",
+          "classification": "U16",
+          "level": "AAA",
+          "mId": 3
+        }
+      ]
+    },
+    {
+      "profileId": "MinneapHO",
+      "classificationLevels": [
+        {
+          "regularExpression": "Hockey Boys, Varsity",
+          "classification": "High School Boys",
+          "level": "Varsity",
+          "mId": 3
+        }
+      ]
+    }
+  ]
+}

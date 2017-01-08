@@ -11,5 +11,10 @@
   "enter_address_for": "Enter address for %s",
   "calendar_events_will_start": "Calendar events will start %d minutes prior to the game start",
   "calendar_events_length": "Calendar events will be set to %d minutes in length",
-  "consecutive_games_acknowledgement": "Any games within %d hours of each other at the same location will be considered consecutive"
+  "consecutive_games_acknowledgement": "Any games within %d hours of each other at the same location will be considered consecutive",
+  "game_age_preference_updated": "Game age preference '%s %s' updated",
+  "game_classification": "Classification",
+  "game_level": "Level",
+  "game_regex": "Regular Expression",
+  "arbitrator_identifier_description": "ArbitratorGameInfoId"
 }

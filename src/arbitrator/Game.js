@@ -1,41 +1,8 @@
-import * as CryptoJS from 'crypto-js'
+import  crypto from 'crypto';
 import { Place } from './Place'
-import { PreferenceSingleton, TimeType } from './PreferenceStore'
+import { PreferenceSingleton, TimePreferenceKeys } from './PreferenceStore'
 import * as moment from 'moment';
 import { Strings } from './Strings'
-
-var gameLevels = {
-  'Mite'            : 'Mite',
-  'Squirt'          : 'Squirt',
-  'Peewee'          : 'Peewee',
-  'Bantam'          : 'Bantam',
-  'Junior Gold'     : 'Junior Gold',
-  'Junior'          : 'Junior',
-  'SC'              : 'Squirt C',
-  'SB'              : 'Squirt B',
-  'SA'              : 'Squirt A/AA/AAA',
-  'PC'              : 'Peewee C',
-  'PB'              : 'Peewee B',
-  'PA'              : 'Peewee A/AA/AAA',
-  'BC'              : 'Bantam C',
-  'BB'              : 'Bantam B',
-  'BA'              : 'Bantam A/AA/AAA',
-  'JGB'             : 'Junior Gold B',
-  'JGA'             : 'Junior Gold A/AA/AAA',
-  '10U'             : '10U Girls',
-  '10A'             : '10U Girls A',
-  '10B'             : '10U Girls B',
-  '12U'             : '12U Girls',
-  '12A'             : '12U Girls A',
-  '12B'             : '12U Girls B',
-  '14U'             : '14U Girls',
-  '16U'             : '16U Girls',
-  '19U'             : '19U Girls',
-  'Boys, Varsity'   : 'Varsity Boys',
-  'Girls, Varsity'  : 'Varsity Girls',
-  'Boys, JV'        : 'Junior Varsity Boys',
-  'Girls, JV'       : 'Junior Varsity Girls'
-};
 
 /**
  * Enumeration for Roles. Currently, an official (for hockey) can be one of the
@@ -59,7 +26,8 @@ export var Game = function (aId, aGroup, aRole, aTimestamp, aSportLevel, aSite,
                             aHomeTeam, aAwayTeam, aFees) {
   var prefStore = PreferenceSingleton.instance;
   this.mId = aId;
-  this.mGroup = prefStore.getAliasForGroupId(aGroup);
+  this.mGroupId = aGroup;
+  this.mGroup = prefStore.getAliasForGroupId(this.mGroupId);
   this.setRole(aRole);
   this.mTimestamp = aTimestamp;
   this.mSportLevel = aSportLevel;
@@ -70,9 +38,37 @@ export var Game = function (aId, aGroup, aRole, aTimestamp, aSportLevel, aSite,
   this.mIsConsecutiveGame = false;
 }
 
+// Static methods on Game class
+
+/**
+ * Retrieve a data structure containing the game id and group id, given an
+ * encrypted form of them.
+ *
+ * @param  {String} aEncrypted Encrypted form of game information.
+ *
+ * @return {String} The unencrypted version of the identifying game information.
+ */
+Game.getGameInfoFromCipher = function(aEncrypted) {
+    const decipher = crypto.createDecipher('aes192', 'gameHash');
+    var decrypted = decipher.update(aEncrypted, 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
+
+    var gameInfoArray = decrypted.split('-##-');
+    return {
+      'groupId': gameInfoArray[0],
+      'gameId': gameInfoArray[1]
+    }
+}
+
+// Game class member methods
+
 Game.prototype = {
   getId: function() {
     return this.mId;
+  },
+
+  getGroupId: function() {
+    return this.mGroupId;
   },
 
   getGroup: function() {
@@ -123,7 +119,7 @@ Game.prototype = {
   getISOStartDate: function() {
     var prefStore = PreferenceSingleton.instance;
     var startDate = this.getTimestamp();
-    var priorToStart = prefStore.getTimePreference(TimeType.PRIOR_TO_START, 30);
+    var priorToStart = prefStore.getTimePreference(TimePreferenceKeys.PRIOR_TO_START, 30);
     if (this.isConsecutiveGame()) {
       priorToStart = 0;
     }
@@ -136,7 +132,7 @@ Game.prototype = {
     var endDate = this.getTimestamp();
 
     // Default to 1 hour if no time preference is specified.
-    var gameLengthMins = prefStore.getTimePreference(TimeType.LENGTH_OF_GAME, 60);
+    var gameLengthMins = prefStore.getTimePreference(TimePreferenceKeys.LENGTH_OF_GAME, 60);
     return endDate.add(gameLengthMins, 'minutes').toISOString();
   },
 
@@ -175,7 +171,7 @@ Game.prototype = {
    */
   isWithinConsecutiveTimeRangeOf: function(aGame) {
     var prefStore = PreferenceSingleton.instance;
-    var consecutiveGameThreshold = prefStore.getTimePreference(TimeType.CONSECUTIVE_GAME_THRESHOLD, 2);
+    var consecutiveGameThreshold = prefStore.getTimePreference(TimePreferenceKeys.CONSECUTIVE_GAME_THRESHOLD, 2);
     var aOtherTimestamp = aGame.getTimestamp();
     var timeStamp = this.getTimestamp();
     return aOtherTimestamp.date() == timeStamp.date()
@@ -207,45 +203,25 @@ Game.prototype = {
   },
 
   getLevel: function() {
-    // See hashmap of levels at the top of the file.
-    // TODO: Add a better algorithm for this.
-
     var levelString = this.getSportLevel();
-    var levelKeys = Object.keys(gameLevels);
-    for (var level in levelKeys) {
-      if (levelString.indexOf(levelKeys[level]) > 0) {
-        return gameLevels[levelKeys[level]];
-      }
+    var prefStore = PreferenceSingleton.instance;
+
+    // Load all game level preferences for the given group.
+    var gameProfile = prefStore.getLeagueProfile(this.getGroup());
+
+    if (!gameProfile) {
+      console.warn(`No game age profile was found for group '${this.getGroup()}'. Unable to resolve game age level '${levelString}'`);
+      return 'UNKNOWN';
     }
 
-    // Check for a year
-    var yearStringIdx = levelString.search(/([0-9]{4})/g);
-    var yearString = levelString.slice(yearStringIdx, yearStringIdx+4);
-
-    if (yearString) {
-        var currentYear = (new Date()).getFullYear();
-        var age = parseInt(currentYear,10) - yearString;
-        if (age <= 8) {
-          return 'Mite';
-        } else if (age > 8 && age <= 10) {
-          return 'Squirt';
-        } else if (age > 10 && age <= 12) {
-          return 'Peewee';
-        } else if (age > 12 && age <= 14) {
-          return 'Bantam';
-        } else if (age > 14 && age <= 16) {
-          return '16U Boys/Girls';
-        } else if (age > 16 && age <= 18) {
-          return 'Junior Gold';
-        } else if (age > 18 && age <= 20) {
-          return 'Junior';
-        } else if (age > 20){
-          return 'Senior Mens/Womens';
-        }
+    // Find one where the regex matches.
+    var matchingGameClassificationLevel = gameProfile.findGameClassificationLevelMatching(levelString);
+    if (!matchingGameClassificationLevel) {
+      console.warn(`Unable to find game age/level matching ${levelString} in profile for '${this.getGroup()}'`);
+      return 'UNKNOWN';
     }
 
-    // TODO: Add analytics so that we can determine what the unknown was.
-    return "UNKNOWN";
+    return matchingGameClassificationLevel.getClassification() + " " + matchingGameClassificationLevel.getLevel();
   },
 
   areTeamsValid: function() {
@@ -300,9 +276,15 @@ Game.prototype = {
       "location": siteData,
       "description": "Game starts at " + String(this.getTime12Hr())
                      + subLocationString
-                     + "\n\n{ArbitratorHash: " + String(this.getHash()) + "}",
+                     + "\n\n"
+                     + this.getEncipheredGameInfoString(),
       "summary": this.getSummaryString()
     };
+  },
+
+  getEncipheredGameInfoString: function() {
+    var arbitratorIdString = Strings.arbitrator_identifier_description;
+    return "{" + arbitratorIdString + ": " + String(this.getGameInfoCipher()) + "}";
   },
 
   isScrimmage: function() {
@@ -321,22 +303,24 @@ Game.prototype = {
    *         not change, even if the game dates/times change.
    */
    getIdentificationString: function() {
-      // var level = this.getLevel() === "UNKNOWN" ? "" : this.getLevel();
-      // var teams = this.areTeamsValid() ? this.getHomeTeam() + "v" + this.getAwayTeam() : "";
-      var idString = String(this.getId());
-      // idString = idString + this.getGroup() + level + teams;
+      var idString = String(this.getGroupId() + "-##-" + this.getId());
 
       return idString.replace(/\s+/gm, "");
    },
 
   /**
-   * Retrieve a hash of the unique identifying information of this game. This
-   * serves to identify the game if the date/time changes.
+   * Retrieve an encrypted version of the unique identifying information of this
+   * game. This serves to identify the game if the date/time changes.
    *
-   * @return A string of a SHA-1 hash of the game id.
+   * @return {String} An encrypted version of the game identification string.
    */
-  getHash: function() {
-    return CryptoJS.SHA1(this.getIdentificationString()).toString(CryptoJS.enc.Hex);
+  getGameInfoCipher: function() {
+    var self = this;
+    const cipher = crypto.createCipher('aes192', 'gameHash');
+    var encrypted = cipher.update(self.getIdentificationString(), 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+
+    return encrypted;
   },
 
 

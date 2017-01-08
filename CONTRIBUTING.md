@@ -5,6 +5,20 @@ First, _thank you_ for wanting to contribute to Arbitrator. This is a project th
 
 We have a number of opportunities available for all kinds of people, ranging from those who are technically skilled with Javascript to folks who just want to use Arbitrator to help them keep track of their officiating schedule. The first part of this article discusses _how_ we go about building Arbitrator, which is a process everyone should follow. After this, there are sections on specific tasks to get started for each type of contributor. If you have any questions, please feel free to send a message to [@jwir3](mailto:jaywir3@gmail.com) for more information.
 
+Release Cadence
+----------------
+We are on a two-month release cycle. This means that every two months, a release will be created from our `develop` branch and distributed. The following is the release schedule for the next 12 months:
+
+| Release Version | Expected Release Date | Milestone                                                 |
+|:----------------|:----------------------|:----------------------------------------------------------|
+| 2.2.0           | January 15, 2017      | [2.2.0](https://github.com/jwir3/arbitrator/milestone/9)  |
+| 2.3.0           | March 15, 2017        | [2.3.0](https://github.com/jwir3/arbitrator/milestone/10) |
+| 2.4.0           | May 15, 2017          | None Yet                                                  |
+| 2.5.0           | July 15, 2017         | None Yet                                                  |
+| 2.6.0           | September 15, 2017    | None Yet                                                  |
+| 2.7.0           | November 15, 2017     | None Yet                                                  |
+| 2.8.0           | January 15, 2017      | None Yet                                                  |
+
 Workflow
 ---------
 

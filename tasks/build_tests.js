@@ -23,7 +23,7 @@ var generateEntryFile = function (dir, destFileName, filePattern) {
     });
 };
 
-gulp.task('build-unit', ['environment'], function () {
+gulp.task('build-unit', ['environment', 'strings'], function () {
     var srcDir = jetpack.cwd('src');
     var destDir = jetpack.cwd('app');
 

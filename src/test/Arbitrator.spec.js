@@ -4,14 +4,30 @@ import { env } from '../env';
 import { Arbitrator } from '../arbitrator/Arbitrator';
 import { DONTCARE, checkGame } from './CheckGame';
 import * as moment from 'moment';
-import { PreferenceSingleton, TimeType } from '../arbitrator/PreferenceStore'
+import { PreferenceSingleton, TimePreferenceKeys } from '../arbitrator/PreferenceStore'
 import jetpack from 'fs-jetpack';
 
 var singleGame = jetpack.read('src/test/fixtures/singleGame.txt');
 var basicSchedule = jetpack.read('src/test/fixtures/basicSchedule.txt');
 var complexSchedule = jetpack.read('src/test/fixtures/complexSchedule.txt');
+var testProfiles = jetpack.read('src/test/fixtures/testProfiles.json', 'json');
 
 describe("Arbitrator Translation Functionality", function () {
+  beforeEach(function() {
+    var prefStore = PreferenceSingleton.instance;
+    prefStore._setLeagueProfiles(testProfiles.LeagueProfiles);
+  });
+
+  afterEach(function() {
+      var prefStore = PreferenceSingleton.instance;
+      prefStore._clearLeagueProfiles();
+  });
+
+  it ("should have three LeagueProfiles in preferences", function() {
+    var prefStore = PreferenceSingleton.instance;
+    expect(prefStore.getAllLeagueProfiles()).to.have.lengthOf(3);
+  });
+
   it ("parses a basic string with two games", function() {
     var arbitrator = new Arbitrator(basicSchedule);
 
@@ -25,10 +41,10 @@ describe("Arbitrator Translation Functionality", function () {
     // could instead do something like:
     // expect(firstGame).to.be.a('game').withId(1111).withGroup('106016').withRole(Role.REFEREE)...
     checkGame(arbitrator, 1111, '106016', Role.REFEREE, 11, 9, 2013, 12, 30,
-              '12U Girls B', 'Bloomington Ice Garden 1', 'Bloomington',
+              'U12 B', 'Bloomington Ice Garden 1', 'Bloomington',
               'Minnetonka Black', false, false);
     checkGame(arbitrator, 598, 'Showcase', Role.LINESMAN, 4, 26, 2014, 20, 15,
-              '16U Girls', 'Saint Louis Park, East', 'TBA', 'TBA', false, false);
+              'U16 AAA', 'Saint Louis Park, East', 'TBA', 'TBA', false, false);
   });
 
   it ("parses tournaments and scrimmages correctly", function() {
@@ -50,7 +66,7 @@ describe("Arbitrator Translation Functionality", function () {
     expect(game1.getSummaryString()).to.equal(expectedSS1);
 
     var game2 = arbitrator.getGameById(203);
-    var expectedSS2 = "[106016] Referee Scrimmage New Prague v Farmington (10U Girls B)";
+    var expectedSS2 = "[106016] Referee Scrimmage New Prague v Farmington (U10 B)";
     expect(game2.getSummaryString()).to.equal(expectedSS2);
   });
 
@@ -63,18 +79,19 @@ describe("Arbitrator Translation Functionality", function () {
     checkGame(arbitrator, 330);
 
     // Check the characteristics of the first game.
+    var prefStore = PreferenceSingleton.instance;
     checkGame(arbitrator, 330, '106016', Role.REFEREE, 11, 8, 2014, 9, 50,
               "Squirt C", "New Prague Community Center", "New Prague",
               "Dodge County Black");
 
     // Check the characteristics of the second game.
     checkGame(arbitrator, 339, '106016', Role.REFEREE, 11, 8, 2014, 18, 45,
-              "10U Girls B", "Eden Prairie 3", "Eden Prairie Red",
+              "U10 B", "Eden Prairie 3", "Eden Prairie Red",
               "Minnetonka Black");
 
     // Check the characteristics of the third game.
     checkGame(arbitrator, 3839, 'MinneapHO', Role.LINESMAN, 11, 14, 2014, 20, 10,
-              "Varsity Boys", "St. Louis Park Recreation Center",
+              "High School Boys Varsity", "St. Louis Park Recreation Center",
               "St Thomas Academy", "Minnetonka");
   });
 
@@ -101,7 +118,9 @@ describe("Arbitrator Translation Functionality", function () {
     expect(game.getSite().getName()).to.equal(gameJson.location);
     expect(game.getSummaryString()).to.equal(gameJson.summary);
 
-    var notes = "Game starts at " + String(game.getTime12Hr()) + "\n\n" + "{ArbitratorHash: " + String(game.getHash()) + "}"
+    var notes = "Game starts at " + String(game.getTime12Hr())
+      + "\n\n"
+      + game.getEncipheredGameInfoString();
     expect(notes).to.equal(gameJson.description);
   });
 
@@ -130,22 +149,22 @@ describe("Arbitrator Translation Functionality", function () {
   it ("recognizes time preferences set prior to parsing strings", function() {
     var prefStore = PreferenceSingleton.instance;
 
-    prefStore.addTimePreference(TimeType.PRIOR_TO_START, 61);
-    prefStore.addTimePreference(TimeType.LENGTH_OF_GAME, 90);
+    prefStore.addTimePreference(TimePreferenceKeys.PRIOR_TO_START, 61);
+    prefStore.addTimePreference(TimePreferenceKeys.LENGTH_OF_GAME, 90);
     prefStore.addGroupAlias('106016', 'D6');
 
     var arbitrator = new Arbitrator(basicSchedule);
 
     expect(arbitrator.getNumGames()).to.equal(2);
-    expect(prefStore.getTimePreference(TimeType.PRIOR_TO_START)).to.equal(61);
+    expect(prefStore.getTimePreference(TimePreferenceKeys.PRIOR_TO_START)).to.equal(61);
 
     var game = arbitrator.getGameById(1111);
     expect(game.getISOStartDate()).to.equal(moment("11/9/2013 12:30 PM").subtract(61, 'minutes').toISOString());
     expect(game.getISOEndDate()).to.equal(moment("11/9/2013 12:30 PM").add(90, 'minutes').toISOString());
     assert(game.getEventJSON().description.indexOf("Game starts at 12:30pm") > -1, 'the game should start at 12:30pm and this should be in the calendar event description');
 
-    prefStore.removeTimePreference(TimeType.PRIOR_TO_START);
-    prefStore.removeTimePreference(TimeType.LENGTH_OF_GAME);
+    prefStore.removeTimePreference(TimePreferenceKeys.PRIOR_TO_START);
+    prefStore.removeTimePreference(TimePreferenceKeys.LENGTH_OF_GAME);
 
     expect(game.getISOEndDate()).to.equal("2013-11-09T19:30:00.000Z");
     expect(game.getISOStartDate()).to.equal("2013-11-09T18:00:00.000Z");
@@ -158,8 +177,8 @@ describe("Arbitrator Translation Functionality", function () {
 
     expect(game).to.be.ok;
 
-    prefStore.addTimePreference(TimeType.PRIOR_TO_START, 60);
-    prefStore.addTimePreference(TimeType.LENGTH_OF_GAME, 120);
+    prefStore.addTimePreference(TimePreferenceKeys.PRIOR_TO_START, 60);
+    prefStore.addTimePreference(TimePreferenceKeys.LENGTH_OF_GAME, 120);
 
     // Basic game checking
     checkGame(arbitrator, 5422, DONTCARE, DONTCARE, 11, 22, 2014, 20, 40);
@@ -180,5 +199,27 @@ describe("Arbitrator Translation Functionality", function () {
     expect(prefStore.hasAliasedGroups()).to.be.truthy;
 
     prefStore.removeGroupAlias('D6');
+  });
+
+  it ("should correctly compute an identification string and hash for valid games", function() {
+    var arbitrator = new Arbitrator(basicSchedule);
+
+    expect(arbitrator).to.not.be.null;
+    expect(arbitrator.getNumGames()).to.equal(2);
+    expect(arbitrator.getGameById(1827)).to.be.null;
+
+    var firstGame = arbitrator.getGameById(1111);
+    expect(firstGame).to.not.be.null;
+    expect(firstGame.getIdentificationString()).to.eq("106016-##-1111");
+
+    expect(firstGame.getGameInfoCipher()).to.eq('8af3229d1d0962c5b91ca85ceded9812');
+  });
+
+  it ("should be able to resolve a game cipher back to a game id and group", function() {
+    var gameInfo = Game.getGameInfoFromCipher('8af3229d1d0962c5b91ca85ceded9812');
+    var groupId = gameInfo.groupId;
+    var gameId = gameInfo.gameId;
+    expect(groupId).to.eq('106016');
+    expect(gameId).to.eq('1111');
   });
 });

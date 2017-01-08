@@ -1,6 +1,6 @@
 import { Game } from './Game.js';
 import { UIManager } from './UIManager';
-import { PreferenceSingleton, TimeType } from './PreferenceStore';
+import { PreferenceSingleton, TimePreferenceKeys } from './PreferenceStore';
 import { ArbitratorGoogleClient } from './ArbitratorGoogleClient';
 import { Strings } from './Strings';
 
@@ -168,6 +168,7 @@ Arbitrator.prototype = {
                   gamesProcessed++;
                   if (gamesProcessed == numGames) {
                     self.mUiManager.showSnackbar(Strings.games_added_message);
+                    self.mUiManager.clearArbitratorInput();
                   }
               });
             // } else {
@@ -188,16 +189,16 @@ Arbitrator.prototype = {
     return this.mGames;
   },
 
-//   /**
-//    * Search through all games to find those that are consecutive.
-//    *
-//    * Note that this does not currently search through calendar history. That is,
-//    * only games that are entered together in the same Arbitrator object are
-//    * under consideration for being linked in a consecutive manner.
-//    */
+  /**
+   * Search through all games to find those that are consecutive.
+   *
+   * Note that this does not currently search through calendar history. That is,
+   * only games that are entered together in the same Arbitrator object are
+   * under consideration for being linked in a consecutive manner.
+   */
   findConsecutiveGames: function() {
     var prefStore = PreferenceSingleton.instance;
-    var gameLengthMins = prefStore.getTimePreference(TimeType.LENGTH_OF_GAME, 60);
+    var gameLengthMins = prefStore.getTimePreference(TimePreferenceKeys.LENGTH_OF_GAME, 60);
     var prevGame;
     for (var index in this.mGames) {
       var curGame = this.mGames[index];
