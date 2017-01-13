@@ -5,6 +5,7 @@ branches:
   only:
   - develop
   - master
+  - /^v.*$/
 node_js:
 - '6'
 before_script:
