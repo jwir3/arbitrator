@@ -1,3 +1,6 @@
 {
-  "name": "production"
+  "name": "production",
+  "google_client_id": "609265890429-sm54bao0g1aa54lfbmup9kso5bn3utpm.apps.googleusercontent.com",
+  "google_api_key": "AIzaSyDkiyjtUnxlzQUyxnu0WqUtkhyV8Q2KyA0",
+  "google_client_secret": "psVNav0FXSeehW9NwNgWgxwo"
 }
