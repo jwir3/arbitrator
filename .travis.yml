@@ -7,7 +7,7 @@ branches:
   only:
   - master
   - develop
-  - /^v(.*)$/
+  # - /^v(.*)$/
 before_script:
 - npm install
 - echo 'America/Chicago' | sudo tee /etc/timezone
@@ -28,11 +28,11 @@ addons:
     packages:
     - g++-4.8
     - xvfb
-before_deploy: "npm run package"
-deploy:
-  provider: releases
-  api_key:
-    secure: hQTceXQqjEB/mvDBUGgMKvG6RGx4Fa60BKNjfZKfSSfxnYnF716toB8Q3eHDEip4Qe4YRDaBBw31IbY+YWowdrdASPPM0z8SZom+9s9dXgBvgmX1pnUAnnzW69VFaX3zq8HhkXgmyEnV8c6Vv4C7xrlYKD/DPLMtCafpJ8v21pM=
-  file: ./dist/mac/Arbitrator-2.2.0.dmg
-  on:
-    tags: true
+# before_deploy: "npm run package"
+# deploy:
+#   provider: releases
+#   api_key:
+#     secure: hQTceXQqjEB/mvDBUGgMKvG6RGx4Fa60BKNjfZKfSSfxnYnF716toB8Q3eHDEip4Qe4YRDaBBw31IbY+YWowdrdASPPM0z8SZom+9s9dXgBvgmX1pnUAnnzW69VFaX3zq8HhkXgmyEnV8c6Vv4C7xrlYKD/DPLMtCafpJ8v21pM=
+#   file: ./dist/mac/Arbitrator-2.2.0.dmg
+#   on:
+#     tags: true
