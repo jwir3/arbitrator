@@ -3,6 +3,11 @@ os:
 - linux
 node_js:
 - '6'
+branches:
+  only:
+  - master
+  - develop
+  - /^v(.*)$/
 before_script:
 - npm install
 - echo 'America/Chicago' | sudo tee /etc/timezone
