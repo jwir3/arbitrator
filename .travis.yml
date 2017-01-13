@@ -1,36 +1,36 @@
 language: node_js
-
 os:
-  - linux
-
+- linux
 branches:
   only:
-    - develop
-
+  - develop
+  - master
 node_js:
-  - "6"
-
+- '6'
 before_script:
-  - npm install
-  - echo 'America/Chicago' | sudo tee /etc/timezone
-  - sudo dpkg-reconfigure --frontend noninteractive tzdata
-
+- npm install
+- echo 'America/Chicago' | sudo tee /etc/timezone
+- sudo dpkg-reconfigure --frontend noninteractive tzdata
 install:
-  - export DISPLAY=':99.0'
-  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-
+- export DISPLAY=':99.0'
+- Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
 notifications:
   email:
     on_success: never
     on_failure: change
-
 env:
-  - CXX=g++-4.8
-
+- CXX=g++-4.8
 addons:
   apt:
     sources:
-      - ubuntu-toolchain-r-test
+    - ubuntu-toolchain-r-test
     packages:
-      - g++-4.8
-      - xvfb
+    - g++-4.8
+    - xvfb
+deploy:
+  provider: releases
+  api_key:
+    secure: hQTceXQqjEB/mvDBUGgMKvG6RGx4Fa60BKNjfZKfSSfxnYnF716toB8Q3eHDEip4Qe4YRDaBBw31IbY+YWowdrdASPPM0z8SZom+9s9dXgBvgmX1pnUAnnzW69VFaX3zq8HhkXgmyEnV8c6Vv4C7xrlYKD/DPLMtCafpJ8v21pM=
+  file: dist/mac/*.dmg
+  on:
+    tags: true
