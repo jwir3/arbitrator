@@ -1,0 +1,13 @@
+{
+  "name": "linechange",
+  "productName": "LineChange",
+  "description": "A utility to help synchronize your referee schedule with your Google Calendar",
+  "version": "3.0.0",
+  "author": "Scott Johnson <jaywir3@gmail.com>",
+  "copyright": "© 2019 Sinking Moon Athletics, LLC",
+  "homepage": "http://github.com/jwir3/arbitrator",
+  "license": "GPL-3.0",
+  "main": "./background.js",
+  "dependencies": {
+  }
+}

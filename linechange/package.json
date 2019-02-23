@@ -1,0 +1,60 @@
+{
+  "build": {
+    "appId": "com.sinkingmoon.linechange",
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "resources/windows/icon.ico"
+    },
+    "nsis": {
+      "oneClick": true,
+      "installerHeaderIcon": "resources/windows/setup-icon.ico"
+    },
+    "mac": {
+      "icon": "resources/osx/icon.icns",
+      "category": "calendar"
+    },
+    "dmg": {
+      "icon": "resources/osx/dmg-icon.icns",
+      "background": "resources/osx/dmg-background.png"
+    }
+  },
+  "directories": {
+    "buildResources": "resources"
+  },
+  "scripts": {
+    "pack": "electron-builder --dir",
+    "dist": "yarn compile && electron-builder",
+    "dev": "electron-webpack dev",
+    "compile": "electron-webpack",
+    "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
+    "postinstall": "electron-builder install-app-deps",
+    "pretest": "webpack --config=build/webpack.unit.config.js --env=test --display=none",
+    "test": "electron-mocha temp/specs.js --renderer --require source-map-support/register"
+  },
+  "dependencies": {
+    "@google/maps": "^0.5.5",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "electron-mocha": "^6.0.4",
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "fs-jetpack": "^2.2.2",
+    "googleapis": "30.0.0",
+    "jquery": "^3.3.1",
+    "lockr": "^0.8.5",
+    "macaddress": "^0.2.9",
+    "mocha": "^6.0.1",
+    "moment": "^2.24.0",
+    "node-rest-client": "^3.1.0",
+    "source-map-support": "^0.5.10",
+    "typeahead": "^0.2.2",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "devDependencies": {
+    "electron": "4.0.4",
+    "electron-builder": "20.38.4",
+    "electron-webpack": "^2.6.2",
+    "webpack": "4.28.4"
+  }
+}
