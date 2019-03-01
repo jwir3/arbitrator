@@ -1,8 +1,8 @@
-import { Game } from './Game.js';
-import { UIManager } from './UIManager';
-import { PreferenceSingleton, TimePreferenceKeys } from './PreferenceStore';
-import { ArbitratorGoogleClient } from './ArbitratorGoogleClient';
-import { Strings } from './Strings';
+import { Game } from 'arbitrator/Game.js';
+import { UIManager } from 'arbitrator/UIManager';
+import { PreferenceSingleton, TimePreferenceKeys } from 'arbitrator/PreferenceStore';
+import { ArbitratorGoogleClient } from 'arbitrator/ArbitratorGoogleClient';
+import { Strings } from 'arbitrator/Strings';
 
 /**
  * An object for combining two callbacks for what to do when searching for Google

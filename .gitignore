@@ -12,6 +12,8 @@ node_modules
 **/app/env.json
 **/app/**/*.map
 **/app/strings.json
+**/app/linechange.js
+**/app/assets/images/*.svg
 
 # Our app.html is generated from within the src/ directory
 **/app/app.html
@@ -24,3 +26,5 @@ node_modules
 **/secret.js
 
 **/.sass-cache
+
+**/temp

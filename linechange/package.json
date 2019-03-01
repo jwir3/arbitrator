@@ -26,21 +26,23 @@
   "scripts": {
     "pack": "electron-builder --dir",
     "dist": "yarn compile && electron-builder",
-    "dev": "electron-webpack dev",
     "compile": "electron-webpack",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
     "postinstall": "electron-builder install-app-deps",
     "pretest": "webpack --config=build/webpack.unit.config.js --env=test --display=none",
-    "test": "electron-mocha temp/specs.js --renderer --require source-map-support/register"
+    "test": "electron-mocha temp/specs.js --renderer --require source-map-support/register",
+    "start": "node build/start.js"
   },
   "dependencies": {
     "@google/maps": "^0.5.5",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
+    "copy-webpack-plugin": "^5.0.0",
     "electron-mocha": "^6.0.4",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "fs-jetpack": "^2.2.2",
     "googleapis": "30.0.0",
+    "include-file-webpack-plugin": "^1.0.3",
     "jquery": "^3.3.1",
     "lockr": "^0.8.5",
     "macaddress": "^0.2.9",
@@ -55,6 +57,10 @@
     "electron": "4.0.4",
     "electron-builder": "20.38.4",
     "electron-webpack": "^2.6.2",
+    "file-loader": "^3.0.1",
+    "node-sass": "^4.11.0",
+    "resolve-url-loader": "^3.0.1",
+    "sass-loader": "^7.1.0",
     "webpack": "4.28.4"
   }
 }

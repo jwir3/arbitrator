@@ -1,9 +1,9 @@
-import { ArbitratorConfig } from './ArbitratorConfig'
+import { ArbitratorConfig } from 'arbitrator/ArbitratorConfig'
 import * as google from 'googleapis'
-import createWindow from '../helpers/window';
-import { PreferenceSingleton, TimePreferenceKeys } from './PreferenceStore';
-import { Game } from './Game';
-import { Strings } from './Strings';
+import createWindow from 'helpers/window';
+import { PreferenceSingleton, TimePreferenceKeys } from 'arbitrator/PreferenceStore';
+import { Game } from 'arbitrator/Game';
+import { Strings } from 'arbitrator/Strings';
 
 // Specify default options to be used with all requests.
 // google.options({ proxy: 'http://localhost:5555' });
@@ -47,7 +47,11 @@ ArbitratorGoogleClient.prototype = {
           scope: scopes
         });
 
-        var window = createWindow('googleAuth', {width: 400, height:650});
+        var window = createWindow('googleAuth', {
+          width: 400,
+          height:650
+        });
+
         window.loadURL(url);
 
         window.on('page-title-updated', () => {

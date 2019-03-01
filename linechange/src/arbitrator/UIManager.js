@@ -1,15 +1,15 @@
 import jQuery from 'jquery'
 import $ from 'jquery'
-import { Place } from './Place'
-import { ArbitratorGoogleClient } from './ArbitratorGoogleClient'
-import { ArbitratorConfig } from './ArbitratorConfig'
-import { StringUtils } from './StringUtils'
-import { PreferenceSingleton, TimePreferenceKeys } from './PreferenceStore'
-import { Arbitrator } from './Arbitrator'
-import { Strings } from './Strings'
+import { Place } from 'arbitrator/Place'
+import { ArbitratorGoogleClient } from 'arbitrator/ArbitratorGoogleClient'
+import { ArbitratorConfig } from 'arbitrator/ArbitratorConfig'
+import { StringUtils } from 'arbitrator/StringUtils'
+import { PreferenceSingleton, TimePreferenceKeys } from 'arbitrator/PreferenceStore'
+import { Arbitrator } from 'arbitrator/Arbitrator'
+import { Strings } from 'arbitrator/Strings'
+import { LocationService } from 'arbitrator/LocationService'
+import { QuickCrypto } from 'arbitrator/QuickCrypto'
 import util from 'util'
-import { LocationService } from './LocationService'
-import { QuickCrypto } from './QuickCrypto'
 import Lockr from 'lockr';
 
 export var UIManager = function() {
@@ -821,7 +821,7 @@ UIManager.prototype = {
     var self = this;
 
     $('#hamburger').css({
-      'background': 'no-repeat url("images/back.svg")'
+      'background': 'no-repeat url("../assets/images/back.svg")'
     });
 
     self._bindEventHandlerForNavMenu(true);
@@ -836,7 +836,7 @@ UIManager.prototype = {
     var self = this;
 
     $('#hamburger').css({
-      'background': 'no-repeat url("images/hamburger.svg")'
+      'background': 'no-repeat url("../assets/images/hamburger.svg")'
     });
 
     self._bindEventHandlerForNavMenu(false);
