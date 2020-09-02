@@ -13,7 +13,7 @@
     "fs-jetpack": "^0.9.0",
     "jquery": "^3.1.1",
     "crypto-js": "^3.1.8",
-    "googleapis": "^14.1.0",
+    "googleapis": "^59.0.0",
     "moment": "^2.15.2",
     "macaddress": "^0.2.8",
     "node-rest-client": "^2.0.1",
